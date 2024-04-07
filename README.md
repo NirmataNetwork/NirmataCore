@@ -21,7 +21,7 @@ Be sure to clone the repository properly:\
 
 Note:\
 [*server version*] denotes steps required for building command-line tools (daemon, simplewallet, etc.).\
-[*GUI version*] denotes steps required for building Nirmara executable with GUI.
+[*GUI version*] denotes steps required for building Nirmata executable with GUI.
 
 <br />
 
@@ -91,10 +91,10 @@ For instance, by adding the following lines to `~/.bashrc`
 6. Build the binaries
    1. Build daemon and simplewallet:
 
-          cd NirmaraCore/ && make -j1
+          cd NirmataCore/ && make -j1
       or 
    
-          cd NirmaraCore && mkdir build && cd build
+          cd NirmataCore && mkdir build && cd build
           cmake ..
           make -j1 daemon simplewallet
 
@@ -104,7 +104,7 @@ For instance, by adding the following lines to `~/.bashrc`
    
    1. Build GUI:
 
-          cd NirmaraCore
+          cd NirmataCore
           utils/build_script_linux.sh
 
 7. Look for the binaries in `build` folder
@@ -116,15 +116,15 @@ Recommended OS version: Windows 7 x64.
 1. Install required prerequisites (Boost, Qt, CMake, OpenSSL).
 2. Edit paths in `utils/configure_local_paths.cmd`.
 3. Run one of `utils/configure_win64_msvsNNNN_gui.cmd` according to your MSVC version.
-4. Go to the build folder and open generated Nirmara.sln in MSVC.
+4. Go to the build folder and open generated Nirmata.sln in MSVC.
 5. Build.
 
 In order to correctly deploy Qt GUI application, you also need to do the following:
 
-6. Copy Nirmara.exe to a folder (e.g. `depoy`). 
-7. Run  `PATH_TO_QT\bin\windeployqt.exe deploy\Nirmara.exe`.
+6. Copy Nirmata.exe to a folder (e.g. `depoy`). 
+7. Run  `PATH_TO_QT\bin\windeployqt.exe deploy\Nirmata.exe`.
 8. Copy folder `\src\gui\qt-daemon\html` to `deploy\html`.
-9. Now you can run `Nirmara.exe`
+9. Now you can run `Nirmata.exe`
 
 <br />
 
@@ -139,12 +139,12 @@ To build GUI application:
 1. Create self-signing certificate via Keychain Access:\
     a. Run Keychain Access.\
     b. Choose Keychain Access > Certificate Assistant > Create a Certificate.\
-    c. Use Nirmara (without quotes) as certificate name.\
+    c. Use Nirmata (without quotes) as certificate name.\
     d. Choose “Code Signing” in “Certificate Type” field.\
     e. Press “Create”, then “Done”.\
     f. Make sure the certificate was added to keychain "System". If not—move it to "System".\
     g. Double click the certificate you've just added, enter the trust section and under "When using this certificate" select "Always trust".\
-    h. Unfold the certificate in Keychain Access window and double click the underlying private key "Nirmara". Select "Access Control" tab, then select "Allow all applications to access this item". Click "Save Changes".
+    h. Unfold the certificate in Keychain Access window and double click the underlying private key "Nirmata". Select "Access Control" tab, then select "Allow all applications to access this item". Click "Save Changes".
 2. Revise building script, comment out unwanted steps and run it:  `utils/build_script_mac_osx.sh`
 3. The application should be here: `/buid_mac_osx_64/release/src`
 
