@@ -1,0 +1,774 @@
+{
+    "LOGIN": {
+        "SETUP_MASTER_PASS": "Configurar contraseña maestra",
+        "SETUP_CONFIRM_PASS": "Confirmar la contraseña",
+        "MASTER_PASS": "Contraseña maestra",
+        "BUTTON_NEXT": "Siguiente",
+        "BUTTON_SKIP": "Omitir",
+        "BUTTON_RESET": "Restablecer",
+        "INCORRECT_PASSWORD": "Contraseña inválida",
+        "FORM_ERRORS": {
+          "PASS_REQUIRED": "Se requiere contraseña",
+          "INVALID_PASS": "Contraseña inválida, intenta de nuevo",
+          "CONFIRM_REQUIRED": "Se requiere confirmación",
+          "MISMATCH": "No coincide"
+        }
+      },
+      "COMMON": {
+        "BACK": "Regresar"
+      },
+      "BREADCRUMBS": {
+        "ADD_WALLET": "Agregar billetera",
+        "CREATE_WALLET": "Crear nueva billetera",
+        "SAVE_PHRASE": "Guardar frase semilla",
+        "OPEN_WALLET": "Abrir billetera existente",
+        "RESTORE_WALLET": "Restaurar desde copia de seguridad",
+        "WALLET_DETAILS": "Detalles de la billetera",
+        "ASSIGN_ALIAS": "Asignar alias",
+        "EDIT_ALIAS": "Editar alias",
+        "TRANSFER_ALIAS": "Transferir alias",
+        "CONTRACTS": "Contratos",
+        "NEW_PURCHASE": "Nueva compra",
+        "OLD_PURCHASE": "Compra"
+      },
+      "SIDEBAR": {
+        "TITLE": "Carteras",
+        "ADD_NEW": "Agregar Cartera",
+        "ACCOUNT": {
+          "STAKING": "POS",
+          "MESSAGES": "Nuevas Ofertas/Mensajes",
+          "SYNCING": "Sincronizando cartera"
+        },
+        "CONTACTS": "Contactos",
+        "CONTACTS_TOOLTIP": "Opción de contactos disponible solo con Contraseña Maestra activada",
+        "SETTINGS": "Configuraciones",
+        "LOG_OUT": "Cerrar Sesión",
+        "LOG_OUT_TOOLTIP": "Opción de cerrar sesión disponible solo con Contraseña Maestra activada",
+        "SYNCHRONIZATION": {
+          "OFFLINE": "Desconectado",
+          "ONLINE": "En línea",
+          "ERROR": "Error del sistema",
+          "COMPLETE": "Completado",
+          "SYNCING": "Sincronizando bloque",
+          "LOADING": "Cargando datos de blockchain",
+          "DOWNLOADING": "Descargando",
+          "SLASH": "/",
+          "MB": "MB"
+        },
+        "UPDATE": {
+          "STANDARD": "Actualización disponible",
+          "STANDARD_TOOLTIP": "<span class=\"standard-update\">Obtener nueva actualización.</span><br><span>¡Se recomienda actualizar!</span>",
+          "IMPORTANT": "Actualización importante disponible",
+          "IMPORTANT_HINT": "¡Actualización importante!",
+          "IMPORTANT_TOOLTIP": "<span class=\"important-update\">Obtener nueva actualización.</span><br><span>¡Actualización importante!</span>",
+          "CRITICAL": "Actualización crítica disponible",
+          "CRITICAL_HINT": "¡Actualización crítica!",
+          "CRITICAL_TOOLTIP": "<span class=\"critical-update\">Actualización crítica disponible.</span><i class=\"icon\"></i><span>¡Se recomienda encarecidamente actualizar!</span>",
+          "TIME": "El tiempo del sistema difiere del de la red",
+          "TIME_TOOLTIP": "<span class=\"wrong-time\">Hora del sistema incorrecta.</span><br><span>Verifique y repare la hora de su sistema.</span>"
+        }
+      },
+      "MAIN": {
+        "TITLE": "Crea o abre la billetera para comenzar a usar NiR",
+        "BUTTON_NEW_WALLET": "Crear Nueva Billetera",
+        "BUTTON_OPEN_WALLET": "Abrir Billetera Existente",
+        "BUTTON_RESTORE_BACKUP": "Restaurar desde Copia de Seguridad",
+        "HELP": "¿Cómo Crear Billetera?",
+        "CHOOSE_PATH": "Por favor elige un camino"
+      },
+      "PLACEHOLDERS": {
+        "COMMENT_PLACEHOLDER": "Ingresa tu comentario aquí",
+        "MESSAGE_PLACEHOLDER": "Mensaje...",
+        "TIPS_PLACEHOLDER": "Establece en 0 si no das propina al usuario",
+        "WALLET_NAME_PLACEHOLDER": "Ingresa un Nombre de Billetera aquí",
+        "MASTER_PASS_PLACEHOLDER": "Ingresa una contraseña maestra aquí",
+        "NAME_PLACEHOLDER": "Ingresa un nombre aquí",
+        "ADRESS_PLACEHOLDER": "Ingresa una dirección aquí",
+        "ALIAS_PLACEHOLDER": "Ingresa un alias aquí",
+        "NOTES_PLACEHOLDER": "Ingresa notas aquí",
+        "DESCRIPTION_PLACEHOLDER": "Ingresa una descripción aquí",
+        "SELLER_PLACEHOLDER": "Ingresa un vendedor aquí",
+        "PLACEHOLDER_OLD": "Ingresa la contraseña actual aquí",
+        "AMOUNT_PLACEHOLDER": "Ingresa una cantidad aquí",
+        "DEPOSIT_PLACEHOLDER": "Ingresa tu depósito aquí",
+        "SELLER_DEPOSIT_PLACEHOLDER": "Ingresa el depósito del vendedor aquí",
+        "PLACEHOLDER_NEW": "Ingresa una nueva contraseña aquí",
+        "WALET_PASSWORD_PLACEHOLDER": "Ingresa una contraseña de billetera aquí",
+        "CONFIRM_WALET_PASSWORD_PLACEHOLDER": "Confirma la contraseña de la billetera aquí",
+        "PLACEHOLDER_CONFIRM": "Confirma la nueva contraseña aquí",
+        "PASSWORD_PLACEHOLDER": "Ingresa una contraseña aquí",
+        "SEED_PHRASE_PLACEHOLDER": "Ingresa una frase semilla aquí",
+        "SEED_PASSWORD_PLACEHOLDER": "Ingresa una contraseña semilla aquí",
+        "PURCHASE_PAYMENT_PLACEHOLDER": "Ingresa un ID de pago aquí",
+        "FEE_PLACEHOLDER": "Ingresa una tarifa aquí"
+      },
+      "CREATE_WALLET": {
+        "NAME": "Nombre de la Billetera",
+        "PASS": "Establecer contraseña de la billetera",
+        "CONFIRM": "Confirmar contraseña de la billetera",
+        "BUTTON_SELECT": "Seleccionar Ubicación de la Billetera",
+        "BUTTON_CREATE": "Crear Billetera",
+        "TITLE_SAVE": "Guardar el archivo de la billetera.",
+        "ERROR_CANNOT_SAVE_TOP": "Los archivos de billetera existentes no pueden ser reemplazados ni sobrescritos",
+        "ERROR_CANNOT_SAVE_SYSTEM": "Los archivos de billetera no pueden ser guardados en la partición del sistema operativo",
+        "FORM_ERRORS": {
+          "NAME_REQUIRED": "Se requiere nombre",
+          "NAME_DUPLICATE": "El nombre es duplicado",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del nombre",
+          "CONFIRM_NOT_MATCH": "La confirmación de la contraseña no coincide"
+        }
+      },
+      "OPEN_WALLET": {
+        "NAME": "Nombre de la Billetera",
+        "PASS": "Contraseña de la billetera",
+        "BUTTON": "Abrir billetera",
+        "WITH_ADDRESS_ALREADY_OPEN": "Ya hay una billetera abierta con esta dirección",
+        "FILE_NOT_FOUND1": "Archivo de billetera no encontrado",
+        "FILE_NOT_FOUND2": "<br/><br/> Puede que haya sido renombrado o movido. <br/> Para abrirlo, usa el botón \"Abrir billetera\".",
+        "FORM_ERRORS": {
+          "NAME_REQUIRED": "Se requiere nombre",
+          "NAME_DUPLICATE": "El nombre es duplicado",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del nombre"
+        },
+        "MODAL": {
+          "TITLE": "Escribir contraseña de la billetera",
+          "LABEL": "Contraseña de esta billetera",
+          "OPEN": "Abrir billetera",
+          "SKIP": "Omitir",
+          "NOT_FOUND": "No encontrado"
+        }
+      },
+      "RESTORE_WALLET": {
+        "LABEL_NAME": "Nombre de la Billetera",
+        "LABEL_PHRASE_KEY": "Frase semilla / seguimiento de semilla",
+        "PASS": "Contraseña de la billetera",
+        "CONFIRM": "Confirmar contraseña de la billetera",
+        "BUTTON_SELECT": "Seleccionar ubicación de la billetera",
+        "BUTTON_CREATE": "Crear billetera",
+        "NOT_CORRECT_FILE_OR_PASSWORD": "Archivo de billetera inválido o la contraseña no coincide",
+        "CHOOSE_PATH": "Por favor elige un camino",
+        "SEED_PASSWORD": "Contraseña de la semilla",
+        "OK": "OK",
+        "FORM_ERRORS": {
+          "NAME_REQUIRED": "Se requiere nombre",
+          "NAME_DUPLICATE": "El nombre es duplicado",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del nombre",
+          "CONFIRM_NOT_MATCH": "La confirmación de la contraseña no coincide",
+          "KEY_REQUIRED": "Se requiere clave",
+          "KEY_NOT_VALID": "Clave no válida",
+          "INCORRECT_PASSWORD": "Contraseña incorrecta"
+        }
+      },
+      "EXPORT_HISTORY": {
+        "TOOLTIP": "Exportar el historial de transacciones de la billetera a un archivo",
+        "TITLE": "Exportar Historial de la Billetera",
+        "FORMAT": "Formato",
+        "FILTER": "Filtrar Transacciones POS",
+        "CANCEL": "Cancelar",
+        "EXPORT": "Exportar a archivo...",
+        "EXPORT_BUTTON": "Exportar historial...",
+        "SAVED_FILE": "Seleccionar camino para guardar el historial de transacciones"
+      },
+      "SEED_PHRASE": {
+        "TITLE": "Asegúrate de guardar tu frase semilla en un lugar seguro. Si olvidas tu frase semilla no podrás recuperar tu billetera.",
+        "BUTTON_CREATE_ACCOUNT": "Crear billetera",
+        "BUTTON_COPY": "Copiar",
+        "BUTTON_COPIED": "Copiado"
+      },
+      "PROGRESS": {
+        "ADD_WALLET": "Agregar billetera",
+        "SELECT_LOCATION": "Seleccionar ubicación de la billetera",
+        "CREATE_WALLET": "Crear nueva billetera",
+        "RESTORE_WALLET": "Restaurar desde copia de seguridad"
+      },
+      "SETTINGS": {
+        "TITLE": "Configuraciones",
+        "DARK_THEME": "Tema oscuro",
+        "WHITE_THEME": "Tema blanco",
+        "GRAY_THEME": "Tema gris",
+        "NOTIFICATIONS": "Notificaciones",
+        "SETTINGS_SAVED": "¡Guardado! Configuraciones actualizadas",
+        "APP_LOCK": {
+          "TITLE": "Bloquear app después de:",
+          "TIME1": "5 min",
+          "TIME2": "15 min",
+          "TIME3": "1 hora",
+          "TIME4": "Nunca"
+        },
+        "SCALE": {
+          "TITLE": "Escala de la interfaz",
+          "75": "Escala del 75%",
+          "100": "Escala del 100%",
+          "125": "Escala del 125%",
+          "150": "Escala del 150%",
+          "175": "Escala del 175%",
+          "200": "Escala del 200%",
+          "225": "Escala del 225%",
+          "250": "Escala del 250%"
+        },
+        "LANGUAGE": {
+          "TITLE": "Idioma",
+          "EN": "Inglés",
+          "ZH": "Chino",
+          "ES": "Español",
+          "RU": "Ruso",
+          "FR": "Francés",
+          "DE": "Alemán",
+          "ID": "Indonesio",
+          "IT": "Italiano",
+          "PT": "Portugués",
+          "TR": "Turco"
+        },
+        "MASTER_PASSWORD": {
+          "TITLE": "Actualizar contraseña maestra",
+          "OLD": "Contraseña actual",
+          "NEW": "Nueva contraseña",
+          "CONFIRM": "Confirmar contraseña",
+          "BUTTON": "Guardar"
+        },
+        "FORM_ERRORS": {
+          "PASS_REQUIRED": "Se requiere contraseña",
+          "PASS_NOT_MATCH": "Contraseña incorrecta",
+          "CONFIRM_NOT_MATCH": "La confirmación de la contraseña no coincide"
+        },
+        "LAST_BUILD": "Construcción actual: {{value}}",
+        "APP_LOG_TITLE": "Nivel de registro:"
+      },
+      "WALLET": {
+        "REGISTER_ALIAS": "Registrar un alias",
+        "DETAILS": "Detalles",
+        "BALANCE": "Saldo: ",
+        "WADDRESS": "Dirección de la billetera: ",
+        "LOCK": "Bloquear",
+        "AVAILABLE_BALANCE": "Disponible <b>{{available}} {{currency}}<b/>",
+        "LOCKED_BALANCE": "Bloqueado <b>{{locked}} {{currency}}<b/>",
+        "LOCKED_BALANCE_LINK": "¿Qué significa esto?",
+        "CONFIRM": {
+          "TITLE": "¿Eliminar billetera de la lista?",
+          "MESSAGE": "Para acceder de nuevo tendrás que agregarla otra vez"
+        },
+        "TABS": {
+          "SEND": "Enviar",
+          "RECEIVE": "Recibir",
+          "HISTORY": "Historial",
+          "CONTRACTS": "Contratos",
+          "MESSAGES": "Mensajes",
+          "STAKING": "POS",
+          "PRICE": "Comercio",
+          "ACS": "ACS",
+          "P2P": "Intercambio",
+          "EXPLORER": "Explorador",
+          "SWAP": "PeerSwap",
+          "CHAT": "Chat"
+        },
+        "TOOLTIPS": {
+          "EDIT_ALIAS": "Editar alias",
+          "TRANSFER_ALIAS": "Transferir alias",
+          "SETTINGS": "Configuraciones",
+          "CLOSE": "Cerrar billetera"
+        }
+      },
+      "WALLET_DETAILS": {
+        "LABEL_NAME": "Nombre de la Billetera",
+        "LABEL_FILE_LOCATION": "Ubicación del archivo de la billetera",
+        "LABEL_SEED_PHRASE": "Frase semilla",
+        "SEED_PHRASE_HINT": "Haz clic para revelar la frase semilla",
+        "RESYNC_WALLET": "Resincronizar datos de la billetera",
+        "RESYNC_WALLET_BUTTON": "Resincronizar Billetera",
+        "BUTTON_SAVE": "Guardar",
+        "BUTTON_REMOVE": "Cerrar Billetera",
+        "CREATE_PASSWORD_SECURE": "Crear una contraseña para proteger tu semilla",
+        "INFO": "información",
+        "SEED_IS_UNSECURED": "La semilla no está protegida",
+        "SEED_IS_SECURED": "La semilla está protegida",
+        "REMEMBER_YOU_WILL_REQUIRE": "La semilla protegida requerirá contraseña para restaurar.",
+        "WALLET_OPTIONS": "Opciones de la billetera...",
+        "FORM": {
+          "CONFIRM_PASSWORD": "Confirmar contraseña",
+          "GENERATE_SECURE_SEED": "Generar Semilla Segura",
+          "SECURED_SEED_WILL_REQUIRE": "La semilla segura requerirá esta contraseña para restaurar."
+        },
+        "FORM_ERRORS": {
+          "NAME_REQUIRED": "Se requiere nombre",
+          "NAME_DUPLICATE": "El nombre es duplicado",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del nombre",
+          "PASSWORDS_DONT_MATCH": "Las contraseñas no coinciden"
+        }
+      },
+      "ASSIGN_ALIAS": {
+        "NAME": {
+          "LABEL": "Alias",
+          "PLACEHOLDER": "Ingresa el alias",
+          "TOOLTIP": "Un alias es una forma abreviada de tu cuenta. Un alias solo puede incluir letras latinas, números y los caracteres “.” y “-”. Debe comenzar con “@”."
+        },
+        "COMMENT": {
+          "LABEL": "Comentario",
+          "PLACEHOLDER": "Ingresa tu comentario aquí",
+          "TOOLTIP": "El comentario será visible para cualquiera que quiera hacer un pago a tu alias. Puedes proporcionar detalles sobre tu negocio, contactos o incluir cualquier texto. Los comentarios pueden ser editados más tarde."
+        },
+        "COST": "Tarifa de alias {{value}} {{currency}}",
+        "BUTTON_ASSIGN": "Asignar",
+        "FORM_ERRORS": {
+          "NAME_REQUIRED": "Se requiere nombre",
+          "NAME_WRONG": "Nombre inválido: símbolos permitidos \"0-9\", \"a-z\", \"-\", \".\"",
+          "NAME_LENGTH": "El nombre del alias debe tener entre 6-25 caracteres",
+          "NAME_EXISTS": "El nombre del alias ya existe",
+          "NO_MONEY": "No tienes fondos suficientes para asignar este alias",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del comentario"
+        },
+        "ONE_ALIAS": "Solo puedes crear un alias por billetera",
+        "REQUEST_ADD_REG": "El alias será asignado dentro de 10 minutos"
+      },
+      "EDIT_ALIAS": {
+        "NAME": {
+          "LABEL": "Alias",
+          "PLACEHOLDER": "@ Ingresa el alias"
+        },
+        "COMMENT": {
+          "LABEL": "Comentario",
+          "PLACEHOLDER": "Ingresa tu comentario aquí"
+        },
+        "FORM_ERRORS": {
+          "NO_MONEY": "No tienes suficientes fondos para cambiar el comentario de este alias",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del comentario"
+        },
+        "COST": "Tarifa {{value}} {{currency}}",
+        "BUTTON_EDIT": "Editar"
+      },
+      "TRANSFER_ALIAS": {
+        "NAME": {
+          "LABEL": "Alias",
+          "PLACEHOLDER": "@ Ingresa el alias"
+        },
+        "COMMENT": {
+          "LABEL": "Comentario",
+          "PLACEHOLDER": "Ingresa tu comentario aquí"
+        },
+        "ADDRESS": {
+          "LABEL": "Transferir a",
+          "PLACEHOLDER": "Ingresa la dirección aquí"
+        },
+        "FORM_ERRORS": {
+          "WRONG_ADDRESS": "No existe una billetera con esta cuenta",
+          "ALIAS_EXISTS": "Esta cuenta ya tiene un alias",
+          "NO_MONEY": "No tienes suficientes fondos para transferir este alias"
+        },
+        "COST": "Tarifa de transferencia {{value}} {{currency}}",
+        "BUTTON_TRANSFER": "Transferir",
+        "BUTTON_CANCEL": "Cancelar",
+        "REQUEST_SEND_REG": "El alias será transferido dentro de 10 minutos"
+      },
+      "SEND": {
+        "USER": "Usuario",
+        "ADDRESS": "Dirección",
+        "TIPS": "Consejos Usuario",
+        "AMOUNT": "Cantidad",
+        "COMMENT": "Comentario",
+        "MESSAGE": "Mensaje",
+        "DETAILS": "Detalles adicionales",
+        "MIXIN": "Mixin",
+        "FEE": "Tarifa",
+        "HIDE": "Ocultar tu dirección de billetera al destinatario",
+        "BUTTON": "Enviar",
+        "SUCCESS_SENT": "Transacción enviada",
+        "WRAP": {
+          "TITLE": "Envolver",
+          "MAIN_TEXT": "Esta transacción creará wNiR (\"NiR Envuelto\") que será enviado a la dirección especificada en la red de Ethereum.",
+          "ESTIMATE": "Estimaciones de la transacción",
+          "WILL_RECEIVE": "Recibirás:",
+          "FEE": "Tarifa de transacción de Ethereum:",
+          "NiR": "NiR",
+          "wNIR": "wNiR"
+        },
+        "FORM_ERRORS": {
+          "ADDRESS_REQUIRED": "Se requiere dirección",
+          "ADDRESS_NOT_VALID": "Dirección no válida",
+          "ALIAS_NOT_VALID": "Alias no válido",
+          "AMOUNT_REQUIRED": "Se requiere cantidad",
+          "AMOUNT_ZERO": "La cantidad es cero",
+          "FEE_REQUIRED": "Se requiere tarifa",
+          "FEE_MINIMUM": "Tarifa mínima: {{fee}}",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima del comentario",
+          "GREAT_THAN_UNWRAPPED_COINS": "La cantidad es mayor que los tokens ERC20 disponibles",
+          "LESS_THAN_NIR_NEEDED": "Cantidad demasiado pequeña para cubrir la tarifa de ERC20",
+          "WRAP_INFO_NULL": "falló al solicitar el estado de envoltura"
+        }
+      },
+      "HISTORY": {
+        "STATUS": "Estado",
+        "STATUS_TOOLTIP": "Confirmaciones {{current}}/{{total}}",
+        "LOCK_TOOLTIP": "Bloqueado hasta {{date}}",
+        "SEND": "Enviado",
+        "RECEIVED": "Recibido",
+        "DATE": "Fecha",
+        "AMOUNT": "Cantidad",
+        "FEE": "Tarifa",
+        "ADDRESS": "Dirección",
+        "DETAILS": {
+          "PAYMENT_ID": "ID de pago",
+          "ID": "ID de transacción",
+          "SIZE": "Tamaño de la transacción",
+          "SIZE_VALUE": "{{value}} bytes",
+          "HEIGHT": "Altura",
+          "CONFIRMATION": "Confirmación",
+          "INPUTS": "Entradas",
+          "OUTPUTS": "Salidas",
+          "COMMENT": "Comentario"
+        },
+        "TYPE_MESSAGES": {
+          "HIDDEN": "oculto",
+          "UNDEFINED": "Indefinido",
+          "COMPLETE_BUYER": "Contrato completado",
+          "COMPLETE_SELLER": "Contrato completado",
+          "CREATE_ALIAS": "Tarifa por asignar alias",
+          "UPDATE_ALIAS": "Tarifa por editar alias",
+          "POW_REWARD": "Recompensa POW",
+          "POS_REWARD": "Recompensa POS",
+          "CREATE_CONTRACT": "Propuesta de contrato",
+          "PLEDGE_CONTRACT": "Depósito de contrato",
+          "NULLIFY_CONTRACT": "Depósitos quemados",
+          "PROPOSAL_CANCEL_CONTRACT": "Solicitud de cancelación",
+          "CANCEL_CONTRACT": "Cancelar y devolver depósitos"
+        }
+      },
+      "CONTRACTS": {
+        "EMPTY": "No hay contratos activos",
+        "CONTRACTS": "Contratos",
+        "PURCHASE": "Compra",
+        "SELL": "Venta",
+        "DATE": "Fecha",
+        "AMOUNT": "Cantidad",
+        "STATUS": "Estado",
+        "COMMENTS": "Comentarios",
+        "PURCHASE_BUTTON": "Nueva Compra",
+        "LISTING_BUTTON": "Crear listado",
+        "TIME_LEFT": {
+          "REMAINING_LESS_ONE": "Menos de una hora para responder",
+          "REMAINING_ONE": "Queda {{time}} hora",
+          "REMAINING_MANY": "Quedan {{time}} horas",
+          "REMAINING_MANY_ALT": "Quedan {{time}} horas",
+          "REMAINING_ONE_RESPONSE": "Queda {{time}} hora",
+          "REMAINING_MANY_RESPONSE": "Quedan {{time}} horas",
+          "REMAINING_MANY_ALT_RESPONSE": "Quedan {{time}} horas",
+          "REMAINING_ONE_WAITING": "Esperando {{time}} hora",
+          "REMAINING_MANY_WAITING": "Esperando {{time}} horas",
+          "REMAINING_MANY_ALT_WAITING": "Esperando {{time}} horas"
+        },
+        "STATUS_MESSAGES": {
+          "SELLER": {
+            "NEW_CONTRACT": "Nueva propuesta de contrato",
+            "IGNORED": "Ignoraste la propuesta de contrato",
+            "ACCEPTED": "Contrato iniciado",
+            "WAIT": "Esperando confirmación del contrato",
+            "WAITING_BUYER": "Esperando la entrega",
+            "COMPLETED": "Contrato completado",
+            "NOT_RECEIVED": "Entrega fallida",
+            "NULLIFIED": "Todos los depósitos quemados",
+            "PROPOSAL_CANCEL": "Nueva propuesta para cancelar el contrato y devolver los depósitos",
+            "BEING_CANCELLED": "Cancelación en progreso",
+            "CANCELLED": "Contrato cancelado",
+            "IGNORED_CANCEL": "Ignoraste la propuesta de cancelación",
+            "EXPIRED": "La propuesta de contrato ha expirado"
+          },
+          "BUYER": {
+            "WAITING": "Esperando respuesta",
+            "IGNORED": "El vendedor ignoró tu propuesta de contrato",
+            "ACCEPTED": "El vendedor aceptó tu propuesta de contrato",
+            "WAIT": "Esperando confirmación de los depósitos",
+            "WAITING_SELLER": "Esperando la entrega",
+            "COMPLETED": "Contrato completado",
+            "NOT_RECEIVED": "Entrega fallida",
+            "NULLIFIED": "Todos los depósitos quemados",
+            "WAITING_CANCEL": "Esperando la cancelación del contrato",
+            "BEING_CANCELLED": "Cancelación en progreso",
+            "CANCELLED": "Contrato cancelado",
+            "IGNORED_CANCEL": "El vendedor ignoró tu propuesta para cancelar el contrato",
+            "EXPIRED": "La propuesta de contrato ha expirado"
+          }
+        }
+      },
+      "PURCHASE": {
+        "DESCRIPTION": "Descripción",
+        "SELLER": "Vendedor",
+        "AMOUNT": "Cantidad",
+        "YOUR_DEPOSIT": "Tu depósito",
+        "SELLER_DEPOSIT": "Depósito del vendedor",
+        "BUYER_DEPOSIT": "Depósito del comprador",
+        "SAME_AMOUNT": "Misma cantidad",
+        "COMMENT": "Comentario",
+        "DETAILS": "Detalles adicionales",
+        "SEND_BUTTON": "Enviar",
+        "FORM_ERRORS": {
+          "DESC_REQUIRED": "Descripción requerida",
+          "DESC_MAXIMUM": "Se alcanzó la longitud máxima del campo",
+          "SELLER_REQUIRED": "Dirección requerida",
+          "SELLER_NOT_VALID": "Dirección no válida",
+          "ALIAS_NOT_VALID": "Alias no válido",
+          "AMOUNT_REQUIRED": "Cantidad requerida",
+          "AMOUNT_ZERO": "La cantidad no puede ser cero",
+          "YOUR_DEPOSIT_REQUIRED": "Depósito requerido",
+          "SELLER_DEPOSIT_REQUIRED": "Depósito del vendedor requerido",
+          "SELLER_SAME": "Usar cuenta separada",
+          "COMMENT_MAXIMUM": "Se alcanzó la longitud máxima del comentario"
+        },
+        "PROGRESS_NEW": "Nueva compra",
+        "PROGRESS_WAIT": "Esperando respuesta",
+        "PROGRESS_RECEIVE": "Respuesta recibida",
+        "PROGRESS_COMPLETE": "Completado",
+        "FEE": "Tarifa",
+        "PAYMENT": "ID de pago",
+        "STATUS_MESSAGES": {
+          "NEW_PURCHASE": "Nueva compra",
+          "NEW_PURCHASE_1": "1. Especificar la dirección para recibir el activo",
+          "NEW_PURCHASE_2": "2. Especificar la cantidad de garantía",
+          "WAITING_SELLER": "Esperando respuesta",
+          "WAITING_SELLER_1": "Esperar la decisión del vendedor",
+          "WAITING_BUYER": "Propuesta de contrato recibida",
+          "WAITING_BUYER_1": "Estudiar el contrato y tomar una decisión",
+          "WAITING_CONFIRMATION": "Esperando confirmación de depósitos",
+          "WAITING_DELIVERY": "Esperando entrega",
+          "WAITING_DELIVERY_1": "1. Transferir el activo al vendedor en la dirección proporcionada",
+          "WAITING_DELIVERY_2": "2. Esperar la transferencia del activo por parte del vendedor",
+          "WAITING_DELIVERY_3": "3. Completar el contrato",
+          "WAITING_DELIVERY_4": "1. Esperar la transferencia del comprador",
+          "WAITING_DELIVERY_5": "2. Enviar el activo a la dirección proporcionada por el comprador",
+          "WAITING_DELIVERY_6": "3. Esperar que el comprador complete el contrato",
+          "COMPLETED": "Contrato completado",
+          "IGNORED_BUYER": "Propuesta de contrato ignorada",
+          "IGNORED_SELLER": "El vendedor ignoró tu propuesta de contrato",
+          "PROPOSAL_CANCEL_SELLER": "Solicitud de cancelación enviada",
+          "PROPOSAL_CANCEL_BUYER": "Solicitud de cancelación recibida",
+          "BEING_CANCELLED": "Cancelación en progreso",
+          "IGNORED_CANCEL_SELLER": "El vendedor ignoró tu propuesta para cancelar el contrato",
+          "IGNORED_CANCEL_BUYER": "Propuesta de cancelación del contrato ignorada",
+          "CANCELLED": "Contrato cancelado",
+          "EXPIRED": "La propuesta de contrato ha expirado",
+          "NOT_RECEIVED": "Entrega fallida",
+          "NULLIFIED": "Todos los depósitos quemados",
+          "SELLER_ADDRESS": "Dirección del vendedor para la liberación del activo",
+          "BUYER_ADDRESS": "Dirección del comprador para la liberación del activo",
+          "RECOMMENDATION": "Recomendamos establecer la cantidad de garantía al menos igual a la cantidad de la transacción (USDT)",
+          "COMPLETE_CONTRACT": "¿Estás seguro de que quieres completar el contrato y liberar los depósitos de garantía?",
+          "BUTTON_CONFIRM": "Confirmar",
+          "BUYER_ADDRESS": "Tu dirección para la liberación del activo"
+        },
+      "ACCEPT_STATE_WAIT_BIG": "Contrato iniciado",
+      "IGNORED_ACCEPT": "Propuesta de contrato ignorada",
+      "BURN_PROPOSAL": "Depósitos quemados",
+      "SUCCESS_FINISH_PROPOSAL": "Contrato completado",
+      "SEND_CANCEL_PROPOSAL": "Solicitud de cancelación enviada",
+      "IGNORED_CANCEL": "Propuesta de cancelación del contrato ignorada",
+      "DEALS_CANCELED_WAIT": "Cancelación en progreso",
+      "WAITING_TIME": "Tiempo de respuesta",
+      "NEED_MONEY": "Fondos insuficientes",
+      "BUTTON_MAKE_PLEDGE": "Aceptar y hacer depósito",
+      "BUTTON_IGNORE": "Ignorar y ocultar oferta",
+      "BUTTON_NULLIFY": "Terminar y quemar depósitos",
+      "BUTTON_RECEIVED": "Completar y liberar depósitos",
+      "BUTTON_CANCEL_BUYER": "Cancelar y devolver depósitos",
+      "BUTTON_NOT_CANCEL": "Ignorar solicitud",
+      "BUTTON_CANCEL_SELLER": "Confirmar y devolver depósitos",
+      "HOUR": "hora",
+      "HOURS": "horas",
+      "CANCEL": "Cancelar",
+      "NULLIFY_QUESTION": "¿Estás seguro de que quieres quemar ambos depósitos?",
+      "BUTTON_NULLIFY_SHORT": "Quemar",
+      "WAITING_TIME_QUESTION": "¿Estás seguro de que quieres cancelar el contrato?"
+    },
+    "MESSAGES": {
+        "ADDRESS": "Dirección",
+        "MESSAGE": "Mensaje",
+        "SEND_PLACEHOLDER": "Escribe un mensaje...",
+        "SEND_BUTTON": "Enviar"
+      },
+      "MODALS": {
+        "ERROR": "Error",
+        "SUCCESS": "Éxito",
+        "INFO": "Información",
+        "OK": "Aceptar",
+        "CANCEL": "Cancelar"
+      },
+      "CONFIRM": {
+        "BUTTON_CONFIRM": "Enviar",
+        "BUTTON_CANCEL": "Cancelar",
+        "TITLE": "Confirmar transacción",
+        "MESSAGE": {
+          "SEND": "Enviar",
+          "FROM": "De",
+          "TO": "Para",
+          "COMMENT": "Comentario"
+        }
+      },
+      "STAKING": {
+        "TITLE": "POS",
+        "TITLE_PENDING": "Pendiente",
+        "TITLE_TOTAL": "Total",
+        "TITLE_PERIOD": "Período de tiempo:",
+        "PERIOD": {
+          "WEEK1": "1 semana",
+          "WEEK2": "2 semanas",
+          "MONTH1": "1 mes",
+          "MONTH3": "3 meses",
+          "MONTH6": "6 meses",
+          "YEAR": "1 año",
+          "ALL": "Todo"
+        },
+        "TITLE_GROUP": "Grupo:",
+        "GROUP": {
+          "DAY": "día",
+          "WEEK": "semana",
+          "MONTH": "mes"
+        },
+        "SWITCH": {
+          "ON": "ENCENDIDO",
+          "OFF": "APAGADO"
+        }
+      },
+      "EXCHANGE": {
+        "EXCHANGE_TEXT": "La moneda NiR está disponible en muchas bolsas de criptomonedas. Todas las estadísticas están frente a ti. También puedes cambiar a operar en todas las bolsas disponibles, directamente desde tu billetera. ¡Que tengas buen comercio!",
+        "EXCHANGE_BUTTON": "Comprar/Vender"
+      },
+      "CONTACTS": {
+        "ADD_CONTACT": "Agregar contacto",
+        "TITLE": "Lista de contactos",
+        "IMPORT_EXPORT": "Importar o exportar contactos",
+        "IMPORT": "Importar",
+        "EXPORT": "Exportar",
+        "ADD": "Agregar/editar contacto",
+        "SEND": "Enviar",
+        "SEND_FROM": "Enviar desde",
+        "SEND_TO": "Enviar a",
+        "OPEN_ADD_WALLET": "Abrir/Agregar billetera",
+        "COPY": "- Copiar",
+        "TABLE": {
+          "NAME": "Nombre",
+          "ALIAS": "Alias",
+          "ADDRESS": "Dirección",
+          "NOTES": "Notas",
+          "EMPTY": "La lista de contactos está vacía"
+        },
+        "FORM": {
+          "NAME": "Nombre",
+          "ADDRESS": "Dirección",
+          "NOTES": "Notas"
+        },
+        "FORM_ERRORS": {
+          "NAME_REQUIRED": "Se requiere nombre",
+          "NAME_DUBLICATED": "El nombre está duplicado",
+          "ADDRESS_REQUIRED": "Se requiere dirección",
+          "ADDRESS_NOT_VALID": "Dirección no válida",
+          "SET_MASTER_PASSWORD": "Establecer contraseña maestra",
+          "ADDRESS_DUBLICATED": "La dirección está duplicada",
+          "MAX_LENGTH": "Se alcanzó la longitud máxima de las notas",
+          "NAME_LENGTH": "El nombre debe tener entre 4 y 25 caracteres"
+        },
+        "BUTTON": {
+          "SEND": "Enviar",
+          "EDIT": "Editar",
+          "DELETE": "Eliminar",
+          "ADD": "Agregar contacto",
+          "ADD_EDIT": "Agregar/Guardar",
+          "GO_TO_WALLET": "Ir a la billetera",
+          "IMPORT_EXPORT": "Importar/exportar"
+        },
+        "SUCCESS_SENT": "Contacto agregado",
+        "SUCCESS_SAVE": "Contacto editado",
+        "SUCCESS_IMPORT": "Contactos importados",
+        "SUCCESS_EXPORT": "Contactos exportados",
+        "ERROR_IMPORT": "¡Error ocurrido mientras se leía el archivo!",
+        "ERROR_TYPE_FILE": "Por favor, importe un archivo .csv válido",
+        "ERROR_EXPORT": "Tipo de archivo inválido. Guarde el archivo como .csv",
+        "ERROR_EMPTY_LIST": "La lista de contactos está vacía",
+        "ERROR_IMPORT_EMPTY": "El archivo está vacío"
+      },
+      "ERRORS": {
+        "NO_MONEY": "No hay suficiente dinero",
+        "NOT_ENOUGH_MONEY": "Fondos insuficientes en la cuenta",
+        "CORE_BUSY": "Error interno: el núcleo está ocupado",
+        "DAEMON_BUSY": "Error interno: el daemon está ocupado",
+        "NO_MONEY_REMOVE_OFFER": "No hay tarifa por eliminar una oferta, pero para proteger la red contra transacciones masivas necesitas tener al menos {{fee}} {{currency}} en tu billetera",
+        "NOT_ENOUGH_OUTPUTS_TO_MIX": "El número de mezcla es demasiado grande para el estado actual de la blockchain. No hay suficientes salidas sin gastar para mezclar",
+        "TRANSACTION_IS_TO_BIG": "La transacción excede el límite de la red, envía la cantidad requerida con múltiples transacciones",
+        "TRANSFER_ATTEMPT": "No hay conexión con la red NiR",
+        "ACCESS_DENIED": "Acceso denegado",
+        "TRANSACTION_ERROR": "Error. Transacción no completada.",
+        "BAD_ARG": "Argumento inválido",
+        "WALLET_WRONG_ID": "ID de billetera inválido",
+        "WALLET_WATCH_ONLY_NOT_SUPPORTED": "Las billeteras solo de visualización solo pueden ser abiertas por simplewallet",
+        "WRONG_PASSWORD": "Contraseña inválida",
+        "FILE_RESTORED": "El archivo de la billetera estaba corrupto. Hemos recuperado las claves y la billetera desde la blockchain",
+        "FILE_NOT_FOUND": "Archivo no encontrado",
+        "FILE_EXIST": "Ya existe un archivo con ese nombre. Ingresa otro nombre para guardar el archivo",
+        "FILE_NOT_SAVED": "No puedes guardar un archivo de billetera en esta carpeta. Por favor elige otra carpeta.",
+        "TX_TYPE_NORMAL": "Error. El pago desde la billetera",
+        "TX_TYPE_NORMAL_TO": "a",
+        "TX_TYPE_NORMAL_END": "no fue completado.",
+        "TX_TYPE_NEW_ALIAS": "Error. Falló el registro del alias en la caja fuerte",
+        "TX_TYPE_NEW_ALIAS_END": "Por favor, intenta de nuevo.",
+        "TX_TYPE_UPDATE_ALIAS": "Error. Falló el cambio de comentario al alias en la caja fuerte",
+        "TX_TYPE_COIN_BASE": "Error. El pago no fue completado."
+      },
+      "CONTEXT_MENU": {
+        "COPY": "copiar",
+        "PASTE": "pegar",
+        "SELECT": "seleccionar todo"
+      },
+      "BACKEND_LOCALIZATION": {
+        "QUIT": "Salir",
+        "IS_RECEIVED": "",
+        "IS_CONFIRMED": "",
+        "INCOME_TRANSFER_UNCONFIRMED": "Pago entrante (no confirmado)",
+        "INCOME_TRANSFER_CONFIRMED": "Pago recibido",
+        "MINED": "Minado",
+        "LOCKED": "Bloqueado",
+        "IS_MINIMIZE": "La aplicación NiR está minimizada en la bandeja del sistema",
+        "RESTORE": "Puedes recuperarlo haciendo clic o usando el menú contextual",
+        "TRAY_MENU_SHOW": "Redimensionar",
+        "TRAY_MENU_MINIMIZE": "Minimizar"
+      },
+      "OFFERS": {
+        "TX": "Transacción",
+        "ALIAS": "Alias",
+        "AMMOUNT_CONTRACTS": "Contratos confirmados",
+        "BUY": "Comprar",
+        "SELL": "Vender",
+        "PRICE": "Precio",
+        "CATEGORY": "Categoría",
+        "SELLING_ADDRESS": "La dirección para enviar el activo",
+        "COMENT": "Comentario",
+        "CONTACT": "Contacto",
+        "CONTRACT": "Contrato"
+      },
+      "SWAP": {
+        "TITLE": "Nirmata P2P Swap",
+        "NOT_ALIAS": "Se requiere un alias para trabajar con este componente.",
+        "LINK_HELP": "¿Cómo funciona?",
+        "FILTER_APPLY": "Aplicar",
+        "CREATE_OFFER": "Crear oferta P2P",
+        "SELECT_TYPE": "Seleccionar el tipo de oferta",
+        "BUY_TYPE": "Comprar",
+        "SELL_TYPE": "Vender",
+        "ALIAS": "Tu alias",
+        "SELLING_OFFER": "¿Qué quieres ofrecer?",
+        "SELLING_GET": "¿Qué quieres obtener?",
+        "SELLING_ADDRESS": "La dirección para recibir el activo",
+        "SELLING_PRICE": "Costo unitario",
+        "SELLING_DESCRIPTION": "La descripción más comprensible de tu oferta",
+        "SELLING_CONTACT": "Especifica no solo el contacto sino también la plataforma para la comunicación",
+        "SUBMIT": "Enviar",
+        "TRANSACTION_FEE": "Tarifa de transacción",
+        "BUTTON_SEND": "Firmar y enviar...",
+        "UPDATE_OFFER": "Actualizar mi oferta",
+        "TX_OFFER": "El número de la transacción que contiene la tarifa de colocación",
+        "NUMBER_OFFER": "El número de la oferta en el bloque (opcional)",
+        "TX_ID": "Hash de la transacción",
+        "CANCEL_OFFER": "Cancelar mi oferta",
+        "SELLING": "Vendiendo",
+        "BUYING": "Comprando",
+        "COPY": "Copiar",
+        "WALLET_OFFERS": "Tu Cartera Ofrece",
+        "NO_OFFERS": "No hay ofertas disponibles",
+        "REFRESH_OFFERS": "Actualizar ofertas"
+      }
+  }
+

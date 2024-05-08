@@ -1,0 +1,21 @@
+{
+  "payments": [
+    {
+      "address_this": "Nn2krdYF7vaABJuAHrDKrnJgBikVLyv2ph1gdqy6FX4UCbW5q9X2tDMLC83GKp6vGGGzNRAHo1J1FTy7F2J5Jrae2SgJQoDc2",
+      "amount_this": 1089155
+    },
+    {
+      "address_this": "Nn4G93c6m5r5KbXZwQZjYEeMKFVewtCag57pGYUxF9HWWkcWWiZEqQrMutzUQHYA5yDV5QyUvtM5WFYcRDqWv45J1mmAJvEex",
+      "amount_this": 363052
+    },
+    {
+      "address_this": "Nn31d6K5jFc99BwFQis47P47cpuyS29xc3xaVfEecM6YQzfJbSHxh2BWBWohpnB7HLJ4hq51f6Whf76PcEBzAres1eqoAWBV6",
+      "amount_this": 363051
+    },
+    {
+      "address_this": "Nn4B7EBKuHLLxtrHYyARHtchkCSARDYyCRam5vZ4EX963SSh9iwhR3YhRLrC6XDvCBi9KRpdBkHYoH9t8QBeXuLv1vFxXgRNo",
+      "amount_this": 363051
+    }
+  ],
+  "proof_string": "a4bae0d77ceacedb23ef383befaf56a9"
+}
