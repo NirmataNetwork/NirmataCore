@@ -27,7 +27,7 @@ Note:\
 
 ### Linux
 
-Recommended OS version: Ubuntu 18.04 LTS.
+Recommended OS version: Ubuntu 20.04 LTS.
 
 1. Prerequisites
 
@@ -91,10 +91,10 @@ For instance, by adding the following lines to `~/.bashrc`
 6. Build the binaries
    1. Build daemon and simplewallet:
 
-          cd NirmaraCore/ && make -j1
+          cd NirmataCore/ && make -j1
       or 
    
-          cd NirmaraCore && mkdir build && cd build
+          cd NirmataCore && mkdir build && cd build
           cmake ..
           make -j1 daemon simplewallet
 
@@ -104,8 +104,9 @@ For instance, by adding the following lines to `~/.bashrc`
    
    1. Build GUI:
 
-          cd NirmaraCore
+          cd NirmataCore
           utils/build_script_linux.sh
+
 
 7. Look for the binaries in `build` folder
 
