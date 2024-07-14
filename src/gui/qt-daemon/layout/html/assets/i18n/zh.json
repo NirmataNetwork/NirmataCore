@@ -1,0 +1,775 @@
+{
+  "LOGIN": {
+    "SETUP_MASTER_PASS": "设置主密码",
+    "SETUP_CONFIRM_PASS": "确认密码",
+    "MASTER_PASS": "主密码",
+    "BUTTON_NEXT": "下一步",
+    "BUTTON_SKIP": "跳过",
+    "BUTTON_RESET": "重置",
+    "INCORRECT_PASSWORD": "密码无效",
+    "FORM_ERRORS": {
+      "PASS_REQUIRED": "需要密码",
+      "INVALID_PASS": "密码无效，请重试",
+      "CONFIRM_REQUIRED": "需要确认密码",
+      "MISMATCH": "密码不匹配"
+    }
+  },
+  "COMMON": {
+    "BACK": "返回"
+  },
+  "BREADCRUMBS": {
+    "ADD_WALLET": "添加钱包",
+    "CREATE_WALLET": "创建新钱包",
+    "SAVE_PHRASE": "保存种子短语",
+    "OPEN_WALLET": "打开现有钱包",
+    "RESTORE_WALLET": "从备份恢复",
+    "WALLET_DETAILS": "钱包详情",
+    "ASSIGN_ALIAS": "分配别名",
+    "EDIT_ALIAS": "编辑别名",
+    "TRANSFER_ALIAS": "转移别名",
+    "CONTRACTS": "合同",
+    "NEW_PURCHASE": "新购",
+    "OLD_PURCHASE": "购买"
+  },
+  "SIDEBAR": {
+    "TITLE": "钱包",
+    "ADD_NEW": "添加钱包",
+    "ACCOUNT": {
+      "STAKING": "POS",
+      "MESSAGES": "新优惠/消息",
+      "SYNCING": "同步钱包"
+    },
+    "CONTACTS": "联系人",
+    "CONTACTS_TOOLTIP": "仅在启用主密码时可用的联系人选项",
+    "SETTINGS": "设置",
+    "LOG_OUT": "登出",
+    "LOG_OUT_TOOLTIP": "仅在启用主密码时可用的登出选项",
+    "SYNCHRONIZATION": {
+      "OFFLINE": "离线",
+      "ONLINE": "在线",
+      "ERROR": "系统错误",
+      "COMPLETE": "完成",
+      "SYNCING": "同步区块",
+      "LOADING": "加载区块链数据",
+      "DOWNLOADING": "下载中",
+      "SLASH": "/",
+      "MB": "MB"
+    },
+    "UPDATE": {
+      "STANDARD": "有更新可用",
+      "STANDARD_TOOLTIP": "<span class=\"standard-update\">获取新更新。</span><br><span>推荐更新！</span>",
+      "IMPORTANT": "有更新可用",
+      "IMPORTANT_HINT": "重要更新！",
+      "IMPORTANT_TOOLTIP": "<span class=\"important-update\">获取新更新。</span><br><span>重要更新！</span>",
+      "CRITICAL": "有更新可用",
+      "CRITICAL_HINT": "关键更新！",
+      "CRITICAL_TOOLTIP": "<span class=\"critical-update\">关键更新可用。</span><i class=\"icon\"></i><span>强烈推荐更新！</span>",
+      "TIME": "系统时间与网络不符",
+      "TIME_TOOLTIP": "<span class=\"wrong-time\">系统时间错误！</span><br><span>检查并修复您的系统时间。</span>"
+    }
+  },
+  
+  "MAIN": {
+    "TITLE": "创建或打开钱包以开始使用NiR",
+    "BUTTON_NEW_WALLET": "创建新钱包",
+    "BUTTON_OPEN_WALLET": "打开现有钱包",
+    "BUTTON_RESTORE_BACKUP": "从备份恢复",
+    "HELP": "如何创建钱包？",
+    "CHOOSE_PATH": "请选择路径"
+  },
+  "PLACEHOLDERS": {
+    "COMMENT_PLACEHOLDER": "在此输入您的评论",
+    "MESSAGE_PLACEHOLDER": "消息...",
+    "TIPS_PLACEHOLDER": "如果您不打赏用户，请设置为0",
+    "WALLET_NAME_PLACEHOLDER": "在此输入钱包名称",
+    "MASTER_PASS_PLACEHOLDER": "在此输入主密码",
+    "NAME_PLACEHOLDER": "在此输入名称",
+    "ADRESS_PLACEHOLDER": "在此输入地址",
+    "ALIAS_PLACEHOLDER": "在此输入别名",
+    "NOTES_PLACEHOLDER": "在此输入备注",
+    "DESCRIPTION_PLACEHOLDER": "在此输入描述",
+    "SELLER_PLACEHOLDER": "在此输入卖家信息",
+    "PLACEHOLDER_OLD": "在此输入当前密码",
+    "AMOUNT_PLACEHOLDER": "在此输入金额",
+    "DEPOSIT_PLACEHOLDER": "在此输入您的存款",
+    "SELLER_DEPOSIT_PLACEHOLDER": "在此输入卖家存款",
+    "PLACEHOLDER_NEW": "在此输入新密码",
+    "WALET_PASSWORD_PLACEHOLDER": "在此输入钱包密码",
+    "CONFIRM_WALET_PASSWORD_PLACEHOLDER": "确认钱包密码",
+    "PLACEHOLDER_CONFIRM": "确认新密码",
+    "PASSWORD_PLACEHOLDER": "在此输入密码",
+    "SEED_PHRASE_PLACEHOLDER": "在此输入种子短语",
+    "SEED_PASSWORD_PLACEHOLDER": "在此输入种子密码",
+    "PURCHASE_PAYMENT_PLACEHOLDER": "在此输入支付ID",
+    "FEE_PLACEHOLDER": "在此输入费用"
+  },
+  "CREATE_WALLET": {
+    "NAME": "钱包名称",
+    "PASS": "设置钱包密码",
+    "CONFIRM": "确认钱包密码",
+    "BUTTON_SELECT": "选择钱包位置",
+    "BUTTON_CREATE": "创建钱包",
+    "TITLE_SAVE": "保存钱包文件。",
+    "ERROR_CANNOT_SAVE_TOP": "现有的钱包文件不能被替换或覆写",
+    "ERROR_CANNOT_SAVE_SYSTEM": "钱包文件不能保存到操作系统分区",
+    "FORM_ERRORS": {
+      "NAME_REQUIRED": "需要名称",
+      "NAME_DUPLICATE": "名称重复",
+      "MAX_LENGTH": "已达到名称最大长度",
+      "CONFIRM_NOT_MATCH": "确认密码不匹配"
+    }
+  },
+  "OPEN_WALLET": {
+    "NAME": "钱包名称",
+    "PASS": "钱包密码",
+    "BUTTON": "打开钱包",
+    "WITH_ADDRESS_ALREADY_OPEN": "此地址的钱包已经打开",
+    "FILE_NOT_FOUND1": "未找到钱包文件",
+    "FILE_NOT_FOUND2": "<br/><br/> 可能已被重命名或移动。<br/> 要打开它，请使用“打开钱包”按钮。",
+    "FORM_ERRORS": {
+      "NAME_REQUIRED": "需要名称",
+      "NAME_DUPLICATE": "名称重复",
+      "MAX_LENGTH": "已达到名称最大长度"
+    },
+    "MODAL": {
+      "TITLE": "输入钱包密码",
+      "LABEL": "此钱包的密码",
+      "OPEN": "打开钱包",
+      "SKIP": "跳过",
+      "NOT_FOUND": "未找到"
+    }
+  },
+  "RESTORE_WALLET": {
+    "LABEL_NAME": "钱包名称",
+    "LABEL_PHRASE_KEY": "种子短语/跟踪种子",
+    "PASS": "钱包密码",
+    "CONFIRM": "确认钱包密码",
+    "BUTTON_SELECT": "选择钱包位置",
+    "BUTTON_CREATE": "创建钱包",
+    "NOT_CORRECT_FILE_OR_PASSWORD": "钱包文件无效或密码不匹配",
+    "CHOOSE_PATH": "请选择路径",
+    "SEED_PASSWORD": "种子密码",
+    "OK": "确定",
+    "FORM_ERRORS": {
+      "NAME_REQUIRED": "需要名称",
+      "NAME_DUPLICATE": "名称重复",
+      "MAX_LENGTH": "已达到名称最大长度",
+      "CONFIRM_NOT_MATCH": "确认密码不匹配",
+      "KEY_REQUIRED": "需要密钥",
+      "KEY_NOT_VALID": "密钥无效",
+      "INCORRECT_PASSWORD": "密码错误"
+    }
+  },
+  "EXPORT_HISTORY": {
+    "TOOLTIP": "将钱包交易历史导出到文件",
+    "TITLE": "导出钱包历史",
+    "FORMAT": "格式",
+    "FILTER": "过滤POS交易",
+    "CANCEL": "取消",
+    "EXPORT": "导出到文件...",
+    "EXPORT_BUTTON": "导出历史...",
+    "SAVED_FILE": "选择路径以保存交易历史"
+  },
+  "SEED_PHRASE": {
+    "TITLE": "确保将您的种子短语保存在安全的地方。如果您忘记了种子短语，您将无法恢复您的钱包。",
+    "BUTTON_CREATE_ACCOUNT": "创建钱包",
+    "BUTTON_COPY": "复制",
+    "BUTTON_COPIED": "已复制"
+  },
+  "PROGRESS": {
+    "ADD_WALLET": "添加钱包",
+    "SELECT_LOCATION": "选择钱包位置",
+    "CREATE_WALLET": "创建新钱包",
+    "RESTORE_WALLET": "从备份恢复"
+  },
+  "SETTINGS": {
+    "TITLE": "设置",
+    "DARK_THEME": "暗色主题",
+    "WHITE_THEME": "白色主题",
+    "GRAY_THEME": "灰色主题",
+    "NOTIFICATIONS": "通知",
+    "SETTINGS_SAVED": "已保存！设置已更新",
+    "APP_LOCK": {
+      "TITLE": "应用锁定时间：",
+      "TIME1": "5分钟",
+      "TIME2": "15分钟",
+      "TIME3": "1小时",
+      "TIME4": "从不"
+    },
+    "SCALE": {
+      "TITLE": "界面缩放",
+      "75": "75% 缩放",
+      "100": "100% 缩放",
+      "125": "125% 缩放",
+      "150": "150% 缩放",
+      "175": "175% 缩放",
+      "200": "200% 缩放",
+      "225": "225% 缩放",
+      "250": "250% 缩放"
+    },
+    "LANGUAGE": {
+      "TITLE": "语言",
+      "EN": "英语",
+      "ZH": "中国的",
+      "ES": "西班牙语",
+      "RU": "俄语",
+      "FR": "法语",
+      "DE": "德语",
+      "ID": "印尼语",
+      "IT": "意大利语",
+      "PT": "葡萄牙语",
+      "TR": "土耳其语"
+    },
+    "MASTER_PASSWORD": {
+      "TITLE": "更新主密码",
+      "OLD": "当前密码",
+      "NEW": "新密码",
+      "CONFIRM": "确认密码",
+      "BUTTON": "保存"
+    },
+    "FORM_ERRORS": {
+      "PASS_REQUIRED": "需要密码",
+      "PASS_NOT_MATCH": "密码不正确",
+      "CONFIRM_NOT_MATCH": "确认密码不匹配"
+    },
+    "LAST_BUILD": "当前构建：{{value}}",
+    "APP_LOG_TITLE": "日志级别："
+  },
+  "WALLET": {
+    "REGISTER_ALIAS": "注册别名",
+    "DETAILS": "详情",
+    "BALANCE": "余额：",
+    "WADDRESS": "钱包地址：",
+    "LOCK": "锁定",
+    "AVAILABLE_BALANCE": "可用 <b>{{available}} {{currency}}<b/>",
+    "LOCKED_BALANCE": "锁定 <b>{{locked}} {{currency}}<b/>",
+    "LOCKED_BALANCE_LINK": "这是什么意思？",
+    "CONFIRM": {
+      "TITLE": "从列表中移除钱包？",
+      "MESSAGE": "要再次访问它，您必须重新添加"
+    },
+    "TABS": {
+      "SEND": "发送",
+      "RECEIVE": "接收",
+      "HISTORY": "历史",
+      "CONTRACTS": "合约",
+      "MESSAGES": "消息",
+      "STAKING": "POS",
+      "PRICE": "交易",
+      "ACS": "ACS",
+      "P2P": "交换",
+      "EXPLORER": "浏览器",
+      "SWAP": "PeerSwap",
+      "CHAT": "Chat"
+    },
+    "TOOLTIPS": {
+      "EDIT_ALIAS": "编辑别名",
+      "TRANSFER_ALIAS": "转移别名",
+      "SETTINGS": "设置",
+      "CLOSE": "关闭钱包"
+    }
+  },
+  "WALLET_DETAILS": {
+    "LABEL_NAME": "钱包名称",
+    "LABEL_FILE_LOCATION": "钱包文件位置",
+    "LABEL_SEED_PHRASE": "种子短语",
+    "SEED_PHRASE_HINT": "点击以显示种子短语",
+    "RESYNC_WALLET": "重新同步钱包数据",
+    "RESYNC_WALLET_BUTTON": "重新同步钱包",
+    "BUTTON_SAVE": "保存",
+    "BUTTON_REMOVE": "关闭钱包",
+    "CREATE_PASSWORD_SECURE": "创建密码以保护您的种子",
+    "INFO": "信息",
+    "SEED_IS_UNSECURED": "种子未加密",
+    "SEED_IS_SECURED": "种子已加密",
+    "REMEMBER_YOU_WILL_REQUIRE": "加密的种子将需要密码来恢复。",
+    "WALLET_OPTIONS": "钱包选项...",
+    "FORM": {
+      "CONFIRM_PASSWORD": "确认密码",
+      "GENERATE_SECURE_SEED": "生成安全种子",
+      "SECURED_SEED_WILL_REQUIRE": "安全种子将需要此密码来恢复。"
+    },
+    "FORM_ERRORS": {
+      "NAME_REQUIRED": "需要名称",
+      "NAME_DUPLICATE": "名称重复",
+      "MAX_LENGTH": "已达到名称最大长度",
+      "PASSWORDS_DONT_MATCH": "密码不匹配"
+    }
+  },
+  "ASSIGN_ALIAS": {
+    "NAME": {
+      "LABEL": "别名",
+      "PLACEHOLDER": "输入别名",
+      "TOOLTIP": "别名是您账户的缩写形式。别名只能包含拉丁字母、数字以及字符“.”和“-”，并且必须以“@”开头。"
+    },
+    "COMMENT": {
+      "LABEL": "评论",
+      "PLACEHOLDER": "在此输入您的评论",
+      "TOOLTIP": "评论将对任何想要向您的别名付款的人可见。您可以提供有关您的业务、联系方式或包括任何文本。评论稍后可以编辑。"
+    },
+    "COST": "别名费用 {{value}} {{currency}}",
+    "BUTTON_ASSIGN": "分配",
+    "FORM_ERRORS": {
+      "NAME_REQUIRED": "需要名称",
+      "NAME_WRONG": "无效名称：允许的符号 \"0-9\", \"a-z\", \"-\", \".\"",
+      "NAME_LENGTH": "别名长度必须为6-25个字符",
+      "NAME_EXISTS": "别名已存在",
+      "NO_MONEY": "您的资金不足以分配此别名",
+      "MAX_LENGTH": "已达到评论最大长度"
+    },
+    "ONE_ALIAS": "每个钱包只能创建一个别名",
+    "REQUEST_ADD_REG": "别名将在10分钟内分配"
+  },
+  "EDIT_ALIAS": {
+    "NAME": {
+      "LABEL": "别名",
+      "PLACEHOLDER": "@ 输入别名"
+    },
+    "COMMENT": {
+      "LABEL": "评论",
+      "PLACEHOLDER": "在此输入您的评论"
+    },
+    "FORM_ERRORS": {
+      "NO_MONEY": "您的资金不足以更改此别名的评论",
+      "MAX_LENGTH": "已达到评论最大长度"
+    },
+    "COST": "费用 {{value}} {{currency}}",
+    "BUTTON_EDIT": "编辑"
+  },
+  "TRANSFER_ALIAS": {
+    "NAME": {
+      "LABEL": "别名",
+      "PLACEHOLDER": "@ 输入别名"
+    },
+    "COMMENT": {
+      "LABEL": "评论",
+      "PLACEHOLDER": "在此输入您的评论"
+    },
+    "ADDRESS": {
+      "LABEL": "转移到",
+      "PLACEHOLDER": "在此输入地址"
+    },
+    "FORM_ERRORS": {
+      "WRONG_ADDRESS": "此账户不存在钱包",
+      "ALIAS_EXISTS": "此账户已有别名",
+      "NO_MONEY": "您的资金不足以转移此别名"
+    },
+    "COST": "转移费用 {{value}} {{currency}}",
+    "BUTTON_TRANSFER": "转移",
+    "BUTTON_CANCEL": "取消",
+    "REQUEST_SEND_REG": "别名将在10分钟内转移"
+  },
+  "SEND": {
+    "USER": "用户",
+    "ADDRESS": "地址",
+    "TIPS": "小费用户",
+    "AMOUNT": "金额",
+    "COMMENT": "评论",
+    "MESSAGE": "消息",
+    "DETAILS": "更多细节",
+    "MIXIN": "混合",
+    "FEE": "费用",
+    "HIDE": "对收件人隐藏您的钱包地址",
+    "BUTTON": "发送",
+    "SUCCESS_SENT": "交易已发送",
+    "WRAP": {
+      "TITLE": "包装",
+      "MAIN_TEXT": "此交易将创建 wNiR（“包装的 NiR”），并将其发送到以太坊网络上的指定地址。",
+      "ESTIMATE": "交易估算",
+      "WILL_RECEIVE": "您将收到：",
+      "FEE": "以太坊交易费：",
+      "NiR": "NiR",
+      "wNIR": "wNiR"
+    },
+    "FORM_ERRORS": {
+      "ADDRESS_REQUIRED": "需要地址",
+      "ADDRESS_NOT_VALID": "地址无效",
+      "ALIAS_NOT_VALID": "别名无效",
+      "AMOUNT_REQUIRED": "需要金额",
+      "AMOUNT_ZERO": "金额为零",
+      "FEE_REQUIRED": "需要费用",
+      "FEE_MINIMUM": "最低费用：{{fee}}",
+      "MAX_LENGTH": "已达到评论最大长度",
+      "GREAT_THAN_UNWRAPPED_COINS": "金额大于剩余的 ERC20 代币",
+      "LESS_THAN_NIR_NEEDED": "金额太小，不足以支付 ERC20 费用",
+      "WRAP_INFO_NULL": "请求包装状态失败"
+    }
+  },
+  "HISTORY": {
+    "STATUS": "状态",
+    "STATUS_TOOLTIP": "确认 {{current}}/{{total}}",
+    "LOCK_TOOLTIP": "锁定至 {{date}}",
+    "SEND": "已发送",
+    "RECEIVED": "已接收",
+    "DATE": "日期",
+    "AMOUNT": "金额",
+    "FEE": "费用",
+    "ADDRESS": "地址",
+    "DETAILS": {
+      "PAYMENT_ID": "支付 ID",
+      "ID": "交易 ID",
+      "SIZE": "交易大小",
+      "SIZE_VALUE": "{{value}} 字节",
+      "HEIGHT": "高度",
+      "CONFIRMATION": "确认",
+      "INPUTS": "输入",
+      "OUTPUTS": "输出",
+      "COMMENT": "评论"
+    },
+    "TYPE_MESSAGES": {
+      "HIDDEN": "隐藏",
+      "UNDEFINED": "未定义",
+      "COMPLETE_BUYER": "合约已完成",
+      "COMPLETE_SELLER": "合约已完成",
+      "CREATE_ALIAS": "分配别名的费用",
+      "UPDATE_ALIAS": "编辑别名的费用",
+      "POW_REWARD": "POW 奖励",
+      "POS_REWARD": "POS 奖励",
+      "CREATE_CONTRACT": "合约提案",
+      "PLEDGE_CONTRACT": "合约存款",
+      "NULLIFY_CONTRACT": "销毁存款",
+      "PROPOSAL_CANCEL_CONTRACT": "取消请求",
+      "CANCEL_CONTRACT": "取消并退还存款"
+    }
+  },
+  "CONTRACTS": {
+    "EMPTY": "没有活跃的合约",
+    "CONTRACTS": "合约",
+    "PURCHASE": "购买",
+    "SELL": "出售",
+    "DATE": "日期",
+    "AMOUNT": "金额",
+    "STATUS": "状态",
+    "COMMENTS": "评论",
+    "PURCHASE_BUTTON": "新购买",
+    "LISTING_BUTTON": "创建列表",
+    "TIME_LEFT": {
+      "REMAINING_LESS_ONE": "少于一小时响应时间",
+      "REMAINING_ONE": "{{time}} 小时剩余",
+      "REMAINING_MANY": "{{time}} 小时剩余",
+      "REMAINING_MANY_ALT": "{{time}} 小时剩余",
+      "REMAINING_ONE_RESPONSE": "{{time}} 小时剩余",
+      "REMAINING_MANY_RESPONSE": "{{time}} 小时剩余",
+      "REMAINING_MANY_ALT_RESPONSE": "{{time}} 小时剩余",
+      "REMAINING_ONE_WAITING": "等待 {{time}} 小时",
+      "REMAINING_MANY_WAITING": "等待 {{time}} 小时",
+      "REMAINING_MANY_ALT_WAITING": "等待 {{time}} 小时"
+    },
+    "STATUS_MESSAGES": {
+      "SELLER": {
+        "NEW_CONTRACT": "新合约提案",
+        "IGNORED": "您忽略了合约提案",
+        "ACCEPTED": "合约已开始",
+        "WAIT": "等待合约确认",
+        "WAITING_BUYER": "等待交付",
+        "COMPLETED": "合约已完成",
+        "NOT_RECEIVED": "交付失败",
+        "NULLIFIED": "所有存款已销毁",
+        "PROPOSAL_CANCEL": "新提案取消合约并退还存款",
+        "BEING_CANCELLED": "正在取消中",
+        "CANCELLED": "合约已取消",
+        "IGNORED_CANCEL": "您忽略了取消提案",
+        "EXPIRED": "合约提案已过期"
+      },
+      "BUYER": {
+        "WAITING": "等待回应",
+        "IGNORED": "卖方忽略了您的合约提案",
+        "ACCEPTED": "卖方接受了您的合约提案",
+        "WAIT": "等待存款确认",
+        "WAITING_SELLER": "等待交付",
+        "COMPLETED": "合约已完成",
+        "NOT_RECEIVED": "交付失败",
+        "NULLIFIED": "所有存款已销毁",
+        "WAITING_CANCEL": "等待合约取消",
+        "BEING_CANCELLED": "正在取消中",
+        "CANCELLED": "合约已取消",
+        "IGNORED_CANCEL": "卖方忽略了您的取消提案",
+        "EXPIRED": "合约提案已过期"
+      }
+    }
+  },
+  "PURCHASE": {
+    "DESCRIPTION": "描述",
+    "SELLER": "卖方",
+    "AMOUNT": "金额",
+    "YOUR_DEPOSIT": "您的存款",
+    "SELLER_DEPOSIT": "卖方存款",
+    "BUYER_DEPOSIT": "买方存款",
+    "SAME_AMOUNT": "相同金额",
+    "COMMENT": "评论",
+    "DETAILS": "更多细节",
+    "SEND_BUTTON": "发送",
+    "FORM_ERRORS": {
+      "DESC_REQUIRED": "需要描述",
+      "DESC_MAXIMUM": "已达到字段最大长度",
+      "SELLER_REQUIRED": "需要地址",
+      "SELLER_NOT_VALID": "地址无效",
+      "ALIAS_NOT_VALID": "别名无效",
+      "AMOUNT_REQUIRED": "需要金额",
+      "AMOUNT_ZERO": "金额不能为零",
+      "YOUR_DEPOSIT_REQUIRED": "需要存款",
+      "SELLER_DEPOSIT_REQUIRED": "需要卖方存款",
+      "SELLER_SAME": "使用不同账户",
+      "COMMENT_MAXIMUM": "已达到评论最大长度"
+    },
+    "PROGRESS_NEW": "新购买",
+    "PROGRESS_WAIT": "等待回复",
+    "PROGRESS_RECEIVE": "已收到回复",
+    "PROGRESS_COMPLETE": "已完成",
+    "FEE": "费用",
+    "PAYMENT": "支付 ID",
+    "STATUS_MESSAGES": {
+      "NEW_PURCHASE": "新购买",
+      "NEW_PURCHASE_1": "1. 指定接收资产的地址",
+      "NEW_PURCHASE_2": "2. 指定抵押金额",
+      "WAITING_SELLER": "等待回应",
+      "WAITING_SELLER_1": "等待卖方决定",
+      "WAITING_BUYER": "已收到合约提案",
+      "WAITING_BUYER_1": "研究合约并做出决定",
+      "WAITING_CONFIRMATION": "等待存款确认",
+      "WAITING_DELIVERY": "等待交付",
+      "WAITING_DELIVERY_1": "1. 将资产转移到卖方提供的地址",
+      "WAITING_DELIVERY_2": "2. 等待卖方转移资产",
+      "WAITING_DELIVERY_3": "3. 完成合约",
+      "WAITING_DELIVERY_4": "1. 等待买方转账",
+      "WAITING_DELIVERY_5": "2. 将资产发送到买方提供的地址",
+      "WAITING_DELIVERY_6": "3. 等待买方完成合约",
+      "COMPLETED": "合约已完成",
+      "IGNORED_BUYER": "忽略了合约提案",
+      "IGNORED_SELLER": "卖方忽略了您的合约提案",
+      "PROPOSAL_CANCEL_SELLER": "已发送取消请求",
+      "PROPOSAL_CANCEL_BUYER": "已收到取消请求",
+      "BEING_CANCELLED": "正在取消中",
+      "IGNORED_CANCEL_SELLER": "卖方忽略了您的取消提案",
+      "IGNORED_CANCEL_BUYER": "忽略了取消合约提案",
+      "CANCELLED": "合约已取消",
+      "EXPIRED": "合约提案已过期",
+      "NOT_RECEIVED": "交付失败",
+      "NULLIFIED": "所有存款已销毁",
+      "SELLER_ADDRESS": "卖方资产释放地址",
+      "BUYER_ADDRESS": "买方资产释放地址",
+      "RECOMMENDATION": "我们建议设置的抵押金额至少为交易金额（USDT）",
+      "COMPLETE_CONTRACT": "您确定要完成合约并释放抵押存款吗？",
+      "BUTTON_CONFIRM": "确认",
+      "BUYER_ADDRESS": "您的资产释放地址"
+    },
+    "ACCEPT_STATE_WAIT_BIG": "合约已开始",
+    "IGNORED_ACCEPT": "忽略了合约提案",
+    "BURN_PROPOSAL": "存款已焚烧",
+    "SUCCESS_FINISH_PROPOSAL": "合约已完成",
+    "SEND_CANCEL_PROPOSAL": "已发送取消请求",
+    "IGNORED_CANCEL": "忽略了取消合约提案",
+    "DEALS_CANCELED_WAIT": "正在取消中",
+    "WAITING_TIME": "响应时间",
+    "NEED_MONEY": "资金不足",
+    "BUTTON_MAKE_PLEDGE": "接受并存款",
+    "BUTTON_IGNORE": "忽略并隐藏提议",
+    "BUTTON_NULLIFY": "终止并焚烧存款",
+    "BUTTON_RECEIVED": "完成并释放存款",
+    "BUTTON_CANCEL_BUYER": "取消并退还存款",
+    "BUTTON_NOT_CANCEL": "忽略请求",
+    "BUTTON_CANCEL_SELLER": "确认并退还存款",
+    "HOUR": "小时",
+    "HOURS": "小时",
+    "CANCEL": "取消",
+    "NULLIFY_QUESTION": "您确定要焚烧双方的存款吗？",
+    "BUTTON_NULLIFY_SHORT": "焚烧",
+    "WAITING_TIME_QUESTION": "您确定要取消合约吗？"
+  },
+  "MESSAGES": {
+    "ADDRESS": "地址",
+    "MESSAGE": "消息",
+    "SEND_PLACEHOLDER": "输入消息...",
+    "SEND_BUTTON": "发送"
+  },
+  "MODALS": {
+    "ERROR": "错误",
+    "SUCCESS": "成功",
+    "INFO": "信息",
+    "OK": "确定",
+    "CANCEL": "取消"
+  },
+  "CONFIRM": {
+    "BUTTON_CONFIRM": "发送",
+    "BUTTON_CANCEL": "取消",
+    "TITLE": "确认交易",
+    "MESSAGE": {
+      "SEND": "发送",
+      "FROM": "从",
+      "TO": "到",
+      "COMMENT": "评论"
+    }
+  },
+  "STAKING": {
+    "TITLE": "POS",
+    "TITLE_PENDING": "待定",
+    "TITLE_TOTAL": "总计",
+    "TITLE_PERIOD": "时间周期：",
+    "PERIOD": {
+      "WEEK1": "1周",
+      "WEEK2": "2周",
+      "MONTH1": "1个月",
+      "MONTH3": "3个月",
+      "MONTH6": "6个月",
+      "YEAR": "1年",
+      "ALL": "全部"
+    },
+    "TITLE_GROUP": "分组：",
+    "GROUP": {
+      "DAY": "天",
+      "WEEK": "周",
+      "MONTH": "月"
+    },
+    "SWITCH": {
+      "ON": "开",
+      "OFF": "关"
+    }
+  },
+  "EXCHANGE": {
+    "EXCHANGE_TEXT": "NiR币在许多加密货币交易所都有销售。所有统计数据都在您面前。您也可以直接从您的钱包切换到所有可用的交易所进行交易。祝您交易愉快！",
+    "EXCHANGE_BUTTON": "买/卖"
+  },
+  "CONTACTS": {
+    "ADD_CONTACT": "添加联系人",
+    "TITLE": "联系人列表",
+    "IMPORT_EXPORT": "导入或导出联系人",
+    "IMPORT": "导入",
+    "EXPORT": "导出",
+    "ADD": "添加/编辑联系人",
+    "SEND": "发送",
+    "SEND_FROM": "发送自",
+    "SEND_TO": "发送到",
+    "OPEN_ADD_WALLET": "打开/添加钱包",
+    "COPY": "- 复制",
+    "TABLE": {
+      "NAME": "姓名",
+      "ALIAS": "别名",
+      "ADDRESS": "地址",
+      "NOTES": "备注",
+      "EMPTY": "联系人列表为空"
+    },
+    "FORM": {
+      "NAME": "姓名",
+      "ADDRESS": "地址",
+      "NOTES": "备注"
+    },
+    "FORM_ERRORS": {
+      "NAME_REQUIRED": "需要姓名",
+      "NAME_DUBLICATED": "姓名重复",
+      "ADDRESS_REQUIRED": "需要地址",
+      "ADDRESS_NOT_VALID": "地址无效",
+      "SET_MASTER_PASSWORD": "设置主密码",
+      "ADDRESS_DUBLICATED": "地址重复",
+      "MAX_LENGTH": "已达到备注最大长度",
+      "NAME_LENGTH": "姓名长度必须为4-25个字符"
+    },
+    "BUTTON": {
+      "SEND": "发送",
+      "EDIT": "编辑",
+      "DELETE": "删除",
+      "ADD": "添加联系人",
+      "ADD_EDIT": "添加/保存",
+      "GO_TO_WALLET": "前往钱包",
+      "IMPORT_EXPORT": "导入/导出"
+    },
+    "SUCCESS_SENT": "联系人已添加",
+    "SUCCESS_SAVE": "联系人已编辑",
+    "SUCCESS_IMPORT": "联系人已导入",
+    "SUCCESS_EXPORT": "联系人已导出",
+    "ERROR_IMPORT": "读取文件时发生错误！",
+    "ERROR_TYPE_FILE": "请导入有效的.csv文件",
+    "ERROR_EXPORT": "文件类型无效。请将文件保存为.csv格式",
+    "ERROR_EMPTY_LIST": "联系人列表为空",
+    "ERROR_IMPORT_EMPTY": "文件为空"
+  },
+  "ERRORS": {
+    "NO_MONEY": "资金不足",
+    "NOT_ENOUGH_MONEY": "账户资金不足",
+    "CORE_BUSY": "内部错误：核心忙",
+    "DAEMON_BUSY": "内部错误：守护进程忙",
+    "NO_MONEY_REMOVE_OFFER": "删除报价不需要费用，但为了防止网络洪水攻击，您的钱包中至少需要有 {{fee}} {{currency}}",
+    "NOT_ENOUGH_OUTPUTS_TO_MIX": "混合数过大，当前区块链状态下未花费的输出不足以进行混合",
+    "TRANSACTION_IS_TO_BIG": "交易超出网络限制，请通过多笔交易发送所需金额",
+    "TRANSFER_ATTEMPT": "无法连接到NiR网络",
+    "ACCESS_DENIED": "访问被拒绝",
+    "TRANSACTION_ERROR": "错误。交易未完成。",
+    "BAD_ARG": "无效的参数",
+    "WALLET_WRONG_ID": "无效的钱包ID",
+    "WALLET_WATCH_ONLY_NOT_SUPPORTED": "仅限查看的钱包只能由simplewallet打开",
+    "WRONG_PASSWORD": "密码错误",
+    "FILE_RESTORED": "钱包文件已损坏。我们已从区块链恢复了密钥和钱包",
+    "FILE_NOT_FOUND": "文件未找到",
+    "FILE_EXIST": "该名称的文件已存在。请输入另一个名称以保存文件",
+    "FILE_NOT_SAVED": "您不能在此文件夹中保存钱包文件。请选择另一个文件夹。",
+    "TX_TYPE_NORMAL": "错误。钱包的付款",
+    "TX_TYPE_NORMAL_TO": "到",
+    "TX_TYPE_NORMAL_END": "未完成。",
+    "TX_TYPE_NEW_ALIAS": "错误。未能将别名注册到保险箱",
+    "TX_TYPE_NEW_ALIAS_END": "请再试一次。",
+    "TX_TYPE_UPDATE_ALIAS": "错误。未能在保险箱中更改别名的评论",
+    "TX_TYPE_COIN_BASE": "错误。付款未完成。"
+  },
+  "CONTEXT_MENU": {
+    "COPY": "复制",
+    "PASTE": "粘贴",
+    "SELECT": "全选"
+  },
+  "BACKEND_LOCALIZATION": {
+    "QUIT": "退出",
+    "IS_RECEIVED": "",
+    "IS_CONFIRMED": "",
+    "INCOME_TRANSFER_UNCONFIRMED": "收到的付款（未确认）",
+    "INCOME_TRANSFER_CONFIRMED": "付款已收到",
+    "MINED": "已挖矿",
+    "LOCKED": "已锁定",
+    "IS_MINIMIZE": "NiR应用程序已最小化到系统托盘",
+    "RESTORE": "您可以通过点击或使用上下文菜单恢复",
+    "TRAY_MENU_SHOW": "调整大小",
+    "TRAY_MENU_MINIMIZE": "最小化"
+  },
+  "OFFERS": {
+    "TX": "交易",
+    "ALIAS": "别名",
+    "AMMOUNT_CONTRACTS": "已确认的合约",
+    "BUY": "购买",
+    "SELL": "出售",
+    "PRICE": "价格",
+    "CATEGORY": "类别",
+    "SELLING_ADDRESS": "发送资产的地址",
+    "COMENT": "评论",
+    "CONTACT": "联系方式",
+    "CONTRACT": "合约"
+  },
+  "SWAP": {
+    "TITLE": "Nirmata P2P Swap",
+    "NOT_ALIAS": "使用此组件需要别名。",
+    "LINK_HELP": "这是如何工作的？",
+    "FILTER_APPLY": "应用",
+    "CREATE_OFFER": "创建P2P报价",
+    "SELECT_TYPE": "选择报价类型",
+    "BUY_TYPE": "购买",
+    "SELL_TYPE": "出售",
+    "ALIAS": "您的别名",
+    "SELLING_OFFER": "您想要提供什么？",
+    "SELLING_GET": "您想要得到什么？",
+    "SELLING_ADDRESS": "接收资产的地址",
+    "SELLING_PRICE": "单价",
+    "SELLING_DESCRIPTION": "您的报价最易理解的描述",
+    "SELLING_CONTACT": "请指定联系方式及通讯平台",
+    "SUBMIT": "提交",
+    "TRANSACTION_FEE": "交易费",
+    "BUTTON_SEND": "签名并发送...",
+    "UPDATE_OFFER": "更新我的报价",
+    "TX_OFFER": "包含摆放费用的交易编号",
+    "NUMBER_OFFER": "区块中的报价编号（可选）",
+    "TX_ID": "交易哈希",
+    "CANCEL_OFFER": "取消我的报价",
+    "SELLING": "出售",
+    "BUYING": "购买",
+    "COPY": "复制",
+    "WALLET_OFFERS": "你的钱包提供",
+    "NO_OFFERS": "没有可用的报价",
+    "REFRESH_OFFERS": "刷新报价"
+  }
+}
+
