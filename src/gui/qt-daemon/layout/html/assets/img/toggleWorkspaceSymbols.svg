@@ -1,0 +1,13 @@
+<svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<symbol fill="none" viewBox="0 0 18 18" id="svg-show-worspace" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="16" height="16" rx="1" stroke="var(--icon-stroke, #000)" stroke-width="var(--icon-stroke-width, 2)"/>
+<path d="M6.714 1v16" stroke="var(--icon-stroke, #000)" stroke-width="var(--icon-stroke-width, 2)"/>
+<path d="m10.143 11.286 1.932-1.933a.5.5 0 0 0 0-.707l-1.932-1.932" stroke="var(--icon-stroke, #000)" stroke-width="var(--icon-stroke-width, 2)" stroke-linecap="round"/>
+</symbol>
+
+<symbol fill="none" viewBox="0 0 18 18" id="svg-hide-worspace" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="16" height="16" rx="1" stroke="var(--icon-stroke, #000)" stroke-width="var(--icon-stroke-width, 2)"/>
+<path d="M6.714 1v16" stroke="var(--icon-stroke, #000)" stroke-width="var(--icon-stroke-width, 2)"/>
+<path d="m12.428 11.286-1.932-1.933a.5.5 0 0 1 0-.707l1.932-1.932" stroke="var(--icon-stroke, #000)" stroke-width="var(--icon-stroke-width, 2)" stroke-linecap="round"/>
+</symbol>
+</svg>

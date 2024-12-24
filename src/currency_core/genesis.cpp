@@ -1,0 +1,23 @@
+// Copyright (c) 2023 Nirmata Network
+// Copyright (c) 2014-2018 Zano Project
+// Copyright (c) 2014-2018 The Louisdor Project
+// Distributed under the MIT/X11 software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+#include "genesis.h"
+
+namespace currency
+{
+#ifndef TESTNET
+	const genesis_tx_raw_data ggenesis_tx_raw = {{
+	0xdce0800400000101,0xb3030f8edd96bb82,0xb0d0e3af6c3f5f55,0xbd78bf5a24f4b2cc,0xab1a28bf276593e6,0x0062ee435208f898,0x84f4bbedb7fb8080,0x93feb7579ec80305,0x0d87dae020e6cd00,0xd250010f528fe3a5,0x34362aa4d4b72c60,0xe092e6e080007346,0x3b211c030584f49e,0xb643d8a5ffa6ca70,0x0a0437039b4bde39,0x615cfbe226938eb1,0xe08000e4730371a8,0x030584f49ee092e6,0xedf25ec8ac0a0351,0xc86c89867b0a5c3f,0xfeab60073512d66b,0x7504dc5aefb3f0c3,0x9c29fd45da160800,0x11b5fcb7df3aba44,0x824766e635570809,0xc737e4b05425389d,0x6234612013ea36c7,0x6563373764306561,0x6533326264656361,0x6166656233383366,0x0b00153961363566,0x0bebaa020bb45002,0x0eb615020b097602},
+	{0x0a,0x00,0x00}};
+
+#else
+	const genesis_tx_raw_data ggenesis_tx_raw = {{
+	0xcd03000100000101,0x9c73cb5f065a6c36,0x8d730c03f3d19e2e,0x8952b0fe6e1e444d,0x00916597b203f7ef,0x8e04741dbae51605,0x1589800bd5d22420,0x5ed5eb7041edd71d,0xf3cdf19b0d421da2,0x6162346120137013,0x6165633737643065,0x6665333262646563,0x6661666562333833,0x020b001539613635},
+	{0xf5,0x1e,0x0e,0x0a,0x00,0x00}};
+
+#endif
+}
+
