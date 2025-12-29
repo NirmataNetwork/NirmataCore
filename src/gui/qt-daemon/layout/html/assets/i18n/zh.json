@@ -629,7 +629,9 @@
   },
   "EXCHANGE": {
     "EXCHANGE_TEXT": "NiR币在许多加密货币交易所都有销售。所有统计数据都在您面前。您也可以直接从您的钱包切换到所有可用的交易所进行交易。祝您交易愉快！",
-    "EXCHANGE_BUTTON": "买/卖"
+    "EXCHANGE_BUTTON": "买/卖",
+    "AVAILABLE_EXCHANGES": "可用交易所",
+    "CHOOSE_EXCHANGE": "选择您首选的交易所进行交易NIR"
   },
   "CONTACTS": {
     "ADD_CONTACT": "添加联系人",

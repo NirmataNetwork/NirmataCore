@@ -628,7 +628,9 @@
       },
       "EXCHANGE": {
         "EXCHANGE_TEXT": "La moneda NiR está disponible en muchas bolsas de criptomonedas. Todas las estadísticas están frente a ti. También puedes cambiar a operar en todas las bolsas disponibles, directamente desde tu billetera. ¡Que tengas buen comercio!",
-        "EXCHANGE_BUTTON": "Comprar/Vender"
+        "EXCHANGE_BUTTON": "Comprar/Vender",
+        "AVAILABLE_EXCHANGES": "Bolsas disponibles",
+        "CHOOSE_EXCHANGE": "Elige tu bolsa preferida para operar en NIR"
       },
       "CONTACTS": {
         "ADD_CONTACT": "Agregar contacto",

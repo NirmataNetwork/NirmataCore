@@ -629,7 +629,9 @@
   },
   "EXCHANGE": {
     "EXCHANGE_TEXT": "The NiR coin is available on many cryptocurrency exchanges. All the statistics are in front of you. You can also switch to trading on all available exchanges, directly from your wallet. Have a good trading!",
-    "EXCHANGE_BUTTON": "Buy/Sell"    
+    "EXCHANGE_BUTTON": "Buy/Sell",
+    "AVAILABLE_EXCHANGES": "Available Exchanges",
+    "CHOOSE_EXCHANGE": "Choose your preferred exchange to trade NIR"
   },
   "CONTACTS": {
     "ADD_CONTACT": "Add contact",
@@ -742,9 +744,13 @@
     "CONTACT": "Contact",
     "CONTRACT": "Contract"
   },
+  "NIRVAIL": {
+    "ALIAS_DESCRIPTION": "Register an alias to use the NiRVail messaging feature."
+  },
   "SWAP": {
     "TITLE": "Nirmata P2P Swap",
     "NOT_ALIAS": "An alias is required to work with this component.",
+    "ALIAS_DESCRIPTION": "Register an alias to use the P2P swap feature.",
     "LINK_HELP": "How does it work?",
     "FILTER_APPLY": "Apply",
     "CREATE_OFFER": "Create P2P Offer",

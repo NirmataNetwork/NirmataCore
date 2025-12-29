@@ -8674,6 +8674,401 @@ var A11yModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/@angular/cdk/esm5/accordion.es5.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@angular/cdk/esm5/accordion.es5.js ***!
+  \*********************************************************/
+/*! exports provided: CdkAccordionItem, CdkAccordion, CdkAccordionModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CdkAccordionItem", function() { return CdkAccordionItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CdkAccordion", function() { return CdkAccordion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CdkAccordionModule", function() { return CdkAccordionModule; });
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/collections */ "./node_modules/@angular/cdk/esm5/collections.es5.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Used to generate unique ID for each accordion.
+ * @type {?}
+ */
+var nextId = 0;
+/**
+ * Directive whose purpose is to manage the expanded state of CdkAccordionItem children.
+ */
+var CdkAccordion = /** @class */ (function () {
+    function CdkAccordion() {
+        /**
+         * Emits when the state of the accordion changes
+         */
+        this._stateChanges = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        /**
+         * Stream that emits true/false when openAll/closeAll is triggered.
+         */
+        this._openCloseAllActions = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        /**
+         * A readonly id value to use for unique selection coordination.
+         */
+        this.id = "cdk-accordion-" + nextId++;
+        this._multi = false;
+    }
+    Object.defineProperty(CdkAccordion.prototype, "multi", {
+        /** Whether the accordion should allow multiple expanded accordion items simultaneously. */
+        get: /**
+         * Whether the accordion should allow multiple expanded accordion items simultaneously.
+         * @return {?}
+         */
+        function () { return this._multi; },
+        set: /**
+         * @param {?} multi
+         * @return {?}
+         */
+        function (multi) { this._multi = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_0__["coerceBooleanProperty"])(multi); },
+        enumerable: true,
+        configurable: true
+    });
+    /** Opens all enabled accordion items in an accordion where multi is enabled. */
+    /**
+     * Opens all enabled accordion items in an accordion where multi is enabled.
+     * @return {?}
+     */
+    CdkAccordion.prototype.openAll = /**
+     * Opens all enabled accordion items in an accordion where multi is enabled.
+     * @return {?}
+     */
+    function () {
+        this._openCloseAll(true);
+    };
+    /** Closes all enabled accordion items in an accordion where multi is enabled. */
+    /**
+     * Closes all enabled accordion items in an accordion where multi is enabled.
+     * @return {?}
+     */
+    CdkAccordion.prototype.closeAll = /**
+     * Closes all enabled accordion items in an accordion where multi is enabled.
+     * @return {?}
+     */
+    function () {
+        this._openCloseAll(false);
+    };
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    CdkAccordion.prototype.ngOnChanges = /**
+     * @param {?} changes
+     * @return {?}
+     */
+    function (changes) {
+        this._stateChanges.next(changes);
+    };
+    /**
+     * @return {?}
+     */
+    CdkAccordion.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._stateChanges.complete();
+    };
+    /**
+     * @private
+     * @param {?} expanded
+     * @return {?}
+     */
+    CdkAccordion.prototype._openCloseAll = /**
+     * @private
+     * @param {?} expanded
+     * @return {?}
+     */
+    function (expanded) {
+        if (this.multi) {
+            this._openCloseAllActions.next(expanded);
+        }
+    };
+    CdkAccordion.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"], args: [{
+                    selector: 'cdk-accordion, [cdkAccordion]',
+                    exportAs: 'cdkAccordion',
+                },] },
+    ];
+    CdkAccordion.propDecorators = {
+        multi: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }]
+    };
+    return CdkAccordion;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Used to generate unique ID for each accordion item.
+ * @type {?}
+ */
+var nextId$1 = 0;
+var ɵ0 = undefined;
+/**
+ * An basic directive expected to be extended and decorated as a component.  Sets up all
+ * events and attributes needed to be managed by a CdkAccordion parent.
+ */
+var CdkAccordionItem = /** @class */ (function () {
+    function CdkAccordionItem(accordion, _changeDetectorRef, _expansionDispatcher) {
+        var _this = this;
+        this.accordion = accordion;
+        this._changeDetectorRef = _changeDetectorRef;
+        this._expansionDispatcher = _expansionDispatcher;
+        /**
+         * Subscription to openAll/closeAll events.
+         */
+        this._openCloseAllSubscription = rxjs__WEBPACK_IMPORTED_MODULE_2__["Subscription"].EMPTY;
+        /**
+         * Event emitted every time the AccordionItem is closed.
+         */
+        this.closed = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        /**
+         * Event emitted every time the AccordionItem is opened.
+         */
+        this.opened = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        /**
+         * Event emitted when the AccordionItem is destroyed.
+         */
+        this.destroyed = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        /**
+         * Emits whenever the expanded state of the accordion changes.
+         * Primarily used to facilitate two-way binding.
+         * \@docs-private
+         */
+        this.expandedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        /**
+         * The unique AccordionItem id.
+         */
+        this.id = "cdk-accordion-child-" + nextId$1++;
+        this._expanded = false;
+        this._disabled = false;
+        /**
+         * Unregister function for _expansionDispatcher.
+         */
+        this._removeUniqueSelectionListener = function () { };
+        this._removeUniqueSelectionListener =
+            _expansionDispatcher.listen(function (id, accordionId) {
+                if (_this.accordion && !_this.accordion.multi &&
+                    _this.accordion.id === accordionId && _this.id !== id) {
+                    _this.expanded = false;
+                }
+            });
+        // When an accordion item is hosted in an accordion, subscribe to open/close events.
+        if (this.accordion) {
+            this._openCloseAllSubscription = this._subscribeToOpenCloseAllActions();
+        }
+    }
+    Object.defineProperty(CdkAccordionItem.prototype, "expanded", {
+        /** Whether the AccordionItem is expanded. */
+        get: /**
+         * Whether the AccordionItem is expanded.
+         * @return {?}
+         */
+        function () { return this._expanded; },
+        set: /**
+         * @param {?} expanded
+         * @return {?}
+         */
+        function (expanded) {
+            expanded = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_0__["coerceBooleanProperty"])(expanded);
+            // Only emit events and update the internal value if the value changes.
+            if (this._expanded !== expanded) {
+                this._expanded = expanded;
+                this.expandedChange.emit(expanded);
+                if (expanded) {
+                    this.opened.emit();
+                    /**
+                     * In the unique selection dispatcher, the id parameter is the id of the CdkAccordionItem,
+                     * the name value is the id of the accordion.
+                     * @type {?}
+                     */
+                    var accordionId = this.accordion ? this.accordion.id : this.id;
+                    this._expansionDispatcher.notify(this.id, accordionId);
+                }
+                else {
+                    this.closed.emit();
+                }
+                // Ensures that the animation will run when the value is set outside of an `@Input`.
+                // This includes cases like the open, close and toggle methods.
+                this._changeDetectorRef.markForCheck();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CdkAccordionItem.prototype, "disabled", {
+        /** Whether the AccordionItem is disabled. */
+        get: /**
+         * Whether the AccordionItem is disabled.
+         * @return {?}
+         */
+        function () { return this._disabled; },
+        set: /**
+         * @param {?} disabled
+         * @return {?}
+         */
+        function (disabled) { this._disabled = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_0__["coerceBooleanProperty"])(disabled); },
+        enumerable: true,
+        configurable: true
+    });
+    /** Emits an event for the accordion item being destroyed. */
+    /**
+     * Emits an event for the accordion item being destroyed.
+     * @return {?}
+     */
+    CdkAccordionItem.prototype.ngOnDestroy = /**
+     * Emits an event for the accordion item being destroyed.
+     * @return {?}
+     */
+    function () {
+        this.opened.complete();
+        this.closed.complete();
+        this.destroyed.emit();
+        this.destroyed.complete();
+        this._removeUniqueSelectionListener();
+        this._openCloseAllSubscription.unsubscribe();
+    };
+    /** Toggles the expanded state of the accordion item. */
+    /**
+     * Toggles the expanded state of the accordion item.
+     * @return {?}
+     */
+    CdkAccordionItem.prototype.toggle = /**
+     * Toggles the expanded state of the accordion item.
+     * @return {?}
+     */
+    function () {
+        if (!this.disabled) {
+            this.expanded = !this.expanded;
+        }
+    };
+    /** Sets the expanded state of the accordion item to false. */
+    /**
+     * Sets the expanded state of the accordion item to false.
+     * @return {?}
+     */
+    CdkAccordionItem.prototype.close = /**
+     * Sets the expanded state of the accordion item to false.
+     * @return {?}
+     */
+    function () {
+        if (!this.disabled) {
+            this.expanded = false;
+        }
+    };
+    /** Sets the expanded state of the accordion item to true. */
+    /**
+     * Sets the expanded state of the accordion item to true.
+     * @return {?}
+     */
+    CdkAccordionItem.prototype.open = /**
+     * Sets the expanded state of the accordion item to true.
+     * @return {?}
+     */
+    function () {
+        if (!this.disabled) {
+            this.expanded = true;
+        }
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    CdkAccordionItem.prototype._subscribeToOpenCloseAllActions = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        return this.accordion._openCloseAllActions.subscribe(function (expanded) {
+            // Only change expanded state if item is enabled
+            if (!_this.disabled) {
+                _this.expanded = expanded;
+            }
+        });
+    };
+    CdkAccordionItem.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"], args: [{
+                    selector: 'cdk-accordion-item, [cdkAccordionItem]',
+                    exportAs: 'cdkAccordionItem',
+                    providers: [
+                        // Provide CdkAccordion as undefined to prevent nested accordion items from registering
+                        // to the same accordion.
+                        { provide: CdkAccordion, useValue: ɵ0 },
+                    ],
+                },] },
+    ];
+    /** @nocollapse */
+    CdkAccordionItem.ctorParameters = function () { return [
+        { type: CdkAccordion, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["SkipSelf"] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"] },
+        { type: _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_3__["UniqueSelectionDispatcher"] }
+    ]; };
+    CdkAccordionItem.propDecorators = {
+        closed: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"] }],
+        opened: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"] }],
+        destroyed: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"] }],
+        expandedChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"] }],
+        expanded: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }],
+        disabled: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"] }]
+    };
+    return CdkAccordionItem;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var CdkAccordionModule = /** @class */ (function () {
+    function CdkAccordionModule() {
+    }
+    CdkAccordionModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"], args: [{
+                    exports: [CdkAccordion, CdkAccordionItem],
+                    declarations: [CdkAccordion, CdkAccordionItem],
+                },] },
+    ];
+    return CdkAccordionModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=accordion.es5.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@angular/cdk/esm5/bidi.es5.js":
 /*!****************************************************!*\
   !*** ./node_modules/@angular/cdk/esm5/bidi.es5.js ***!
@@ -91768,6 +92163,815 @@ var ReactiveFormsModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/@angular/material/esm5/button-toggle.es5.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/button-toggle.es5.js ***!
+  \******************************************************************/
+/*! exports provided: MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS, MAT_BUTTON_TOGGLE_GROUP_VALUE_ACCESSOR, MatButtonToggleGroupMultiple, MatButtonToggleChange, MatButtonToggleGroup, MatButtonToggleBase, _MatButtonToggleMixinBase, MatButtonToggle, MatButtonToggleModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS", function() { return MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_BUTTON_TOGGLE_GROUP_VALUE_ACCESSOR", function() { return MAT_BUTTON_TOGGLE_GROUP_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatButtonToggleGroupMultiple", function() { return MatButtonToggleGroupMultiple; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatButtonToggleChange", function() { return MatButtonToggleChange; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatButtonToggleGroup", function() { return MatButtonToggleGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatButtonToggleBase", function() { return MatButtonToggleBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MatButtonToggleMixinBase", function() { return _MatButtonToggleMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatButtonToggle", function() { return MatButtonToggle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatButtonToggleModule", function() { return MatButtonToggleModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm5/a11y.es5.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/collections */ "./node_modules/@angular/cdk/esm5/collections.es5.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm5/core.es5.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Injection token that can be used to configure the
+ * default options for all button toggles within an app.
+ * @type {?}
+ */
+var MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS = new _angular_core__WEBPACK_IMPORTED_MODULE_4__["InjectionToken"]('MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS');
+/**
+ * Provider Expression that allows mat-button-toggle-group to register as a ControlValueAccessor.
+ * This allows it to support [(ngModel)].
+ * \@docs-private
+ * @type {?}
+ */
+var MAT_BUTTON_TOGGLE_GROUP_VALUE_ACCESSOR = {
+    provide: _angular_forms__WEBPACK_IMPORTED_MODULE_5__["NG_VALUE_ACCESSOR"],
+    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["forwardRef"])(function () { return MatButtonToggleGroup; }),
+    multi: true
+};
+/**
+ * @deprecated Use `MatButtonToggleGroup` instead.
+ * \@breaking-change 8.0.0
+ */
+var  /**
+ * @deprecated Use `MatButtonToggleGroup` instead.
+ * \@breaking-change 8.0.0
+ */
+MatButtonToggleGroupMultiple = /** @class */ (function () {
+    function MatButtonToggleGroupMultiple() {
+    }
+    return MatButtonToggleGroupMultiple;
+}());
+/** @type {?} */
+var _uniqueIdCounter = 0;
+/**
+ * Change event object emitted by MatButtonToggle.
+ */
+var  /**
+ * Change event object emitted by MatButtonToggle.
+ */
+MatButtonToggleChange = /** @class */ (function () {
+    function MatButtonToggleChange(source, value) {
+        this.source = source;
+        this.value = value;
+    }
+    return MatButtonToggleChange;
+}());
+/**
+ * Exclusive selection button toggle group that behaves like a radio-button group.
+ */
+var MatButtonToggleGroup = /** @class */ (function () {
+    function MatButtonToggleGroup(_changeDetector, defaultOptions) {
+        this._changeDetector = _changeDetector;
+        this._vertical = false;
+        this._multiple = false;
+        this._disabled = false;
+        /**
+         * The method to be called in order to update ngModel.
+         * Now `ngModel` binding is not supported in multiple selection mode.
+         */
+        this._controlValueAccessorChangeFn = function () { };
+        /**
+         * onTouch function registered via registerOnTouch (ControlValueAccessor).
+         */
+        this._onTouched = function () { };
+        this._name = "mat-button-toggle-group-" + _uniqueIdCounter++;
+        /**
+         * Event that emits whenever the value of the group changes.
+         * Used to facilitate two-way data binding.
+         * \@docs-private
+         */
+        this.valueChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__["EventEmitter"]();
+        /**
+         * Event emitted when the group's value changes.
+         */
+        this.change = new _angular_core__WEBPACK_IMPORTED_MODULE_4__["EventEmitter"]();
+        this.appearance =
+            defaultOptions && defaultOptions.appearance ? defaultOptions.appearance : 'standard';
+    }
+    Object.defineProperty(MatButtonToggleGroup.prototype, "name", {
+        /** `name` attribute for the underlying `input` element. */
+        get: /**
+         * `name` attribute for the underlying `input` element.
+         * @return {?}
+         */
+        function () { return this._name; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            var _this = this;
+            this._name = value;
+            if (this._buttonToggles) {
+                this._buttonToggles.forEach(function (toggle) {
+                    toggle.name = _this._name;
+                    toggle._markForCheck();
+                });
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggleGroup.prototype, "vertical", {
+        /** Whether the toggle group is vertical. */
+        get: /**
+         * Whether the toggle group is vertical.
+         * @return {?}
+         */
+        function () { return this._vertical; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._vertical = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_2__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggleGroup.prototype, "value", {
+        /** Value of the toggle group. */
+        get: /**
+         * Value of the toggle group.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var selected = this._selectionModel ? this._selectionModel.selected : [];
+            if (this.multiple) {
+                return selected.map(function (toggle) { return toggle.value; });
+            }
+            return selected[0] ? selected[0].value : undefined;
+        },
+        set: /**
+         * @param {?} newValue
+         * @return {?}
+         */
+        function (newValue) {
+            this._setSelectionByValue(newValue);
+            this.valueChange.emit(this.value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggleGroup.prototype, "selected", {
+        /** Selected button toggles in the group. */
+        get: /**
+         * Selected button toggles in the group.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var selected = this._selectionModel.selected;
+            return this.multiple ? selected : (selected[0] || null);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggleGroup.prototype, "multiple", {
+        /** Whether multiple button toggles can be selected. */
+        get: /**
+         * Whether multiple button toggles can be selected.
+         * @return {?}
+         */
+        function () { return this._multiple; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._multiple = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_2__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggleGroup.prototype, "disabled", {
+        /** Whether multiple button toggle group is disabled. */
+        get: /**
+         * Whether multiple button toggle group is disabled.
+         * @return {?}
+         */
+        function () { return this._disabled; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._disabled = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_2__["coerceBooleanProperty"])(value);
+            if (this._buttonToggles) {
+                this._buttonToggles.forEach(function (toggle) { return toggle._markForCheck(); });
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        this._selectionModel = new _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_3__["SelectionModel"](this.multiple, undefined, false);
+    };
+    /**
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype.ngAfterContentInit = /**
+     * @return {?}
+     */
+    function () {
+        var _a;
+        (_a = this._selectionModel).select.apply(_a, this._buttonToggles.filter(function (toggle) { return toggle.checked; }));
+    };
+    /**
+     * Sets the model value. Implemented as part of ControlValueAccessor.
+     * @param value Value to be set to the model.
+     */
+    /**
+     * Sets the model value. Implemented as part of ControlValueAccessor.
+     * @param {?} value Value to be set to the model.
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype.writeValue = /**
+     * Sets the model value. Implemented as part of ControlValueAccessor.
+     * @param {?} value Value to be set to the model.
+     * @return {?}
+     */
+    function (value) {
+        this.value = value;
+        this._changeDetector.markForCheck();
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype.registerOnChange = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        this._controlValueAccessorChangeFn = fn;
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype.registerOnTouched = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        this._onTouched = fn;
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype.setDisabledState = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    /** Dispatch change event with current selection and group value. */
+    /**
+     * Dispatch change event with current selection and group value.
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._emitChangeEvent = /**
+     * Dispatch change event with current selection and group value.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var selected = this.selected;
+        /** @type {?} */
+        var source = Array.isArray(selected) ? selected[selected.length - 1] : selected;
+        /** @type {?} */
+        var event = new MatButtonToggleChange((/** @type {?} */ (source)), this.value);
+        this._controlValueAccessorChangeFn(event.value);
+        this.change.emit(event);
+    };
+    /**
+     * Syncs a button toggle's selected state with the model value.
+     * @param toggle Toggle to be synced.
+     * @param select Whether the toggle should be selected.
+     * @param isUserInput Whether the change was a result of a user interaction.
+     */
+    /**
+     * Syncs a button toggle's selected state with the model value.
+     * @param {?} toggle Toggle to be synced.
+     * @param {?} select Whether the toggle should be selected.
+     * @param {?=} isUserInput Whether the change was a result of a user interaction.
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._syncButtonToggle = /**
+     * Syncs a button toggle's selected state with the model value.
+     * @param {?} toggle Toggle to be synced.
+     * @param {?} select Whether the toggle should be selected.
+     * @param {?=} isUserInput Whether the change was a result of a user interaction.
+     * @return {?}
+     */
+    function (toggle, select, isUserInput) {
+        if (isUserInput === void 0) { isUserInput = false; }
+        // Deselect the currently-selected toggle, if we're in single-selection
+        // mode and the button being toggled isn't selected at the moment.
+        if (!this.multiple && this.selected && !toggle.checked) {
+            ((/** @type {?} */ (this.selected))).checked = false;
+        }
+        if (select) {
+            this._selectionModel.select(toggle);
+        }
+        else {
+            this._selectionModel.deselect(toggle);
+        }
+        // Only emit the change event for user input.
+        if (isUserInput) {
+            this._emitChangeEvent();
+        }
+        // Note: we emit this one no matter whether it was a user interaction, because
+        // it is used by Angular to sync up the two-way data binding.
+        this.valueChange.emit(this.value);
+    };
+    /** Checks whether a button toggle is selected. */
+    /**
+     * Checks whether a button toggle is selected.
+     * @param {?} toggle
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._isSelected = /**
+     * Checks whether a button toggle is selected.
+     * @param {?} toggle
+     * @return {?}
+     */
+    function (toggle) {
+        return this._selectionModel.isSelected(toggle);
+    };
+    /** Determines whether a button toggle should be checked on init. */
+    /**
+     * Determines whether a button toggle should be checked on init.
+     * @param {?} toggle
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._isPrechecked = /**
+     * Determines whether a button toggle should be checked on init.
+     * @param {?} toggle
+     * @return {?}
+     */
+    function (toggle) {
+        if (typeof this._rawValue === 'undefined') {
+            return false;
+        }
+        if (this.multiple && Array.isArray(this._rawValue)) {
+            return this._rawValue.some(function (value) { return toggle.value != null && value === toggle.value; });
+        }
+        return toggle.value === this._rawValue;
+    };
+    /** Updates the selection state of the toggles in the group based on a value. */
+    /**
+     * Updates the selection state of the toggles in the group based on a value.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._setSelectionByValue = /**
+     * Updates the selection state of the toggles in the group based on a value.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        var _this = this;
+        this._rawValue = value;
+        if (!this._buttonToggles) {
+            return;
+        }
+        if (this.multiple && value) {
+            if (!Array.isArray(value)) {
+                throw Error('Value must be an array in multiple-selection mode.');
+            }
+            this._clearSelection();
+            value.forEach(function (currentValue) { return _this._selectValue(currentValue); });
+        }
+        else {
+            this._clearSelection();
+            this._selectValue(value);
+        }
+    };
+    /** Clears the selected toggles. */
+    /**
+     * Clears the selected toggles.
+     * @private
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._clearSelection = /**
+     * Clears the selected toggles.
+     * @private
+     * @return {?}
+     */
+    function () {
+        this._selectionModel.clear();
+        this._buttonToggles.forEach(function (toggle) { return toggle.checked = false; });
+    };
+    /** Selects a value if there's a toggle that corresponds to it. */
+    /**
+     * Selects a value if there's a toggle that corresponds to it.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    MatButtonToggleGroup.prototype._selectValue = /**
+     * Selects a value if there's a toggle that corresponds to it.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        /** @type {?} */
+        var correspondingOption = this._buttonToggles.find(function (toggle) {
+            return toggle.value != null && toggle.value === value;
+        });
+        if (correspondingOption) {
+            correspondingOption.checked = true;
+            this._selectionModel.select(correspondingOption);
+        }
+    };
+    MatButtonToggleGroup.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Directive"], args: [{
+                    selector: 'mat-button-toggle-group',
+                    providers: [
+                        MAT_BUTTON_TOGGLE_GROUP_VALUE_ACCESSOR,
+                        { provide: MatButtonToggleGroupMultiple, useExisting: MatButtonToggleGroup },
+                    ],
+                    host: {
+                        'role': 'group',
+                        'class': 'mat-button-toggle-group',
+                        '[attr.aria-disabled]': 'disabled',
+                        '[class.mat-button-toggle-vertical]': 'vertical',
+                        '[class.mat-button-toggle-group-appearance-standard]': 'appearance === "standard"',
+                    },
+                    exportAs: 'matButtonToggleGroup',
+                },] },
+    ];
+    /** @nocollapse */
+    MatButtonToggleGroup.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ChangeDetectorRef"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,] }] }
+    ]; };
+    MatButtonToggleGroup.propDecorators = {
+        _buttonToggles: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ContentChildren"], args: [Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["forwardRef"])(function () { return MatButtonToggle; }),] }],
+        appearance: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        vertical: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        value: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        valueChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Output"] }],
+        multiple: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        disabled: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        change: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Output"] }]
+    };
+    return MatButtonToggleGroup;
+}());
+// Boilerplate for applying mixins to the MatButtonToggle class.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to the MatButtonToggle class.
+/**
+ * \@docs-private
+ */
+MatButtonToggleBase = /** @class */ (function () {
+    function MatButtonToggleBase() {
+    }
+    return MatButtonToggleBase;
+}());
+/** @type {?} */
+var _MatButtonToggleMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_6__["mixinDisableRipple"])(MatButtonToggleBase);
+/**
+ * Single button inside of a toggle group.
+ */
+var MatButtonToggle = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(MatButtonToggle, _super);
+    function MatButtonToggle(toggleGroup, _changeDetectorRef, _elementRef, _focusMonitor, 
+    // @breaking-change 8.0.0 `defaultTabIndex` to be made a required parameter.
+    defaultTabIndex, defaultOptions) {
+        var _this = _super.call(this) || this;
+        _this._changeDetectorRef = _changeDetectorRef;
+        _this._elementRef = _elementRef;
+        _this._focusMonitor = _focusMonitor;
+        _this._isSingleSelector = false;
+        _this._checked = false;
+        /**
+         * Users can specify the `aria-labelledby` attribute which will be forwarded to the input element
+         */
+        _this.ariaLabelledby = null;
+        _this._disabled = false;
+        /**
+         * Event emitted when the group value changes.
+         */
+        _this.change = new _angular_core__WEBPACK_IMPORTED_MODULE_4__["EventEmitter"]();
+        /** @type {?} */
+        var parsedTabIndex = Number(defaultTabIndex);
+        _this.tabIndex = (parsedTabIndex || parsedTabIndex === 0) ? parsedTabIndex : null;
+        _this.buttonToggleGroup = toggleGroup;
+        _this.appearance =
+            defaultOptions && defaultOptions.appearance ? defaultOptions.appearance : 'standard';
+        return _this;
+    }
+    Object.defineProperty(MatButtonToggle.prototype, "buttonId", {
+        /** Unique ID for the underlying `button` element. */
+        get: /**
+         * Unique ID for the underlying `button` element.
+         * @return {?}
+         */
+        function () { return this.id + "-button"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggle.prototype, "appearance", {
+        /** The appearance style of the button. */
+        get: /**
+         * The appearance style of the button.
+         * @return {?}
+         */
+        function () {
+            return this.buttonToggleGroup ? this.buttonToggleGroup.appearance : this._appearance;
+        },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._appearance = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggle.prototype, "checked", {
+        /** Whether the button is checked. */
+        get: /**
+         * Whether the button is checked.
+         * @return {?}
+         */
+        function () {
+            return this.buttonToggleGroup ? this.buttonToggleGroup._isSelected(this) : this._checked;
+        },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            /** @type {?} */
+            var newValue = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_2__["coerceBooleanProperty"])(value);
+            if (newValue !== this._checked) {
+                this._checked = newValue;
+                if (this.buttonToggleGroup) {
+                    this.buttonToggleGroup._syncButtonToggle(this, this._checked);
+                }
+                this._changeDetectorRef.markForCheck();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatButtonToggle.prototype, "disabled", {
+        /** Whether the button is disabled. */
+        get: /**
+         * Whether the button is disabled.
+         * @return {?}
+         */
+        function () {
+            return this._disabled || (this.buttonToggleGroup && this.buttonToggleGroup.disabled);
+        },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) { this._disabled = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_2__["coerceBooleanProperty"])(value); },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatButtonToggle.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        this._isSingleSelector = this.buttonToggleGroup && !this.buttonToggleGroup.multiple;
+        this._type = this._isSingleSelector ? 'radio' : 'checkbox';
+        this.id = this.id || "mat-button-toggle-" + _uniqueIdCounter++;
+        if (this._isSingleSelector) {
+            this.name = this.buttonToggleGroup.name;
+        }
+        if (this.buttonToggleGroup && this.buttonToggleGroup._isPrechecked(this)) {
+            this.checked = true;
+        }
+        this._focusMonitor.monitor(this._elementRef, true);
+    };
+    /**
+     * @return {?}
+     */
+    MatButtonToggle.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        /** @type {?} */
+        var group = this.buttonToggleGroup;
+        this._focusMonitor.stopMonitoring(this._elementRef);
+        // Remove the toggle from the selection once it's destroyed. Needs to happen
+        // on the next tick in order to avoid "changed after checked" errors.
+        if (group && group._isSelected(this)) {
+            Promise.resolve().then(function () { return group._syncButtonToggle(_this, false); });
+        }
+    };
+    /** Focuses the button. */
+    /**
+     * Focuses the button.
+     * @return {?}
+     */
+    MatButtonToggle.prototype.focus = /**
+     * Focuses the button.
+     * @return {?}
+     */
+    function () {
+        this._buttonElement.nativeElement.focus();
+    };
+    /** Checks the button toggle due to an interaction with the underlying native button. */
+    /**
+     * Checks the button toggle due to an interaction with the underlying native button.
+     * @return {?}
+     */
+    MatButtonToggle.prototype._onButtonClick = /**
+     * Checks the button toggle due to an interaction with the underlying native button.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var newChecked = this._isSingleSelector ? true : !this._checked;
+        if (newChecked !== this._checked) {
+            this._checked = newChecked;
+            if (this.buttonToggleGroup) {
+                this.buttonToggleGroup._syncButtonToggle(this, this._checked, true);
+                this.buttonToggleGroup._onTouched();
+            }
+        }
+        // Emit a change event when it's the single selector
+        this.change.emit(new MatButtonToggleChange(this, this.value));
+    };
+    /**
+     * Marks the button toggle as needing checking for change detection.
+     * This method is exposed because the parent button toggle group will directly
+     * update bound properties of the radio button.
+     */
+    /**
+     * Marks the button toggle as needing checking for change detection.
+     * This method is exposed because the parent button toggle group will directly
+     * update bound properties of the radio button.
+     * @return {?}
+     */
+    MatButtonToggle.prototype._markForCheck = /**
+     * Marks the button toggle as needing checking for change detection.
+     * This method is exposed because the parent button toggle group will directly
+     * update bound properties of the radio button.
+     * @return {?}
+     */
+    function () {
+        // When the group value changes, the button will not be notified.
+        // Use `markForCheck` to explicit update button toggle's status.
+        this._changeDetectorRef.markForCheck();
+    };
+    MatButtonToggle.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"], args: [{selector: 'mat-button-toggle',
+                    template: "<button #button class=\"mat-button-toggle-button\" type=\"button\" [id]=\"buttonId\" [attr.tabindex]=\"disabled ? -1 : tabIndex\" [attr.aria-pressed]=\"checked\" [disabled]=\"disabled || null\" [attr.name]=\"name || null\" [attr.aria-label]=\"ariaLabel\" [attr.aria-labelledby]=\"ariaLabelledby\" (click)=\"_onButtonClick()\"><div class=\"mat-button-toggle-label-content\"><ng-content></ng-content></div></button><div class=\"mat-button-toggle-focus-overlay\"></div><div class=\"mat-button-toggle-ripple\" matRipple [matRippleTrigger]=\"button\" [matRippleDisabled]=\"this.disableRipple || this.disabled\"></div>",
+                    styles: [".mat-button-toggle-group,.mat-button-toggle-standalone{position:relative;display:inline-flex;flex-direction:row;white-space:nowrap;overflow:hidden;border-radius:2px;-webkit-tap-highlight-color:transparent}@media (-ms-high-contrast:active){.mat-button-toggle-group,.mat-button-toggle-standalone{outline:solid 1px}}.mat-button-toggle-group-appearance-standard,.mat-button-toggle-standalone.mat-button-toggle-appearance-standard{border-radius:4px}@media (-ms-high-contrast:active){.mat-button-toggle-group-appearance-standard,.mat-button-toggle-standalone.mat-button-toggle-appearance-standard{outline:0}}.mat-button-toggle-vertical{flex-direction:column}.mat-button-toggle-vertical .mat-button-toggle-label-content{display:block}.mat-button-toggle{white-space:nowrap;position:relative}.mat-button-toggle .mat-icon svg{vertical-align:top}.mat-button-toggle.cdk-keyboard-focused .mat-button-toggle-focus-overlay{opacity:1}@media (-ms-high-contrast:active){.mat-button-toggle.cdk-keyboard-focused .mat-button-toggle-focus-overlay{opacity:.5}}.mat-button-toggle-appearance-standard:not(.mat-button-toggle-disabled):hover .mat-button-toggle-focus-overlay{opacity:.04}.mat-button-toggle-appearance-standard.cdk-keyboard-focused:not(.mat-button-toggle-disabled) .mat-button-toggle-focus-overlay{opacity:.12}@media (-ms-high-contrast:active){.mat-button-toggle-appearance-standard.cdk-keyboard-focused:not(.mat-button-toggle-disabled) .mat-button-toggle-focus-overlay{opacity:.5}}@media (hover:none){.mat-button-toggle-appearance-standard:not(.mat-button-toggle-disabled):hover .mat-button-toggle-focus-overlay{display:none}}.mat-button-toggle-label-content{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:inline-block;line-height:36px;padding:0 16px;position:relative}.mat-button-toggle-appearance-standard .mat-button-toggle-label-content{line-height:48px;padding:0 12px}.mat-button-toggle-label-content>*{vertical-align:middle}.mat-button-toggle-focus-overlay{border-radius:inherit;pointer-events:none;opacity:0;top:0;left:0;right:0;bottom:0;position:absolute}.mat-button-toggle-checked .mat-button-toggle-focus-overlay{border-bottom:solid 36px}@media (-ms-high-contrast:active){.mat-button-toggle-checked .mat-button-toggle-focus-overlay{opacity:.5;height:0}}@media (-ms-high-contrast:active){.mat-button-toggle-checked.mat-button-toggle-appearance-standard .mat-button-toggle-focus-overlay{border-bottom:solid 48px}}.mat-button-toggle .mat-button-toggle-ripple{top:0;left:0;right:0;bottom:0;position:absolute;pointer-events:none}.mat-button-toggle-button{border:0;background:0 0;color:inherit;padding:0;margin:0;font:inherit;outline:0;width:100%;cursor:pointer}.mat-button-toggle-disabled .mat-button-toggle-button{cursor:default}.mat-button-toggle-button::-moz-focus-inner{border:0}"],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ViewEncapsulation"].None,
+                    exportAs: 'matButtonToggle',
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ChangeDetectionStrategy"].OnPush,
+                    inputs: ['disableRipple'],
+                    host: {
+                        '[class.mat-button-toggle-standalone]': '!buttonToggleGroup',
+                        '[class.mat-button-toggle-checked]': 'checked',
+                        '[class.mat-button-toggle-disabled]': 'disabled',
+                        '[class.mat-button-toggle-appearance-standard]': 'appearance === "standard"',
+                        'class': 'mat-button-toggle',
+                        // Always reset the tabindex to -1 so it doesn't conflict with the one on the `button`,
+                        // but can still receive focus from things like cdkFocusInitial.
+                        '[attr.tabindex]': '-1',
+                        '[attr.id]': 'id',
+                        '(focus)': 'focus()',
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    MatButtonToggle.ctorParameters = function () { return [
+        { type: MatButtonToggleGroup, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ChangeDetectorRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"] },
+        { type: _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__["FocusMonitor"] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Attribute"], args: ['tabindex',] }] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [MAT_BUTTON_TOGGLE_DEFAULT_OPTIONS,] }] }
+    ]; };
+    MatButtonToggle.propDecorators = {
+        ariaLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"], args: ['aria-label',] }],
+        ariaLabelledby: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"], args: ['aria-labelledby',] }],
+        _buttonElement: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ViewChild"], args: ['button',] }],
+        id: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        value: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        tabIndex: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        appearance: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        checked: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        disabled: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        change: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Output"] }]
+    };
+    return MatButtonToggle;
+}(_MatButtonToggleMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatButtonToggleModule = /** @class */ (function () {
+    function MatButtonToggleModule() {
+    }
+    MatButtonToggleModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["NgModule"], args: [{
+                    imports: [_angular_material_core__WEBPACK_IMPORTED_MODULE_6__["MatCommonModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_6__["MatRippleModule"]],
+                    exports: [_angular_material_core__WEBPACK_IMPORTED_MODULE_6__["MatCommonModule"], MatButtonToggleGroup, MatButtonToggle],
+                    declarations: [MatButtonToggleGroup, MatButtonToggle],
+                },] },
+    ];
+    return MatButtonToggleModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=button-toggle.es5.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@angular/material/esm5/button.es5.js":
 /*!***********************************************************!*\
   !*** ./node_modules/@angular/material/esm5/button.es5.js ***!
@@ -92062,6 +93266,726 @@ var MatButtonModule = /** @class */ (function () {
 
 
 //# sourceMappingURL=button.es5.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@angular/material/esm5/checkbox.es5.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/checkbox.es5.js ***!
+  \*************************************************************/
+/*! exports provided: MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR, TransitionCheckState, MatCheckboxChange, MatCheckboxBase, _MatCheckboxMixinBase, MatCheckbox, MAT_CHECKBOX_CLICK_ACTION, MatCheckboxModule, MAT_CHECKBOX_REQUIRED_VALIDATOR, MatCheckboxRequiredValidator */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR", function() { return MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TransitionCheckState", function() { return TransitionCheckState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatCheckboxChange", function() { return MatCheckboxChange; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatCheckboxBase", function() { return MatCheckboxBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MatCheckboxMixinBase", function() { return _MatCheckboxMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatCheckbox", function() { return MatCheckbox; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_CHECKBOX_CLICK_ACTION", function() { return MAT_CHECKBOX_CLICK_ACTION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatCheckboxModule", function() { return MatCheckboxModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_CHECKBOX_REQUIRED_VALIDATOR", function() { return MAT_CHECKBOX_REQUIRED_VALIDATOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatCheckboxRequiredValidator", function() { return MatCheckboxRequiredValidator; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm5/a11y.es5.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm5/core.es5.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var _angular_cdk_observers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/cdk/observers */ "./node_modules/@angular/cdk/esm5/observers.es5.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Injection token that can be used to specify the checkbox click behavior.
+ * @type {?}
+ */
+var MAT_CHECKBOX_CLICK_ACTION = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('mat-checkbox-click-action');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// Increasing integer for generating unique ids for checkbox components.
+/** @type {?} */
+var nextUniqueId = 0;
+/**
+ * Provider Expression that allows mat-checkbox to register as a ControlValueAccessor.
+ * This allows it to support [(ngModel)].
+ * \@docs-private
+ * @type {?}
+ */
+var MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR = {
+    provide: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NG_VALUE_ACCESSOR"],
+    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])(function () { return MatCheckbox; }),
+    multi: true
+};
+/** @enum {number} */
+var TransitionCheckState = {
+    /** The initial state of the component before any user interaction. */
+    Init: 0,
+    /** The state representing the component when it's becoming checked. */
+    Checked: 1,
+    /** The state representing the component when it's becoming unchecked. */
+    Unchecked: 2,
+    /** The state representing the component when it's becoming indeterminate. */
+    Indeterminate: 3,
+};
+TransitionCheckState[TransitionCheckState.Init] = 'Init';
+TransitionCheckState[TransitionCheckState.Checked] = 'Checked';
+TransitionCheckState[TransitionCheckState.Unchecked] = 'Unchecked';
+TransitionCheckState[TransitionCheckState.Indeterminate] = 'Indeterminate';
+/**
+ * Change event object emitted by MatCheckbox.
+ */
+var  /**
+ * Change event object emitted by MatCheckbox.
+ */
+MatCheckboxChange = /** @class */ (function () {
+    function MatCheckboxChange() {
+    }
+    return MatCheckboxChange;
+}());
+// Boilerplate for applying mixins to MatCheckbox.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatCheckbox.
+/**
+ * \@docs-private
+ */
+MatCheckboxBase = /** @class */ (function () {
+    function MatCheckboxBase(_elementRef) {
+        this._elementRef = _elementRef;
+    }
+    return MatCheckboxBase;
+}());
+/** @type {?} */
+var _MatCheckboxMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["mixinTabIndex"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["mixinColor"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["mixinDisableRipple"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["mixinDisabled"])(MatCheckboxBase)), 'accent'));
+/**
+ * A material design checkbox component. Supports all of the functionality of an HTML5 checkbox,
+ * and exposes a similar API. A MatCheckbox can be either checked, unchecked, indeterminate, or
+ * disabled. Note that all additional accessibility attributes are taken care of by the component,
+ * so there is no need to provide them yourself. However, if you want to omit a label and still
+ * have the checkbox be accessible, you may supply an [aria-label] input.
+ * See: https://material.io/design/components/selection-controls.html
+ */
+var MatCheckbox = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatCheckbox, _super);
+    function MatCheckbox(elementRef, _changeDetectorRef, _focusMonitor, _ngZone, tabIndex, _clickAction, _animationMode) {
+        var _this = _super.call(this, elementRef) || this;
+        _this._changeDetectorRef = _changeDetectorRef;
+        _this._focusMonitor = _focusMonitor;
+        _this._ngZone = _ngZone;
+        _this._clickAction = _clickAction;
+        _this._animationMode = _animationMode;
+        /**
+         * Attached to the aria-label attribute of the host element. In most cases, arial-labelledby will
+         * take precedence so this may be omitted.
+         */
+        _this.ariaLabel = '';
+        /**
+         * Users can specify the `aria-labelledby` attribute which will be forwarded to the input element
+         */
+        _this.ariaLabelledby = null;
+        _this._uniqueId = "mat-checkbox-" + ++nextUniqueId;
+        /**
+         * A unique id for the checkbox input. If none is supplied, it will be auto-generated.
+         */
+        _this.id = _this._uniqueId;
+        /**
+         * Whether the label should appear after or before the checkbox. Defaults to 'after'
+         */
+        _this.labelPosition = 'after';
+        /**
+         * Name value will be applied to the input element if present
+         */
+        _this.name = null;
+        /**
+         * Event emitted when the checkbox's `checked` value changes.
+         */
+        _this.change = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted when the checkbox's `indeterminate` value changes.
+         */
+        _this.indeterminateChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Called when the checkbox is blurred. Needed to properly implement ControlValueAccessor.
+         * \@docs-private
+         */
+        _this._onTouched = function () { };
+        _this._currentAnimationClass = '';
+        _this._currentCheckState = TransitionCheckState.Init;
+        _this._controlValueAccessorChangeFn = function () { };
+        _this._checked = false;
+        _this._disabled = false;
+        _this._indeterminate = false;
+        _this.tabIndex = parseInt(tabIndex) || 0;
+        _this._focusMonitor.monitor(elementRef, true).subscribe(function (focusOrigin) {
+            if (!focusOrigin) {
+                // When a focused element becomes disabled, the browser *immediately* fires a blur event.
+                // Angular does not expect events to be raised during change detection, so any state change
+                // (such as a form control's 'ng-touched') will cause a changed-after-checked error.
+                // See https://github.com/angular/angular/issues/17793. To work around this, we defer
+                // telling the form control it has been touched until the next tick.
+                Promise.resolve().then(function () {
+                    _this._onTouched();
+                    _changeDetectorRef.markForCheck();
+                });
+            }
+        });
+        return _this;
+    }
+    Object.defineProperty(MatCheckbox.prototype, "inputId", {
+        /** Returns the unique id for the visual hidden input. */
+        get: /**
+         * Returns the unique id for the visual hidden input.
+         * @return {?}
+         */
+        function () { return (this.id || this._uniqueId) + "-input"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatCheckbox.prototype, "required", {
+        /** Whether the checkbox is required. */
+        get: /**
+         * Whether the checkbox is required.
+         * @return {?}
+         */
+        function () { return this._required; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) { this._required = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceBooleanProperty"])(value); },
+        enumerable: true,
+        configurable: true
+    });
+    // TODO: Delete next major revision.
+    // TODO: Delete next major revision.
+    /**
+     * @return {?}
+     */
+    MatCheckbox.prototype.ngAfterViewChecked = 
+    // TODO: Delete next major revision.
+    /**
+     * @return {?}
+     */
+    function () { };
+    /**
+     * @return {?}
+     */
+    MatCheckbox.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._focusMonitor.stopMonitoring(this._elementRef);
+    };
+    Object.defineProperty(MatCheckbox.prototype, "checked", {
+        /**
+         * Whether the checkbox is checked.
+         */
+        get: /**
+         * Whether the checkbox is checked.
+         * @return {?}
+         */
+        function () { return this._checked; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            if (value != this.checked) {
+                this._checked = value;
+                this._changeDetectorRef.markForCheck();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatCheckbox.prototype, "disabled", {
+        /**
+         * Whether the checkbox is disabled. This fully overrides the implementation provided by
+         * mixinDisabled, but the mixin is still required because mixinTabIndex requires it.
+         */
+        get: /**
+         * Whether the checkbox is disabled. This fully overrides the implementation provided by
+         * mixinDisabled, but the mixin is still required because mixinTabIndex requires it.
+         * @return {?}
+         */
+        function () { return this._disabled; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            /** @type {?} */
+            var newValue = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceBooleanProperty"])(value);
+            if (newValue !== this.disabled) {
+                this._disabled = newValue;
+                this._changeDetectorRef.markForCheck();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatCheckbox.prototype, "indeterminate", {
+        /**
+         * Whether the checkbox is indeterminate. This is also known as "mixed" mode and can be used to
+         * represent a checkbox with three states, e.g. a checkbox that represents a nested list of
+         * checkable items. Note that whenever checkbox is manually clicked, indeterminate is immediately
+         * set to false.
+         */
+        get: /**
+         * Whether the checkbox is indeterminate. This is also known as "mixed" mode and can be used to
+         * represent a checkbox with three states, e.g. a checkbox that represents a nested list of
+         * checkable items. Note that whenever checkbox is manually clicked, indeterminate is immediately
+         * set to false.
+         * @return {?}
+         */
+        function () { return this._indeterminate; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            /** @type {?} */
+            var changed = value != this._indeterminate;
+            this._indeterminate = value;
+            if (changed) {
+                if (this._indeterminate) {
+                    this._transitionCheckState(TransitionCheckState.Indeterminate);
+                }
+                else {
+                    this._transitionCheckState(this.checked ? TransitionCheckState.Checked : TransitionCheckState.Unchecked);
+                }
+                this.indeterminateChange.emit(this._indeterminate);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatCheckbox.prototype._isRippleDisabled = /**
+     * @return {?}
+     */
+    function () {
+        return this.disableRipple || this.disabled;
+    };
+    /** Method being called whenever the label text changes. */
+    /**
+     * Method being called whenever the label text changes.
+     * @return {?}
+     */
+    MatCheckbox.prototype._onLabelTextChange = /**
+     * Method being called whenever the label text changes.
+     * @return {?}
+     */
+    function () {
+        // Since the event of the `cdkObserveContent` directive runs outside of the zone, the checkbox
+        // component will be only marked for check, but no actual change detection runs automatically.
+        // Instead of going back into the zone in order to trigger a change detection which causes
+        // *all* components to be checked (if explicitly marked or not using OnPush), we only trigger
+        // an explicit change detection for the checkbox view and it's children.
+        this._changeDetectorRef.detectChanges();
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    MatCheckbox.prototype.writeValue = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        this.checked = !!value;
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    MatCheckbox.prototype.registerOnChange = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        this._controlValueAccessorChangeFn = fn;
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    MatCheckbox.prototype.registerOnTouched = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} fn
+     * @return {?}
+     */
+    function (fn) {
+        this._onTouched = fn;
+    };
+    // Implemented as part of ControlValueAccessor.
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    MatCheckbox.prototype.setDisabledState = 
+    // Implemented as part of ControlValueAccessor.
+    /**
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    /**
+     * @return {?}
+     */
+    MatCheckbox.prototype._getAriaChecked = /**
+     * @return {?}
+     */
+    function () {
+        return this.checked ? 'true' : (this.indeterminate ? 'mixed' : 'false');
+    };
+    /**
+     * @private
+     * @param {?} newState
+     * @return {?}
+     */
+    MatCheckbox.prototype._transitionCheckState = /**
+     * @private
+     * @param {?} newState
+     * @return {?}
+     */
+    function (newState) {
+        /** @type {?} */
+        var oldState = this._currentCheckState;
+        /** @type {?} */
+        var element = this._elementRef.nativeElement;
+        if (oldState === newState) {
+            return;
+        }
+        if (this._currentAnimationClass.length > 0) {
+            element.classList.remove(this._currentAnimationClass);
+        }
+        this._currentAnimationClass = this._getAnimationClassForCheckStateTransition(oldState, newState);
+        this._currentCheckState = newState;
+        if (this._currentAnimationClass.length > 0) {
+            element.classList.add(this._currentAnimationClass);
+            // Remove the animation class to avoid animation when the checkbox is moved between containers
+            /** @type {?} */
+            var animationClass_1 = this._currentAnimationClass;
+            this._ngZone.runOutsideAngular(function () {
+                setTimeout(function () {
+                    element.classList.remove(animationClass_1);
+                }, 1000);
+            });
+        }
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    MatCheckbox.prototype._emitChangeEvent = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var event = new MatCheckboxChange();
+        event.source = this;
+        event.checked = this.checked;
+        this._controlValueAccessorChangeFn(this.checked);
+        this.change.emit(event);
+    };
+    /** Toggles the `checked` state of the checkbox. */
+    /**
+     * Toggles the `checked` state of the checkbox.
+     * @return {?}
+     */
+    MatCheckbox.prototype.toggle = /**
+     * Toggles the `checked` state of the checkbox.
+     * @return {?}
+     */
+    function () {
+        this.checked = !this.checked;
+    };
+    /**
+     * Event handler for checkbox input element.
+     * Toggles checked state if element is not disabled.
+     * Do not toggle on (change) event since IE doesn't fire change event when
+     *   indeterminate checkbox is clicked.
+     * @param event
+     */
+    /**
+     * Event handler for checkbox input element.
+     * Toggles checked state if element is not disabled.
+     * Do not toggle on (change) event since IE doesn't fire change event when
+     *   indeterminate checkbox is clicked.
+     * @param {?} event
+     * @return {?}
+     */
+    MatCheckbox.prototype._onInputClick = /**
+     * Event handler for checkbox input element.
+     * Toggles checked state if element is not disabled.
+     * Do not toggle on (change) event since IE doesn't fire change event when
+     *   indeterminate checkbox is clicked.
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        var _this = this;
+        // We have to stop propagation for click events on the visual hidden input element.
+        // By default, when a user clicks on a label element, a generated click event will be
+        // dispatched on the associated input element. Since we are using a label element as our
+        // root container, the click event on the `checkbox` will be executed twice.
+        // The real click event will bubble up, and the generated click event also tries to bubble up.
+        // This will lead to multiple click events.
+        // Preventing bubbling for the second event will solve that issue.
+        event.stopPropagation();
+        // If resetIndeterminate is false, and the current state is indeterminate, do nothing on click
+        if (!this.disabled && this._clickAction !== 'noop') {
+            // When user manually click on the checkbox, `indeterminate` is set to false.
+            if (this.indeterminate && this._clickAction !== 'check') {
+                Promise.resolve().then(function () {
+                    _this._indeterminate = false;
+                    _this.indeterminateChange.emit(_this._indeterminate);
+                });
+            }
+            this.toggle();
+            this._transitionCheckState(this._checked ? TransitionCheckState.Checked : TransitionCheckState.Unchecked);
+            // Emit our custom change event if the native input emitted one.
+            // It is important to only emit it, if the native input triggered one, because
+            // we don't want to trigger a change event, when the `checked` variable changes for example.
+            this._emitChangeEvent();
+        }
+        else if (!this.disabled && this._clickAction === 'noop') {
+            // Reset native input when clicked with noop. The native checkbox becomes checked after
+            // click, reset it to be align with `checked` value of `mat-checkbox`.
+            this._inputElement.nativeElement.checked = this.checked;
+            this._inputElement.nativeElement.indeterminate = this.indeterminate;
+        }
+    };
+    /** Focuses the checkbox. */
+    /**
+     * Focuses the checkbox.
+     * @return {?}
+     */
+    MatCheckbox.prototype.focus = /**
+     * Focuses the checkbox.
+     * @return {?}
+     */
+    function () {
+        this._focusMonitor.focusVia(this._inputElement, 'keyboard');
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    MatCheckbox.prototype._onInteractionEvent = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        // We always have to stop propagation on the change event.
+        // Otherwise the change event, from the input element, will bubble up and
+        // emit its event object to the `change` output.
+        event.stopPropagation();
+    };
+    /**
+     * @private
+     * @param {?} oldState
+     * @param {?} newState
+     * @return {?}
+     */
+    MatCheckbox.prototype._getAnimationClassForCheckStateTransition = /**
+     * @private
+     * @param {?} oldState
+     * @param {?} newState
+     * @return {?}
+     */
+    function (oldState, newState) {
+        // Don't transition if animations are disabled.
+        if (this._animationMode === 'NoopAnimations') {
+            return '';
+        }
+        /** @type {?} */
+        var animSuffix = '';
+        switch (oldState) {
+            case TransitionCheckState.Init:
+                // Handle edge case where user interacts with checkbox that does not have [(ngModel)] or
+                // [checked] bound to it.
+                if (newState === TransitionCheckState.Checked) {
+                    animSuffix = 'unchecked-checked';
+                }
+                else if (newState == TransitionCheckState.Indeterminate) {
+                    animSuffix = 'unchecked-indeterminate';
+                }
+                else {
+                    return '';
+                }
+                break;
+            case TransitionCheckState.Unchecked:
+                animSuffix = newState === TransitionCheckState.Checked ?
+                    'unchecked-checked' : 'unchecked-indeterminate';
+                break;
+            case TransitionCheckState.Checked:
+                animSuffix = newState === TransitionCheckState.Unchecked ?
+                    'checked-unchecked' : 'checked-indeterminate';
+                break;
+            case TransitionCheckState.Indeterminate:
+                animSuffix = newState === TransitionCheckState.Checked ?
+                    'indeterminate-checked' : 'indeterminate-unchecked';
+                break;
+        }
+        return "mat-checkbox-anim-" + animSuffix;
+    };
+    MatCheckbox.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: 'mat-checkbox',
+                    template: "<label [attr.for]=\"inputId\" class=\"mat-checkbox-layout\" #label><div class=\"mat-checkbox-inner-container\" [class.mat-checkbox-inner-container-no-side-margin]=\"!checkboxLabel.textContent || !checkboxLabel.textContent.trim()\"><input #input class=\"mat-checkbox-input cdk-visually-hidden\" type=\"checkbox\" [id]=\"inputId\" [required]=\"required\" [checked]=\"checked\" [attr.value]=\"value\" [disabled]=\"disabled\" [attr.name]=\"name\" [tabIndex]=\"tabIndex\" [indeterminate]=\"indeterminate\" [attr.aria-label]=\"ariaLabel || null\" [attr.aria-labelledby]=\"ariaLabelledby\" [attr.aria-checked]=\"_getAriaChecked()\" (change)=\"_onInteractionEvent($event)\" (click)=\"_onInputClick($event)\"><div matRipple class=\"mat-checkbox-ripple\" [matRippleTrigger]=\"label\" [matRippleDisabled]=\"_isRippleDisabled()\" [matRippleRadius]=\"20\" [matRippleCentered]=\"true\" [matRippleAnimation]=\"{enterDuration: 150}\"><div class=\"mat-ripple-element mat-checkbox-persistent-ripple\"></div></div><div class=\"mat-checkbox-frame\"></div><div class=\"mat-checkbox-background\"><svg version=\"1.1\" focusable=\"false\" class=\"mat-checkbox-checkmark\" viewBox=\"0 0 24 24\" xml:space=\"preserve\"><path class=\"mat-checkbox-checkmark-path\" fill=\"none\" stroke=\"white\" d=\"M4.1,12.7 9,17.6 20.3,6.3\"/></svg><div class=\"mat-checkbox-mixedmark\"></div></div></div><span class=\"mat-checkbox-label\" #checkboxLabel (cdkObserveContent)=\"_onLabelTextChange()\"><span style=\"display:none\">&nbsp;</span><ng-content></ng-content></span></label>",
+                    styles: ["@keyframes mat-checkbox-fade-in-background{0%{opacity:0}50%{opacity:1}}@keyframes mat-checkbox-fade-out-background{0%,50%{opacity:1}100%{opacity:0}}@keyframes mat-checkbox-unchecked-checked-checkmark-path{0%,50%{stroke-dashoffset:22.91026}50%{animation-timing-function:cubic-bezier(0,0,.2,.1)}100%{stroke-dashoffset:0}}@keyframes mat-checkbox-unchecked-indeterminate-mixedmark{0%,68.2%{transform:scaleX(0)}68.2%{animation-timing-function:cubic-bezier(0,0,0,1)}100%{transform:scaleX(1)}}@keyframes mat-checkbox-checked-unchecked-checkmark-path{from{animation-timing-function:cubic-bezier(.4,0,1,1);stroke-dashoffset:0}to{stroke-dashoffset:-22.91026}}@keyframes mat-checkbox-checked-indeterminate-checkmark{from{animation-timing-function:cubic-bezier(0,0,.2,.1);opacity:1;transform:rotate(0)}to{opacity:0;transform:rotate(45deg)}}@keyframes mat-checkbox-indeterminate-checked-checkmark{from{animation-timing-function:cubic-bezier(.14,0,0,1);opacity:0;transform:rotate(45deg)}to{opacity:1;transform:rotate(360deg)}}@keyframes mat-checkbox-checked-indeterminate-mixedmark{from{animation-timing-function:cubic-bezier(0,0,.2,.1);opacity:0;transform:rotate(-45deg)}to{opacity:1;transform:rotate(0)}}@keyframes mat-checkbox-indeterminate-checked-mixedmark{from{animation-timing-function:cubic-bezier(.14,0,0,1);opacity:1;transform:rotate(0)}to{opacity:0;transform:rotate(315deg)}}@keyframes mat-checkbox-indeterminate-unchecked-mixedmark{0%{animation-timing-function:linear;opacity:1;transform:scaleX(1)}100%,32.8%{opacity:0;transform:scaleX(0)}}.mat-checkbox-background,.mat-checkbox-frame{top:0;left:0;right:0;bottom:0;position:absolute;border-radius:2px;box-sizing:border-box;pointer-events:none}.mat-checkbox{transition:background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);cursor:pointer;-webkit-tap-highlight-color:transparent}._mat-animation-noopable.mat-checkbox{transition:none;animation:none}.mat-checkbox .mat-ripple-element:not(.mat-checkbox-persistent-ripple){opacity:.16}.mat-checkbox-layout{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:inherit;align-items:baseline;vertical-align:middle;display:inline-flex;white-space:nowrap}.mat-checkbox-label{-webkit-user-select:auto;-moz-user-select:auto;-ms-user-select:auto;user-select:auto}.mat-checkbox-inner-container{display:inline-block;height:16px;line-height:0;margin:auto;margin-right:8px;order:0;position:relative;vertical-align:middle;white-space:nowrap;width:16px;flex-shrink:0}[dir=rtl] .mat-checkbox-inner-container{margin-left:8px;margin-right:auto}.mat-checkbox-inner-container-no-side-margin{margin-left:0;margin-right:0}.mat-checkbox-frame{background-color:transparent;transition:border-color 90ms cubic-bezier(0,0,.2,.1);border-width:2px;border-style:solid}._mat-animation-noopable .mat-checkbox-frame{transition:none}@media (-ms-high-contrast:active){.mat-checkbox.cdk-keyboard-focused .mat-checkbox-frame{border-style:dotted}}.mat-checkbox-background{align-items:center;display:inline-flex;justify-content:center;transition:background-color 90ms cubic-bezier(0,0,.2,.1),opacity 90ms cubic-bezier(0,0,.2,.1)}._mat-animation-noopable .mat-checkbox-background{transition:none}.mat-checkbox-persistent-ripple{width:100%;height:100%;transform:none}.mat-checkbox-inner-container:hover .mat-checkbox-persistent-ripple{opacity:.04}.mat-checkbox.cdk-keyboard-focused .mat-checkbox-persistent-ripple{opacity:.12}.mat-checkbox-persistent-ripple,.mat-checkbox.mat-disabled .mat-checkbox-inner-container:hover .mat-checkbox-persistent-ripple{opacity:0}.mat-checkbox-checkmark{top:0;left:0;right:0;bottom:0;position:absolute;width:100%}.mat-checkbox-checkmark-path{stroke-dashoffset:22.91026;stroke-dasharray:22.91026;stroke-width:2.13333px}.mat-checkbox-mixedmark{width:calc(100% - 6px);height:2px;opacity:0;transform:scaleX(0) rotate(0);border-radius:2px}@media (-ms-high-contrast:active){.mat-checkbox-mixedmark{height:0;border-top:solid 2px;margin-top:2px}}.mat-checkbox-label-before .mat-checkbox-inner-container{order:1;margin-left:8px;margin-right:auto}[dir=rtl] .mat-checkbox-label-before .mat-checkbox-inner-container{margin-left:auto;margin-right:8px}.mat-checkbox-checked .mat-checkbox-checkmark{opacity:1}.mat-checkbox-checked .mat-checkbox-checkmark-path{stroke-dashoffset:0}.mat-checkbox-checked .mat-checkbox-mixedmark{transform:scaleX(1) rotate(-45deg)}.mat-checkbox-indeterminate .mat-checkbox-checkmark{opacity:0;transform:rotate(45deg)}.mat-checkbox-indeterminate .mat-checkbox-checkmark-path{stroke-dashoffset:0}.mat-checkbox-indeterminate .mat-checkbox-mixedmark{opacity:1;transform:scaleX(1) rotate(0)}.mat-checkbox-unchecked .mat-checkbox-background{background-color:transparent}.mat-checkbox-disabled{cursor:default}.mat-checkbox-anim-unchecked-checked .mat-checkbox-background{animation:180ms linear 0s mat-checkbox-fade-in-background}.mat-checkbox-anim-unchecked-checked .mat-checkbox-checkmark-path{animation:180ms linear 0s mat-checkbox-unchecked-checked-checkmark-path}.mat-checkbox-anim-unchecked-indeterminate .mat-checkbox-background{animation:180ms linear 0s mat-checkbox-fade-in-background}.mat-checkbox-anim-unchecked-indeterminate .mat-checkbox-mixedmark{animation:90ms linear 0s mat-checkbox-unchecked-indeterminate-mixedmark}.mat-checkbox-anim-checked-unchecked .mat-checkbox-background{animation:180ms linear 0s mat-checkbox-fade-out-background}.mat-checkbox-anim-checked-unchecked .mat-checkbox-checkmark-path{animation:90ms linear 0s mat-checkbox-checked-unchecked-checkmark-path}.mat-checkbox-anim-checked-indeterminate .mat-checkbox-checkmark{animation:90ms linear 0s mat-checkbox-checked-indeterminate-checkmark}.mat-checkbox-anim-checked-indeterminate .mat-checkbox-mixedmark{animation:90ms linear 0s mat-checkbox-checked-indeterminate-mixedmark}.mat-checkbox-anim-indeterminate-checked .mat-checkbox-checkmark{animation:.5s linear 0s mat-checkbox-indeterminate-checked-checkmark}.mat-checkbox-anim-indeterminate-checked .mat-checkbox-mixedmark{animation:.5s linear 0s mat-checkbox-indeterminate-checked-mixedmark}.mat-checkbox-anim-indeterminate-unchecked .mat-checkbox-background{animation:180ms linear 0s mat-checkbox-fade-out-background}.mat-checkbox-anim-indeterminate-unchecked .mat-checkbox-mixedmark{animation:.3s linear 0s mat-checkbox-indeterminate-unchecked-mixedmark}.mat-checkbox-input{bottom:0;left:50%}.mat-checkbox .mat-checkbox-ripple{position:absolute;left:calc(50% - 20px);top:calc(50% - 20px);height:40px;width:40px;z-index:1;pointer-events:none}"],
+                    exportAs: 'matCheckbox',
+                    host: {
+                        'class': 'mat-checkbox',
+                        '[id]': 'id',
+                        '[attr.tabindex]': 'null',
+                        '[class.mat-checkbox-indeterminate]': 'indeterminate',
+                        '[class.mat-checkbox-checked]': 'checked',
+                        '[class.mat-checkbox-disabled]': 'disabled',
+                        '[class.mat-checkbox-label-before]': 'labelPosition == "before"',
+                        '[class._mat-animation-noopable]': "_animationMode === 'NoopAnimations'",
+                    },
+                    providers: [MAT_CHECKBOX_CONTROL_VALUE_ACCESSOR],
+                    inputs: ['disableRipple', 'color', 'tabIndex'],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush
+                },] },
+    ];
+    /** @nocollapse */
+    MatCheckbox.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] },
+        { type: _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__["FocusMonitor"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Attribute"], args: ['tabindex',] }] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [MAT_CHECKBOX_CLICK_ACTION,] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["ANIMATION_MODULE_TYPE"],] }] }
+    ]; };
+    MatCheckbox.propDecorators = {
+        ariaLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['aria-label',] }],
+        ariaLabelledby: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['aria-labelledby',] }],
+        id: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        required: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        labelPosition: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        name: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        change: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        indeterminateChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        value: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        _inputElement: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['input',] }],
+        ripple: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["MatRipple"],] }],
+        checked: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        disabled: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        indeterminate: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }]
+    };
+    return MatCheckbox;
+}(_MatCheckboxMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+var MAT_CHECKBOX_REQUIRED_VALIDATOR = {
+    provide: _angular_forms__WEBPACK_IMPORTED_MODULE_4__["NG_VALIDATORS"],
+    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])(function () { return MatCheckboxRequiredValidator; }),
+    multi: true
+};
+/**
+ * Validator for Material checkbox's required attribute in template-driven checkbox.
+ * Current CheckboxRequiredValidator only work with `input type=checkbox` and does not
+ * work with `mat-checkbox`.
+ */
+var MatCheckboxRequiredValidator = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatCheckboxRequiredValidator, _super);
+    function MatCheckboxRequiredValidator() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MatCheckboxRequiredValidator.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: "mat-checkbox[required][formControlName],\n             mat-checkbox[required][formControl], mat-checkbox[required][ngModel]",
+                    providers: [MAT_CHECKBOX_REQUIRED_VALIDATOR],
+                    host: { '[attr.required]': 'required ? "" : null' }
+                },] },
+    ];
+    return MatCheckboxRequiredValidator;
+}(_angular_forms__WEBPACK_IMPORTED_MODULE_4__["CheckboxRequiredValidator"]));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatCheckboxModule = /** @class */ (function () {
+    function MatCheckboxModule() {
+    }
+    MatCheckboxModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
+                    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__["CommonModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_5__["MatRippleModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_5__["MatCommonModule"], _angular_cdk_observers__WEBPACK_IMPORTED_MODULE_7__["ObserversModule"]],
+                    exports: [MatCheckbox, MatCheckboxRequiredValidator, _angular_material_core__WEBPACK_IMPORTED_MODULE_5__["MatCommonModule"]],
+                    declarations: [MatCheckbox, MatCheckboxRequiredValidator],
+                },] },
+    ];
+    return MatCheckboxModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=checkbox.es5.js.map
 
 
 /***/ }),
@@ -96598,6 +98522,806 @@ var MatDialogModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/@angular/material/esm5/expansion.es5.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/expansion.es5.js ***!
+  \**************************************************************/
+/*! exports provided: MatExpansionModule, MatAccordion, MAT_ACCORDION, MAT_EXPANSION_PANEL_DEFAULT_OPTIONS, MatExpansionPanel, MatExpansionPanelActionRow, MatExpansionPanelHeader, MatExpansionPanelDescription, MatExpansionPanelTitle, MatExpansionPanelContent, EXPANSION_PANEL_ANIMATION_TIMING, matExpansionAnimations */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionModule", function() { return MatExpansionModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatAccordion", function() { return MatAccordion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_ACCORDION", function() { return MAT_ACCORDION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_EXPANSION_PANEL_DEFAULT_OPTIONS", function() { return MAT_EXPANSION_PANEL_DEFAULT_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionPanel", function() { return MatExpansionPanel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionPanelActionRow", function() { return MatExpansionPanelActionRow; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionPanelHeader", function() { return MatExpansionPanelHeader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionPanelDescription", function() { return MatExpansionPanelDescription; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionPanelTitle", function() { return MatExpansionPanelTitle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatExpansionPanelContent", function() { return MatExpansionPanelContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EXPANSION_PANEL_ANIMATION_TIMING", function() { return EXPANSION_PANEL_ANIMATION_TIMING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "matExpansionAnimations", function() { return matExpansionAnimations; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_accordion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/accordion */ "./node_modules/@angular/cdk/esm5/accordion.es5.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/collections */ "./node_modules/@angular/cdk/esm5/collections.es5.js");
+/* harmony import */ var _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/portal */ "./node_modules/@angular/cdk/esm5/portal.es5.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm5/a11y.es5.js");
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/cdk/keycodes */ "./node_modules/@angular/cdk/esm5/keycodes.es5.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Token used to provide a `MatAccordion` to `MatExpansionPanel`.
+ * Used primarily to avoid circular imports between `MatAccordion` and `MatExpansionPanel`.
+ * @type {?}
+ */
+var MAT_ACCORDION = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('MAT_ACCORDION');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Time and timing curve for expansion panel animations.
+ * @type {?}
+ */
+var EXPANSION_PANEL_ANIMATION_TIMING = '225ms cubic-bezier(0.4,0.0,0.2,1)';
+/**
+ * Animations used by the Material expansion panel.
+ *
+ * A bug in angular animation's `state` when ViewContainers are moved using ViewContainerRef.move()
+ * causes the animation state of moved components to become `void` upon exit, and not update again
+ * upon reentry into the DOM.  This can lead a to situation for the expansion panel where the state
+ * of the panel is `expanded` or `collapsed` but the animation state is `void`.
+ *
+ * To correctly handle animating to the next state, we animate between `void` and `collapsed` which
+ * are defined to have the same styles. Since angular animates from the current styles to the
+ * destination state's style definition, in situations where we are moving from `void`'s styles to
+ * `collapsed` this acts a noop since no style values change.
+ *
+ * In the case where angular's animation state is out of sync with the expansion panel's state, the
+ * expansion panel being `expanded` and angular animations being `void`, the animation from the
+ * `expanded`'s effective styles (though in a `void` animation state) to the collapsed state will
+ * occur as expected.
+ *
+ * Angular Bug: https://github.com/angular/angular/issues/18847
+ *
+ * \@docs-private
+ * @type {?}
+ */
+var matExpansionAnimations = {
+    /**
+     * Animation that rotates the indicator arrow.
+     */
+    indicatorRotate: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["trigger"])('indicatorRotate', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('collapsed, void', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({ transform: 'rotate(0deg)' })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('expanded', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({ transform: 'rotate(180deg)' })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["transition"])('expanded <=> collapsed, void => collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animate"])(EXPANSION_PANEL_ANIMATION_TIMING)),
+    ]),
+    /**
+     * Animation that expands and collapses the panel header height.
+     */
+    expansionHeaderHeight: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["trigger"])('expansionHeight', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('collapsed, void', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({
+            height: '{{collapsedHeight}}',
+        }), {
+            params: { collapsedHeight: '48px' },
+        }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('expanded', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({
+            height: '{{expandedHeight}}'
+        }), {
+            params: { expandedHeight: '64px' }
+        }),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["transition"])('expanded <=> collapsed, void => collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["group"])([
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["query"])('@indicatorRotate', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animateChild"])(), { optional: true }),
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animate"])(EXPANSION_PANEL_ANIMATION_TIMING),
+        ])),
+    ]),
+    /**
+     * Animation that expands and collapses the panel content.
+     */
+    bodyExpansion: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["trigger"])('bodyExpansion', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('collapsed, void', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({ height: '0px', visibility: 'hidden' })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('expanded', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({ height: '*', visibility: 'visible' })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["transition"])('expanded <=> collapsed, void => collapsed', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animate"])(EXPANSION_PANEL_ANIMATION_TIMING)),
+    ])
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Expansion panel content that will be rendered lazily
+ * after the panel is opened for the first time.
+ */
+var MatExpansionPanelContent = /** @class */ (function () {
+    function MatExpansionPanelContent(_template) {
+        this._template = _template;
+    }
+    MatExpansionPanelContent.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: 'ng-template[matExpansionPanelContent]'
+                },] },
+    ];
+    /** @nocollapse */
+    MatExpansionPanelContent.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"] }
+    ]; };
+    return MatExpansionPanelContent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Counter for generating unique element ids.
+ * @type {?}
+ */
+var uniqueId = 0;
+/**
+ * Injection token that can be used to configure the defalt
+ * options for the expansion panel component.
+ * @type {?}
+ */
+var MAT_EXPANSION_PANEL_DEFAULT_OPTIONS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('MAT_EXPANSION_PANEL_DEFAULT_OPTIONS');
+var ɵ0 = undefined;
+/**
+ * `<mat-expansion-panel>`
+ *
+ * This component can be used as a single element to show expandable content, or as one of
+ * multiple children of an element with the MatAccordion directive attached.
+ */
+var MatExpansionPanel = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__extends"])(MatExpansionPanel, _super);
+    function MatExpansionPanel(accordion, _changeDetectorRef, _uniqueSelectionDispatcher, _viewContainerRef, 
+    // @breaking-change 8.0.0 _document and _animationMode to be made required
+    _document, _animationMode, defaultOptions) {
+        var _this = _super.call(this, accordion, _changeDetectorRef, _uniqueSelectionDispatcher) || this;
+        _this._viewContainerRef = _viewContainerRef;
+        _this._animationMode = _animationMode;
+        _this._hideToggle = false;
+        /**
+         * An event emitted after the body's expansion animation happens.
+         */
+        _this.afterExpand = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * An event emitted after the body's collapse animation happens.
+         */
+        _this.afterCollapse = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Stream that emits for changes in `\@Input` properties.
+         */
+        _this._inputChanges = new rxjs__WEBPACK_IMPORTED_MODULE_9__["Subject"]();
+        /**
+         * ID for the associated header element. Used for a11y labelling.
+         */
+        _this._headerId = "mat-expansion-panel-header-" + uniqueId++;
+        /**
+         * Stream of body animation done events.
+         */
+        _this._bodyAnimationDone = new rxjs__WEBPACK_IMPORTED_MODULE_9__["Subject"]();
+        _this.accordion = accordion;
+        _this._document = _document;
+        // We need a Subject with distinctUntilChanged, because the `done` event
+        // fires twice on some browsers. See https://github.com/angular/angular/issues/24084
+        _this._bodyAnimationDone.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["distinctUntilChanged"])(function (x, y) {
+            return x.fromState === y.fromState && x.toState === y.toState;
+        })).subscribe(function (event) {
+            if (event.fromState !== 'void') {
+                if (event.toState === 'expanded') {
+                    _this.afterExpand.emit();
+                }
+                else if (event.toState === 'collapsed') {
+                    _this.afterCollapse.emit();
+                }
+            }
+        });
+        if (defaultOptions) {
+            _this.hideToggle = defaultOptions.hideToggle;
+        }
+        return _this;
+    }
+    Object.defineProperty(MatExpansionPanel.prototype, "hideToggle", {
+        /** Whether the toggle indicator should be hidden. */
+        get: /**
+         * Whether the toggle indicator should be hidden.
+         * @return {?}
+         */
+        function () {
+            return this._hideToggle || (this.accordion && this.accordion.hideToggle);
+        },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._hideToggle = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /** Determines whether the expansion panel should have spacing between it and its siblings. */
+    /**
+     * Determines whether the expansion panel should have spacing between it and its siblings.
+     * @return {?}
+     */
+    MatExpansionPanel.prototype._hasSpacing = /**
+     * Determines whether the expansion panel should have spacing between it and its siblings.
+     * @return {?}
+     */
+    function () {
+        if (this.accordion) {
+            // We don't need to subscribe to the `stateChanges` of the parent accordion because each time
+            // the [displayMode] input changes, the change detection will also cover the host bindings
+            // of this expansion panel.
+            return (this.expanded ? this.accordion.displayMode : this._getExpandedState()) === 'default';
+        }
+        return false;
+    };
+    /** Gets the expanded state string. */
+    /**
+     * Gets the expanded state string.
+     * @return {?}
+     */
+    MatExpansionPanel.prototype._getExpandedState = /**
+     * Gets the expanded state string.
+     * @return {?}
+     */
+    function () {
+        return this.expanded ? 'expanded' : 'collapsed';
+    };
+    /**
+     * @return {?}
+     */
+    MatExpansionPanel.prototype.ngAfterContentInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this._lazyContent) {
+            // Render the content as soon as the panel becomes open.
+            this.opened.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["startWith"])((/** @type {?} */ (null))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["filter"])(function () { return _this.expanded && !_this._portal; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["take"])(1)).subscribe(function () {
+                _this._portal = new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_6__["TemplatePortal"](_this._lazyContent._template, _this._viewContainerRef);
+            });
+        }
+    };
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    MatExpansionPanel.prototype.ngOnChanges = /**
+     * @param {?} changes
+     * @return {?}
+     */
+    function (changes) {
+        this._inputChanges.next(changes);
+    };
+    /**
+     * @return {?}
+     */
+    MatExpansionPanel.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        _super.prototype.ngOnDestroy.call(this);
+        this._bodyAnimationDone.complete();
+        this._inputChanges.complete();
+    };
+    /** Checks whether the expansion panel's content contains the currently-focused element. */
+    /**
+     * Checks whether the expansion panel's content contains the currently-focused element.
+     * @return {?}
+     */
+    MatExpansionPanel.prototype._containsFocus = /**
+     * Checks whether the expansion panel's content contains the currently-focused element.
+     * @return {?}
+     */
+    function () {
+        if (this._body && this._document) {
+            /** @type {?} */
+            var focusedElement = this._document.activeElement;
+            /** @type {?} */
+            var bodyElement = this._body.nativeElement;
+            return focusedElement === bodyElement || bodyElement.contains(focusedElement);
+        }
+        return false;
+    };
+    MatExpansionPanel.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{styles: [".mat-expansion-panel{box-sizing:content-box;display:block;margin:0;border-radius:4px;overflow:hidden;transition:margin 225ms cubic-bezier(.4,0,.2,1),box-shadow 280ms cubic-bezier(.4,0,.2,1)}.mat-accordion .mat-expansion-panel:not(.mat-expanded),.mat-accordion .mat-expansion-panel:not(.mat-expansion-panel-spacing){border-radius:0}.mat-accordion .mat-expansion-panel:first-of-type{border-top-right-radius:4px;border-top-left-radius:4px}.mat-accordion .mat-expansion-panel:last-of-type{border-bottom-right-radius:4px;border-bottom-left-radius:4px}@media (-ms-high-contrast:active){.mat-expansion-panel{outline:solid 1px}}.mat-expansion-panel._mat-animation-noopable,.mat-expansion-panel.ng-animate-disabled,.ng-animate-disabled .mat-expansion-panel{transition:none}.mat-expansion-panel-content{display:flex;flex-direction:column;overflow:visible}.mat-expansion-panel-body{padding:0 24px 16px}.mat-expansion-panel-spacing{margin:16px 0}.mat-accordion>.mat-expansion-panel-spacing:first-child,.mat-accordion>:first-child:not(.mat-expansion-panel) .mat-expansion-panel-spacing{margin-top:0}.mat-accordion>.mat-expansion-panel-spacing:last-child,.mat-accordion>:last-child:not(.mat-expansion-panel) .mat-expansion-panel-spacing{margin-bottom:0}.mat-action-row{border-top-style:solid;border-top-width:1px;display:flex;flex-direction:row;justify-content:flex-end;padding:16px 8px 16px 24px}.mat-action-row button.mat-button{margin-left:8px}[dir=rtl] .mat-action-row button.mat-button{margin-left:0;margin-right:8px}"],
+                    selector: 'mat-expansion-panel',
+                    exportAs: 'matExpansionPanel',
+                    template: "<ng-content select=\"mat-expansion-panel-header\"></ng-content><div class=\"mat-expansion-panel-content\" role=\"region\" [@bodyExpansion]=\"_getExpandedState()\" (@bodyExpansion.done)=\"_bodyAnimationDone.next($event)\" [attr.aria-labelledby]=\"_headerId\" [id]=\"id\" #body><div class=\"mat-expansion-panel-body\"><ng-content></ng-content><ng-template [cdkPortalOutlet]=\"_portal\"></ng-template></div><ng-content select=\"mat-action-row\"></ng-content></div>",
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                    inputs: ['disabled', 'expanded'],
+                    outputs: ['opened', 'closed', 'expandedChange'],
+                    animations: [matExpansionAnimations.bodyExpansion],
+                    providers: [
+                        // Provide MatAccordion as undefined to prevent nested expansion panels from registering
+                        // to the same accordion.
+                        { provide: MAT_ACCORDION, useValue: ɵ0 },
+                    ],
+                    host: {
+                        'class': 'mat-expansion-panel',
+                        '[class.mat-expanded]': 'expanded',
+                        '[class._mat-animation-noopable]': '_animationMode === "NoopAnimations"',
+                        '[class.mat-expansion-panel-spacing]': '_hasSpacing()',
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    MatExpansionPanel.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["SkipSelf"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [MAT_ACCORDION,] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] },
+        { type: _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_5__["UniqueSelectionDispatcher"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["DOCUMENT"],] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__["ANIMATION_MODULE_TYPE"],] }] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [MAT_EXPANSION_PANEL_DEFAULT_OPTIONS,] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }] }
+    ]; };
+    MatExpansionPanel.propDecorators = {
+        hideToggle: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        afterExpand: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        afterCollapse: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        _lazyContent: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChild"], args: [MatExpansionPanelContent,] }],
+        _body: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['body',] }]
+    };
+    return MatExpansionPanel;
+}(_angular_cdk_accordion__WEBPACK_IMPORTED_MODULE_3__["CdkAccordionItem"]));
+var MatExpansionPanelActionRow = /** @class */ (function () {
+    function MatExpansionPanelActionRow() {
+    }
+    MatExpansionPanelActionRow.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: 'mat-action-row',
+                    host: {
+                        class: 'mat-action-row'
+                    }
+                },] },
+    ];
+    return MatExpansionPanelActionRow;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * `<mat-expansion-panel-header>`
+ *
+ * This component corresponds to the header element of an `<mat-expansion-panel>`.
+ */
+var MatExpansionPanelHeader = /** @class */ (function () {
+    function MatExpansionPanelHeader(panel, _element, _focusMonitor, _changeDetectorRef, defaultOptions) {
+        var _this = this;
+        this.panel = panel;
+        this._element = _element;
+        this._focusMonitor = _focusMonitor;
+        this._changeDetectorRef = _changeDetectorRef;
+        this._parentChangeSubscription = rxjs__WEBPACK_IMPORTED_MODULE_9__["Subscription"].EMPTY;
+        /** @type {?} */
+        var accordionHideToggleChange = panel.accordion ?
+            panel.accordion._stateChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["filter"])(function (changes) { return !!changes['hideToggle']; })) :
+            rxjs__WEBPACK_IMPORTED_MODULE_9__["EMPTY"];
+        // Since the toggle state depends on an @Input on the panel, we
+        // need to subscribe and trigger change detection manually.
+        this._parentChangeSubscription =
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["merge"])(panel.opened, panel.closed, accordionHideToggleChange, panel._inputChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["filter"])(function (changes) { return !!(changes['hideToggle'] || changes['disabled']); })))
+                .subscribe(function () { return _this._changeDetectorRef.markForCheck(); });
+        // Avoids focus being lost if the panel contained the focused element and was closed.
+        panel.closed
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["filter"])(function () { return panel._containsFocus(); }))
+            .subscribe(function () { return _focusMonitor.focusVia(_element, 'program'); });
+        _focusMonitor.monitor(_element).subscribe(function (origin) {
+            if (origin && panel.accordion) {
+                panel.accordion._handleHeaderFocus(_this);
+            }
+        });
+        if (defaultOptions) {
+            this.expandedHeight = defaultOptions.expandedHeight;
+            this.collapsedHeight = defaultOptions.collapsedHeight;
+        }
+    }
+    Object.defineProperty(MatExpansionPanelHeader.prototype, "disabled", {
+        /**
+         * Whether the associated panel is disabled. Implemented as a part of `FocusableOption`.
+         * @docs-private
+         */
+        get: /**
+         * Whether the associated panel is disabled. Implemented as a part of `FocusableOption`.
+         * \@docs-private
+         * @return {?}
+         */
+        function () {
+            return this.panel.disabled;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /** Toggles the expanded state of the panel. */
+    /**
+     * Toggles the expanded state of the panel.
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype._toggle = /**
+     * Toggles the expanded state of the panel.
+     * @return {?}
+     */
+    function () {
+        this.panel.toggle();
+    };
+    /** Gets whether the panel is expanded. */
+    /**
+     * Gets whether the panel is expanded.
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype._isExpanded = /**
+     * Gets whether the panel is expanded.
+     * @return {?}
+     */
+    function () {
+        return this.panel.expanded;
+    };
+    /** Gets the expanded state string of the panel. */
+    /**
+     * Gets the expanded state string of the panel.
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype._getExpandedState = /**
+     * Gets the expanded state string of the panel.
+     * @return {?}
+     */
+    function () {
+        return this.panel._getExpandedState();
+    };
+    /** Gets the panel id. */
+    /**
+     * Gets the panel id.
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype._getPanelId = /**
+     * Gets the panel id.
+     * @return {?}
+     */
+    function () {
+        return this.panel.id;
+    };
+    /** Gets whether the expand indicator should be shown. */
+    /**
+     * Gets whether the expand indicator should be shown.
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype._showToggle = /**
+     * Gets whether the expand indicator should be shown.
+     * @return {?}
+     */
+    function () {
+        return !this.panel.hideToggle && !this.panel.disabled;
+    };
+    /** Handle keydown event calling to toggle() if appropriate. */
+    /**
+     * Handle keydown event calling to toggle() if appropriate.
+     * @param {?} event
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype._keydown = /**
+     * Handle keydown event calling to toggle() if appropriate.
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        switch (event.keyCode) {
+            // Toggle for space and enter keys.
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_12__["SPACE"]:
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_12__["ENTER"]:
+                if (!Object(_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_12__["hasModifierKey"])(event)) {
+                    event.preventDefault();
+                    this._toggle();
+                }
+                break;
+            default:
+                if (this.panel.accordion) {
+                    this.panel.accordion._handleHeaderKeydown(event);
+                }
+                return;
+        }
+    };
+    /**
+     * Focuses the panel header. Implemented as a part of `FocusableOption`.
+     * @param origin Origin of the action that triggered the focus.
+     * @docs-private
+     */
+    /**
+     * Focuses the panel header. Implemented as a part of `FocusableOption`.
+     * \@docs-private
+     * @param {?=} origin Origin of the action that triggered the focus.
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype.focus = /**
+     * Focuses the panel header. Implemented as a part of `FocusableOption`.
+     * \@docs-private
+     * @param {?=} origin Origin of the action that triggered the focus.
+     * @return {?}
+     */
+    function (origin) {
+        if (origin === void 0) { origin = 'program'; }
+        this._focusMonitor.focusVia(this._element, origin);
+    };
+    /**
+     * @return {?}
+     */
+    MatExpansionPanelHeader.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._parentChangeSubscription.unsubscribe();
+        this._focusMonitor.stopMonitoring(this._element);
+    };
+    MatExpansionPanelHeader.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: 'mat-expansion-panel-header',
+                    styles: [".mat-expansion-panel-header{display:flex;flex-direction:row;align-items:center;padding:0 24px;border-radius:inherit}.mat-expansion-panel-header:focus,.mat-expansion-panel-header:hover{outline:0}.mat-expansion-panel-header.mat-expanded:focus,.mat-expansion-panel-header.mat-expanded:hover{background:inherit}.mat-expansion-panel-header:not([aria-disabled=true]){cursor:pointer}.mat-content{display:flex;flex:1;flex-direction:row;overflow:hidden}.mat-expansion-panel-header-description,.mat-expansion-panel-header-title{display:flex;flex-grow:1;margin-right:16px}[dir=rtl] .mat-expansion-panel-header-description,[dir=rtl] .mat-expansion-panel-header-title{margin-right:0;margin-left:16px}.mat-expansion-panel-header-description{flex-grow:2}.mat-expansion-indicator::after{border-style:solid;border-width:0 2px 2px 0;content:'';display:inline-block;padding:3px;transform:rotate(45deg);vertical-align:middle}"],
+                    template: "<span class=\"mat-content\"><ng-content select=\"mat-panel-title\"></ng-content><ng-content select=\"mat-panel-description\"></ng-content><ng-content></ng-content></span><span [@indicatorRotate]=\"_getExpandedState()\" *ngIf=\"_showToggle()\" class=\"mat-expansion-indicator\"></span>",
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                    animations: [
+                        matExpansionAnimations.indicatorRotate,
+                        matExpansionAnimations.expansionHeaderHeight
+                    ],
+                    host: {
+                        'class': 'mat-expansion-panel-header',
+                        'role': 'button',
+                        '[attr.id]': 'panel._headerId',
+                        '[attr.tabindex]': 'disabled ? -1 : 0',
+                        '[attr.aria-controls]': '_getPanelId()',
+                        '[attr.aria-expanded]': '_isExpanded()',
+                        '[attr.aria-disabled]': 'panel.disabled',
+                        '[class.mat-expanded]': '_isExpanded()',
+                        '(click)': '_toggle()',
+                        '(keydown)': '_keydown($event)',
+                        '[@expansionHeight]': "{\n        value: _getExpandedState(),\n        params: {\n          collapsedHeight: collapsedHeight,\n          expandedHeight: expandedHeight\n        }\n    }",
+                    },
+                },] },
+    ];
+    /** @nocollapse */
+    MatExpansionPanelHeader.ctorParameters = function () { return [
+        { type: MatExpansionPanel, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Host"] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__["FocusMonitor"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [MAT_EXPANSION_PANEL_DEFAULT_OPTIONS,] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }] }
+    ]; };
+    MatExpansionPanelHeader.propDecorators = {
+        expandedHeight: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        collapsedHeight: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }]
+    };
+    return MatExpansionPanelHeader;
+}());
+/**
+ * `<mat-panel-description>`
+ *
+ * This directive is to be used inside of the MatExpansionPanelHeader component.
+ */
+var MatExpansionPanelDescription = /** @class */ (function () {
+    function MatExpansionPanelDescription() {
+    }
+    MatExpansionPanelDescription.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: 'mat-panel-description',
+                    host: {
+                        class: 'mat-expansion-panel-header-description'
+                    }
+                },] },
+    ];
+    return MatExpansionPanelDescription;
+}());
+/**
+ * `<mat-panel-title>`
+ *
+ * This directive is to be used inside of the MatExpansionPanelHeader component.
+ */
+var MatExpansionPanelTitle = /** @class */ (function () {
+    function MatExpansionPanelTitle() {
+    }
+    MatExpansionPanelTitle.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: 'mat-panel-title',
+                    host: {
+                        class: 'mat-expansion-panel-header-title'
+                    }
+                },] },
+    ];
+    return MatExpansionPanelTitle;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Directive for a Material Design Accordion.
+ */
+var MatAccordion = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_2__["__extends"])(MatAccordion, _super);
+    function MatAccordion() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._hideToggle = false;
+        /**
+         * Display mode used for all expansion panels in the accordion. Currently two display
+         * modes exist:
+         *  default - a gutter-like spacing is placed around any expanded panel, placing the expanded
+         *     panel at a different elevation from the rest of the accordion.
+         *  flat - no spacing is placed around expanded panels, showing all panels at the same
+         *     elevation.
+         */
+        _this.displayMode = 'default';
+        return _this;
+    }
+    Object.defineProperty(MatAccordion.prototype, "hideToggle", {
+        /** Whether the expansion indicator should be hidden. */
+        get: /**
+         * Whether the expansion indicator should be hidden.
+         * @return {?}
+         */
+        function () { return this._hideToggle; },
+        set: /**
+         * @param {?} show
+         * @return {?}
+         */
+        function (show) { this._hideToggle = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__["coerceBooleanProperty"])(show); },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatAccordion.prototype.ngAfterContentInit = /**
+     * @return {?}
+     */
+    function () {
+        this._keyManager = new _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__["FocusKeyManager"](this._headers).withWrap();
+    };
+    /** Handles keyboard events coming in from the panel headers. */
+    /**
+     * Handles keyboard events coming in from the panel headers.
+     * @param {?} event
+     * @return {?}
+     */
+    MatAccordion.prototype._handleHeaderKeydown = /**
+     * Handles keyboard events coming in from the panel headers.
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        var keyCode = event.keyCode;
+        /** @type {?} */
+        var manager = this._keyManager;
+        if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_12__["HOME"]) {
+            manager.setFirstItemActive();
+            event.preventDefault();
+        }
+        else if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_12__["END"]) {
+            manager.setLastItemActive();
+            event.preventDefault();
+        }
+        else {
+            this._keyManager.onKeydown(event);
+        }
+    };
+    /**
+     * @param {?} header
+     * @return {?}
+     */
+    MatAccordion.prototype._handleHeaderFocus = /**
+     * @param {?} header
+     * @return {?}
+     */
+    function (header) {
+        this._keyManager.updateActiveItem(header);
+    };
+    MatAccordion.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: 'mat-accordion',
+                    exportAs: 'matAccordion',
+                    inputs: ['multi'],
+                    providers: [{
+                            provide: MAT_ACCORDION,
+                            useExisting: MatAccordion
+                        }],
+                    host: {
+                        class: 'mat-accordion'
+                    }
+                },] },
+    ];
+    MatAccordion.propDecorators = {
+        _headers: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChildren"], args: [MatExpansionPanelHeader, { descendants: true },] }],
+        hideToggle: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        displayMode: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }]
+    };
+    return MatAccordion;
+}(_angular_cdk_accordion__WEBPACK_IMPORTED_MODULE_3__["CdkAccordion"]));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatExpansionModule = /** @class */ (function () {
+    function MatExpansionModule() {
+    }
+    MatExpansionModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
+                    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_7__["CommonModule"], _angular_cdk_accordion__WEBPACK_IMPORTED_MODULE_3__["CdkAccordionModule"], _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_6__["PortalModule"]],
+                    exports: [
+                        MatAccordion,
+                        MatExpansionPanel,
+                        MatExpansionPanelActionRow,
+                        MatExpansionPanelHeader,
+                        MatExpansionPanelTitle,
+                        MatExpansionPanelDescription,
+                        MatExpansionPanelContent,
+                    ],
+                    declarations: [
+                        MatAccordion,
+                        MatExpansionPanel,
+                        MatExpansionPanelActionRow,
+                        MatExpansionPanelHeader,
+                        MatExpansionPanelTitle,
+                        MatExpansionPanelDescription,
+                        MatExpansionPanelContent,
+                    ],
+                },] },
+    ];
+    return MatExpansionModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=expansion.es5.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/@angular/material/esm5/form-field.es5.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@angular/material/esm5/form-field.es5.js ***!
@@ -100067,6 +102791,6242 @@ var MatInputModule = /** @class */ (function () {
 
 
 //# sourceMappingURL=input.es5.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@angular/material/esm5/progress-spinner.es5.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/progress-spinner.es5.js ***!
+  \*********************************************************************/
+/*! exports provided: MatProgressSpinnerModule, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY, MatProgressSpinnerBase, _MatProgressSpinnerMixinBase, MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS, MatProgressSpinner, MatSpinner */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatProgressSpinnerModule", function() { return MatProgressSpinnerModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY", function() { return MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatProgressSpinnerBase", function() { return MatProgressSpinnerBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MatProgressSpinnerMixinBase", function() { return _MatProgressSpinnerMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS", function() { return MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatProgressSpinner", function() { return MatProgressSpinner; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSpinner", function() { return MatSpinner; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/platform */ "./node_modules/@angular/cdk/esm5/platform.es5.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm5/core.es5.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Base reference size of the spinner.
+ * \@docs-private
+ * @type {?}
+ */
+var BASE_SIZE = 100;
+/**
+ * Base reference stroke width of the spinner.
+ * \@docs-private
+ * @type {?}
+ */
+var BASE_STROKE_WIDTH = 10;
+// Boilerplate for applying mixins to MatProgressSpinner.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatProgressSpinner.
+/**
+ * \@docs-private
+ */
+MatProgressSpinnerBase = /** @class */ (function () {
+    function MatProgressSpinnerBase(_elementRef) {
+        this._elementRef = _elementRef;
+    }
+    return MatProgressSpinnerBase;
+}());
+/** @type {?} */
+var _MatProgressSpinnerMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["mixinColor"])(MatProgressSpinnerBase, 'primary');
+/**
+ * Injection token to be used to override the default options for `mat-progress-spinner`.
+ * @type {?}
+ */
+var MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS = new _angular_core__WEBPACK_IMPORTED_MODULE_4__["InjectionToken"]('mat-progress-spinner-default-options', {
+    providedIn: 'root',
+    factory: MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY,
+});
+/**
+ * \@docs-private
+ * @return {?}
+ */
+function MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS_FACTORY() {
+    return { diameter: BASE_SIZE };
+}
+// .0001 percentage difference is necessary in order to avoid unwanted animation frames
+// for example because the animation duration is 4 seconds, .1% accounts to 4ms
+// which are enough to see the flicker described in
+// https://github.com/angular/material2/issues/8984
+/** @type {?} */
+var INDETERMINATE_ANIMATION_TEMPLATE = "\n @keyframes mat-progress-spinner-stroke-rotate-DIAMETER {\n    0%      { stroke-dashoffset: START_VALUE;  transform: rotate(0); }\n    12.5%   { stroke-dashoffset: END_VALUE;    transform: rotate(0); }\n    12.5001%  { stroke-dashoffset: END_VALUE;    transform: rotateX(180deg) rotate(72.5deg); }\n    25%     { stroke-dashoffset: START_VALUE;  transform: rotateX(180deg) rotate(72.5deg); }\n\n    25.0001%   { stroke-dashoffset: START_VALUE;  transform: rotate(270deg); }\n    37.5%   { stroke-dashoffset: END_VALUE;    transform: rotate(270deg); }\n    37.5001%  { stroke-dashoffset: END_VALUE;    transform: rotateX(180deg) rotate(161.5deg); }\n    50%     { stroke-dashoffset: START_VALUE;  transform: rotateX(180deg) rotate(161.5deg); }\n\n    50.0001%  { stroke-dashoffset: START_VALUE;  transform: rotate(180deg); }\n    62.5%   { stroke-dashoffset: END_VALUE;    transform: rotate(180deg); }\n    62.5001%  { stroke-dashoffset: END_VALUE;    transform: rotateX(180deg) rotate(251.5deg); }\n    75%     { stroke-dashoffset: START_VALUE;  transform: rotateX(180deg) rotate(251.5deg); }\n\n    75.0001%  { stroke-dashoffset: START_VALUE;  transform: rotate(90deg); }\n    87.5%   { stroke-dashoffset: END_VALUE;    transform: rotate(90deg); }\n    87.5001%  { stroke-dashoffset: END_VALUE;    transform: rotateX(180deg) rotate(341.5deg); }\n    100%    { stroke-dashoffset: START_VALUE;  transform: rotateX(180deg) rotate(341.5deg); }\n  }\n";
+/**
+ * `<mat-progress-spinner>` component.
+ */
+var MatProgressSpinner = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(MatProgressSpinner, _super);
+    function MatProgressSpinner(_elementRef, platform, _document, animationMode, defaults) {
+        var _this = _super.call(this, _elementRef) || this;
+        _this._elementRef = _elementRef;
+        _this._document = _document;
+        _this.animationMode = animationMode;
+        _this.defaults = defaults;
+        _this._value = 0;
+        _this._fallbackAnimation = false;
+        /**
+         * Whether the _mat-animation-noopable class should be applied, disabling animations.
+         */
+        _this._noopAnimations = _this.animationMode === 'NoopAnimations' && (!!_this.defaults && !_this.defaults._forceAnimations);
+        _this._diameter = BASE_SIZE;
+        /**
+         * Mode of the progress circle
+         */
+        _this.mode = 'determinate';
+        _this._fallbackAnimation = platform.EDGE || platform.TRIDENT;
+        if (defaults) {
+            if (defaults.diameter) {
+                _this.diameter = defaults.diameter;
+            }
+            if (defaults.strokeWidth) {
+                _this.strokeWidth = defaults.strokeWidth;
+            }
+        }
+        // On IE and Edge, we can't animate the `stroke-dashoffset`
+        // reliably so we fall back to a non-spec animation.
+        /** @type {?} */
+        var animationClass = "mat-progress-spinner-indeterminate" + (_this._fallbackAnimation ? '-fallback' : '') + "-animation";
+        _elementRef.nativeElement.classList.add(animationClass);
+        return _this;
+    }
+    Object.defineProperty(MatProgressSpinner.prototype, "diameter", {
+        /** The diameter of the progress spinner (will set width and height of svg). */
+        get: /**
+         * The diameter of the progress spinner (will set width and height of svg).
+         * @return {?}
+         */
+        function () { return this._diameter; },
+        set: /**
+         * @param {?} size
+         * @return {?}
+         */
+        function (size) {
+            this._diameter = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_1__["coerceNumberProperty"])(size);
+            if (!this._fallbackAnimation && !MatProgressSpinner.diameters.has(this._diameter)) {
+                this._attachStyleNode();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "strokeWidth", {
+        /** Stroke width of the progress spinner. */
+        get: /**
+         * Stroke width of the progress spinner.
+         * @return {?}
+         */
+        function () {
+            return this._strokeWidth || this.diameter / 10;
+        },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._strokeWidth = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_1__["coerceNumberProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "value", {
+        /** Value of the progress circle. */
+        get: /**
+         * Value of the progress circle.
+         * @return {?}
+         */
+        function () {
+            return this.mode === 'determinate' ? this._value : 0;
+        },
+        set: /**
+         * @param {?} newValue
+         * @return {?}
+         */
+        function (newValue) {
+            this._value = Math.max(0, Math.min(100, Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_1__["coerceNumberProperty"])(newValue)));
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "_circleRadius", {
+        /** The radius of the spinner, adjusted for stroke width. */
+        get: /**
+         * The radius of the spinner, adjusted for stroke width.
+         * @return {?}
+         */
+        function () {
+            return (this.diameter - BASE_STROKE_WIDTH) / 2;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "_viewBox", {
+        /** The view box of the spinner's svg element. */
+        get: /**
+         * The view box of the spinner's svg element.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var viewBox = this._circleRadius * 2 + this.strokeWidth;
+            return "0 0 " + viewBox + " " + viewBox;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "_strokeCircumference", {
+        /** The stroke circumference of the svg circle. */
+        get: /**
+         * The stroke circumference of the svg circle.
+         * @return {?}
+         */
+        function () {
+            return 2 * Math.PI * this._circleRadius;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "_strokeDashOffset", {
+        /** The dash offset of the svg circle. */
+        get: /**
+         * The dash offset of the svg circle.
+         * @return {?}
+         */
+        function () {
+            if (this.mode === 'determinate') {
+                return this._strokeCircumference * (100 - this._value) / 100;
+            }
+            // In fallback mode set the circle to 80% and rotate it with CSS.
+            if (this._fallbackAnimation && this.mode === 'indeterminate') {
+                return this._strokeCircumference * 0.2;
+            }
+            return null;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatProgressSpinner.prototype, "_circleStrokeWidth", {
+        /** Stroke width of the circle in percent. */
+        get: /**
+         * Stroke width of the circle in percent.
+         * @return {?}
+         */
+        function () {
+            return this.strokeWidth / this.diameter * 100;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /** Dynamically generates a style tag containing the correct animation for this diameter. */
+    /**
+     * Dynamically generates a style tag containing the correct animation for this diameter.
+     * @private
+     * @return {?}
+     */
+    MatProgressSpinner.prototype._attachStyleNode = /**
+     * Dynamically generates a style tag containing the correct animation for this diameter.
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var styleTag = MatProgressSpinner.styleTag;
+        if (!styleTag) {
+            styleTag = this._document.createElement('style');
+            this._document.head.appendChild(styleTag);
+            MatProgressSpinner.styleTag = styleTag;
+        }
+        if (styleTag && styleTag.sheet) {
+            ((/** @type {?} */ (styleTag.sheet))).insertRule(this._getAnimationText(), 0);
+        }
+        MatProgressSpinner.diameters.add(this.diameter);
+    };
+    /** Generates animation styles adjusted for the spinner's diameter. */
+    /**
+     * Generates animation styles adjusted for the spinner's diameter.
+     * @private
+     * @return {?}
+     */
+    MatProgressSpinner.prototype._getAnimationText = /**
+     * Generates animation styles adjusted for the spinner's diameter.
+     * @private
+     * @return {?}
+     */
+    function () {
+        return INDETERMINATE_ANIMATION_TEMPLATE
+            // Animation should begin at 5% and end at 80%
+            .replace(/START_VALUE/g, "" + 0.95 * this._strokeCircumference)
+            .replace(/END_VALUE/g, "" + 0.2 * this._strokeCircumference)
+            .replace(/DIAMETER/g, "" + this.diameter);
+    };
+    /**
+     * Tracks diameters of existing instances to de-dupe generated styles (default d = 100)
+     */
+    MatProgressSpinner.diameters = new Set([BASE_SIZE]);
+    /**
+     * Used for storing all of the generated keyframe animations.
+     * \@dynamic
+     */
+    MatProgressSpinner.styleTag = null;
+    MatProgressSpinner.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"], args: [{selector: 'mat-progress-spinner',
+                    exportAs: 'matProgressSpinner',
+                    host: {
+                        'role': 'progressbar',
+                        'class': 'mat-progress-spinner',
+                        '[class._mat-animation-noopable]': "_noopAnimations",
+                        '[style.width.px]': 'diameter',
+                        '[style.height.px]': 'diameter',
+                        '[attr.aria-valuemin]': 'mode === "determinate" ? 0 : null',
+                        '[attr.aria-valuemax]': 'mode === "determinate" ? 100 : null',
+                        '[attr.aria-valuenow]': 'value',
+                        '[attr.mode]': 'mode',
+                    },
+                    inputs: ['color'],
+                    template: "<svg [style.width.px]=\"diameter\" [style.height.px]=\"diameter\" [attr.viewBox]=\"_viewBox\" preserveAspectRatio=\"xMidYMid meet\" focusable=\"false\" [ngSwitch]=\"mode === 'indeterminate'\"><circle *ngSwitchCase=\"true\" cx=\"50%\" cy=\"50%\" [attr.r]=\"_circleRadius\" [style.animation-name]=\"'mat-progress-spinner-stroke-rotate-' + diameter\" [style.stroke-dashoffset.px]=\"_strokeDashOffset\" [style.stroke-dasharray.px]=\"_strokeCircumference\" [style.stroke-width.%]=\"_circleStrokeWidth\"></circle><circle *ngSwitchCase=\"false\" cx=\"50%\" cy=\"50%\" [attr.r]=\"_circleRadius\" [style.stroke-dashoffset.px]=\"_strokeDashOffset\" [style.stroke-dasharray.px]=\"_strokeCircumference\" [style.stroke-width.%]=\"_circleStrokeWidth\"></circle></svg>",
+                    styles: [".mat-progress-spinner{display:block;position:relative}.mat-progress-spinner svg{position:absolute;transform:rotate(-90deg);top:0;left:0;transform-origin:center;overflow:visible}.mat-progress-spinner circle{fill:transparent;transform-origin:center;transition:stroke-dashoffset 225ms linear}._mat-animation-noopable.mat-progress-spinner circle{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate]{animation:mat-progress-spinner-linear-rotate 2s linear infinite}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate]{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate] circle{transition-property:stroke;animation-duration:4s;animation-timing-function:cubic-bezier(.35,0,.25,1);animation-iteration-count:infinite}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate] circle{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate]{animation:mat-progress-spinner-stroke-rotate-fallback 10s cubic-bezier(.87,.03,.33,1) infinite}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate]{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate] circle{transition-property:stroke}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate] circle{transition:none;animation:none}@keyframes mat-progress-spinner-linear-rotate{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes mat-progress-spinner-stroke-rotate-100{0%{stroke-dashoffset:268.60617px;transform:rotate(0)}12.5%{stroke-dashoffset:56.54867px;transform:rotate(0)}12.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(72.5deg)}25%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(72.5deg)}25.0001%{stroke-dashoffset:268.60617px;transform:rotate(270deg)}37.5%{stroke-dashoffset:56.54867px;transform:rotate(270deg)}37.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(161.5deg)}50%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(161.5deg)}50.0001%{stroke-dashoffset:268.60617px;transform:rotate(180deg)}62.5%{stroke-dashoffset:56.54867px;transform:rotate(180deg)}62.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(251.5deg)}75%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(251.5deg)}75.0001%{stroke-dashoffset:268.60617px;transform:rotate(90deg)}87.5%{stroke-dashoffset:56.54867px;transform:rotate(90deg)}87.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(341.5deg)}100%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(341.5deg)}}@keyframes mat-progress-spinner-stroke-rotate-fallback{0%{transform:rotate(0)}25%{transform:rotate(1170deg)}50%{transform:rotate(2340deg)}75%{transform:rotate(3510deg)}100%{transform:rotate(4680deg)}}"],
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ChangeDetectionStrategy"].OnPush,
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ViewEncapsulation"].None,
+                },] },
+    ];
+    /** @nocollapse */
+    MatProgressSpinner.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"] },
+        { type: _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_2__["Platform"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"],] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [_angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["ANIMATION_MODULE_TYPE"],] }] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,] }] }
+    ]; };
+    MatProgressSpinner.propDecorators = {
+        diameter: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        strokeWidth: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        mode: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        value: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }]
+    };
+    return MatProgressSpinner;
+}(_MatProgressSpinnerMixinBase));
+/**
+ * `<mat-spinner>` component.
+ *
+ * This is a component definition to be used as a convenience reference to create an
+ * indeterminate `<mat-progress-spinner>` instance.
+ */
+var MatSpinner = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(MatSpinner, _super);
+    function MatSpinner(elementRef, platform, document, 
+    // @breaking-change 8.0.0 animationMode and defaults parameters to be made required.
+    animationMode, defaults) {
+        var _this = _super.call(this, elementRef, platform, document, animationMode, defaults) || this;
+        _this.mode = 'indeterminate';
+        return _this;
+    }
+    MatSpinner.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Component"], args: [{selector: 'mat-spinner',
+                    host: {
+                        'role': 'progressbar',
+                        'mode': 'indeterminate',
+                        'class': 'mat-spinner mat-progress-spinner',
+                        '[class._mat-animation-noopable]': "_noopAnimations",
+                        '[style.width.px]': 'diameter',
+                        '[style.height.px]': 'diameter',
+                    },
+                    inputs: ['color'],
+                    template: "<svg [style.width.px]=\"diameter\" [style.height.px]=\"diameter\" [attr.viewBox]=\"_viewBox\" preserveAspectRatio=\"xMidYMid meet\" focusable=\"false\" [ngSwitch]=\"mode === 'indeterminate'\"><circle *ngSwitchCase=\"true\" cx=\"50%\" cy=\"50%\" [attr.r]=\"_circleRadius\" [style.animation-name]=\"'mat-progress-spinner-stroke-rotate-' + diameter\" [style.stroke-dashoffset.px]=\"_strokeDashOffset\" [style.stroke-dasharray.px]=\"_strokeCircumference\" [style.stroke-width.%]=\"_circleStrokeWidth\"></circle><circle *ngSwitchCase=\"false\" cx=\"50%\" cy=\"50%\" [attr.r]=\"_circleRadius\" [style.stroke-dashoffset.px]=\"_strokeDashOffset\" [style.stroke-dasharray.px]=\"_strokeCircumference\" [style.stroke-width.%]=\"_circleStrokeWidth\"></circle></svg>",
+                    styles: [".mat-progress-spinner{display:block;position:relative}.mat-progress-spinner svg{position:absolute;transform:rotate(-90deg);top:0;left:0;transform-origin:center;overflow:visible}.mat-progress-spinner circle{fill:transparent;transform-origin:center;transition:stroke-dashoffset 225ms linear}._mat-animation-noopable.mat-progress-spinner circle{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate]{animation:mat-progress-spinner-linear-rotate 2s linear infinite}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate]{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate] circle{transition-property:stroke;animation-duration:4s;animation-timing-function:cubic-bezier(.35,0,.25,1);animation-iteration-count:infinite}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-animation[mode=indeterminate] circle{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate]{animation:mat-progress-spinner-stroke-rotate-fallback 10s cubic-bezier(.87,.03,.33,1) infinite}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate]{transition:none;animation:none}.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate] circle{transition-property:stroke}._mat-animation-noopable.mat-progress-spinner.mat-progress-spinner-indeterminate-fallback-animation[mode=indeterminate] circle{transition:none;animation:none}@keyframes mat-progress-spinner-linear-rotate{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes mat-progress-spinner-stroke-rotate-100{0%{stroke-dashoffset:268.60617px;transform:rotate(0)}12.5%{stroke-dashoffset:56.54867px;transform:rotate(0)}12.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(72.5deg)}25%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(72.5deg)}25.0001%{stroke-dashoffset:268.60617px;transform:rotate(270deg)}37.5%{stroke-dashoffset:56.54867px;transform:rotate(270deg)}37.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(161.5deg)}50%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(161.5deg)}50.0001%{stroke-dashoffset:268.60617px;transform:rotate(180deg)}62.5%{stroke-dashoffset:56.54867px;transform:rotate(180deg)}62.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(251.5deg)}75%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(251.5deg)}75.0001%{stroke-dashoffset:268.60617px;transform:rotate(90deg)}87.5%{stroke-dashoffset:56.54867px;transform:rotate(90deg)}87.5001%{stroke-dashoffset:56.54867px;transform:rotateX(180deg) rotate(341.5deg)}100%{stroke-dashoffset:268.60617px;transform:rotateX(180deg) rotate(341.5deg)}}@keyframes mat-progress-spinner-stroke-rotate-fallback{0%{transform:rotate(0)}25%{transform:rotate(1170deg)}50%{transform:rotate(2340deg)}75%{transform:rotate(3510deg)}100%{transform:rotate(4680deg)}}"],
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ChangeDetectionStrategy"].OnPush,
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ViewEncapsulation"].None,
+                },] },
+    ];
+    /** @nocollapse */
+    MatSpinner.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"] },
+        { type: _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_2__["Platform"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DOCUMENT"],] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [_angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_6__["ANIMATION_MODULE_TYPE"],] }] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Inject"], args: [MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,] }] }
+    ]; };
+    return MatSpinner;
+}(MatProgressSpinner));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatProgressSpinnerModule = /** @class */ (function () {
+    function MatProgressSpinnerModule() {
+    }
+    MatProgressSpinnerModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["NgModule"], args: [{
+                    imports: [_angular_material_core__WEBPACK_IMPORTED_MODULE_5__["MatCommonModule"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"]],
+                    exports: [
+                        MatProgressSpinner,
+                        MatSpinner,
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_5__["MatCommonModule"]
+                    ],
+                    declarations: [
+                        MatProgressSpinner,
+                        MatSpinner
+                    ],
+                },] },
+    ];
+    return MatProgressSpinnerModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=progress-spinner.es5.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@angular/material/esm5/select.es5.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/select.es5.js ***!
+  \***********************************************************/
+/*! exports provided: MatSelectModule, MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY, SELECT_PANEL_MAX_HEIGHT, SELECT_PANEL_PADDING_X, SELECT_PANEL_INDENT_PADDING_X, SELECT_ITEM_HEIGHT_EM, SELECT_MULTIPLE_PANEL_PADDING_X, SELECT_PANEL_VIEWPORT_PADDING, MAT_SELECT_SCROLL_STRATEGY, MAT_SELECT_SCROLL_STRATEGY_PROVIDER, MatSelectChange, MatSelectBase, _MatSelectMixinBase, MatSelectTrigger, MatSelect, matSelectAnimations, transformPanel, fadeInContent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSelectModule", function() { return MatSelectModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY", function() { return MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECT_PANEL_MAX_HEIGHT", function() { return SELECT_PANEL_MAX_HEIGHT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECT_PANEL_PADDING_X", function() { return SELECT_PANEL_PADDING_X; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECT_PANEL_INDENT_PADDING_X", function() { return SELECT_PANEL_INDENT_PADDING_X; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECT_ITEM_HEIGHT_EM", function() { return SELECT_ITEM_HEIGHT_EM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECT_MULTIPLE_PANEL_PADDING_X", function() { return SELECT_MULTIPLE_PANEL_PADDING_X; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SELECT_PANEL_VIEWPORT_PADDING", function() { return SELECT_PANEL_VIEWPORT_PADDING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_SELECT_SCROLL_STRATEGY", function() { return MAT_SELECT_SCROLL_STRATEGY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_SELECT_SCROLL_STRATEGY_PROVIDER", function() { return MAT_SELECT_SCROLL_STRATEGY_PROVIDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSelectChange", function() { return MatSelectChange; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSelectBase", function() { return MatSelectBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MatSelectMixinBase", function() { return _MatSelectMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSelectTrigger", function() { return MatSelectTrigger; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSelect", function() { return MatSelect; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "matSelectAnimations", function() { return matSelectAnimations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transformPanel", function() { return transformPanel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fadeInContent", function() { return fadeInContent; });
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm5/a11y.es5.js");
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/bidi */ "./node_modules/@angular/cdk/esm5/bidi.es5.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/cdk/collections */ "./node_modules/@angular/cdk/esm5/collections.es5.js");
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/keycodes */ "./node_modules/@angular/cdk/esm5/keycodes.es5.js");
+/* harmony import */ var _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/cdk/overlay */ "./node_modules/@angular/cdk/esm5/overlay.es5.js");
+/* harmony import */ var _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/cdk/scrolling */ "./node_modules/@angular/cdk/esm5/scrolling.es5.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm5/core.es5.js");
+/* harmony import */ var _angular_material_form_field__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/form-field */ "./node_modules/@angular/material/esm5/form-field.es5.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * The following are all the animations for the mat-select component, with each
+ * const containing the metadata for one animation.
+ *
+ * The values below match the implementation of the AngularJS Material mat-select animation.
+ * \@docs-private
+ * @type {?}
+ */
+var matSelectAnimations = {
+    /**
+     * This animation ensures the select's overlay panel animation (transformPanel) is called when
+     * closing the select.
+     * This is needed due to https://github.com/angular/angular/issues/23302
+     */
+    transformPanelWrap: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('transformPanelWrap', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])('* => void', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["query"])('@transformPanel', [Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animateChild"])()], { optional: true }))
+    ]),
+    /**
+     * This animation transforms the select's overlay panel on and off the page.
+     *
+     * When the panel is attached to the DOM, it expands its width by the amount of padding, scales it
+     * up to 100% on the Y axis, fades in its border, and translates slightly up and to the
+     * side to ensure the option text correctly overlaps the trigger text.
+     *
+     * When the panel is removed from the DOM, it simply fades out linearly.
+     */
+    transformPanel: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('transformPanel', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["state"])('void', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+            transform: 'scaleY(0.8)',
+            minWidth: '100%',
+            opacity: 0
+        })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["state"])('showing', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+            opacity: 1,
+            minWidth: 'calc(100% + 32px)',
+            // 32px = 2 * 16px padding
+            transform: 'scaleY(1)'
+        })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["state"])('showing-multiple', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({
+            opacity: 1,
+            minWidth: 'calc(100% + 64px)',
+            // 64px = 48px padding on the left + 16px padding on the right
+            transform: 'scaleY(1)'
+        })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])('void => *', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('120ms cubic-bezier(0, 0, 0.2, 1)')),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])('* => void', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('100ms 25ms linear', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 0 })))
+    ]),
+    /**
+     * This animation fades in the background color and text content of the
+     * select's options. It is time delayed to occur 100ms after the overlay
+     * panel has transformed in.
+     * @deprecated Not used anymore. To be removed.
+     * \@breaking-change 8.0.0
+     */
+    fadeInContent: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["trigger"])('fadeInContent', [
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["state"])('showing', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 1 })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["transition"])('void => showing', [
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["style"])({ opacity: 0 }),
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_0__["animate"])('150ms 100ms cubic-bezier(0.55, 0, 0.55, 0.2)')
+        ])
+    ])
+};
+/**
+ * @deprecated
+ * \@breaking-change 8.0.0
+ * \@docs-private
+ * @type {?}
+ */
+var transformPanel = matSelectAnimations.transformPanel;
+/**
+ * @deprecated
+ * \@breaking-change 8.0.0
+ * \@docs-private
+ * @type {?}
+ */
+var fadeInContent = matSelectAnimations.fadeInContent;
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * Returns an exception to be thrown when attempting to change a select's `multiple` option
+ * after initialization.
+ * \@docs-private
+ * @return {?}
+ */
+function getMatSelectDynamicMultipleError() {
+    return Error('Cannot change `multiple` mode of select after initialization.');
+}
+/**
+ * Returns an exception to be thrown when attempting to assign a non-array value to a select
+ * in `multiple` mode. Note that `undefined` and `null` are still valid values to allow for
+ * resetting the value.
+ * \@docs-private
+ * @return {?}
+ */
+function getMatSelectNonArrayValueError() {
+    return Error('Value must be an array in multiple-selection mode.');
+}
+/**
+ * Returns an exception to be thrown when assigning a non-function value to the comparator
+ * used to determine if a value corresponds to an option. Note that whether the function
+ * actually takes two values and returns a boolean is not checked.
+ * @return {?}
+ */
+function getMatSelectNonFunctionValueError() {
+    return Error('`compareWith` must be a function.');
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+var nextUniqueId = 0;
+/**
+ * The max height of the select's overlay panel
+ * @type {?}
+ */
+var SELECT_PANEL_MAX_HEIGHT = 256;
+/**
+ * The panel's padding on the x-axis
+ * @type {?}
+ */
+var SELECT_PANEL_PADDING_X = 16;
+/**
+ * The panel's x axis padding if it is indented (e.g. there is an option group).
+ * @type {?}
+ */
+var SELECT_PANEL_INDENT_PADDING_X = SELECT_PANEL_PADDING_X * 2;
+/**
+ * The height of the select items in `em` units.
+ * @type {?}
+ */
+var SELECT_ITEM_HEIGHT_EM = 3;
+// TODO(josephperrott): Revert to a constant after 2018 spec updates are fully merged.
+/**
+ * Distance between the panel edge and the option text in
+ * multi-selection mode.
+ *
+ * Calculated as:
+ * (SELECT_PANEL_PADDING_X * 1.5) + 20 = 44
+ * The padding is multiplied by 1.5 because the checkbox's margin is half the padding.
+ * The checkbox width is 16px.
+ * @type {?}
+ */
+var SELECT_MULTIPLE_PANEL_PADDING_X = 0;
+/**
+ * The select panel will only "fit" inside the viewport if it is positioned at
+ * this value or more away from the viewport boundary.
+ * @type {?}
+ */
+var SELECT_PANEL_VIEWPORT_PADDING = 8;
+/**
+ * Injection token that determines the scroll handling while a select is open.
+ * @type {?}
+ */
+var MAT_SELECT_SCROLL_STRATEGY = new _angular_core__WEBPACK_IMPORTED_MODULE_9__["InjectionToken"]('mat-select-scroll-strategy');
+/**
+ * \@docs-private
+ * @param {?} overlay
+ * @return {?}
+ */
+function MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY(overlay) {
+    return function () { return overlay.scrollStrategies.reposition(); };
+}
+/**
+ * \@docs-private
+ * @type {?}
+ */
+var MAT_SELECT_SCROLL_STRATEGY_PROVIDER = {
+    provide: MAT_SELECT_SCROLL_STRATEGY,
+    deps: [_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_7__["Overlay"]],
+    useFactory: MAT_SELECT_SCROLL_STRATEGY_PROVIDER_FACTORY,
+};
+/**
+ * Change event object that is emitted when the select value has changed.
+ */
+var  /**
+ * Change event object that is emitted when the select value has changed.
+ */
+MatSelectChange = /** @class */ (function () {
+    function MatSelectChange(source, value) {
+        this.source = source;
+        this.value = value;
+    }
+    return MatSelectChange;
+}());
+// Boilerplate for applying mixins to MatSelect.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatSelect.
+/**
+ * \@docs-private
+ */
+MatSelectBase = /** @class */ (function () {
+    function MatSelectBase(_elementRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl) {
+        this._elementRef = _elementRef;
+        this._defaultErrorStateMatcher = _defaultErrorStateMatcher;
+        this._parentForm = _parentForm;
+        this._parentFormGroup = _parentFormGroup;
+        this.ngControl = ngControl;
+    }
+    return MatSelectBase;
+}());
+/** @type {?} */
+var _MatSelectMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["mixinDisableRipple"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["mixinTabIndex"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["mixinDisabled"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["mixinErrorState"])(MatSelectBase))));
+/**
+ * Allows the user to customize the trigger that is displayed when the select has a value.
+ */
+var MatSelectTrigger = /** @class */ (function () {
+    function MatSelectTrigger() {
+    }
+    MatSelectTrigger.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Directive"], args: [{
+                    selector: 'mat-select-trigger'
+                },] },
+    ];
+    return MatSelectTrigger;
+}());
+var MatSelect = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatSelect, _super);
+    function MatSelect(_viewportRuler, _changeDetectorRef, _ngZone, _defaultErrorStateMatcher, elementRef, _dir, _parentForm, _parentFormGroup, _parentFormField, ngControl, tabIndex, scrollStrategyFactory, _liveAnnouncer) {
+        var _this = _super.call(this, elementRef, _defaultErrorStateMatcher, _parentForm, _parentFormGroup, ngControl) || this;
+        _this._viewportRuler = _viewportRuler;
+        _this._changeDetectorRef = _changeDetectorRef;
+        _this._ngZone = _ngZone;
+        _this._dir = _dir;
+        _this._parentFormField = _parentFormField;
+        _this.ngControl = ngControl;
+        _this._liveAnnouncer = _liveAnnouncer;
+        /**
+         * Whether or not the overlay panel is open.
+         */
+        _this._panelOpen = false;
+        /**
+         * Whether filling out the select is required in the form.
+         */
+        _this._required = false;
+        /**
+         * The scroll position of the overlay panel, calculated to center the selected option.
+         */
+        _this._scrollTop = 0;
+        /**
+         * Whether the component is in multiple selection mode.
+         */
+        _this._multiple = false;
+        /**
+         * Comparison function to specify which option is displayed. Defaults to object equality.
+         */
+        _this._compareWith = function (o1, o2) { return o1 === o2; };
+        /**
+         * Unique id for this input.
+         */
+        _this._uid = "mat-select-" + nextUniqueId++;
+        /**
+         * Emits whenever the component is destroyed.
+         */
+        _this._destroy = new rxjs__WEBPACK_IMPORTED_MODULE_13__["Subject"]();
+        /**
+         * The cached font-size of the trigger element.
+         */
+        _this._triggerFontSize = 0;
+        /**
+         * `View -> model callback called when value changes`
+         */
+        _this._onChange = function () { };
+        /**
+         * `View -> model callback called when select has been touched`
+         */
+        _this._onTouched = function () { };
+        /**
+         * The IDs of child options to be passed to the aria-owns attribute.
+         */
+        _this._optionIds = '';
+        /**
+         * The value of the select panel's transform-origin property.
+         */
+        _this._transformOrigin = 'top';
+        /**
+         * Emits when the panel element is finished transforming in.
+         */
+        _this._panelDoneAnimatingStream = new rxjs__WEBPACK_IMPORTED_MODULE_13__["Subject"]();
+        /**
+         * The y-offset of the overlay panel in relation to the trigger's top start corner.
+         * This must be adjusted to align the selected option text over the trigger text.
+         * when the panel opens. Will change based on the y-position of the selected option.
+         */
+        _this._offsetY = 0;
+        /**
+         * This position config ensures that the top "start" corner of the overlay
+         * is aligned with with the top "start" of the origin by default (overlapping
+         * the trigger completely). If the panel cannot fit below the trigger, it
+         * will fall back to a position above the trigger.
+         */
+        _this._positions = [
+            {
+                originX: 'start',
+                originY: 'top',
+                overlayX: 'start',
+                overlayY: 'top',
+            },
+            {
+                originX: 'start',
+                originY: 'bottom',
+                overlayX: 'start',
+                overlayY: 'bottom',
+            },
+        ];
+        /**
+         * Whether the component is disabling centering of the active option over the trigger.
+         */
+        _this._disableOptionCentering = false;
+        _this._focused = false;
+        /**
+         * A name for this control that can be used by `mat-form-field`.
+         */
+        _this.controlType = 'mat-select';
+        /**
+         * Aria label of the select. If not specified, the placeholder will be used as label.
+         */
+        _this.ariaLabel = '';
+        /**
+         * Combined stream of all of the child options' change events.
+         */
+        _this.optionSelectionChanges = Object(rxjs__WEBPACK_IMPORTED_MODULE_13__["defer"])(function () {
+            if (_this.options) {
+                return rxjs__WEBPACK_IMPORTED_MODULE_13__["merge"].apply(void 0, _this.options.map(function (option) { return option.onSelectionChange; }));
+            }
+            return _this._ngZone.onStable
+                .asObservable()
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["switchMap"])(function () { return _this.optionSelectionChanges; }));
+        });
+        /**
+         * Event emitted when the select panel has been toggled.
+         */
+        _this.openedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_9__["EventEmitter"]();
+        /**
+         * Event emitted when the select has been opened.
+         */
+        _this._openedStream = _this.openedChange.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["filter"])(function (o) { return o; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["map"])(function () { }));
+        /**
+         * Event emitted when the select has been closed.
+         */
+        _this._closedStream = _this.openedChange.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["filter"])(function (o) { return !o; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["map"])(function () { }));
+        /**
+         * Event emitted when the selected value has been changed by the user.
+         */
+        _this.selectionChange = new _angular_core__WEBPACK_IMPORTED_MODULE_9__["EventEmitter"]();
+        /**
+         * Event that emits whenever the raw value of the select changes. This is here primarily
+         * to facilitate the two-way binding for the `value` input.
+         * \@docs-private
+         */
+        _this.valueChange = new _angular_core__WEBPACK_IMPORTED_MODULE_9__["EventEmitter"]();
+        if (_this.ngControl) {
+            // Note: we provide the value accessor through here, instead of
+            // the `providers` to avoid running into a circular import.
+            _this.ngControl.valueAccessor = _this;
+        }
+        _this._scrollStrategyFactory = scrollStrategyFactory;
+        _this._scrollStrategy = _this._scrollStrategyFactory();
+        _this.tabIndex = parseInt(tabIndex) || 0;
+        // Force setter to be called in case id was not specified.
+        _this.id = _this.id;
+        return _this;
+    }
+    Object.defineProperty(MatSelect.prototype, "focused", {
+        /** Whether the select is focused. */
+        get: /**
+         * Whether the select is focused.
+         * @return {?}
+         */
+        function () {
+            return this._focused || this._panelOpen;
+        },
+        /**
+         * @deprecated Setter to be removed as this property is intended to be readonly.
+         * @breaking-change 8.0.0
+         */
+        set: /**
+         * @deprecated Setter to be removed as this property is intended to be readonly.
+         * \@breaking-change 8.0.0
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._focused = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "placeholder", {
+        /** Placeholder to be shown if no value has been selected. */
+        get: /**
+         * Placeholder to be shown if no value has been selected.
+         * @return {?}
+         */
+        function () { return this._placeholder; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._placeholder = value;
+            this.stateChanges.next();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "required", {
+        /** Whether the component is required. */
+        get: /**
+         * Whether the component is required.
+         * @return {?}
+         */
+        function () { return this._required; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._required = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__["coerceBooleanProperty"])(value);
+            this.stateChanges.next();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "multiple", {
+        /** Whether the user should be allowed to select multiple options. */
+        get: /**
+         * Whether the user should be allowed to select multiple options.
+         * @return {?}
+         */
+        function () { return this._multiple; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            if (this._selectionModel) {
+                throw getMatSelectDynamicMultipleError();
+            }
+            this._multiple = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "disableOptionCentering", {
+        /** Whether to center the active option over the trigger. */
+        get: /**
+         * Whether to center the active option over the trigger.
+         * @return {?}
+         */
+        function () { return this._disableOptionCentering; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._disableOptionCentering = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_4__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "compareWith", {
+        /**
+         * Function to compare the option values with the selected values. The first argument
+         * is a value from an option. The second is a value from the selection. A boolean
+         * should be returned.
+         */
+        get: /**
+         * Function to compare the option values with the selected values. The first argument
+         * is a value from an option. The second is a value from the selection. A boolean
+         * should be returned.
+         * @return {?}
+         */
+        function () { return this._compareWith; },
+        set: /**
+         * @param {?} fn
+         * @return {?}
+         */
+        function (fn) {
+            if (typeof fn !== 'function') {
+                throw getMatSelectNonFunctionValueError();
+            }
+            this._compareWith = fn;
+            if (this._selectionModel) {
+                // A different comparator means the selection could change.
+                this._initializeSelection();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "value", {
+        /** Value of the select control. */
+        get: /**
+         * Value of the select control.
+         * @return {?}
+         */
+        function () { return this._value; },
+        set: /**
+         * @param {?} newValue
+         * @return {?}
+         */
+        function (newValue) {
+            if (newValue !== this._value) {
+                this.writeValue(newValue);
+                this._value = newValue;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "id", {
+        /** Unique id of the element. */
+        get: /**
+         * Unique id of the element.
+         * @return {?}
+         */
+        function () { return this._id; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._id = value || this._uid;
+            this.stateChanges.next();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatSelect.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this._selectionModel = new _angular_cdk_collections__WEBPACK_IMPORTED_MODULE_5__["SelectionModel"](this.multiple);
+        this.stateChanges.next();
+        // We need `distinctUntilChanged` here, because some browsers will
+        // fire the animation end event twice for the same animation. See:
+        // https://github.com/angular/angular/issues/24084
+        this._panelDoneAnimatingStream
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["distinctUntilChanged"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(this._destroy))
+            .subscribe(function () {
+            if (_this.panelOpen) {
+                _this._scrollTop = 0;
+                _this.openedChange.emit(true);
+            }
+            else {
+                _this.openedChange.emit(false);
+                _this.overlayDir.offsetX = 0;
+                _this._changeDetectorRef.markForCheck();
+            }
+        });
+    };
+    /**
+     * @return {?}
+     */
+    MatSelect.prototype.ngAfterContentInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this._initKeyManager();
+        this._selectionModel.onChange.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(this._destroy)).subscribe(function (event) {
+            event.added.forEach(function (option) { return option.select(); });
+            event.removed.forEach(function (option) { return option.deselect(); });
+        });
+        this.options.changes.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["startWith"])(null), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(this._destroy)).subscribe(function () {
+            _this._resetOptions();
+            _this._initializeSelection();
+        });
+    };
+    /**
+     * @return {?}
+     */
+    MatSelect.prototype.ngDoCheck = /**
+     * @return {?}
+     */
+    function () {
+        if (this.ngControl) {
+            this.updateErrorState();
+        }
+    };
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    MatSelect.prototype.ngOnChanges = /**
+     * @param {?} changes
+     * @return {?}
+     */
+    function (changes) {
+        // Updating the disabled state is handled by `mixinDisabled`, but we need to additionally let
+        // the parent form field know to run change detection when the disabled state changes.
+        if (changes['disabled']) {
+            this.stateChanges.next();
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatSelect.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._destroy.next();
+        this._destroy.complete();
+        this.stateChanges.complete();
+    };
+    /** Toggles the overlay panel open or closed. */
+    /**
+     * Toggles the overlay panel open or closed.
+     * @return {?}
+     */
+    MatSelect.prototype.toggle = /**
+     * Toggles the overlay panel open or closed.
+     * @return {?}
+     */
+    function () {
+        this.panelOpen ? this.close() : this.open();
+    };
+    /** Opens the overlay panel. */
+    /**
+     * Opens the overlay panel.
+     * @return {?}
+     */
+    MatSelect.prototype.open = /**
+     * Opens the overlay panel.
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this.disabled || !this.options || !this.options.length || this._panelOpen) {
+            return;
+        }
+        this._triggerRect = this.trigger.nativeElement.getBoundingClientRect();
+        // Note: The computed font-size will be a string pixel value (e.g. "16px").
+        // `parseInt` ignores the trailing 'px' and converts this to a number.
+        this._triggerFontSize = parseInt(getComputedStyle(this.trigger.nativeElement).fontSize || '0');
+        this._panelOpen = true;
+        this._keyManager.withHorizontalOrientation(null);
+        this._calculateOverlayPosition();
+        this._highlightCorrectOption();
+        this._changeDetectorRef.markForCheck();
+        // Set the font size on the panel element once it exists.
+        this._ngZone.onStable.asObservable().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["take"])(1)).subscribe(function () {
+            if (_this._triggerFontSize && _this.overlayDir.overlayRef &&
+                _this.overlayDir.overlayRef.overlayElement) {
+                _this.overlayDir.overlayRef.overlayElement.style.fontSize = _this._triggerFontSize + "px";
+            }
+        });
+    };
+    /** Closes the overlay panel and focuses the host element. */
+    /**
+     * Closes the overlay panel and focuses the host element.
+     * @return {?}
+     */
+    MatSelect.prototype.close = /**
+     * Closes the overlay panel and focuses the host element.
+     * @return {?}
+     */
+    function () {
+        if (this._panelOpen) {
+            this._panelOpen = false;
+            this._keyManager.withHorizontalOrientation(this._isRtl() ? 'rtl' : 'ltr');
+            this._changeDetectorRef.markForCheck();
+            this._onTouched();
+        }
+    };
+    /**
+     * Sets the select's value. Part of the ControlValueAccessor interface
+     * required to integrate with Angular's core forms API.
+     *
+     * @param value New value to be written to the model.
+     */
+    /**
+     * Sets the select's value. Part of the ControlValueAccessor interface
+     * required to integrate with Angular's core forms API.
+     *
+     * @param {?} value New value to be written to the model.
+     * @return {?}
+     */
+    MatSelect.prototype.writeValue = /**
+     * Sets the select's value. Part of the ControlValueAccessor interface
+     * required to integrate with Angular's core forms API.
+     *
+     * @param {?} value New value to be written to the model.
+     * @return {?}
+     */
+    function (value) {
+        if (this.options) {
+            this._setSelectionByValue(value);
+        }
+    };
+    /**
+     * Saves a callback function to be invoked when the select's value
+     * changes from user input. Part of the ControlValueAccessor interface
+     * required to integrate with Angular's core forms API.
+     *
+     * @param fn Callback to be triggered when the value changes.
+     */
+    /**
+     * Saves a callback function to be invoked when the select's value
+     * changes from user input. Part of the ControlValueAccessor interface
+     * required to integrate with Angular's core forms API.
+     *
+     * @param {?} fn Callback to be triggered when the value changes.
+     * @return {?}
+     */
+    MatSelect.prototype.registerOnChange = /**
+     * Saves a callback function to be invoked when the select's value
+     * changes from user input. Part of the ControlValueAccessor interface
+     * required to integrate with Angular's core forms API.
+     *
+     * @param {?} fn Callback to be triggered when the value changes.
+     * @return {?}
+     */
+    function (fn) {
+        this._onChange = fn;
+    };
+    /**
+     * Saves a callback function to be invoked when the select is blurred
+     * by the user. Part of the ControlValueAccessor interface required
+     * to integrate with Angular's core forms API.
+     *
+     * @param fn Callback to be triggered when the component has been touched.
+     */
+    /**
+     * Saves a callback function to be invoked when the select is blurred
+     * by the user. Part of the ControlValueAccessor interface required
+     * to integrate with Angular's core forms API.
+     *
+     * @param {?} fn Callback to be triggered when the component has been touched.
+     * @return {?}
+     */
+    MatSelect.prototype.registerOnTouched = /**
+     * Saves a callback function to be invoked when the select is blurred
+     * by the user. Part of the ControlValueAccessor interface required
+     * to integrate with Angular's core forms API.
+     *
+     * @param {?} fn Callback to be triggered when the component has been touched.
+     * @return {?}
+     */
+    function (fn) {
+        this._onTouched = fn;
+    };
+    /**
+     * Disables the select. Part of the ControlValueAccessor interface required
+     * to integrate with Angular's core forms API.
+     *
+     * @param isDisabled Sets whether the component is disabled.
+     */
+    /**
+     * Disables the select. Part of the ControlValueAccessor interface required
+     * to integrate with Angular's core forms API.
+     *
+     * @param {?} isDisabled Sets whether the component is disabled.
+     * @return {?}
+     */
+    MatSelect.prototype.setDisabledState = /**
+     * Disables the select. Part of the ControlValueAccessor interface required
+     * to integrate with Angular's core forms API.
+     *
+     * @param {?} isDisabled Sets whether the component is disabled.
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+        this._changeDetectorRef.markForCheck();
+        this.stateChanges.next();
+    };
+    Object.defineProperty(MatSelect.prototype, "panelOpen", {
+        /** Whether or not the overlay panel is open. */
+        get: /**
+         * Whether or not the overlay panel is open.
+         * @return {?}
+         */
+        function () {
+            return this._panelOpen;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "selected", {
+        /** The currently selected option. */
+        get: /**
+         * The currently selected option.
+         * @return {?}
+         */
+        function () {
+            return this.multiple ? this._selectionModel.selected : this._selectionModel.selected[0];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSelect.prototype, "triggerValue", {
+        /** The value displayed in the trigger. */
+        get: /**
+         * The value displayed in the trigger.
+         * @return {?}
+         */
+        function () {
+            if (this.empty) {
+                return '';
+            }
+            if (this._multiple) {
+                /** @type {?} */
+                var selectedOptions = this._selectionModel.selected.map(function (option) { return option.viewValue; });
+                if (this._isRtl()) {
+                    selectedOptions.reverse();
+                }
+                // TODO(crisbeto): delimiter should be configurable for proper localization.
+                return selectedOptions.join(', ');
+            }
+            return this._selectionModel.selected[0].viewValue;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /** Whether the element is in RTL mode. */
+    /**
+     * Whether the element is in RTL mode.
+     * @return {?}
+     */
+    MatSelect.prototype._isRtl = /**
+     * Whether the element is in RTL mode.
+     * @return {?}
+     */
+    function () {
+        return this._dir ? this._dir.value === 'rtl' : false;
+    };
+    /** Handles all keydown events on the select. */
+    /**
+     * Handles all keydown events on the select.
+     * @param {?} event
+     * @return {?}
+     */
+    MatSelect.prototype._handleKeydown = /**
+     * Handles all keydown events on the select.
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        if (!this.disabled) {
+            this.panelOpen ? this._handleOpenKeydown(event) : this._handleClosedKeydown(event);
+        }
+    };
+    /** Handles keyboard events while the select is closed. */
+    /**
+     * Handles keyboard events while the select is closed.
+     * @private
+     * @param {?} event
+     * @return {?}
+     */
+    MatSelect.prototype._handleClosedKeydown = /**
+     * Handles keyboard events while the select is closed.
+     * @private
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        /** @type {?} */
+        var keyCode = event.keyCode;
+        /** @type {?} */
+        var isArrowKey = keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["DOWN_ARROW"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["UP_ARROW"] ||
+            keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["LEFT_ARROW"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["RIGHT_ARROW"];
+        /** @type {?} */
+        var isOpenKey = keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["ENTER"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["SPACE"];
+        /** @type {?} */
+        var manager = this._keyManager;
+        // Open the select on ALT + arrow key to match the native <select>
+        if ((isOpenKey && !Object(_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["hasModifierKey"])(event)) || ((this.multiple || event.altKey) && isArrowKey)) {
+            event.preventDefault(); // prevents the page from scrolling down when pressing space
+            this.open();
+        }
+        else if (!this.multiple) {
+            /** @type {?} */
+            var selectedOption = this.selected;
+            if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["HOME"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["END"]) {
+                keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["HOME"] ? manager.setFirstItemActive() : manager.setLastItemActive();
+                event.preventDefault();
+            }
+            else {
+                manager.onKeydown(event);
+            }
+            // Since the value has changed, we need to announce it ourselves.
+            // @breaking-change 8.0.0 remove null check for _liveAnnouncer.
+            if (this._liveAnnouncer && selectedOption !== this.selected) {
+                this._liveAnnouncer.announce(((/** @type {?} */ (this.selected))).viewValue);
+            }
+        }
+    };
+    /** Handles keyboard events when the selected is open. */
+    /**
+     * Handles keyboard events when the selected is open.
+     * @private
+     * @param {?} event
+     * @return {?}
+     */
+    MatSelect.prototype._handleOpenKeydown = /**
+     * Handles keyboard events when the selected is open.
+     * @private
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        /** @type {?} */
+        var keyCode = event.keyCode;
+        /** @type {?} */
+        var isArrowKey = keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["DOWN_ARROW"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["UP_ARROW"];
+        /** @type {?} */
+        var manager = this._keyManager;
+        if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["HOME"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["END"]) {
+            event.preventDefault();
+            keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["HOME"] ? manager.setFirstItemActive() : manager.setLastItemActive();
+        }
+        else if (isArrowKey && event.altKey) {
+            // Close the select on ALT + arrow key to match the native <select>
+            event.preventDefault();
+            this.close();
+        }
+        else if ((keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["ENTER"] || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["SPACE"]) && manager.activeItem &&
+            !Object(_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["hasModifierKey"])(event)) {
+            event.preventDefault();
+            manager.activeItem._selectViaInteraction();
+        }
+        else if (this._multiple && keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_6__["A"] && event.ctrlKey) {
+            event.preventDefault();
+            /** @type {?} */
+            var hasDeselectedOptions_1 = this.options.some(function (opt) { return !opt.disabled && !opt.selected; });
+            this.options.forEach(function (option) {
+                if (!option.disabled) {
+                    hasDeselectedOptions_1 ? option.select() : option.deselect();
+                }
+            });
+        }
+        else {
+            /** @type {?} */
+            var previouslyFocusedIndex = manager.activeItemIndex;
+            manager.onKeydown(event);
+            if (this._multiple && isArrowKey && event.shiftKey && manager.activeItem &&
+                manager.activeItemIndex !== previouslyFocusedIndex) {
+                manager.activeItem._selectViaInteraction();
+            }
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatSelect.prototype._onFocus = /**
+     * @return {?}
+     */
+    function () {
+        if (!this.disabled) {
+            this._focused = true;
+            this.stateChanges.next();
+        }
+    };
+    /**
+     * Calls the touched callback only if the panel is closed. Otherwise, the trigger will
+     * "blur" to the panel when it opens, causing a false positive.
+     */
+    /**
+     * Calls the touched callback only if the panel is closed. Otherwise, the trigger will
+     * "blur" to the panel when it opens, causing a false positive.
+     * @return {?}
+     */
+    MatSelect.prototype._onBlur = /**
+     * Calls the touched callback only if the panel is closed. Otherwise, the trigger will
+     * "blur" to the panel when it opens, causing a false positive.
+     * @return {?}
+     */
+    function () {
+        this._focused = false;
+        if (!this.disabled && !this.panelOpen) {
+            this._onTouched();
+            this._changeDetectorRef.markForCheck();
+            this.stateChanges.next();
+        }
+    };
+    /**
+     * Callback that is invoked when the overlay panel has been attached.
+     */
+    /**
+     * Callback that is invoked when the overlay panel has been attached.
+     * @return {?}
+     */
+    MatSelect.prototype._onAttached = /**
+     * Callback that is invoked when the overlay panel has been attached.
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.overlayDir.positionChange.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["take"])(1)).subscribe(function () {
+            _this._setPseudoCheckboxPaddingSize();
+            _this._changeDetectorRef.detectChanges();
+            _this._calculateOverlayOffsetX();
+            _this.panel.nativeElement.scrollTop = _this._scrollTop;
+        });
+    };
+    /** Returns the theme to be used on the panel. */
+    /**
+     * Returns the theme to be used on the panel.
+     * @return {?}
+     */
+    MatSelect.prototype._getPanelTheme = /**
+     * Returns the theme to be used on the panel.
+     * @return {?}
+     */
+    function () {
+        return this._parentFormField ? "mat-" + this._parentFormField.color : '';
+    };
+    // TODO(josephperrott): Remove after 2018 spec updates are fully merged.
+    /** Sets the pseudo checkbox padding size based on the width of the pseudo checkbox. */
+    // TODO(josephperrott): Remove after 2018 spec updates are fully merged.
+    /**
+     * Sets the pseudo checkbox padding size based on the width of the pseudo checkbox.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._setPseudoCheckboxPaddingSize = 
+    // TODO(josephperrott): Remove after 2018 spec updates are fully merged.
+    /**
+     * Sets the pseudo checkbox padding size based on the width of the pseudo checkbox.
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (!SELECT_MULTIPLE_PANEL_PADDING_X && this.multiple) {
+            /** @type {?} */
+            var pseudoCheckbox = this.panel.nativeElement.querySelector('.mat-pseudo-checkbox');
+            if (pseudoCheckbox) {
+                SELECT_MULTIPLE_PANEL_PADDING_X = SELECT_PANEL_PADDING_X * 1.5 + pseudoCheckbox.offsetWidth;
+            }
+        }
+    };
+    Object.defineProperty(MatSelect.prototype, "empty", {
+        /** Whether the select has a value. */
+        get: /**
+         * Whether the select has a value.
+         * @return {?}
+         */
+        function () {
+            return !this._selectionModel || this._selectionModel.isEmpty();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._initializeSelection = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        // Defer setting the value in order to avoid the "Expression
+        // has changed after it was checked" errors from Angular.
+        Promise.resolve().then(function () {
+            _this._setSelectionByValue(_this.ngControl ? _this.ngControl.value : _this._value);
+            _this.stateChanges.next();
+        });
+    };
+    /**
+     * Sets the selected option based on a value. If no option can be
+     * found with the designated value, the select trigger is cleared.
+     */
+    /**
+     * Sets the selected option based on a value. If no option can be
+     * found with the designated value, the select trigger is cleared.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    MatSelect.prototype._setSelectionByValue = /**
+     * Sets the selected option based on a value. If no option can be
+     * found with the designated value, the select trigger is cleared.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        var _this = this;
+        if (this.multiple && value) {
+            if (!Array.isArray(value)) {
+                throw getMatSelectNonArrayValueError();
+            }
+            this._selectionModel.clear();
+            value.forEach(function (currentValue) { return _this._selectValue(currentValue); });
+            this._sortValues();
+        }
+        else {
+            this._selectionModel.clear();
+            /** @type {?} */
+            var correspondingOption = this._selectValue(value);
+            // Shift focus to the active item. Note that we shouldn't do this in multiple
+            // mode, because we don't know what option the user interacted with last.
+            if (correspondingOption) {
+                this._keyManager.setActiveItem(correspondingOption);
+            }
+        }
+        this._changeDetectorRef.markForCheck();
+    };
+    /**
+     * Finds and selects and option based on its value.
+     * @returns Option that has the corresponding value.
+     */
+    /**
+     * Finds and selects and option based on its value.
+     * @private
+     * @param {?} value
+     * @return {?} Option that has the corresponding value.
+     */
+    MatSelect.prototype._selectValue = /**
+     * Finds and selects and option based on its value.
+     * @private
+     * @param {?} value
+     * @return {?} Option that has the corresponding value.
+     */
+    function (value) {
+        var _this = this;
+        /** @type {?} */
+        var correspondingOption = this.options.find(function (option) {
+            try {
+                // Treat null as a special reset value.
+                return option.value != null && _this._compareWith(option.value, value);
+            }
+            catch (error) {
+                if (Object(_angular_core__WEBPACK_IMPORTED_MODULE_9__["isDevMode"])()) {
+                    // Notify developers of errors in their comparator.
+                    console.warn(error);
+                }
+                return false;
+            }
+        });
+        if (correspondingOption) {
+            this._selectionModel.select(correspondingOption);
+        }
+        return correspondingOption;
+    };
+    /** Sets up a key manager to listen to keyboard events on the overlay panel. */
+    /**
+     * Sets up a key manager to listen to keyboard events on the overlay panel.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._initKeyManager = /**
+     * Sets up a key manager to listen to keyboard events on the overlay panel.
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this._keyManager = new _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__["ActiveDescendantKeyManager"](this.options)
+            .withTypeAhead()
+            .withVerticalOrientation()
+            .withHorizontalOrientation(this._isRtl() ? 'rtl' : 'ltr')
+            .withAllowedModifierKeys(['shiftKey']);
+        this._keyManager.tabOut.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(this._destroy)).subscribe(function () {
+            // Restore focus to the trigger before closing. Ensures that the focus
+            // position won't be lost if the user got focus into the overlay.
+            _this.focus();
+            _this.close();
+        });
+        this._keyManager.change.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(this._destroy)).subscribe(function () {
+            if (_this._panelOpen && _this.panel) {
+                _this._scrollActiveOptionIntoView();
+            }
+            else if (!_this._panelOpen && !_this.multiple && _this._keyManager.activeItem) {
+                _this._keyManager.activeItem._selectViaInteraction();
+            }
+        });
+    };
+    /** Drops current option subscriptions and IDs and resets from scratch. */
+    /**
+     * Drops current option subscriptions and IDs and resets from scratch.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._resetOptions = /**
+     * Drops current option subscriptions and IDs and resets from scratch.
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        /** @type {?} */
+        var changedOrDestroyed = Object(rxjs__WEBPACK_IMPORTED_MODULE_13__["merge"])(this.options.changes, this._destroy);
+        this.optionSelectionChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(changedOrDestroyed)).subscribe(function (event) {
+            _this._onSelect(event.source, event.isUserInput);
+            if (event.isUserInput && !_this.multiple && _this._panelOpen) {
+                _this.close();
+                _this.focus();
+            }
+        });
+        // Listen to changes in the internal state of the options and react accordingly.
+        // Handles cases like the labels of the selected options changing.
+        rxjs__WEBPACK_IMPORTED_MODULE_13__["merge"].apply(void 0, this.options.map(function (option) { return option._stateChanges; })).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_14__["takeUntil"])(changedOrDestroyed))
+            .subscribe(function () {
+            _this._changeDetectorRef.markForCheck();
+            _this.stateChanges.next();
+        });
+        this._setOptionIds();
+    };
+    /** Invoked when an option is clicked. */
+    /**
+     * Invoked when an option is clicked.
+     * @private
+     * @param {?} option
+     * @param {?} isUserInput
+     * @return {?}
+     */
+    MatSelect.prototype._onSelect = /**
+     * Invoked when an option is clicked.
+     * @private
+     * @param {?} option
+     * @param {?} isUserInput
+     * @return {?}
+     */
+    function (option, isUserInput) {
+        /** @type {?} */
+        var wasSelected = this._selectionModel.isSelected(option);
+        if (option.value == null && !this._multiple) {
+            option.deselect();
+            this._selectionModel.clear();
+            this._propagateChanges(option.value);
+        }
+        else {
+            option.selected ? this._selectionModel.select(option) : this._selectionModel.deselect(option);
+            if (isUserInput) {
+                this._keyManager.setActiveItem(option);
+            }
+            if (this.multiple) {
+                this._sortValues();
+                if (isUserInput) {
+                    // In case the user selected the option with their mouse, we
+                    // want to restore focus back to the trigger, in order to
+                    // prevent the select keyboard controls from clashing with
+                    // the ones from `mat-option`.
+                    this.focus();
+                }
+            }
+        }
+        if (wasSelected !== this._selectionModel.isSelected(option)) {
+            this._propagateChanges();
+        }
+        this.stateChanges.next();
+    };
+    /** Sorts the selected values in the selected based on their order in the panel. */
+    /**
+     * Sorts the selected values in the selected based on their order in the panel.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._sortValues = /**
+     * Sorts the selected values in the selected based on their order in the panel.
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this.multiple) {
+            /** @type {?} */
+            var options_1 = this.options.toArray();
+            this._selectionModel.sort(function (a, b) {
+                return _this.sortComparator ? _this.sortComparator(a, b, options_1) :
+                    options_1.indexOf(a) - options_1.indexOf(b);
+            });
+            this.stateChanges.next();
+        }
+    };
+    /** Emits change event to set the model value. */
+    /**
+     * Emits change event to set the model value.
+     * @private
+     * @param {?=} fallbackValue
+     * @return {?}
+     */
+    MatSelect.prototype._propagateChanges = /**
+     * Emits change event to set the model value.
+     * @private
+     * @param {?=} fallbackValue
+     * @return {?}
+     */
+    function (fallbackValue) {
+        /** @type {?} */
+        var valueToEmit = null;
+        if (this.multiple) {
+            valueToEmit = ((/** @type {?} */ (this.selected))).map(function (option) { return option.value; });
+        }
+        else {
+            valueToEmit = this.selected ? ((/** @type {?} */ (this.selected))).value : fallbackValue;
+        }
+        this._value = valueToEmit;
+        this.valueChange.emit(valueToEmit);
+        this._onChange(valueToEmit);
+        this.selectionChange.emit(new MatSelectChange(this, valueToEmit));
+        this._changeDetectorRef.markForCheck();
+    };
+    /** Records option IDs to pass to the aria-owns property. */
+    /**
+     * Records option IDs to pass to the aria-owns property.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._setOptionIds = /**
+     * Records option IDs to pass to the aria-owns property.
+     * @private
+     * @return {?}
+     */
+    function () {
+        this._optionIds = this.options.map(function (option) { return option.id; }).join(' ');
+    };
+    /**
+     * Highlights the selected item. If no option is selected, it will highlight
+     * the first item instead.
+     */
+    /**
+     * Highlights the selected item. If no option is selected, it will highlight
+     * the first item instead.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._highlightCorrectOption = /**
+     * Highlights the selected item. If no option is selected, it will highlight
+     * the first item instead.
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (this._keyManager) {
+            if (this.empty) {
+                this._keyManager.setFirstItemActive();
+            }
+            else {
+                this._keyManager.setActiveItem(this._selectionModel.selected[0]);
+            }
+        }
+    };
+    /** Scrolls the active option into view. */
+    /**
+     * Scrolls the active option into view.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._scrollActiveOptionIntoView = /**
+     * Scrolls the active option into view.
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var activeOptionIndex = this._keyManager.activeItemIndex || 0;
+        /** @type {?} */
+        var labelCount = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["_countGroupLabelsBeforeOption"])(activeOptionIndex, this.options, this.optionGroups);
+        this.panel.nativeElement.scrollTop = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["_getOptionScrollPosition"])(activeOptionIndex + labelCount, this._getItemHeight(), this.panel.nativeElement.scrollTop, SELECT_PANEL_MAX_HEIGHT);
+    };
+    /** Focuses the select element. */
+    /**
+     * Focuses the select element.
+     * @return {?}
+     */
+    MatSelect.prototype.focus = /**
+     * Focuses the select element.
+     * @return {?}
+     */
+    function () {
+        this._elementRef.nativeElement.focus();
+    };
+    /** Gets the index of the provided option in the option list. */
+    /**
+     * Gets the index of the provided option in the option list.
+     * @private
+     * @param {?} option
+     * @return {?}
+     */
+    MatSelect.prototype._getOptionIndex = /**
+     * Gets the index of the provided option in the option list.
+     * @private
+     * @param {?} option
+     * @return {?}
+     */
+    function (option) {
+        return this.options.reduce(function (result, current, index) {
+            return result === undefined ? (option === current ? index : undefined) : result;
+        }, undefined);
+    };
+    /** Calculates the scroll position and x- and y-offsets of the overlay panel. */
+    /**
+     * Calculates the scroll position and x- and y-offsets of the overlay panel.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._calculateOverlayPosition = /**
+     * Calculates the scroll position and x- and y-offsets of the overlay panel.
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var itemHeight = this._getItemHeight();
+        /** @type {?} */
+        var items = this._getItemCount();
+        /** @type {?} */
+        var panelHeight = Math.min(items * itemHeight, SELECT_PANEL_MAX_HEIGHT);
+        /** @type {?} */
+        var scrollContainerHeight = items * itemHeight;
+        // The farthest the panel can be scrolled before it hits the bottom
+        /** @type {?} */
+        var maxScroll = scrollContainerHeight - panelHeight;
+        // If no value is selected we open the popup to the first item.
+        /** @type {?} */
+        var selectedOptionOffset = this.empty ? 0 : (/** @type {?} */ (this._getOptionIndex(this._selectionModel.selected[0])));
+        selectedOptionOffset += Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["_countGroupLabelsBeforeOption"])(selectedOptionOffset, this.options, this.optionGroups);
+        // We must maintain a scroll buffer so the selected option will be scrolled to the
+        // center of the overlay panel rather than the top.
+        /** @type {?} */
+        var scrollBuffer = panelHeight / 2;
+        this._scrollTop = this._calculateOverlayScroll(selectedOptionOffset, scrollBuffer, maxScroll);
+        this._offsetY = this._calculateOverlayOffsetY(selectedOptionOffset, scrollBuffer, maxScroll);
+        this._checkOverlayWithinViewport(maxScroll);
+    };
+    /**
+     * Calculates the scroll position of the select's overlay panel.
+     *
+     * Attempts to center the selected option in the panel. If the option is
+     * too high or too low in the panel to be scrolled to the center, it clamps the
+     * scroll position to the min or max scroll positions respectively.
+     */
+    /**
+     * Calculates the scroll position of the select's overlay panel.
+     *
+     * Attempts to center the selected option in the panel. If the option is
+     * too high or too low in the panel to be scrolled to the center, it clamps the
+     * scroll position to the min or max scroll positions respectively.
+     * @param {?} selectedIndex
+     * @param {?} scrollBuffer
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    MatSelect.prototype._calculateOverlayScroll = /**
+     * Calculates the scroll position of the select's overlay panel.
+     *
+     * Attempts to center the selected option in the panel. If the option is
+     * too high or too low in the panel to be scrolled to the center, it clamps the
+     * scroll position to the min or max scroll positions respectively.
+     * @param {?} selectedIndex
+     * @param {?} scrollBuffer
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    function (selectedIndex, scrollBuffer, maxScroll) {
+        /** @type {?} */
+        var itemHeight = this._getItemHeight();
+        /** @type {?} */
+        var optionOffsetFromScrollTop = itemHeight * selectedIndex;
+        /** @type {?} */
+        var halfOptionHeight = itemHeight / 2;
+        // Starts at the optionOffsetFromScrollTop, which scrolls the option to the top of the
+        // scroll container, then subtracts the scroll buffer to scroll the option down to
+        // the center of the overlay panel. Half the option height must be re-added to the
+        // scrollTop so the option is centered based on its middle, not its top edge.
+        /** @type {?} */
+        var optimalScrollPosition = optionOffsetFromScrollTop - scrollBuffer + halfOptionHeight;
+        return Math.min(Math.max(0, optimalScrollPosition), maxScroll);
+    };
+    /** Returns the aria-label of the select component. */
+    /**
+     * Returns the aria-label of the select component.
+     * @return {?}
+     */
+    MatSelect.prototype._getAriaLabel = /**
+     * Returns the aria-label of the select component.
+     * @return {?}
+     */
+    function () {
+        // If an ariaLabelledby value has been set by the consumer, the select should not overwrite the
+        // `aria-labelledby` value by setting the ariaLabel to the placeholder.
+        return this.ariaLabelledby ? null : this.ariaLabel || this.placeholder;
+    };
+    /** Returns the aria-labelledby of the select component. */
+    /**
+     * Returns the aria-labelledby of the select component.
+     * @return {?}
+     */
+    MatSelect.prototype._getAriaLabelledby = /**
+     * Returns the aria-labelledby of the select component.
+     * @return {?}
+     */
+    function () {
+        if (this.ariaLabelledby) {
+            return this.ariaLabelledby;
+        }
+        // Note: we use `_getAriaLabel` here, because we want to check whether there's a
+        // computed label. `this.ariaLabel` is only the user-specified label.
+        if (!this._parentFormField || !this._parentFormField._hasFloatingLabel() ||
+            this._getAriaLabel()) {
+            return null;
+        }
+        return this._parentFormField._labelId || null;
+    };
+    /** Determines the `aria-activedescendant` to be set on the host. */
+    /**
+     * Determines the `aria-activedescendant` to be set on the host.
+     * @return {?}
+     */
+    MatSelect.prototype._getAriaActiveDescendant = /**
+     * Determines the `aria-activedescendant` to be set on the host.
+     * @return {?}
+     */
+    function () {
+        if (this.panelOpen && this._keyManager && this._keyManager.activeItem) {
+            return this._keyManager.activeItem.id;
+        }
+        return null;
+    };
+    /**
+     * Sets the x-offset of the overlay panel in relation to the trigger's top start corner.
+     * This must be adjusted to align the selected option text over the trigger text when
+     * the panel opens. Will change based on LTR or RTL text direction. Note that the offset
+     * can't be calculated until the panel has been attached, because we need to know the
+     * content width in order to constrain the panel within the viewport.
+     */
+    /**
+     * Sets the x-offset of the overlay panel in relation to the trigger's top start corner.
+     * This must be adjusted to align the selected option text over the trigger text when
+     * the panel opens. Will change based on LTR or RTL text direction. Note that the offset
+     * can't be calculated until the panel has been attached, because we need to know the
+     * content width in order to constrain the panel within the viewport.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._calculateOverlayOffsetX = /**
+     * Sets the x-offset of the overlay panel in relation to the trigger's top start corner.
+     * This must be adjusted to align the selected option text over the trigger text when
+     * the panel opens. Will change based on LTR or RTL text direction. Note that the offset
+     * can't be calculated until the panel has been attached, because we need to know the
+     * content width in order to constrain the panel within the viewport.
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var overlayRect = this.overlayDir.overlayRef.overlayElement.getBoundingClientRect();
+        /** @type {?} */
+        var viewportSize = this._viewportRuler.getViewportSize();
+        /** @type {?} */
+        var isRtl = this._isRtl();
+        /** @type {?} */
+        var paddingWidth = this.multiple ? SELECT_MULTIPLE_PANEL_PADDING_X + SELECT_PANEL_PADDING_X :
+            SELECT_PANEL_PADDING_X * 2;
+        /** @type {?} */
+        var offsetX;
+        // Adjust the offset, depending on the option padding.
+        if (this.multiple) {
+            offsetX = SELECT_MULTIPLE_PANEL_PADDING_X;
+        }
+        else {
+            /** @type {?} */
+            var selected = this._selectionModel.selected[0] || this.options.first;
+            offsetX = selected && selected.group ? SELECT_PANEL_INDENT_PADDING_X : SELECT_PANEL_PADDING_X;
+        }
+        // Invert the offset in LTR.
+        if (!isRtl) {
+            offsetX *= -1;
+        }
+        // Determine how much the select overflows on each side.
+        /** @type {?} */
+        var leftOverflow = 0 - (overlayRect.left + offsetX - (isRtl ? paddingWidth : 0));
+        /** @type {?} */
+        var rightOverflow = overlayRect.right + offsetX - viewportSize.width
+            + (isRtl ? 0 : paddingWidth);
+        // If the element overflows on either side, reduce the offset to allow it to fit.
+        if (leftOverflow > 0) {
+            offsetX += leftOverflow + SELECT_PANEL_VIEWPORT_PADDING;
+        }
+        else if (rightOverflow > 0) {
+            offsetX -= rightOverflow + SELECT_PANEL_VIEWPORT_PADDING;
+        }
+        // Set the offset directly in order to avoid having to go through change detection and
+        // potentially triggering "changed after it was checked" errors. Round the value to avoid
+        // blurry content in some browsers.
+        this.overlayDir.offsetX = Math.round(offsetX);
+        this.overlayDir.overlayRef.updatePosition();
+    };
+    /**
+     * Calculates the y-offset of the select's overlay panel in relation to the
+     * top start corner of the trigger. It has to be adjusted in order for the
+     * selected option to be aligned over the trigger when the panel opens.
+     */
+    /**
+     * Calculates the y-offset of the select's overlay panel in relation to the
+     * top start corner of the trigger. It has to be adjusted in order for the
+     * selected option to be aligned over the trigger when the panel opens.
+     * @private
+     * @param {?} selectedIndex
+     * @param {?} scrollBuffer
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    MatSelect.prototype._calculateOverlayOffsetY = /**
+     * Calculates the y-offset of the select's overlay panel in relation to the
+     * top start corner of the trigger. It has to be adjusted in order for the
+     * selected option to be aligned over the trigger when the panel opens.
+     * @private
+     * @param {?} selectedIndex
+     * @param {?} scrollBuffer
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    function (selectedIndex, scrollBuffer, maxScroll) {
+        /** @type {?} */
+        var itemHeight = this._getItemHeight();
+        /** @type {?} */
+        var optionHeightAdjustment = (itemHeight - this._triggerRect.height) / 2;
+        /** @type {?} */
+        var maxOptionsDisplayed = Math.floor(SELECT_PANEL_MAX_HEIGHT / itemHeight);
+        /** @type {?} */
+        var optionOffsetFromPanelTop;
+        // Disable offset if requested by user by returning 0 as value to offset
+        if (this._disableOptionCentering) {
+            return 0;
+        }
+        if (this._scrollTop === 0) {
+            optionOffsetFromPanelTop = selectedIndex * itemHeight;
+        }
+        else if (this._scrollTop === maxScroll) {
+            /** @type {?} */
+            var firstDisplayedIndex = this._getItemCount() - maxOptionsDisplayed;
+            /** @type {?} */
+            var selectedDisplayIndex = selectedIndex - firstDisplayedIndex;
+            // The first item is partially out of the viewport. Therefore we need to calculate what
+            // portion of it is shown in the viewport and account for it in our offset.
+            /** @type {?} */
+            var partialItemHeight = itemHeight - (this._getItemCount() * itemHeight - SELECT_PANEL_MAX_HEIGHT) % itemHeight;
+            // Because the panel height is longer than the height of the options alone,
+            // there is always extra padding at the top or bottom of the panel. When
+            // scrolled to the very bottom, this padding is at the top of the panel and
+            // must be added to the offset.
+            optionOffsetFromPanelTop = selectedDisplayIndex * itemHeight + partialItemHeight;
+        }
+        else {
+            // If the option was scrolled to the middle of the panel using a scroll buffer,
+            // its offset will be the scroll buffer minus the half height that was added to
+            // center it.
+            optionOffsetFromPanelTop = scrollBuffer - itemHeight / 2;
+        }
+        // The final offset is the option's offset from the top, adjusted for the height difference,
+        // multiplied by -1 to ensure that the overlay moves in the correct direction up the page.
+        // The value is rounded to prevent some browsers from blurring the content.
+        return Math.round(optionOffsetFromPanelTop * -1 - optionHeightAdjustment);
+    };
+    /**
+     * Checks that the attempted overlay position will fit within the viewport.
+     * If it will not fit, tries to adjust the scroll position and the associated
+     * y-offset so the panel can open fully on-screen. If it still won't fit,
+     * sets the offset back to 0 to allow the fallback position to take over.
+     */
+    /**
+     * Checks that the attempted overlay position will fit within the viewport.
+     * If it will not fit, tries to adjust the scroll position and the associated
+     * y-offset so the panel can open fully on-screen. If it still won't fit,
+     * sets the offset back to 0 to allow the fallback position to take over.
+     * @private
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    MatSelect.prototype._checkOverlayWithinViewport = /**
+     * Checks that the attempted overlay position will fit within the viewport.
+     * If it will not fit, tries to adjust the scroll position and the associated
+     * y-offset so the panel can open fully on-screen. If it still won't fit,
+     * sets the offset back to 0 to allow the fallback position to take over.
+     * @private
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    function (maxScroll) {
+        /** @type {?} */
+        var itemHeight = this._getItemHeight();
+        /** @type {?} */
+        var viewportSize = this._viewportRuler.getViewportSize();
+        /** @type {?} */
+        var topSpaceAvailable = this._triggerRect.top - SELECT_PANEL_VIEWPORT_PADDING;
+        /** @type {?} */
+        var bottomSpaceAvailable = viewportSize.height - this._triggerRect.bottom - SELECT_PANEL_VIEWPORT_PADDING;
+        /** @type {?} */
+        var panelHeightTop = Math.abs(this._offsetY);
+        /** @type {?} */
+        var totalPanelHeight = Math.min(this._getItemCount() * itemHeight, SELECT_PANEL_MAX_HEIGHT);
+        /** @type {?} */
+        var panelHeightBottom = totalPanelHeight - panelHeightTop - this._triggerRect.height;
+        if (panelHeightBottom > bottomSpaceAvailable) {
+            this._adjustPanelUp(panelHeightBottom, bottomSpaceAvailable);
+        }
+        else if (panelHeightTop > topSpaceAvailable) {
+            this._adjustPanelDown(panelHeightTop, topSpaceAvailable, maxScroll);
+        }
+        else {
+            this._transformOrigin = this._getOriginBasedOnOption();
+        }
+    };
+    /** Adjusts the overlay panel up to fit in the viewport. */
+    /**
+     * Adjusts the overlay panel up to fit in the viewport.
+     * @private
+     * @param {?} panelHeightBottom
+     * @param {?} bottomSpaceAvailable
+     * @return {?}
+     */
+    MatSelect.prototype._adjustPanelUp = /**
+     * Adjusts the overlay panel up to fit in the viewport.
+     * @private
+     * @param {?} panelHeightBottom
+     * @param {?} bottomSpaceAvailable
+     * @return {?}
+     */
+    function (panelHeightBottom, bottomSpaceAvailable) {
+        // Browsers ignore fractional scroll offsets, so we need to round.
+        /** @type {?} */
+        var distanceBelowViewport = Math.round(panelHeightBottom - bottomSpaceAvailable);
+        // Scrolls the panel up by the distance it was extending past the boundary, then
+        // adjusts the offset by that amount to move the panel up into the viewport.
+        this._scrollTop -= distanceBelowViewport;
+        this._offsetY -= distanceBelowViewport;
+        this._transformOrigin = this._getOriginBasedOnOption();
+        // If the panel is scrolled to the very top, it won't be able to fit the panel
+        // by scrolling, so set the offset to 0 to allow the fallback position to take
+        // effect.
+        if (this._scrollTop <= 0) {
+            this._scrollTop = 0;
+            this._offsetY = 0;
+            this._transformOrigin = "50% bottom 0px";
+        }
+    };
+    /** Adjusts the overlay panel down to fit in the viewport. */
+    /**
+     * Adjusts the overlay panel down to fit in the viewport.
+     * @private
+     * @param {?} panelHeightTop
+     * @param {?} topSpaceAvailable
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    MatSelect.prototype._adjustPanelDown = /**
+     * Adjusts the overlay panel down to fit in the viewport.
+     * @private
+     * @param {?} panelHeightTop
+     * @param {?} topSpaceAvailable
+     * @param {?} maxScroll
+     * @return {?}
+     */
+    function (panelHeightTop, topSpaceAvailable, maxScroll) {
+        // Browsers ignore fractional scroll offsets, so we need to round.
+        /** @type {?} */
+        var distanceAboveViewport = Math.round(panelHeightTop - topSpaceAvailable);
+        // Scrolls the panel down by the distance it was extending past the boundary, then
+        // adjusts the offset by that amount to move the panel down into the viewport.
+        this._scrollTop += distanceAboveViewport;
+        this._offsetY += distanceAboveViewport;
+        this._transformOrigin = this._getOriginBasedOnOption();
+        // If the panel is scrolled to the very bottom, it won't be able to fit the
+        // panel by scrolling, so set the offset to 0 to allow the fallback position
+        // to take effect.
+        if (this._scrollTop >= maxScroll) {
+            this._scrollTop = maxScroll;
+            this._offsetY = 0;
+            this._transformOrigin = "50% top 0px";
+            return;
+        }
+    };
+    /** Sets the transform origin point based on the selected option. */
+    /**
+     * Sets the transform origin point based on the selected option.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._getOriginBasedOnOption = /**
+     * Sets the transform origin point based on the selected option.
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var itemHeight = this._getItemHeight();
+        /** @type {?} */
+        var optionHeightAdjustment = (itemHeight - this._triggerRect.height) / 2;
+        /** @type {?} */
+        var originY = Math.abs(this._offsetY) - optionHeightAdjustment + itemHeight / 2;
+        return "50% " + originY + "px 0px";
+    };
+    /** Calculates the amount of items in the select. This includes options and group labels. */
+    /**
+     * Calculates the amount of items in the select. This includes options and group labels.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._getItemCount = /**
+     * Calculates the amount of items in the select. This includes options and group labels.
+     * @private
+     * @return {?}
+     */
+    function () {
+        return this.options.length + this.optionGroups.length;
+    };
+    /** Calculates the height of the select's options. */
+    /**
+     * Calculates the height of the select's options.
+     * @private
+     * @return {?}
+     */
+    MatSelect.prototype._getItemHeight = /**
+     * Calculates the height of the select's options.
+     * @private
+     * @return {?}
+     */
+    function () {
+        return this._triggerFontSize * SELECT_ITEM_HEIGHT_EM;
+    };
+    /**
+     * Implemented as part of MatFormFieldControl.
+     * @docs-private
+     */
+    /**
+     * Implemented as part of MatFormFieldControl.
+     * \@docs-private
+     * @param {?} ids
+     * @return {?}
+     */
+    MatSelect.prototype.setDescribedByIds = /**
+     * Implemented as part of MatFormFieldControl.
+     * \@docs-private
+     * @param {?} ids
+     * @return {?}
+     */
+    function (ids) {
+        this._ariaDescribedby = ids.join(' ');
+    };
+    /**
+     * Implemented as part of MatFormFieldControl.
+     * @docs-private
+     */
+    /**
+     * Implemented as part of MatFormFieldControl.
+     * \@docs-private
+     * @return {?}
+     */
+    MatSelect.prototype.onContainerClick = /**
+     * Implemented as part of MatFormFieldControl.
+     * \@docs-private
+     * @return {?}
+     */
+    function () {
+        this.focus();
+        this.open();
+    };
+    Object.defineProperty(MatSelect.prototype, "shouldLabelFloat", {
+        /**
+         * Implemented as part of MatFormFieldControl.
+         * @docs-private
+         */
+        get: /**
+         * Implemented as part of MatFormFieldControl.
+         * \@docs-private
+         * @return {?}
+         */
+        function () {
+            return this._panelOpen || !this.empty;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MatSelect.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Component"], args: [{selector: 'mat-select',
+                    exportAs: 'matSelect',
+                    template: "<div cdk-overlay-origin class=\"mat-select-trigger\" aria-hidden=\"true\" (click)=\"toggle()\" #origin=\"cdkOverlayOrigin\" #trigger><div class=\"mat-select-value\" [ngSwitch]=\"empty\"><span class=\"mat-select-placeholder\" *ngSwitchCase=\"true\">{{placeholder || '\u00A0'}}</span> <span class=\"mat-select-value-text\" *ngSwitchCase=\"false\" [ngSwitch]=\"!!customTrigger\"><span *ngSwitchDefault>{{triggerValue || '\u00A0'}}</span><ng-content select=\"mat-select-trigger\" *ngSwitchCase=\"true\"></ng-content></span></div><div class=\"mat-select-arrow-wrapper\"><div class=\"mat-select-arrow\"></div></div></div><ng-template cdk-connected-overlay cdkConnectedOverlayLockPosition cdkConnectedOverlayHasBackdrop cdkConnectedOverlayBackdropClass=\"cdk-overlay-transparent-backdrop\" [cdkConnectedOverlayScrollStrategy]=\"_scrollStrategy\" [cdkConnectedOverlayOrigin]=\"origin\" [cdkConnectedOverlayOpen]=\"panelOpen\" [cdkConnectedOverlayPositions]=\"_positions\" [cdkConnectedOverlayMinWidth]=\"_triggerRect?.width\" [cdkConnectedOverlayOffsetY]=\"_offsetY\" (backdropClick)=\"close()\" (attach)=\"_onAttached()\" (detach)=\"close()\"><div class=\"mat-select-panel-wrap\" [@transformPanelWrap]><div #panel class=\"mat-select-panel {{ _getPanelTheme() }}\" [ngClass]=\"panelClass\" [@transformPanel]=\"multiple ? 'showing-multiple' : 'showing'\" (@transformPanel.done)=\"_panelDoneAnimatingStream.next($event.toState)\" [style.transformOrigin]=\"_transformOrigin\" [style.font-size.px]=\"_triggerFontSize\" (keydown)=\"_handleKeydown($event)\"><ng-content></ng-content></div></div></ng-template>",
+                    styles: [".mat-select{display:inline-block;width:100%;outline:0}.mat-select-trigger{display:inline-table;cursor:pointer;position:relative;box-sizing:border-box}.mat-select-disabled .mat-select-trigger{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default}.mat-select-value{display:table-cell;max-width:0;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mat-select-value-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mat-select-arrow-wrapper{display:table-cell;vertical-align:middle}.mat-form-field-appearance-fill .mat-select-arrow-wrapper{transform:translateY(-50%)}.mat-form-field-appearance-outline .mat-select-arrow-wrapper{transform:translateY(-25%)}.mat-form-field-appearance-standard.mat-form-field-has-label .mat-select:not(.mat-select-empty) .mat-select-arrow-wrapper{transform:translateY(-50%)}.mat-form-field-appearance-standard .mat-select.mat-select-empty .mat-select-arrow-wrapper{transition:transform .4s cubic-bezier(.25,.8,.25,1)}._mat-animation-noopable.mat-form-field-appearance-standard .mat-select.mat-select-empty .mat-select-arrow-wrapper{transition:none}.mat-select-arrow{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid;margin:0 4px}.mat-select-panel-wrap{flex-basis:100%}.mat-select-panel{min-width:112px;max-width:280px;overflow:auto;-webkit-overflow-scrolling:touch;padding-top:0;padding-bottom:0;max-height:256px;min-width:100%;border-radius:4px}@media (-ms-high-contrast:active){.mat-select-panel{outline:solid 1px}}.mat-select-panel .mat-optgroup-label,.mat-select-panel .mat-option{font-size:inherit;line-height:3em;height:3em}.mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex{cursor:pointer}.mat-form-field-type-mat-select .mat-form-field-label{width:calc(100% - 18px)}.mat-select-placeholder{transition:color .4s .133s cubic-bezier(.25,.8,.25,1)}._mat-animation-noopable .mat-select-placeholder{transition:none}.mat-form-field-hide-placeholder .mat-select-placeholder{color:transparent;-webkit-text-fill-color:transparent;transition:none;display:block}"],
+                    inputs: ['disabled', 'disableRipple', 'tabIndex'],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ChangeDetectionStrategy"].OnPush,
+                    host: {
+                        'role': 'listbox',
+                        '[attr.id]': 'id',
+                        '[attr.tabindex]': 'tabIndex',
+                        '[attr.aria-label]': '_getAriaLabel()',
+                        '[attr.aria-labelledby]': '_getAriaLabelledby()',
+                        '[attr.aria-required]': 'required.toString()',
+                        '[attr.aria-disabled]': 'disabled.toString()',
+                        '[attr.aria-invalid]': 'errorState',
+                        '[attr.aria-owns]': 'panelOpen ? _optionIds : null',
+                        '[attr.aria-multiselectable]': 'multiple',
+                        '[attr.aria-describedby]': '_ariaDescribedby || null',
+                        '[attr.aria-activedescendant]': '_getAriaActiveDescendant()',
+                        '[class.mat-select-disabled]': 'disabled',
+                        '[class.mat-select-invalid]': 'errorState',
+                        '[class.mat-select-required]': 'required',
+                        '[class.mat-select-empty]': 'empty',
+                        'class': 'mat-select',
+                        '(keydown)': '_handleKeydown($event)',
+                        '(focus)': '_onFocus()',
+                        '(blur)': '_onBlur()',
+                    },
+                    animations: [
+                        matSelectAnimations.transformPanelWrap,
+                        matSelectAnimations.transformPanel
+                    ],
+                    providers: [
+                        { provide: _angular_material_form_field__WEBPACK_IMPORTED_MODULE_12__["MatFormFieldControl"], useExisting: MatSelect },
+                        { provide: _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MAT_OPTION_PARENT_COMPONENT"], useExisting: MatSelect }
+                    ],
+                },] },
+    ];
+    /** @nocollapse */
+    MatSelect.ctorParameters = function () { return [
+        { type: _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_8__["ViewportRuler"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ChangeDetectorRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["NgZone"] },
+        { type: _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["ErrorStateMatcher"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ElementRef"] },
+        { type: _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_3__["Directionality"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Optional"] }] },
+        { type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__["NgForm"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Optional"] }] },
+        { type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__["FormGroupDirective"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Optional"] }] },
+        { type: _angular_material_form_field__WEBPACK_IMPORTED_MODULE_12__["MatFormField"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Optional"] }] },
+        { type: _angular_forms__WEBPACK_IMPORTED_MODULE_10__["NgControl"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Self"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Optional"] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Attribute"], args: ['tabindex',] }] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Inject"], args: [MAT_SELECT_SCROLL_STRATEGY,] }] },
+        { type: _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_2__["LiveAnnouncer"] }
+    ]; };
+    MatSelect.propDecorators = {
+        trigger: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ViewChild"], args: ['trigger',] }],
+        panel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ViewChild"], args: ['panel',] }],
+        overlayDir: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ViewChild"], args: [_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_7__["CdkConnectedOverlay"],] }],
+        options: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ContentChildren"], args: [_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatOption"], { descendants: true },] }],
+        optionGroups: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ContentChildren"], args: [_angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatOptgroup"],] }],
+        panelClass: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        customTrigger: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["ContentChild"], args: [MatSelectTrigger,] }],
+        placeholder: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        required: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        multiple: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        disableOptionCentering: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        compareWith: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        value: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        ariaLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"], args: ['aria-label',] }],
+        ariaLabelledby: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"], args: ['aria-labelledby',] }],
+        errorStateMatcher: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        sortComparator: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        id: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Input"] }],
+        openedChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Output"] }],
+        _openedStream: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Output"], args: ['opened',] }],
+        _closedStream: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Output"], args: ['closed',] }],
+        selectionChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Output"] }],
+        valueChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["Output"] }]
+    };
+    return MatSelect;
+}(_MatSelectMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatSelectModule = /** @class */ (function () {
+    function MatSelectModule() {
+    }
+    MatSelectModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_9__["NgModule"], args: [{
+                    imports: [
+                        _angular_common__WEBPACK_IMPORTED_MODULE_15__["CommonModule"],
+                        _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_7__["OverlayModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatOptionModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatCommonModule"],
+                    ],
+                    exports: [_angular_material_form_field__WEBPACK_IMPORTED_MODULE_12__["MatFormFieldModule"], MatSelect, MatSelectTrigger, _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatOptionModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_11__["MatCommonModule"]],
+                    declarations: [MatSelect, MatSelectTrigger],
+                    providers: [MAT_SELECT_SCROLL_STRATEGY_PROVIDER]
+                },] },
+    ];
+    return MatSelectModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=select.es5.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@angular/material/esm5/slider.es5.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/slider.es5.js ***!
+  \***********************************************************/
+/*! exports provided: MatSliderModule, MAT_SLIDER_VALUE_ACCESSOR, MatSliderChange, MatSliderBase, _MatSliderMixinBase, MatSlider */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSliderModule", function() { return MatSliderModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_SLIDER_VALUE_ACCESSOR", function() { return MAT_SLIDER_VALUE_ACCESSOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSliderChange", function() { return MatSliderChange; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSliderBase", function() { return MatSliderBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MatSliderMixinBase", function() { return _MatSliderMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatSlider", function() { return MatSlider; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm5/a11y.es5.js");
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/bidi */ "./node_modules/@angular/cdk/esm5/bidi.es5.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/keycodes */ "./node_modules/@angular/cdk/esm5/keycodes.es5.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm5/core.es5.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Visually, a 30px separation between tick marks looks best. This is very subjective but it is
+ * the default separation we chose.
+ * @type {?}
+ */
+var MIN_AUTO_TICK_SEPARATION = 30;
+/**
+ * The thumb gap size for a disabled slider.
+ * @type {?}
+ */
+var DISABLED_THUMB_GAP = 7;
+/**
+ * The thumb gap size for a non-active slider at its minimum value.
+ * @type {?}
+ */
+var MIN_VALUE_NONACTIVE_THUMB_GAP = 7;
+/**
+ * The thumb gap size for an active slider at its minimum value.
+ * @type {?}
+ */
+var MIN_VALUE_ACTIVE_THUMB_GAP = 10;
+/**
+ * Provider Expression that allows mat-slider to register as a ControlValueAccessor.
+ * This allows it to support [(ngModel)] and [formControl].
+ * \@docs-private
+ * @type {?}
+ */
+var MAT_SLIDER_VALUE_ACCESSOR = {
+    provide: _angular_forms__WEBPACK_IMPORTED_MODULE_6__["NG_VALUE_ACCESSOR"],
+    useExisting: Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["forwardRef"])(function () { return MatSlider; }),
+    multi: true
+};
+/**
+ * A simple change event emitted by the MatSlider component.
+ */
+var  /**
+ * A simple change event emitted by the MatSlider component.
+ */
+MatSliderChange = /** @class */ (function () {
+    function MatSliderChange() {
+    }
+    return MatSliderChange;
+}());
+// Boilerplate for applying mixins to MatSlider.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatSlider.
+/**
+ * \@docs-private
+ */
+MatSliderBase = /** @class */ (function () {
+    function MatSliderBase(_elementRef) {
+        this._elementRef = _elementRef;
+    }
+    return MatSliderBase;
+}());
+/** @type {?} */
+var _MatSliderMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_7__["mixinTabIndex"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_7__["mixinColor"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_7__["mixinDisabled"])(MatSliderBase), 'accent'));
+/**
+ * Allows users to select from a range of values by moving the slider thumb. It is similar in
+ * behavior to the native `<input type="range">` element.
+ */
+var MatSlider = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"])(MatSlider, _super);
+    function MatSlider(elementRef, _focusMonitor, _changeDetectorRef, _dir, tabIndex, _animationMode) {
+        var _this = _super.call(this, elementRef) || this;
+        _this._focusMonitor = _focusMonitor;
+        _this._changeDetectorRef = _changeDetectorRef;
+        _this._dir = _dir;
+        _this._animationMode = _animationMode;
+        _this._invert = false;
+        _this._max = 100;
+        _this._min = 0;
+        _this._step = 1;
+        _this._thumbLabel = false;
+        _this._tickInterval = 0;
+        _this._value = null;
+        _this._vertical = false;
+        /**
+         * Event emitted when the slider value has changed.
+         */
+        _this.change = new _angular_core__WEBPACK_IMPORTED_MODULE_5__["EventEmitter"]();
+        /**
+         * Event emitted when the slider thumb moves.
+         */
+        _this.input = new _angular_core__WEBPACK_IMPORTED_MODULE_5__["EventEmitter"]();
+        /**
+         * Emits when the raw value of the slider changes. This is here primarily
+         * to facilitate the two-way binding for the `value` input.
+         * \@docs-private
+         */
+        _this.valueChange = new _angular_core__WEBPACK_IMPORTED_MODULE_5__["EventEmitter"]();
+        /**
+         * onTouch function registered via registerOnTouch (ControlValueAccessor).
+         */
+        _this.onTouched = function () { };
+        _this._percent = 0;
+        /**
+         * Whether or not the thumb is sliding.
+         * Used to determine if there should be a transition for the thumb and fill track.
+         */
+        _this._isSliding = false;
+        /**
+         * Whether or not the slider is active (clicked or sliding).
+         * Used to shrink and grow the thumb as according to the Material Design spec.
+         */
+        _this._isActive = false;
+        /**
+         * The size of a tick interval as a percentage of the size of the track.
+         */
+        _this._tickIntervalPercent = 0;
+        /**
+         * The dimensions of the slider.
+         */
+        _this._sliderDimensions = null;
+        _this._controlValueAccessorChangeFn = function () { };
+        /**
+         * Subscription to the Directionality change EventEmitter.
+         */
+        _this._dirChangeSubscription = rxjs__WEBPACK_IMPORTED_MODULE_9__["Subscription"].EMPTY;
+        _this.tabIndex = parseInt(tabIndex) || 0;
+        return _this;
+    }
+    Object.defineProperty(MatSlider.prototype, "invert", {
+        /** Whether the slider is inverted. */
+        get: /**
+         * Whether the slider is inverted.
+         * @return {?}
+         */
+        function () { return this._invert; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._invert = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "max", {
+        /** The maximum value that the slider can have. */
+        get: /**
+         * The maximum value that the slider can have.
+         * @return {?}
+         */
+        function () { return this._max; },
+        set: /**
+         * @param {?} v
+         * @return {?}
+         */
+        function (v) {
+            this._max = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceNumberProperty"])(v, this._max);
+            this._percent = this._calculatePercentage(this._value);
+            // Since this also modifies the percentage, we need to let the change detection know.
+            this._changeDetectorRef.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "min", {
+        /** The minimum value that the slider can have. */
+        get: /**
+         * The minimum value that the slider can have.
+         * @return {?}
+         */
+        function () { return this._min; },
+        set: /**
+         * @param {?} v
+         * @return {?}
+         */
+        function (v) {
+            this._min = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceNumberProperty"])(v, this._min);
+            // If the value wasn't explicitly set by the user, set it to the min.
+            if (this._value === null) {
+                this.value = this._min;
+            }
+            this._percent = this._calculatePercentage(this._value);
+            // Since this also modifies the percentage, we need to let the change detection know.
+            this._changeDetectorRef.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "step", {
+        /** The values at which the thumb will snap. */
+        get: /**
+         * The values at which the thumb will snap.
+         * @return {?}
+         */
+        function () { return this._step; },
+        set: /**
+         * @param {?} v
+         * @return {?}
+         */
+        function (v) {
+            this._step = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceNumberProperty"])(v, this._step);
+            if (this._step % 1 !== 0) {
+                this._roundToDecimal = (/** @type {?} */ (this._step.toString().split('.').pop())).length;
+            }
+            // Since this could modify the label, we need to notify the change detection.
+            this._changeDetectorRef.markForCheck();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "thumbLabel", {
+        /** Whether or not to show the thumb label. */
+        get: /**
+         * Whether or not to show the thumb label.
+         * @return {?}
+         */
+        function () { return this._thumbLabel; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) { this._thumbLabel = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceBooleanProperty"])(value); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "tickInterval", {
+        /**
+         * How often to show ticks. Relative to the step so that a tick always appears on a step.
+         * Ex: Tick interval of 4 with a step of 3 will draw a tick every 4 steps (every 12 values).
+         */
+        get: /**
+         * How often to show ticks. Relative to the step so that a tick always appears on a step.
+         * Ex: Tick interval of 4 with a step of 3 will draw a tick every 4 steps (every 12 values).
+         * @return {?}
+         */
+        function () { return this._tickInterval; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            if (value === 'auto') {
+                this._tickInterval = 'auto';
+            }
+            else if (typeof value === 'number' || typeof value === 'string') {
+                this._tickInterval = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceNumberProperty"])(value, (/** @type {?} */ (this._tickInterval)));
+            }
+            else {
+                this._tickInterval = 0;
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "value", {
+        /** Value of the slider. */
+        get: /**
+         * Value of the slider.
+         * @return {?}
+         */
+        function () {
+            // If the value needs to be read and it is still uninitialized, initialize it to the min.
+            if (this._value === null) {
+                this.value = this._min;
+            }
+            return this._value;
+        },
+        set: /**
+         * @param {?} v
+         * @return {?}
+         */
+        function (v) {
+            if (v !== this._value) {
+                /** @type {?} */
+                var value = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceNumberProperty"])(v);
+                // While incrementing by a decimal we can end up with values like 33.300000000000004.
+                // Truncate it to ensure that it matches the label and to make it easier to work with.
+                if (this._roundToDecimal) {
+                    value = parseFloat(value.toFixed(this._roundToDecimal));
+                }
+                this._value = value;
+                this._percent = this._calculatePercentage(this._value);
+                // Since this also modifies the percentage, we need to let the change detection know.
+                this._changeDetectorRef.markForCheck();
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "vertical", {
+        /** Whether the slider is vertical. */
+        get: /**
+         * Whether the slider is vertical.
+         * @return {?}
+         */
+        function () { return this._vertical; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._vertical = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_3__["coerceBooleanProperty"])(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "displayValue", {
+        /** The value to be used for display purposes. */
+        get: /**
+         * The value to be used for display purposes.
+         * @return {?}
+         */
+        function () {
+            if (this.displayWith) {
+                return this.displayWith(this.value);
+            }
+            // Note that this could be improved further by rounding something like 0.999 to 1 or
+            // 0.899 to 0.9, however it is very performance sensitive, because it gets called on
+            // every change detection cycle.
+            if (this._roundToDecimal && this.value && this.value % 1 !== 0) {
+                return this.value.toFixed(this._roundToDecimal);
+            }
+            return this.value || 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /** set focus to the host element */
+    /**
+     * set focus to the host element
+     * @return {?}
+     */
+    MatSlider.prototype.focus = /**
+     * set focus to the host element
+     * @return {?}
+     */
+    function () {
+        this._focusHostElement();
+    };
+    /** blur the host element */
+    /**
+     * blur the host element
+     * @return {?}
+     */
+    MatSlider.prototype.blur = /**
+     * blur the host element
+     * @return {?}
+     */
+    function () {
+        this._blurHostElement();
+    };
+    Object.defineProperty(MatSlider.prototype, "percent", {
+        /** The percentage of the slider that coincides with the value. */
+        get: /**
+         * The percentage of the slider that coincides with the value.
+         * @return {?}
+         */
+        function () { return this._clamp(this._percent); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_invertAxis", {
+        /**
+         * Whether the axis of the slider is inverted.
+         * (i.e. whether moving the thumb in the positive x or y direction decreases the slider's value).
+         */
+        get: /**
+         * Whether the axis of the slider is inverted.
+         * (i.e. whether moving the thumb in the positive x or y direction decreases the slider's value).
+         * @return {?}
+         */
+        function () {
+            // Standard non-inverted mode for a vertical slider should be dragging the thumb from bottom to
+            // top. However from a y-axis standpoint this is inverted.
+            return this.vertical ? !this.invert : this.invert;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_isMinValue", {
+        /** Whether the slider is at its minimum value. */
+        get: /**
+         * Whether the slider is at its minimum value.
+         * @return {?}
+         */
+        function () {
+            return this.percent === 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_thumbGap", {
+        /**
+         * The amount of space to leave between the slider thumb and the track fill & track background
+         * elements.
+         */
+        get: /**
+         * The amount of space to leave between the slider thumb and the track fill & track background
+         * elements.
+         * @return {?}
+         */
+        function () {
+            if (this.disabled) {
+                return DISABLED_THUMB_GAP;
+            }
+            if (this._isMinValue && !this.thumbLabel) {
+                return this._isActive ? MIN_VALUE_ACTIVE_THUMB_GAP : MIN_VALUE_NONACTIVE_THUMB_GAP;
+            }
+            return 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_trackBackgroundStyles", {
+        /** CSS styles for the track background element. */
+        get: /**
+         * CSS styles for the track background element.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var axis = this.vertical ? 'Y' : 'X';
+            /** @type {?} */
+            var scale = this.vertical ? "1, " + (1 - this.percent) + ", 1" : 1 - this.percent + ", 1, 1";
+            /** @type {?} */
+            var sign = this._shouldInvertMouseCoords() ? '-' : '';
+            return {
+                // scale3d avoids some rendering issues in Chrome. See #12071.
+                transform: "translate" + axis + "(" + sign + this._thumbGap + "px) scale3d(" + scale + ")"
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_trackFillStyles", {
+        /** CSS styles for the track fill element. */
+        get: /**
+         * CSS styles for the track fill element.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var axis = this.vertical ? 'Y' : 'X';
+            /** @type {?} */
+            var scale = this.vertical ? "1, " + this.percent + ", 1" : this.percent + ", 1, 1";
+            /** @type {?} */
+            var sign = this._shouldInvertMouseCoords() ? '' : '-';
+            return {
+                // scale3d avoids some rendering issues in Chrome. See #12071.
+                transform: "translate" + axis + "(" + sign + this._thumbGap + "px) scale3d(" + scale + ")"
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_ticksContainerStyles", {
+        /** CSS styles for the ticks container element. */
+        get: /**
+         * CSS styles for the ticks container element.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var axis = this.vertical ? 'Y' : 'X';
+            // For a horizontal slider in RTL languages we push the ticks container off the left edge
+            // instead of the right edge to avoid causing a horizontal scrollbar to appear.
+            /** @type {?} */
+            var sign = !this.vertical && this._getDirection() == 'rtl' ? '' : '-';
+            /** @type {?} */
+            var offset = this._tickIntervalPercent / 2 * 100;
+            return {
+                'transform': "translate" + axis + "(" + sign + offset + "%)"
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_ticksStyles", {
+        /** CSS styles for the ticks element. */
+        get: /**
+         * CSS styles for the ticks element.
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var tickSize = this._tickIntervalPercent * 100;
+            /** @type {?} */
+            var backgroundSize = this.vertical ? "2px " + tickSize + "%" : tickSize + "% 2px";
+            /** @type {?} */
+            var axis = this.vertical ? 'Y' : 'X';
+            // Depending on the direction we pushed the ticks container, push the ticks the opposite
+            // direction to re-center them but clip off the end edge. In RTL languages we need to flip the
+            // ticks 180 degrees so we're really cutting off the end edge abd not the start.
+            /** @type {?} */
+            var sign = !this.vertical && this._getDirection() == 'rtl' ? '-' : '';
+            /** @type {?} */
+            var rotate = !this.vertical && this._getDirection() == 'rtl' ? ' rotate(180deg)' : '';
+            /** @type {?} */
+            var styles = {
+                'backgroundSize': backgroundSize,
+                // Without translateZ ticks sometimes jitter as the slider moves on Chrome & Firefox.
+                'transform': "translateZ(0) translate" + axis + "(" + sign + tickSize / 2 + "%)" + rotate
+            };
+            if (this._isMinValue && this._thumbGap) {
+                /** @type {?} */
+                var side = this.vertical ?
+                    (this._invertAxis ? 'Bottom' : 'Top') :
+                    (this._invertAxis ? 'Right' : 'Left');
+                styles["padding" + side] = this._thumbGap + "px";
+            }
+            return styles;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatSlider.prototype, "_thumbContainerStyles", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var axis = this.vertical ? 'Y' : 'X';
+            // For a horizontal slider in RTL languages we push the thumb container off the left edge
+            // instead of the right edge to avoid causing a horizontal scrollbar to appear.
+            /** @type {?} */
+            var invertOffset = (this._getDirection() == 'rtl' && !this.vertical) ? !this._invertAxis : this._invertAxis;
+            /** @type {?} */
+            var offset = (invertOffset ? this.percent : 1 - this.percent) * 100;
+            return {
+                'transform': "translate" + axis + "(-" + offset + "%)"
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Whether mouse events should be converted to a slider position by calculating their distance
+     * from the right or bottom edge of the slider as opposed to the top or left.
+     */
+    /**
+     * Whether mouse events should be converted to a slider position by calculating their distance
+     * from the right or bottom edge of the slider as opposed to the top or left.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._shouldInvertMouseCoords = /**
+     * Whether mouse events should be converted to a slider position by calculating their distance
+     * from the right or bottom edge of the slider as opposed to the top or left.
+     * @private
+     * @return {?}
+     */
+    function () {
+        return (this._getDirection() == 'rtl' && !this.vertical) ? !this._invertAxis : this._invertAxis;
+    };
+    /** The language direction for this slider element. */
+    /**
+     * The language direction for this slider element.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._getDirection = /**
+     * The language direction for this slider element.
+     * @private
+     * @return {?}
+     */
+    function () {
+        return (this._dir && this._dir.value == 'rtl') ? 'rtl' : 'ltr';
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this._focusMonitor
+            .monitor(this._elementRef, true)
+            .subscribe(function (origin) {
+            _this._isActive = !!origin && origin !== 'keyboard';
+            _this._changeDetectorRef.detectChanges();
+        });
+        if (this._dir) {
+            this._dirChangeSubscription = this._dir.change.subscribe(function () {
+                _this._changeDetectorRef.markForCheck();
+            });
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._focusMonitor.stopMonitoring(this._elementRef);
+        this._dirChangeSubscription.unsubscribe();
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype._onMouseenter = /**
+     * @return {?}
+     */
+    function () {
+        if (this.disabled) {
+            return;
+        }
+        // We save the dimensions of the slider here so we can use them to update the spacing of the
+        // ticks and determine where on the slider click and slide events happen.
+        this._sliderDimensions = this._getSliderDimensions();
+        this._updateTickIntervalPercent();
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    MatSlider.prototype._onMousedown = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        // Don't do anything if the slider is disabled or the
+        // user is using anything other than the main mouse button.
+        if (this.disabled || event.button !== 0) {
+            return;
+        }
+        /** @type {?} */
+        var oldValue = this.value;
+        this._isSliding = false;
+        this._focusHostElement();
+        this._updateValueFromPosition({ x: event.clientX, y: event.clientY });
+        // Emit a change and input event if the value changed.
+        if (oldValue != this.value) {
+            this._emitInputEvent();
+            this._emitChangeEvent();
+        }
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    MatSlider.prototype._onSlide = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        if (this.disabled) {
+            return;
+        }
+        // The slide start event sometimes fails to fire on iOS, so if we're not already in the sliding
+        // state, call the slide start handler manually.
+        if (!this._isSliding) {
+            this._onSlideStart(null);
+        }
+        // Prevent the slide from selecting anything else.
+        event.preventDefault();
+        /** @type {?} */
+        var oldValue = this.value;
+        this._updateValueFromPosition({ x: event.center.x, y: event.center.y });
+        // Native range elements always emit `input` events when the value changed while sliding.
+        if (oldValue != this.value) {
+            this._emitInputEvent();
+        }
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    MatSlider.prototype._onSlideStart = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        if (this.disabled || this._isSliding) {
+            return;
+        }
+        // Simulate mouseenter in case this is a mobile device.
+        this._onMouseenter();
+        this._isSliding = true;
+        this._focusHostElement();
+        this._valueOnSlideStart = this.value;
+        if (event) {
+            this._updateValueFromPosition({ x: event.center.x, y: event.center.y });
+            event.preventDefault();
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype._onSlideEnd = /**
+     * @return {?}
+     */
+    function () {
+        this._isSliding = false;
+        if (this._valueOnSlideStart != this.value && !this.disabled) {
+            this._emitChangeEvent();
+        }
+        this._valueOnSlideStart = null;
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype._onFocus = /**
+     * @return {?}
+     */
+    function () {
+        // We save the dimensions of the slider here so we can use them to update the spacing of the
+        // ticks and determine where on the slider click and slide events happen.
+        this._sliderDimensions = this._getSliderDimensions();
+        this._updateTickIntervalPercent();
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype._onBlur = /**
+     * @return {?}
+     */
+    function () {
+        this.onTouched();
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    MatSlider.prototype._onKeydown = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        if (this.disabled || Object(_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["hasModifierKey"])(event)) {
+            return;
+        }
+        /** @type {?} */
+        var oldValue = this.value;
+        switch (event.keyCode) {
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["PAGE_UP"]:
+                this._increment(10);
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["PAGE_DOWN"]:
+                this._increment(-10);
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["END"]:
+                this.value = this.max;
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["HOME"]:
+                this.value = this.min;
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["LEFT_ARROW"]:
+                // NOTE: For a sighted user it would make more sense that when they press an arrow key on an
+                // inverted slider the thumb moves in that direction. However for a blind user, nothing
+                // about the slider indicates that it is inverted. They will expect left to be decrement,
+                // regardless of how it appears on the screen. For speakers ofRTL languages, they probably
+                // expect left to mean increment. Therefore we flip the meaning of the side arrow keys for
+                // RTL. For inverted sliders we prefer a good a11y experience to having it "look right" for
+                // sighted users, therefore we do not swap the meaning.
+                this._increment(this._getDirection() == 'rtl' ? 1 : -1);
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["UP_ARROW"]:
+                this._increment(1);
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["RIGHT_ARROW"]:
+                // See comment on LEFT_ARROW about the conditions under which we flip the meaning.
+                this._increment(this._getDirection() == 'rtl' ? -1 : 1);
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_4__["DOWN_ARROW"]:
+                this._increment(-1);
+                break;
+            default:
+                // Return if the key is not one that we explicitly handle to avoid calling preventDefault on
+                // it.
+                return;
+        }
+        if (oldValue != this.value) {
+            this._emitInputEvent();
+            this._emitChangeEvent();
+        }
+        this._isSliding = true;
+        event.preventDefault();
+    };
+    /**
+     * @return {?}
+     */
+    MatSlider.prototype._onKeyup = /**
+     * @return {?}
+     */
+    function () {
+        this._isSliding = false;
+    };
+    /** Increments the slider by the given number of steps (negative number decrements). */
+    /**
+     * Increments the slider by the given number of steps (negative number decrements).
+     * @private
+     * @param {?} numSteps
+     * @return {?}
+     */
+    MatSlider.prototype._increment = /**
+     * Increments the slider by the given number of steps (negative number decrements).
+     * @private
+     * @param {?} numSteps
+     * @return {?}
+     */
+    function (numSteps) {
+        this.value = this._clamp((this.value || 0) + this.step * numSteps, this.min, this.max);
+    };
+    /** Calculate the new value from the new physical location. The value will always be snapped. */
+    /**
+     * Calculate the new value from the new physical location. The value will always be snapped.
+     * @private
+     * @param {?} pos
+     * @return {?}
+     */
+    MatSlider.prototype._updateValueFromPosition = /**
+     * Calculate the new value from the new physical location. The value will always be snapped.
+     * @private
+     * @param {?} pos
+     * @return {?}
+     */
+    function (pos) {
+        if (!this._sliderDimensions) {
+            return;
+        }
+        /** @type {?} */
+        var offset = this.vertical ? this._sliderDimensions.top : this._sliderDimensions.left;
+        /** @type {?} */
+        var size = this.vertical ? this._sliderDimensions.height : this._sliderDimensions.width;
+        /** @type {?} */
+        var posComponent = this.vertical ? pos.y : pos.x;
+        // The exact value is calculated from the event and used to find the closest snap value.
+        /** @type {?} */
+        var percent = this._clamp((posComponent - offset) / size);
+        if (this._shouldInvertMouseCoords()) {
+            percent = 1 - percent;
+        }
+        // Since the steps may not divide cleanly into the max value, if the user
+        // slid to 0 or 100 percent, we jump to the min/max value. This approach
+        // is slightly more intuitive than using `Math.ceil` below, because it
+        // follows the user's pointer closer.
+        if (percent === 0) {
+            this.value = this.min;
+        }
+        else if (percent === 1) {
+            this.value = this.max;
+        }
+        else {
+            /** @type {?} */
+            var exactValue = this._calculateValue(percent);
+            // This calculation finds the closest step by finding the closest
+            // whole number divisible by the step relative to the min.
+            /** @type {?} */
+            var closestValue = Math.round((exactValue - this.min) / this.step) * this.step + this.min;
+            // The value needs to snap to the min and max.
+            this.value = this._clamp(closestValue, this.min, this.max);
+        }
+    };
+    /** Emits a change event if the current value is different from the last emitted value. */
+    /**
+     * Emits a change event if the current value is different from the last emitted value.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._emitChangeEvent = /**
+     * Emits a change event if the current value is different from the last emitted value.
+     * @private
+     * @return {?}
+     */
+    function () {
+        this._controlValueAccessorChangeFn(this.value);
+        this.valueChange.emit(this.value);
+        this.change.emit(this._createChangeEvent());
+    };
+    /** Emits an input event when the current value is different from the last emitted value. */
+    /**
+     * Emits an input event when the current value is different from the last emitted value.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._emitInputEvent = /**
+     * Emits an input event when the current value is different from the last emitted value.
+     * @private
+     * @return {?}
+     */
+    function () {
+        this.input.emit(this._createChangeEvent());
+    };
+    /** Updates the amount of space between ticks as a percentage of the width of the slider. */
+    /**
+     * Updates the amount of space between ticks as a percentage of the width of the slider.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._updateTickIntervalPercent = /**
+     * Updates the amount of space between ticks as a percentage of the width of the slider.
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (!this.tickInterval || !this._sliderDimensions) {
+            return;
+        }
+        if (this.tickInterval == 'auto') {
+            /** @type {?} */
+            var trackSize = this.vertical ? this._sliderDimensions.height : this._sliderDimensions.width;
+            /** @type {?} */
+            var pixelsPerStep = trackSize * this.step / (this.max - this.min);
+            /** @type {?} */
+            var stepsPerTick = Math.ceil(MIN_AUTO_TICK_SEPARATION / pixelsPerStep);
+            /** @type {?} */
+            var pixelsPerTick = stepsPerTick * this.step;
+            this._tickIntervalPercent = pixelsPerTick / trackSize;
+        }
+        else {
+            this._tickIntervalPercent = this.tickInterval * this.step / (this.max - this.min);
+        }
+    };
+    /** Creates a slider change object from the specified value. */
+    /**
+     * Creates a slider change object from the specified value.
+     * @private
+     * @param {?=} value
+     * @return {?}
+     */
+    MatSlider.prototype._createChangeEvent = /**
+     * Creates a slider change object from the specified value.
+     * @private
+     * @param {?=} value
+     * @return {?}
+     */
+    function (value) {
+        if (value === void 0) { value = this.value; }
+        /** @type {?} */
+        var event = new MatSliderChange();
+        event.source = this;
+        event.value = value;
+        return event;
+    };
+    /** Calculates the percentage of the slider that a value is. */
+    /**
+     * Calculates the percentage of the slider that a value is.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    MatSlider.prototype._calculatePercentage = /**
+     * Calculates the percentage of the slider that a value is.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        return ((value || 0) - this.min) / (this.max - this.min);
+    };
+    /** Calculates the value a percentage of the slider corresponds to. */
+    /**
+     * Calculates the value a percentage of the slider corresponds to.
+     * @private
+     * @param {?} percentage
+     * @return {?}
+     */
+    MatSlider.prototype._calculateValue = /**
+     * Calculates the value a percentage of the slider corresponds to.
+     * @private
+     * @param {?} percentage
+     * @return {?}
+     */
+    function (percentage) {
+        return this.min + percentage * (this.max - this.min);
+    };
+    /** Return a number between two numbers. */
+    /**
+     * Return a number between two numbers.
+     * @private
+     * @param {?} value
+     * @param {?=} min
+     * @param {?=} max
+     * @return {?}
+     */
+    MatSlider.prototype._clamp = /**
+     * Return a number between two numbers.
+     * @private
+     * @param {?} value
+     * @param {?=} min
+     * @param {?=} max
+     * @return {?}
+     */
+    function (value, min, max) {
+        if (min === void 0) { min = 0; }
+        if (max === void 0) { max = 1; }
+        return Math.max(min, Math.min(value, max));
+    };
+    /**
+     * Get the bounding client rect of the slider track element.
+     * The track is used rather than the native element to ignore the extra space that the thumb can
+     * take up.
+     */
+    /**
+     * Get the bounding client rect of the slider track element.
+     * The track is used rather than the native element to ignore the extra space that the thumb can
+     * take up.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._getSliderDimensions = /**
+     * Get the bounding client rect of the slider track element.
+     * The track is used rather than the native element to ignore the extra space that the thumb can
+     * take up.
+     * @private
+     * @return {?}
+     */
+    function () {
+        return this._sliderWrapper ? this._sliderWrapper.nativeElement.getBoundingClientRect() : null;
+    };
+    /**
+     * Focuses the native element.
+     * Currently only used to allow a blur event to fire but will be used with keyboard input later.
+     */
+    /**
+     * Focuses the native element.
+     * Currently only used to allow a blur event to fire but will be used with keyboard input later.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._focusHostElement = /**
+     * Focuses the native element.
+     * Currently only used to allow a blur event to fire but will be used with keyboard input later.
+     * @private
+     * @return {?}
+     */
+    function () {
+        this._elementRef.nativeElement.focus();
+    };
+    /** Blurs the native element. */
+    /**
+     * Blurs the native element.
+     * @private
+     * @return {?}
+     */
+    MatSlider.prototype._blurHostElement = /**
+     * Blurs the native element.
+     * @private
+     * @return {?}
+     */
+    function () {
+        this._elementRef.nativeElement.blur();
+    };
+    /**
+     * Sets the model value. Implemented as part of ControlValueAccessor.
+     * @param value
+     */
+    /**
+     * Sets the model value. Implemented as part of ControlValueAccessor.
+     * @param {?} value
+     * @return {?}
+     */
+    MatSlider.prototype.writeValue = /**
+     * Sets the model value. Implemented as part of ControlValueAccessor.
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        this.value = value;
+    };
+    /**
+     * Registers a callback to be triggered when the value has changed.
+     * Implemented as part of ControlValueAccessor.
+     * @param fn Callback to be registered.
+     */
+    /**
+     * Registers a callback to be triggered when the value has changed.
+     * Implemented as part of ControlValueAccessor.
+     * @param {?} fn Callback to be registered.
+     * @return {?}
+     */
+    MatSlider.prototype.registerOnChange = /**
+     * Registers a callback to be triggered when the value has changed.
+     * Implemented as part of ControlValueAccessor.
+     * @param {?} fn Callback to be registered.
+     * @return {?}
+     */
+    function (fn) {
+        this._controlValueAccessorChangeFn = fn;
+    };
+    /**
+     * Registers a callback to be triggered when the component is touched.
+     * Implemented as part of ControlValueAccessor.
+     * @param fn Callback to be registered.
+     */
+    /**
+     * Registers a callback to be triggered when the component is touched.
+     * Implemented as part of ControlValueAccessor.
+     * @param {?} fn Callback to be registered.
+     * @return {?}
+     */
+    MatSlider.prototype.registerOnTouched = /**
+     * Registers a callback to be triggered when the component is touched.
+     * Implemented as part of ControlValueAccessor.
+     * @param {?} fn Callback to be registered.
+     * @return {?}
+     */
+    function (fn) {
+        this.onTouched = fn;
+    };
+    /**
+     * Sets whether the component should be disabled.
+     * Implemented as part of ControlValueAccessor.
+     * @param isDisabled
+     */
+    /**
+     * Sets whether the component should be disabled.
+     * Implemented as part of ControlValueAccessor.
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    MatSlider.prototype.setDisabledState = /**
+     * Sets whether the component should be disabled.
+     * Implemented as part of ControlValueAccessor.
+     * @param {?} isDisabled
+     * @return {?}
+     */
+    function (isDisabled) {
+        this.disabled = isDisabled;
+    };
+    MatSlider.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Component"], args: [{selector: 'mat-slider',
+                    exportAs: 'matSlider',
+                    providers: [MAT_SLIDER_VALUE_ACCESSOR],
+                    host: {
+                        '(focus)': '_onFocus()',
+                        '(blur)': '_onBlur()',
+                        '(mousedown)': '_onMousedown($event)',
+                        '(keydown)': '_onKeydown($event)',
+                        '(keyup)': '_onKeyup()',
+                        '(mouseenter)': '_onMouseenter()',
+                        '(slide)': '_onSlide($event)',
+                        '(slideend)': '_onSlideEnd()',
+                        '(slidestart)': '_onSlideStart($event)',
+                        'class': 'mat-slider',
+                        'role': 'slider',
+                        '[tabIndex]': 'tabIndex',
+                        '[attr.aria-disabled]': 'disabled',
+                        '[attr.aria-valuemax]': 'max',
+                        '[attr.aria-valuemin]': 'min',
+                        '[attr.aria-valuenow]': 'value',
+                        '[attr.aria-orientation]': 'vertical ? "vertical" : "horizontal"',
+                        '[class.mat-slider-disabled]': 'disabled',
+                        '[class.mat-slider-has-ticks]': 'tickInterval',
+                        '[class.mat-slider-horizontal]': '!vertical',
+                        '[class.mat-slider-axis-inverted]': '_invertAxis',
+                        '[class.mat-slider-sliding]': '_isSliding',
+                        '[class.mat-slider-thumb-label-showing]': 'thumbLabel',
+                        '[class.mat-slider-vertical]': 'vertical',
+                        '[class.mat-slider-min-value]': '_isMinValue',
+                        '[class.mat-slider-hide-last-tick]': 'disabled || _isMinValue && _thumbGap && _invertAxis',
+                        '[class._mat-animation-noopable]': '_animationMode === "NoopAnimations"',
+                    },
+                    template: "<div class=\"mat-slider-wrapper\" #sliderWrapper><div class=\"mat-slider-track-wrapper\"><div class=\"mat-slider-track-background\" [ngStyle]=\"_trackBackgroundStyles\"></div><div class=\"mat-slider-track-fill\" [ngStyle]=\"_trackFillStyles\"></div></div><div class=\"mat-slider-ticks-container\" [ngStyle]=\"_ticksContainerStyles\"><div class=\"mat-slider-ticks\" [ngStyle]=\"_ticksStyles\"></div></div><div class=\"mat-slider-thumb-container\" [ngStyle]=\"_thumbContainerStyles\"><div class=\"mat-slider-focus-ring\"></div><div class=\"mat-slider-thumb\"></div><div class=\"mat-slider-thumb-label\"><span class=\"mat-slider-thumb-label-text\">{{displayValue}}</span></div></div></div>",
+                    styles: [".mat-slider{display:inline-block;position:relative;box-sizing:border-box;padding:8px;outline:0;vertical-align:middle}.mat-slider-wrapper{position:absolute}.mat-slider-track-wrapper{position:absolute;top:0;left:0;overflow:hidden}.mat-slider-track-fill{position:absolute;transform-origin:0 0;transition:transform .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-track-background{position:absolute;transform-origin:100% 100%;transition:transform .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-ticks-container{position:absolute;left:0;top:0;overflow:hidden}.mat-slider-ticks{background-repeat:repeat;background-clip:content-box;box-sizing:border-box;opacity:0;transition:opacity .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-thumb-container{position:absolute;z-index:1;transition:transform .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-focus-ring{position:absolute;width:30px;height:30px;border-radius:50%;transform:scale(0);opacity:0;transition:transform .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1),opacity .4s cubic-bezier(.25,.8,.25,1)}.mat-slider.cdk-keyboard-focused .mat-slider-focus-ring,.mat-slider.cdk-program-focused .mat-slider-focus-ring{transform:scale(1);opacity:1}.mat-slider:not(.mat-slider-disabled) .mat-slider-thumb,.mat-slider:not(.mat-slider-disabled) .mat-slider-thumb-label{cursor:-webkit-grab;cursor:grab}.mat-slider-sliding:not(.mat-slider-disabled) .mat-slider-thumb,.mat-slider-sliding:not(.mat-slider-disabled) .mat-slider-thumb-label,.mat-slider:not(.mat-slider-disabled) .mat-slider-thumb-label:active,.mat-slider:not(.mat-slider-disabled) .mat-slider-thumb:active{cursor:-webkit-grabbing;cursor:grabbing}.mat-slider-thumb{position:absolute;right:-10px;bottom:-10px;box-sizing:border-box;width:20px;height:20px;border:3px solid transparent;border-radius:50%;transform:scale(.7);transition:transform .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1),border-color .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-thumb-label{display:none;align-items:center;justify-content:center;position:absolute;width:28px;height:28px;border-radius:50%;transition:transform .4s cubic-bezier(.25,.8,.25,1),border-radius .4s cubic-bezier(.25,.8,.25,1),background-color .4s cubic-bezier(.25,.8,.25,1)}@media (-ms-high-contrast:active){.mat-slider-thumb-label{outline:solid 1px}}.mat-slider-thumb-label-text{z-index:1;opacity:0;transition:opacity .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-sliding .mat-slider-thumb-container,.mat-slider-sliding .mat-slider-track-background,.mat-slider-sliding .mat-slider-track-fill{transition-duration:0s}.mat-slider-has-ticks .mat-slider-wrapper::after{content:'';position:absolute;border-width:0;border-style:solid;opacity:0;transition:opacity .4s cubic-bezier(.25,.8,.25,1)}.mat-slider-has-ticks.cdk-focused:not(.mat-slider-hide-last-tick) .mat-slider-wrapper::after,.mat-slider-has-ticks:hover:not(.mat-slider-hide-last-tick) .mat-slider-wrapper::after{opacity:1}.mat-slider-has-ticks.cdk-focused:not(.mat-slider-disabled) .mat-slider-ticks,.mat-slider-has-ticks:hover:not(.mat-slider-disabled) .mat-slider-ticks{opacity:1}.mat-slider-thumb-label-showing .mat-slider-focus-ring{display:none}.mat-slider-thumb-label-showing .mat-slider-thumb-label{display:flex}.mat-slider-axis-inverted .mat-slider-track-fill{transform-origin:100% 100%}.mat-slider-axis-inverted .mat-slider-track-background{transform-origin:0 0}.mat-slider:not(.mat-slider-disabled).cdk-focused.mat-slider-thumb-label-showing .mat-slider-thumb{transform:scale(0)}.mat-slider:not(.mat-slider-disabled).cdk-focused .mat-slider-thumb-label{border-radius:50% 50% 0}.mat-slider:not(.mat-slider-disabled).cdk-focused .mat-slider-thumb-label-text{opacity:1}.mat-slider:not(.mat-slider-disabled).cdk-mouse-focused .mat-slider-thumb,.mat-slider:not(.mat-slider-disabled).cdk-program-focused .mat-slider-thumb,.mat-slider:not(.mat-slider-disabled).cdk-touch-focused .mat-slider-thumb{border-width:2px;transform:scale(1)}.mat-slider-disabled .mat-slider-focus-ring{transform:scale(0);opacity:0}.mat-slider-disabled .mat-slider-thumb{border-width:4px;transform:scale(.5)}.mat-slider-disabled .mat-slider-thumb-label{display:none}.mat-slider-horizontal{height:48px;min-width:128px}.mat-slider-horizontal .mat-slider-wrapper{height:2px;top:23px;left:8px;right:8px}.mat-slider-horizontal .mat-slider-wrapper::after{height:2px;border-left-width:2px;right:0;top:0}.mat-slider-horizontal .mat-slider-track-wrapper{height:2px;width:100%}.mat-slider-horizontal .mat-slider-track-fill{height:2px;width:100%;transform:scaleX(0)}.mat-slider-horizontal .mat-slider-track-background{height:2px;width:100%;transform:scaleX(1)}.mat-slider-horizontal .mat-slider-ticks-container{height:2px;width:100%}@media (-ms-high-contrast:active){.mat-slider-horizontal .mat-slider-ticks-container{height:0;outline:solid 2px;top:1px}}.mat-slider-horizontal .mat-slider-ticks{height:2px;width:100%}.mat-slider-horizontal .mat-slider-thumb-container{width:100%;height:0;top:50%}.mat-slider-horizontal .mat-slider-focus-ring{top:-15px;right:-15px}.mat-slider-horizontal .mat-slider-thumb-label{right:-14px;top:-40px;transform:translateY(26px) scale(.01) rotate(45deg)}.mat-slider-horizontal .mat-slider-thumb-label-text{transform:rotate(-45deg)}.mat-slider-horizontal.cdk-focused .mat-slider-thumb-label{transform:rotate(45deg)}@media (-ms-high-contrast:active){.mat-slider-horizontal.cdk-focused .mat-slider-thumb-label,.mat-slider-horizontal.cdk-focused .mat-slider-thumb-label-text{transform:none}}.mat-slider-vertical{width:48px;min-height:128px}.mat-slider-vertical .mat-slider-wrapper{width:2px;top:8px;bottom:8px;left:23px}.mat-slider-vertical .mat-slider-wrapper::after{width:2px;border-top-width:2px;bottom:0;left:0}.mat-slider-vertical .mat-slider-track-wrapper{height:100%;width:2px}.mat-slider-vertical .mat-slider-track-fill{height:100%;width:2px;transform:scaleY(0)}.mat-slider-vertical .mat-slider-track-background{height:100%;width:2px;transform:scaleY(1)}.mat-slider-vertical .mat-slider-ticks-container{width:2px;height:100%}@media (-ms-high-contrast:active){.mat-slider-vertical .mat-slider-ticks-container{width:0;outline:solid 2px;left:1px}}.mat-slider-vertical .mat-slider-focus-ring{bottom:-15px;left:-15px}.mat-slider-vertical .mat-slider-ticks{width:2px;height:100%}.mat-slider-vertical .mat-slider-thumb-container{height:100%;width:0;left:50%}.mat-slider-vertical .mat-slider-thumb{-webkit-backface-visibility:hidden;backface-visibility:hidden}.mat-slider-vertical .mat-slider-thumb-label{bottom:-14px;left:-40px;transform:translateX(26px) scale(.01) rotate(-45deg)}.mat-slider-vertical .mat-slider-thumb-label-text{transform:rotate(45deg)}.mat-slider-vertical.cdk-focused .mat-slider-thumb-label{transform:rotate(-45deg)}[dir=rtl] .mat-slider-wrapper::after{left:0;right:auto}[dir=rtl] .mat-slider-horizontal .mat-slider-track-fill{transform-origin:100% 100%}[dir=rtl] .mat-slider-horizontal .mat-slider-track-background{transform-origin:0 0}[dir=rtl] .mat-slider-horizontal.mat-slider-axis-inverted .mat-slider-track-fill{transform-origin:0 0}[dir=rtl] .mat-slider-horizontal.mat-slider-axis-inverted .mat-slider-track-background{transform-origin:100% 100%}.mat-slider._mat-animation-noopable .mat-slider-focus-ring,.mat-slider._mat-animation-noopable .mat-slider-has-ticks .mat-slider-wrapper::after,.mat-slider._mat-animation-noopable .mat-slider-thumb,.mat-slider._mat-animation-noopable .mat-slider-thumb-container,.mat-slider._mat-animation-noopable .mat-slider-thumb-label,.mat-slider._mat-animation-noopable .mat-slider-thumb-label-text,.mat-slider._mat-animation-noopable .mat-slider-ticks,.mat-slider._mat-animation-noopable .mat-slider-track-background,.mat-slider._mat-animation-noopable .mat-slider-track-fill{transition:none}"],
+                    inputs: ['disabled', 'color', 'tabIndex'],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_5__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_5__["ChangeDetectionStrategy"].OnPush,
+                },] },
+    ];
+    /** @nocollapse */
+    MatSlider.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["ElementRef"] },
+        { type: _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__["FocusMonitor"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["ChangeDetectorRef"] },
+        { type: _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_2__["Directionality"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Optional"] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Attribute"], args: ['tabindex',] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Inject"], args: [_angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_8__["ANIMATION_MODULE_TYPE"],] }] }
+    ]; };
+    MatSlider.propDecorators = {
+        invert: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        max: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        min: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        step: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        thumbLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        tickInterval: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        value: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        displayWith: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        vertical: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Input"] }],
+        change: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Output"] }],
+        input: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Output"] }],
+        valueChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["Output"] }],
+        _sliderWrapper: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["ViewChild"], args: ['sliderWrapper',] }]
+    };
+    return MatSlider;
+}(_MatSliderMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatSliderModule = /** @class */ (function () {
+    function MatSliderModule() {
+    }
+    MatSliderModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__["NgModule"], args: [{
+                    imports: [_angular_common__WEBPACK_IMPORTED_MODULE_10__["CommonModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_7__["MatCommonModule"]],
+                    exports: [MatSlider, _angular_material_core__WEBPACK_IMPORTED_MODULE_7__["MatCommonModule"]],
+                    declarations: [MatSlider],
+                    providers: [{ provide: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_11__["HAMMER_GESTURE_CONFIG"], useClass: _angular_material_core__WEBPACK_IMPORTED_MODULE_7__["GestureConfig"] }]
+                },] },
+    ];
+    return MatSliderModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=slider.es5.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/@angular/material/esm5/tabs.es5.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@angular/material/esm5/tabs.es5.js ***!
+  \*********************************************************/
+/*! exports provided: MatInkBar, _MAT_INK_BAR_POSITIONER, MatTabBody, MatTabBodyPortal, MatTabHeader, MatTabLabelWrapper, MatTab, MatTabLabel, MatTabNav, MatTabLink, MatTabContent, MatTabsModule, MatTabChangeEvent, MAT_TABS_CONFIG, MatTabGroupBase, _MatTabGroupMixinBase, MatTabGroup, matTabsAnimations, ɵa21, ɵf21, ɵg21, ɵb21, ɵc21, ɵd21, ɵe21, ɵj21, ɵh21, ɵk21, ɵi21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatInkBar", function() { return MatInkBar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MAT_INK_BAR_POSITIONER", function() { return _MAT_INK_BAR_POSITIONER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabBody", function() { return MatTabBody; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabBodyPortal", function() { return MatTabBodyPortal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabHeader", function() { return MatTabHeader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabLabelWrapper", function() { return MatTabLabelWrapper; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTab", function() { return MatTab; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabLabel", function() { return MatTabLabel; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabNav", function() { return MatTabNav; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabLink", function() { return MatTabLink; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabContent", function() { return MatTabContent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabsModule", function() { return MatTabsModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabChangeEvent", function() { return MatTabChangeEvent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MAT_TABS_CONFIG", function() { return MAT_TABS_CONFIG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabGroupBase", function() { return MatTabGroupBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_MatTabGroupMixinBase", function() { return _MatTabGroupMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MatTabGroup", function() { return MatTabGroup; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "matTabsAnimations", function() { return matTabsAnimations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa21", function() { return _MAT_INK_BAR_POSITIONER_FACTORY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵf21", function() { return MatTabBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵg21", function() { return _MatTabMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵb21", function() { return MatTabHeaderBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵc21", function() { return _MatTabHeaderMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵd21", function() { return MatTabLabelWrapperBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵe21", function() { return _MatTabLabelWrapperMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵj21", function() { return MatTabLinkBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵh21", function() { return MatTabNavBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵk21", function() { return _MatTabLinkMixinBase; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵi21", function() { return _MatTabNavMixinBase; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/portal */ "./node_modules/@angular/cdk/esm5/portal.es5.js");
+/* harmony import */ var _angular_material_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/core */ "./node_modules/@angular/material/esm5/core.es5.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/bidi */ "./node_modules/@angular/cdk/esm5/bidi.es5.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/cdk/coercion */ "./node_modules/@angular/cdk/esm5/coercion.es5.js");
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/cdk/keycodes */ "./node_modules/@angular/cdk/esm5/keycodes.es5.js");
+/* harmony import */ var _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/cdk/scrolling */ "./node_modules/@angular/cdk/esm5/scrolling.es5.js");
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/cdk/a11y */ "./node_modules/@angular/cdk/esm5/a11y.es5.js");
+/* harmony import */ var _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/cdk/platform */ "./node_modules/@angular/cdk/esm5/platform.es5.js");
+/* harmony import */ var _angular_cdk_observers__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/cdk/observers */ "./node_modules/@angular/cdk/esm5/observers.es5.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Injection token for the MatInkBar's Positioner.
+ * @type {?}
+ */
+var _MAT_INK_BAR_POSITIONER = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('MatInkBarPositioner', {
+    providedIn: 'root',
+    factory: _MAT_INK_BAR_POSITIONER_FACTORY
+});
+/**
+ * The default positioner function for the MatInkBar.
+ * \@docs-private
+ * @return {?}
+ */
+function _MAT_INK_BAR_POSITIONER_FACTORY() {
+    /** @type {?} */
+    var method = function (element) { return ({
+        left: element ? (element.offsetLeft || 0) + 'px' : '0',
+        width: element ? (element.offsetWidth || 0) + 'px' : '0',
+    }); };
+    return method;
+}
+/**
+ * The ink-bar is used to display and animate the line underneath the current active tab label.
+ * \@docs-private
+ */
+var MatInkBar = /** @class */ (function () {
+    function MatInkBar(_elementRef, _ngZone, _inkBarPositioner) {
+        this._elementRef = _elementRef;
+        this._ngZone = _ngZone;
+        this._inkBarPositioner = _inkBarPositioner;
+    }
+    /**
+     * Calculates the styles from the provided element in order to align the ink-bar to that element.
+     * Shows the ink bar if previously set as hidden.
+     * @param element
+     */
+    /**
+     * Calculates the styles from the provided element in order to align the ink-bar to that element.
+     * Shows the ink bar if previously set as hidden.
+     * @param {?} element
+     * @return {?}
+     */
+    MatInkBar.prototype.alignToElement = /**
+     * Calculates the styles from the provided element in order to align the ink-bar to that element.
+     * Shows the ink bar if previously set as hidden.
+     * @param {?} element
+     * @return {?}
+     */
+    function (element) {
+        var _this = this;
+        this.show();
+        if (typeof requestAnimationFrame !== 'undefined') {
+            this._ngZone.runOutsideAngular(function () {
+                requestAnimationFrame(function () { return _this._setStyles(element); });
+            });
+        }
+        else {
+            this._setStyles(element);
+        }
+    };
+    /** Shows the ink bar. */
+    /**
+     * Shows the ink bar.
+     * @return {?}
+     */
+    MatInkBar.prototype.show = /**
+     * Shows the ink bar.
+     * @return {?}
+     */
+    function () {
+        this._elementRef.nativeElement.style.visibility = 'visible';
+    };
+    /** Hides the ink bar. */
+    /**
+     * Hides the ink bar.
+     * @return {?}
+     */
+    MatInkBar.prototype.hide = /**
+     * Hides the ink bar.
+     * @return {?}
+     */
+    function () {
+        this._elementRef.nativeElement.style.visibility = 'hidden';
+    };
+    /**
+     * Sets the proper styles to the ink bar element.
+     * @param element
+     */
+    /**
+     * Sets the proper styles to the ink bar element.
+     * @private
+     * @param {?} element
+     * @return {?}
+     */
+    MatInkBar.prototype._setStyles = /**
+     * Sets the proper styles to the ink bar element.
+     * @private
+     * @param {?} element
+     * @return {?}
+     */
+    function (element) {
+        /** @type {?} */
+        var positions = this._inkBarPositioner(element);
+        /** @type {?} */
+        var inkBar = this._elementRef.nativeElement;
+        inkBar.style.left = positions.left;
+        inkBar.style.width = positions.width;
+    };
+    MatInkBar.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: 'mat-ink-bar',
+                    host: {
+                        'class': 'mat-ink-bar',
+                    },
+                },] },
+    ];
+    /** @nocollapse */
+    MatInkBar.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_MAT_INK_BAR_POSITIONER,] }] }
+    ]; };
+    return MatInkBar;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Decorates the `ng-template` tags and reads out the template from it.
+ */
+var MatTabContent = /** @class */ (function () {
+    function MatTabContent(template) {
+        this.template = template;
+    }
+    MatTabContent.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{ selector: '[matTabContent]' },] },
+    ];
+    /** @nocollapse */
+    MatTabContent.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"] }
+    ]; };
+    return MatTabContent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Used to flag tab labels for use with the portal directive
+ */
+var MatTabLabel = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabLabel, _super);
+    function MatTabLabel() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MatTabLabel.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: '[mat-tab-label], [matTabLabel]',
+                },] },
+    ];
+    return MatTabLabel;
+}(_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_2__["CdkPortal"]));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// Boilerplate for applying mixins to MatTab.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatTab.
+/**
+ * \@docs-private
+ */
+MatTabBase = /** @class */ (function () {
+    function MatTabBase() {
+    }
+    return MatTabBase;
+}());
+/** @type {?} */
+var _MatTabMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisabled"])(MatTabBase);
+var MatTab = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTab, _super);
+    function MatTab(_viewContainerRef) {
+        var _this = _super.call(this) || this;
+        _this._viewContainerRef = _viewContainerRef;
+        /**
+         * Plain text label for the tab, used when there is no template label.
+         */
+        _this.textLabel = '';
+        /**
+         * Portal that will be the hosted content of the tab
+         */
+        _this._contentPortal = null;
+        /**
+         * Emits whenever the internal state of the tab changes.
+         */
+        _this._stateChanges = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        /**
+         * The relatively indexed position where 0 represents the center, negative is left, and positive
+         * represents the right.
+         */
+        _this.position = null;
+        /**
+         * The initial relatively index origin of the tab if it was created and selected after there
+         * was already a selected tab. Provides context of what position the tab should originate from.
+         */
+        _this.origin = null;
+        /**
+         * Whether the tab is currently active.
+         */
+        _this.isActive = false;
+        return _this;
+    }
+    Object.defineProperty(MatTab.prototype, "content", {
+        /** @docs-private */
+        get: /**
+         * \@docs-private
+         * @return {?}
+         */
+        function () {
+            return this._contentPortal;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    MatTab.prototype.ngOnChanges = /**
+     * @param {?} changes
+     * @return {?}
+     */
+    function (changes) {
+        if (changes.hasOwnProperty('textLabel') || changes.hasOwnProperty('disabled')) {
+            this._stateChanges.next();
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatTab.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._stateChanges.complete();
+    };
+    /**
+     * @return {?}
+     */
+    MatTab.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        this._contentPortal = new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_2__["TemplatePortal"](this._explicitContent || this._implicitContent, this._viewContainerRef);
+    };
+    MatTab.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: 'mat-tab',
+                    template: "<ng-template><ng-content></ng-content></ng-template>",
+                    inputs: ['disabled'],
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    exportAs: 'matTab',
+                },] },
+    ];
+    /** @nocollapse */
+    MatTab.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"] }
+    ]; };
+    MatTab.propDecorators = {
+        templateLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChild"], args: [MatTabLabel,] }],
+        _explicitContent: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChild"], args: [MatTabContent, { read: _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"] },] }],
+        _implicitContent: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"],] }],
+        textLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['label',] }],
+        ariaLabel: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['aria-label',] }],
+        ariaLabelledby: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['aria-labelledby',] }]
+    };
+    return MatTab;
+}(_MatTabMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Animations used by the Material tabs.
+ * \@docs-private
+ * @type {?}
+ */
+var matTabsAnimations = {
+    /**
+     * Animation translates a tab along the X axis.
+     */
+    translateTab: Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["trigger"])('translateTab', [
+        // Note: transitions to `none` instead of 0, because some browsers might blur the content.
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["state"])('center, void, left-origin-center, right-origin-center', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ transform: 'none' })),
+        // If the tab is either on the left or right, we additionally add a `min-height` of 1px
+        // in order to ensure that the element has a height before its state changes. This is
+        // necessary because Chrome does seem to skip the transition in RTL mode if the element does
+        // not have a static height and is not rendered. See related issue: #9465
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["state"])('left', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ transform: 'translate3d(-100%, 0, 0)', minHeight: '1px' })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["state"])('right', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ transform: 'translate3d(100%, 0, 0)', minHeight: '1px' })),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["transition"])('* => left, * => right, left => center, right => center', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["animate"])('{{animationDuration}} cubic-bezier(0.35, 0, 0.25, 1)')),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["transition"])('void => left-origin-center', [
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ transform: 'translate3d(-100%, 0, 0)' }),
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["animate"])('{{animationDuration}} cubic-bezier(0.35, 0, 0.25, 1)')
+        ]),
+        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["transition"])('void => right-origin-center', [
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["style"])({ transform: 'translate3d(100%, 0, 0)' }),
+            Object(_angular_animations__WEBPACK_IMPORTED_MODULE_5__["animate"])('{{animationDuration}} cubic-bezier(0.35, 0, 0.25, 1)')
+        ])
+    ])
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * The portal host directive for the contents of the tab.
+ * \@docs-private
+ */
+var MatTabBodyPortal = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabBodyPortal, _super);
+    function MatTabBodyPortal(componentFactoryResolver, viewContainerRef, _host) {
+        var _this = _super.call(this, componentFactoryResolver, viewContainerRef) || this;
+        _this._host = _host;
+        /**
+         * Subscription to events for when the tab body begins centering.
+         */
+        _this._centeringSub = rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"].EMPTY;
+        /**
+         * Subscription to events for when the tab body finishes leaving from center position.
+         */
+        _this._leavingSub = rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"].EMPTY;
+        return _this;
+    }
+    /** Set initial visibility or set up subscription for changing visibility. */
+    /**
+     * Set initial visibility or set up subscription for changing visibility.
+     * @return {?}
+     */
+    MatTabBodyPortal.prototype.ngOnInit = /**
+     * Set initial visibility or set up subscription for changing visibility.
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        _super.prototype.ngOnInit.call(this);
+        this._centeringSub = this._host._beforeCentering
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])(this._host._isCenterPosition(this._host._position)))
+            .subscribe(function (isCentering) {
+            if (isCentering && !_this.hasAttached()) {
+                _this.attach(_this._host._content);
+            }
+        });
+        this._leavingSub = this._host._afterLeavingCenter.subscribe(function () {
+            _this.detach();
+        });
+    };
+    /** Clean up centering subscription. */
+    /**
+     * Clean up centering subscription.
+     * @return {?}
+     */
+    MatTabBodyPortal.prototype.ngOnDestroy = /**
+     * Clean up centering subscription.
+     * @return {?}
+     */
+    function () {
+        _super.prototype.ngOnDestroy.call(this);
+        this._centeringSub.unsubscribe();
+        this._leavingSub.unsubscribe();
+    };
+    MatTabBodyPortal.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: '[matTabBodyHost]'
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabBodyPortal.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"] },
+        { type: MatTabBody, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])(function () { return MatTabBody; }),] }] }
+    ]; };
+    return MatTabBodyPortal;
+}(_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_2__["CdkPortalOutlet"]));
+/**
+ * Wrapper for the contents of a tab.
+ * \@docs-private
+ */
+var MatTabBody = /** @class */ (function () {
+    function MatTabBody(_elementRef, _dir, 
+    /**
+     * @breaking-change 8.0.0 changeDetectorRef to be made required.
+     */
+    changeDetectorRef) {
+        var _this = this;
+        this._elementRef = _elementRef;
+        this._dir = _dir;
+        /**
+         * Subscription to the directionality change observable.
+         */
+        this._dirChangeSubscription = rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"].EMPTY;
+        /**
+         * Emits when an animation on the tab is complete.
+         */
+        this._translateTabComplete = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        /**
+         * Event emitted when the tab begins to animate towards the center as the active tab.
+         */
+        this._onCentering = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted before the centering of the tab begins.
+         */
+        this._beforeCentering = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted before the centering of the tab begins.
+         */
+        this._afterLeavingCenter = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted when the tab completes its animation towards the center.
+         */
+        this._onCentered = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"](true);
+        // Note that the default value will always be overwritten by `MatTabBody`, but we need one
+        // anyway to prevent the animations module from throwing an error if the body is used on its own.
+        /**
+         * Duration for the tab's animation.
+         */
+        this.animationDuration = '500ms';
+        if (this._dir && changeDetectorRef) {
+            this._dirChangeSubscription = this._dir.change.subscribe(function (dir) {
+                _this._computePositionAnimationState(dir);
+                changeDetectorRef.markForCheck();
+            });
+        }
+        // Ensure that we get unique animation events, because the `.done` callback can get
+        // invoked twice in some browsers. See https://github.com/angular/angular/issues/24084.
+        this._translateTabComplete.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["distinctUntilChanged"])(function (x, y) {
+            return x.fromState === y.fromState && x.toState === y.toState;
+        })).subscribe(function (event) {
+            // If the transition to the center is complete, emit an event.
+            if (_this._isCenterPosition(event.toState) && _this._isCenterPosition(_this._position)) {
+                _this._onCentered.emit();
+            }
+            if (_this._isCenterPosition(event.fromState) && !_this._isCenterPosition(_this._position)) {
+                _this._afterLeavingCenter.emit();
+            }
+        });
+    }
+    Object.defineProperty(MatTabBody.prototype, "position", {
+        /** The shifted index position of the tab body, where zero represents the active center tab. */
+        set: /**
+         * The shifted index position of the tab body, where zero represents the active center tab.
+         * @param {?} position
+         * @return {?}
+         */
+        function (position) {
+            this._positionIndex = position;
+            this._computePositionAnimationState();
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * After initialized, check if the content is centered and has an origin. If so, set the
+     * special position states that transition the tab from the left or right before centering.
+     */
+    /**
+     * After initialized, check if the content is centered and has an origin. If so, set the
+     * special position states that transition the tab from the left or right before centering.
+     * @return {?}
+     */
+    MatTabBody.prototype.ngOnInit = /**
+     * After initialized, check if the content is centered and has an origin. If so, set the
+     * special position states that transition the tab from the left or right before centering.
+     * @return {?}
+     */
+    function () {
+        if (this._position == 'center' && this.origin != null) {
+            this._position = this._computePositionFromOrigin();
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatTabBody.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._dirChangeSubscription.unsubscribe();
+        this._translateTabComplete.complete();
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    MatTabBody.prototype._onTranslateTabStarted = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        /** @type {?} */
+        var isCentering = this._isCenterPosition(event.toState);
+        this._beforeCentering.emit(isCentering);
+        if (isCentering) {
+            this._onCentering.emit(this._elementRef.nativeElement.clientHeight);
+        }
+    };
+    /** The text direction of the containing app. */
+    /**
+     * The text direction of the containing app.
+     * @return {?}
+     */
+    MatTabBody.prototype._getLayoutDirection = /**
+     * The text direction of the containing app.
+     * @return {?}
+     */
+    function () {
+        return this._dir && this._dir.value === 'rtl' ? 'rtl' : 'ltr';
+    };
+    /** Whether the provided position state is considered center, regardless of origin. */
+    /**
+     * Whether the provided position state is considered center, regardless of origin.
+     * @param {?} position
+     * @return {?}
+     */
+    MatTabBody.prototype._isCenterPosition = /**
+     * Whether the provided position state is considered center, regardless of origin.
+     * @param {?} position
+     * @return {?}
+     */
+    function (position) {
+        return position == 'center' ||
+            position == 'left-origin-center' ||
+            position == 'right-origin-center';
+    };
+    /** Computes the position state that will be used for the tab-body animation trigger. */
+    /**
+     * Computes the position state that will be used for the tab-body animation trigger.
+     * @private
+     * @param {?=} dir
+     * @return {?}
+     */
+    MatTabBody.prototype._computePositionAnimationState = /**
+     * Computes the position state that will be used for the tab-body animation trigger.
+     * @private
+     * @param {?=} dir
+     * @return {?}
+     */
+    function (dir) {
+        if (dir === void 0) { dir = this._getLayoutDirection(); }
+        if (this._positionIndex < 0) {
+            this._position = dir == 'ltr' ? 'left' : 'right';
+        }
+        else if (this._positionIndex > 0) {
+            this._position = dir == 'ltr' ? 'right' : 'left';
+        }
+        else {
+            this._position = 'center';
+        }
+    };
+    /**
+     * Computes the position state based on the specified origin position. This is used if the
+     * tab is becoming visible immediately after creation.
+     */
+    /**
+     * Computes the position state based on the specified origin position. This is used if the
+     * tab is becoming visible immediately after creation.
+     * @private
+     * @return {?}
+     */
+    MatTabBody.prototype._computePositionFromOrigin = /**
+     * Computes the position state based on the specified origin position. This is used if the
+     * tab is becoming visible immediately after creation.
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var dir = this._getLayoutDirection();
+        if ((dir == 'ltr' && this.origin <= 0) || (dir == 'rtl' && this.origin > 0)) {
+            return 'left-origin-center';
+        }
+        return 'right-origin-center';
+    };
+    MatTabBody.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: 'mat-tab-body',
+                    template: "<div class=\"mat-tab-body-content\" #content [@translateTab]=\"{ value: _position, params: {animationDuration: animationDuration} }\" (@translateTab.start)=\"_onTranslateTabStarted($event)\" (@translateTab.done)=\"_translateTabComplete.next($event)\"><ng-template matTabBodyHost></ng-template></div>",
+                    styles: [".mat-tab-body-content{height:100%;overflow:auto}.mat-tab-group-dynamic-height .mat-tab-body-content{overflow:hidden}"],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                    animations: [matTabsAnimations.translateTab],
+                    host: {
+                        'class': 'mat-tab-body',
+                    },
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabBody.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_6__["Directionality"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] }
+    ]; };
+    MatTabBody.propDecorators = {
+        _onCentering: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        _beforeCentering: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        _afterLeavingCenter: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        _onCentered: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        _portalHost: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_2__["PortalHostDirective"],] }],
+        _content: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"], args: ['content',] }],
+        origin: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        animationDuration: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        position: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }]
+    };
+    return MatTabBody;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// Boilerplate for applying mixins to MatTabLabelWrapper.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatTabLabelWrapper.
+/**
+ * \@docs-private
+ */
+MatTabLabelWrapperBase = /** @class */ (function () {
+    function MatTabLabelWrapperBase() {
+    }
+    return MatTabLabelWrapperBase;
+}());
+/** @type {?} */
+var _MatTabLabelWrapperMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisabled"])(MatTabLabelWrapperBase);
+/**
+ * Used in the `mat-tab-group` view to display tab labels.
+ * \@docs-private
+ */
+var MatTabLabelWrapper = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabLabelWrapper, _super);
+    function MatTabLabelWrapper(elementRef) {
+        var _this = _super.call(this) || this;
+        _this.elementRef = elementRef;
+        return _this;
+    }
+    /** Sets focus on the wrapper element */
+    /**
+     * Sets focus on the wrapper element
+     * @return {?}
+     */
+    MatTabLabelWrapper.prototype.focus = /**
+     * Sets focus on the wrapper element
+     * @return {?}
+     */
+    function () {
+        this.elementRef.nativeElement.focus();
+    };
+    /**
+     * @return {?}
+     */
+    MatTabLabelWrapper.prototype.getOffsetLeft = /**
+     * @return {?}
+     */
+    function () {
+        return this.elementRef.nativeElement.offsetLeft;
+    };
+    /**
+     * @return {?}
+     */
+    MatTabLabelWrapper.prototype.getOffsetWidth = /**
+     * @return {?}
+     */
+    function () {
+        return this.elementRef.nativeElement.offsetWidth;
+    };
+    MatTabLabelWrapper.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: '[matTabLabelWrapper]',
+                    inputs: ['disabled'],
+                    host: {
+                        '[class.mat-tab-disabled]': 'disabled',
+                        '[attr.aria-disabled]': '!!disabled',
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabLabelWrapper.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }
+    ]; };
+    return MatTabLabelWrapper;
+}(_MatTabLabelWrapperMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Config used to bind passive event listeners
+ * @type {?}
+ */
+var passiveEventListenerOptions = (/** @type {?} */ (Object(_angular_cdk_platform__WEBPACK_IMPORTED_MODULE_12__["normalizePassiveListenerOptions"])({ passive: true })));
+/**
+ * The distance in pixels that will be overshot when scrolling a tab label into view. This helps
+ * provide a small affordance to the label next to it.
+ * @type {?}
+ */
+var EXAGGERATED_OVERSCROLL = 60;
+/**
+ * Amount of milliseconds to wait before starting to scroll the header automatically.
+ * Set a little conservatively in order to handle fake events dispatched on touch devices.
+ * @type {?}
+ */
+var HEADER_SCROLL_DELAY = 650;
+/**
+ * Interval in milliseconds at which to scroll the header
+ * while the user is holding their pointer.
+ * @type {?}
+ */
+var HEADER_SCROLL_INTERVAL = 100;
+// Boilerplate for applying mixins to MatTabHeader.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatTabHeader.
+/**
+ * \@docs-private
+ */
+MatTabHeaderBase = /** @class */ (function () {
+    function MatTabHeaderBase() {
+    }
+    return MatTabHeaderBase;
+}());
+/** @type {?} */
+var _MatTabHeaderMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisableRipple"])(MatTabHeaderBase);
+/**
+ * The header of the tab group which displays a list of all the tabs in the tab group. Includes
+ * an ink bar that follows the currently selected tab. When the tabs list's width exceeds the
+ * width of the header container, then arrows will be displayed to allow the user to scroll
+ * left and right across the header.
+ * \@docs-private
+ */
+var MatTabHeader = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabHeader, _super);
+    function MatTabHeader(_elementRef, _changeDetectorRef, _viewportRuler, _dir, _ngZone, _platform) {
+        var _this = _super.call(this) || this;
+        _this._elementRef = _elementRef;
+        _this._changeDetectorRef = _changeDetectorRef;
+        _this._viewportRuler = _viewportRuler;
+        _this._dir = _dir;
+        _this._ngZone = _ngZone;
+        _this._platform = _platform;
+        /**
+         * The distance in pixels that the tab labels should be translated to the left.
+         */
+        _this._scrollDistance = 0;
+        /**
+         * Whether the header should scroll to the selected index after the view has been checked.
+         */
+        _this._selectedIndexChanged = false;
+        /**
+         * Emits when the component is destroyed.
+         */
+        _this._destroyed = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        /**
+         * Whether the controls for pagination should be displayed
+         */
+        _this._showPaginationControls = false;
+        /**
+         * Whether the tab list can be scrolled more towards the end of the tab label list.
+         */
+        _this._disableScrollAfter = true;
+        /**
+         * Whether the tab list can be scrolled more towards the beginning of the tab label list.
+         */
+        _this._disableScrollBefore = true;
+        /**
+         * Stream that will stop the automated scrolling.
+         */
+        _this._stopScrolling = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        _this._selectedIndex = 0;
+        /**
+         * Event emitted when the option is selected.
+         */
+        _this.selectFocusedIndex = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted when a label is focused.
+         */
+        _this.indexFocused = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /** @type {?} */
+        var element = _elementRef.nativeElement;
+        /** @type {?} */
+        var bindEvent = function () {
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["fromEvent"])(element, 'mouseleave')
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(_this._destroyed))
+                .subscribe(function () {
+                _this._stopInterval();
+            });
+        };
+        // @breaking-change 8.0.0 remove null check once _ngZone is made into a required parameter.
+        if (_ngZone) {
+            // Bind the `mouseleave` event on the outside since it doesn't change anything in the view.
+            _ngZone.runOutsideAngular(bindEvent);
+        }
+        else {
+            bindEvent();
+        }
+        return _this;
+    }
+    Object.defineProperty(MatTabHeader.prototype, "selectedIndex", {
+        /** The index of the active tab. */
+        get: /**
+         * The index of the active tab.
+         * @return {?}
+         */
+        function () { return this._selectedIndex; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            value = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_8__["coerceNumberProperty"])(value);
+            this._selectedIndexChanged = this._selectedIndex != value;
+            this._selectedIndex = value;
+            if (this._keyManager) {
+                this._keyManager.updateActiveItemIndex(value);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatTabHeader.prototype.ngAfterContentChecked = /**
+     * @return {?}
+     */
+    function () {
+        // If the number of tab labels have changed, check if scrolling should be enabled
+        if (this._tabLabelCount != this._labelWrappers.length) {
+            this.updatePagination();
+            this._tabLabelCount = this._labelWrappers.length;
+            this._changeDetectorRef.markForCheck();
+        }
+        // If the selected index has changed, scroll to the label and check if the scrolling controls
+        // should be disabled.
+        if (this._selectedIndexChanged) {
+            this._scrollToLabel(this._selectedIndex);
+            this._checkScrollingControls();
+            this._alignInkBarToSelectedTab();
+            this._selectedIndexChanged = false;
+            this._changeDetectorRef.markForCheck();
+        }
+        // If the scroll distance has been changed (tab selected, focused, scroll controls activated),
+        // then translate the header to reflect this.
+        if (this._scrollDistanceChanged) {
+            this._updateTabScrollPosition();
+            this._scrollDistanceChanged = false;
+            this._changeDetectorRef.markForCheck();
+        }
+    };
+    /** Handles keyboard events on the header. */
+    /**
+     * Handles keyboard events on the header.
+     * @param {?} event
+     * @return {?}
+     */
+    MatTabHeader.prototype._handleKeydown = /**
+     * Handles keyboard events on the header.
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        // We don't handle any key bindings with a modifier key.
+        if (Object(_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_9__["hasModifierKey"])(event)) {
+            return;
+        }
+        switch (event.keyCode) {
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_9__["HOME"]:
+                this._keyManager.setFirstItemActive();
+                event.preventDefault();
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_9__["END"]:
+                this._keyManager.setLastItemActive();
+                event.preventDefault();
+                break;
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_9__["ENTER"]:
+            case _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_9__["SPACE"]:
+                this.selectFocusedIndex.emit(this.focusIndex);
+                event.preventDefault();
+                break;
+            default:
+                this._keyManager.onKeydown(event);
+        }
+    };
+    /**
+     * Aligns the ink bar to the selected tab on load.
+     */
+    /**
+     * Aligns the ink bar to the selected tab on load.
+     * @return {?}
+     */
+    MatTabHeader.prototype.ngAfterContentInit = /**
+     * Aligns the ink bar to the selected tab on load.
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        /** @type {?} */
+        var dirChange = this._dir ? this._dir.change : Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
+        /** @type {?} */
+        var resize = this._viewportRuler.change(150);
+        /** @type {?} */
+        var realign = function () {
+            _this.updatePagination();
+            _this._alignInkBarToSelectedTab();
+        };
+        this._keyManager = new _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__["FocusKeyManager"](this._labelWrappers)
+            .withHorizontalOrientation(this._getLayoutDirection())
+            .withWrap();
+        this._keyManager.updateActiveItem(0);
+        // Defer the first call in order to allow for slower browsers to lay out the elements.
+        // This helps in cases where the user lands directly on a page with paginated tabs.
+        typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame(realign) : realign();
+        // On dir change or window resize, realign the ink bar and update the orientation of
+        // the key manager if the direction has changed.
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["merge"])(dirChange, resize).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this._destroyed)).subscribe(function () {
+            realign();
+            _this._keyManager.withHorizontalOrientation(_this._getLayoutDirection());
+        });
+        // If there is a change in the focus key manager we need to emit the `indexFocused`
+        // event in order to provide a public event that notifies about focus changes. Also we realign
+        // the tabs container by scrolling the new focused tab into the visible section.
+        this._keyManager.change.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this._destroyed)).subscribe(function (newFocusIndex) {
+            _this.indexFocused.emit(newFocusIndex);
+            _this._setTabFocus(newFocusIndex);
+        });
+    };
+    /**
+     * @return {?}
+     */
+    MatTabHeader.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        // We need to handle these events manually, because we want to bind passive event listeners.
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["fromEvent"])(this._previousPaginator.nativeElement, 'touchstart', passiveEventListenerOptions)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this._destroyed))
+            .subscribe(function () {
+            _this._handlePaginatorPress('before');
+        });
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["fromEvent"])(this._nextPaginator.nativeElement, 'touchstart', passiveEventListenerOptions)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this._destroyed))
+            .subscribe(function () {
+            _this._handlePaginatorPress('after');
+        });
+    };
+    /**
+     * @return {?}
+     */
+    MatTabHeader.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._destroyed.next();
+        this._destroyed.complete();
+        this._stopScrolling.complete();
+    };
+    /**
+     * Callback for when the MutationObserver detects that the content has changed.
+     */
+    /**
+     * Callback for when the MutationObserver detects that the content has changed.
+     * @return {?}
+     */
+    MatTabHeader.prototype._onContentChanges = /**
+     * Callback for when the MutationObserver detects that the content has changed.
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        /** @type {?} */
+        var textContent = this._elementRef.nativeElement.textContent;
+        // We need to diff the text content of the header, because the MutationObserver callback
+        // will fire even if the text content didn't change which is inefficient and is prone
+        // to infinite loops if a poorly constructed expression is passed in (see #14249).
+        if (textContent !== this._currentTextContent) {
+            this._currentTextContent = textContent;
+            /** @type {?} */
+            var zoneCallback = function () {
+                _this.updatePagination();
+                _this._alignInkBarToSelectedTab();
+                _this._changeDetectorRef.markForCheck();
+            };
+            // The content observer runs outside the `NgZone` by default, which
+            // means that we need to bring the callback back in ourselves.
+            // @breaking-change 8.0.0 Remove null check for `_ngZone` once it's a required parameter.
+            this._ngZone ? this._ngZone.run(zoneCallback) : zoneCallback();
+        }
+    };
+    /**
+     * Updates the view whether pagination should be enabled or not.
+     *
+     * WARNING: Calling this method can be very costly in terms of performance.  It should be called
+     * as infrequently as possible from outside of the Tabs component as it causes a reflow of the
+     * page.
+     */
+    /**
+     * Updates the view whether pagination should be enabled or not.
+     *
+     * WARNING: Calling this method can be very costly in terms of performance.  It should be called
+     * as infrequently as possible from outside of the Tabs component as it causes a reflow of the
+     * page.
+     * @return {?}
+     */
+    MatTabHeader.prototype.updatePagination = /**
+     * Updates the view whether pagination should be enabled or not.
+     *
+     * WARNING: Calling this method can be very costly in terms of performance.  It should be called
+     * as infrequently as possible from outside of the Tabs component as it causes a reflow of the
+     * page.
+     * @return {?}
+     */
+    function () {
+        this._checkPaginationEnabled();
+        this._checkScrollingControls();
+        this._updateTabScrollPosition();
+    };
+    Object.defineProperty(MatTabHeader.prototype, "focusIndex", {
+        /** Tracks which element has focus; used for keyboard navigation */
+        get: /**
+         * Tracks which element has focus; used for keyboard navigation
+         * @return {?}
+         */
+        function () {
+            return this._keyManager ? (/** @type {?} */ (this._keyManager.activeItemIndex)) : 0;
+        },
+        /** When the focus index is set, we must manually send focus to the correct label */
+        set: /**
+         * When the focus index is set, we must manually send focus to the correct label
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            if (!this._isValidIndex(value) || this.focusIndex === value || !this._keyManager) {
+                return;
+            }
+            this._keyManager.setActiveItem(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Determines if an index is valid.  If the tabs are not ready yet, we assume that the user is
+     * providing a valid index and return true.
+     */
+    /**
+     * Determines if an index is valid.  If the tabs are not ready yet, we assume that the user is
+     * providing a valid index and return true.
+     * @param {?} index
+     * @return {?}
+     */
+    MatTabHeader.prototype._isValidIndex = /**
+     * Determines if an index is valid.  If the tabs are not ready yet, we assume that the user is
+     * providing a valid index and return true.
+     * @param {?} index
+     * @return {?}
+     */
+    function (index) {
+        if (!this._labelWrappers) {
+            return true;
+        }
+        /** @type {?} */
+        var tab = this._labelWrappers ? this._labelWrappers.toArray()[index] : null;
+        return !!tab && !tab.disabled;
+    };
+    /**
+     * Sets focus on the HTML element for the label wrapper and scrolls it into the view if
+     * scrolling is enabled.
+     */
+    /**
+     * Sets focus on the HTML element for the label wrapper and scrolls it into the view if
+     * scrolling is enabled.
+     * @param {?} tabIndex
+     * @return {?}
+     */
+    MatTabHeader.prototype._setTabFocus = /**
+     * Sets focus on the HTML element for the label wrapper and scrolls it into the view if
+     * scrolling is enabled.
+     * @param {?} tabIndex
+     * @return {?}
+     */
+    function (tabIndex) {
+        if (this._showPaginationControls) {
+            this._scrollToLabel(tabIndex);
+        }
+        if (this._labelWrappers && this._labelWrappers.length) {
+            this._labelWrappers.toArray()[tabIndex].focus();
+            // Do not let the browser manage scrolling to focus the element, this will be handled
+            // by using translation. In LTR, the scroll left should be 0. In RTL, the scroll width
+            // should be the full width minus the offset width.
+            /** @type {?} */
+            var containerEl = this._tabListContainer.nativeElement;
+            /** @type {?} */
+            var dir = this._getLayoutDirection();
+            if (dir == 'ltr') {
+                containerEl.scrollLeft = 0;
+            }
+            else {
+                containerEl.scrollLeft = containerEl.scrollWidth - containerEl.offsetWidth;
+            }
+        }
+    };
+    /** The layout direction of the containing app. */
+    /**
+     * The layout direction of the containing app.
+     * @return {?}
+     */
+    MatTabHeader.prototype._getLayoutDirection = /**
+     * The layout direction of the containing app.
+     * @return {?}
+     */
+    function () {
+        return this._dir && this._dir.value === 'rtl' ? 'rtl' : 'ltr';
+    };
+    /** Performs the CSS transformation on the tab list that will cause the list to scroll. */
+    /**
+     * Performs the CSS transformation on the tab list that will cause the list to scroll.
+     * @return {?}
+     */
+    MatTabHeader.prototype._updateTabScrollPosition = /**
+     * Performs the CSS transformation on the tab list that will cause the list to scroll.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var scrollDistance = this.scrollDistance;
+        /** @type {?} */
+        var platform = this._platform;
+        /** @type {?} */
+        var translateX = this._getLayoutDirection() === 'ltr' ? -scrollDistance : scrollDistance;
+        // Don't use `translate3d` here because we don't want to create a new layer. A new layer
+        // seems to cause flickering and overflow in Internet Explorer. For example, the ink bar
+        // and ripples will exceed the boundaries of the visible tab bar.
+        // See: https://github.com/angular/material2/issues/10276
+        // We round the `transform` here, because transforms with sub-pixel precision cause some
+        // browsers to blur the content of the element.
+        this._tabList.nativeElement.style.transform = "translateX(" + Math.round(translateX) + "px)";
+        // Setting the `transform` on IE will change the scroll offset of the parent, causing the
+        // position to be thrown off in some cases. We have to reset it ourselves to ensure that
+        // it doesn't get thrown off. Note that we scope it only to IE and Edge, because messing
+        // with the scroll position throws off Chrome 71+ in RTL mode (see #14689).
+        // @breaking-change 8.0.0 Remove null check for `platform`.
+        if (platform && (platform.TRIDENT || platform.EDGE)) {
+            this._tabListContainer.nativeElement.scrollLeft = 0;
+        }
+    };
+    Object.defineProperty(MatTabHeader.prototype, "scrollDistance", {
+        /** Sets the distance in pixels that the tab header should be transformed in the X-axis. */
+        get: /**
+         * Sets the distance in pixels that the tab header should be transformed in the X-axis.
+         * @return {?}
+         */
+        function () { return this._scrollDistance; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._scrollTo(value);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Moves the tab list in the 'before' or 'after' direction (towards the beginning of the list or
+     * the end of the list, respectively). The distance to scroll is computed to be a third of the
+     * length of the tab list view window.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     */
+    /**
+     * Moves the tab list in the 'before' or 'after' direction (towards the beginning of the list or
+     * the end of the list, respectively). The distance to scroll is computed to be a third of the
+     * length of the tab list view window.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @param {?} direction
+     * @return {?}
+     */
+    MatTabHeader.prototype._scrollHeader = /**
+     * Moves the tab list in the 'before' or 'after' direction (towards the beginning of the list or
+     * the end of the list, respectively). The distance to scroll is computed to be a third of the
+     * length of the tab list view window.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @param {?} direction
+     * @return {?}
+     */
+    function (direction) {
+        /** @type {?} */
+        var viewLength = this._tabListContainer.nativeElement.offsetWidth;
+        // Move the scroll distance one-third the length of the tab list's viewport.
+        /** @type {?} */
+        var scrollAmount = (direction == 'before' ? -1 : 1) * viewLength / 3;
+        return this._scrollTo(this._scrollDistance + scrollAmount);
+    };
+    /** Handles click events on the pagination arrows. */
+    /**
+     * Handles click events on the pagination arrows.
+     * @param {?} direction
+     * @return {?}
+     */
+    MatTabHeader.prototype._handlePaginatorClick = /**
+     * Handles click events on the pagination arrows.
+     * @param {?} direction
+     * @return {?}
+     */
+    function (direction) {
+        this._stopInterval();
+        this._scrollHeader(direction);
+    };
+    /**
+     * Moves the tab list such that the desired tab label (marked by index) is moved into view.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     */
+    /**
+     * Moves the tab list such that the desired tab label (marked by index) is moved into view.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @param {?} labelIndex
+     * @return {?}
+     */
+    MatTabHeader.prototype._scrollToLabel = /**
+     * Moves the tab list such that the desired tab label (marked by index) is moved into view.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @param {?} labelIndex
+     * @return {?}
+     */
+    function (labelIndex) {
+        /** @type {?} */
+        var selectedLabel = this._labelWrappers ? this._labelWrappers.toArray()[labelIndex] : null;
+        if (!selectedLabel) {
+            return;
+        }
+        // The view length is the visible width of the tab labels.
+        /** @type {?} */
+        var viewLength = this._tabListContainer.nativeElement.offsetWidth;
+        /** @type {?} */
+        var labelBeforePos;
+        /** @type {?} */
+        var labelAfterPos;
+        if (this._getLayoutDirection() == 'ltr') {
+            labelBeforePos = selectedLabel.getOffsetLeft();
+            labelAfterPos = labelBeforePos + selectedLabel.getOffsetWidth();
+        }
+        else {
+            labelAfterPos = this._tabList.nativeElement.offsetWidth - selectedLabel.getOffsetLeft();
+            labelBeforePos = labelAfterPos - selectedLabel.getOffsetWidth();
+        }
+        /** @type {?} */
+        var beforeVisiblePos = this.scrollDistance;
+        /** @type {?} */
+        var afterVisiblePos = this.scrollDistance + viewLength;
+        if (labelBeforePos < beforeVisiblePos) {
+            // Scroll header to move label to the before direction
+            this.scrollDistance -= beforeVisiblePos - labelBeforePos + EXAGGERATED_OVERSCROLL;
+        }
+        else if (labelAfterPos > afterVisiblePos) {
+            // Scroll header to move label to the after direction
+            this.scrollDistance += labelAfterPos - afterVisiblePos + EXAGGERATED_OVERSCROLL;
+        }
+    };
+    /**
+     * Evaluate whether the pagination controls should be displayed. If the scroll width of the
+     * tab list is wider than the size of the header container, then the pagination controls should
+     * be shown.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     */
+    /**
+     * Evaluate whether the pagination controls should be displayed. If the scroll width of the
+     * tab list is wider than the size of the header container, then the pagination controls should
+     * be shown.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @return {?}
+     */
+    MatTabHeader.prototype._checkPaginationEnabled = /**
+     * Evaluate whether the pagination controls should be displayed. If the scroll width of the
+     * tab list is wider than the size of the header container, then the pagination controls should
+     * be shown.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var isEnabled = this._tabList.nativeElement.scrollWidth > this._elementRef.nativeElement.offsetWidth;
+        if (!isEnabled) {
+            this.scrollDistance = 0;
+        }
+        if (isEnabled !== this._showPaginationControls) {
+            this._changeDetectorRef.markForCheck();
+        }
+        this._showPaginationControls = isEnabled;
+    };
+    /**
+     * Evaluate whether the before and after controls should be enabled or disabled.
+     * If the header is at the beginning of the list (scroll distance is equal to 0) then disable the
+     * before button. If the header is at the end of the list (scroll distance is equal to the
+     * maximum distance we can scroll), then disable the after button.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     */
+    /**
+     * Evaluate whether the before and after controls should be enabled or disabled.
+     * If the header is at the beginning of the list (scroll distance is equal to 0) then disable the
+     * before button. If the header is at the end of the list (scroll distance is equal to the
+     * maximum distance we can scroll), then disable the after button.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @return {?}
+     */
+    MatTabHeader.prototype._checkScrollingControls = /**
+     * Evaluate whether the before and after controls should be enabled or disabled.
+     * If the header is at the beginning of the list (scroll distance is equal to 0) then disable the
+     * before button. If the header is at the end of the list (scroll distance is equal to the
+     * maximum distance we can scroll), then disable the after button.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @return {?}
+     */
+    function () {
+        // Check if the pagination arrows should be activated.
+        this._disableScrollBefore = this.scrollDistance == 0;
+        this._disableScrollAfter = this.scrollDistance == this._getMaxScrollDistance();
+        this._changeDetectorRef.markForCheck();
+    };
+    /**
+     * Determines what is the maximum length in pixels that can be set for the scroll distance. This
+     * is equal to the difference in width between the tab list container and tab header container.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     */
+    /**
+     * Determines what is the maximum length in pixels that can be set for the scroll distance. This
+     * is equal to the difference in width between the tab list container and tab header container.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @return {?}
+     */
+    MatTabHeader.prototype._getMaxScrollDistance = /**
+     * Determines what is the maximum length in pixels that can be set for the scroll distance. This
+     * is equal to the difference in width between the tab list container and tab header container.
+     *
+     * This is an expensive call that forces a layout reflow to compute box and scroll metrics and
+     * should be called sparingly.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var lengthOfTabList = this._tabList.nativeElement.scrollWidth;
+        /** @type {?} */
+        var viewLength = this._tabListContainer.nativeElement.offsetWidth;
+        return (lengthOfTabList - viewLength) || 0;
+    };
+    /** Tells the ink-bar to align itself to the current label wrapper */
+    /**
+     * Tells the ink-bar to align itself to the current label wrapper
+     * @return {?}
+     */
+    MatTabHeader.prototype._alignInkBarToSelectedTab = /**
+     * Tells the ink-bar to align itself to the current label wrapper
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var selectedLabelWrapper = this._labelWrappers && this._labelWrappers.length ?
+            this._labelWrappers.toArray()[this.selectedIndex].elementRef.nativeElement :
+            null;
+        this._inkBar.alignToElement((/** @type {?} */ (selectedLabelWrapper)));
+    };
+    /** Stops the currently-running paginator interval.  */
+    /**
+     * Stops the currently-running paginator interval.
+     * @return {?}
+     */
+    MatTabHeader.prototype._stopInterval = /**
+     * Stops the currently-running paginator interval.
+     * @return {?}
+     */
+    function () {
+        this._stopScrolling.next();
+    };
+    /**
+     * Handles the user pressing down on one of the paginators.
+     * Starts scrolling the header after a certain amount of time.
+     * @param direction In which direction the paginator should be scrolled.
+     */
+    /**
+     * Handles the user pressing down on one of the paginators.
+     * Starts scrolling the header after a certain amount of time.
+     * @param {?} direction In which direction the paginator should be scrolled.
+     * @return {?}
+     */
+    MatTabHeader.prototype._handlePaginatorPress = /**
+     * Handles the user pressing down on one of the paginators.
+     * Starts scrolling the header after a certain amount of time.
+     * @param {?} direction In which direction the paginator should be scrolled.
+     * @return {?}
+     */
+    function (direction) {
+        var _this = this;
+        // Avoid overlapping timers.
+        this._stopInterval();
+        // Start a timer after the delay and keep firing based on the interval.
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["timer"])(HEADER_SCROLL_DELAY, HEADER_SCROLL_INTERVAL)
+            // Keep the timer going until something tells it to stop or the component is destroyed.
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["merge"])(this._stopScrolling, this._destroyed)))
+            .subscribe(function () {
+            var _a = _this._scrollHeader(direction), maxScrollDistance = _a.maxScrollDistance, distance = _a.distance;
+            // Stop the timer if we've reached the start or the end.
+            if (distance === 0 || distance >= maxScrollDistance) {
+                _this._stopInterval();
+            }
+        });
+    };
+    /**
+     * Scrolls the header to a given position.
+     * @param position Position to which to scroll.
+     * @returns Information on the current scroll distance and the maximum.
+     */
+    /**
+     * Scrolls the header to a given position.
+     * @private
+     * @param {?} position Position to which to scroll.
+     * @return {?} Information on the current scroll distance and the maximum.
+     */
+    MatTabHeader.prototype._scrollTo = /**
+     * Scrolls the header to a given position.
+     * @private
+     * @param {?} position Position to which to scroll.
+     * @return {?} Information on the current scroll distance and the maximum.
+     */
+    function (position) {
+        /** @type {?} */
+        var maxScrollDistance = this._getMaxScrollDistance();
+        this._scrollDistance = Math.max(0, Math.min(maxScrollDistance, position));
+        // Mark that the scroll distance has changed so that after the view is checked, the CSS
+        // transformation can move the header.
+        this._scrollDistanceChanged = true;
+        this._checkScrollingControls();
+        return { maxScrollDistance: maxScrollDistance, distance: this._scrollDistance };
+    };
+    MatTabHeader.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: 'mat-tab-header',
+                    template: "<div class=\"mat-tab-header-pagination mat-tab-header-pagination-before mat-elevation-z4\" #previousPaginator aria-hidden=\"true\" mat-ripple [matRippleDisabled]=\"_disableScrollBefore || disableRipple\" [class.mat-tab-header-pagination-disabled]=\"_disableScrollBefore\" (click)=\"_handlePaginatorClick('before')\" (mousedown)=\"_handlePaginatorPress('before')\" (touchend)=\"_stopInterval()\"><div class=\"mat-tab-header-pagination-chevron\"></div></div><div class=\"mat-tab-label-container\" #tabListContainer (keydown)=\"_handleKeydown($event)\"><div class=\"mat-tab-list\" #tabList role=\"tablist\" (cdkObserveContent)=\"_onContentChanges()\"><div class=\"mat-tab-labels\"><ng-content></ng-content></div><mat-ink-bar></mat-ink-bar></div></div><div class=\"mat-tab-header-pagination mat-tab-header-pagination-after mat-elevation-z4\" #nextPaginator aria-hidden=\"true\" mat-ripple [matRippleDisabled]=\"_disableScrollAfter || disableRipple\" [class.mat-tab-header-pagination-disabled]=\"_disableScrollAfter\" (mousedown)=\"_handlePaginatorPress('after')\" (click)=\"_handlePaginatorClick('after')\" (touchend)=\"_stopInterval()\"><div class=\"mat-tab-header-pagination-chevron\"></div></div>",
+                    styles: [".mat-tab-header{display:flex;overflow:hidden;position:relative;flex-shrink:0}.mat-tab-label{height:48px;padding:0 24px;cursor:pointer;box-sizing:border-box;opacity:.6;min-width:160px;text-align:center;display:inline-flex;justify-content:center;align-items:center;white-space:nowrap;position:relative}.mat-tab-label:focus{outline:0}.mat-tab-label:focus:not(.mat-tab-disabled){opacity:1}@media (-ms-high-contrast:active){.mat-tab-label:focus{outline:dotted 2px}}.mat-tab-label.mat-tab-disabled{cursor:default}@media (-ms-high-contrast:active){.mat-tab-label.mat-tab-disabled{opacity:.5}}.mat-tab-label .mat-tab-label-content{display:inline-flex;justify-content:center;align-items:center;white-space:nowrap}@media (-ms-high-contrast:active){.mat-tab-label{opacity:1}}@media (max-width:599px){.mat-tab-label{min-width:72px}}.mat-ink-bar{position:absolute;bottom:0;height:2px;transition:.5s cubic-bezier(.35,0,.25,1)}.mat-tab-group-inverted-header .mat-ink-bar{bottom:auto;top:0}@media (-ms-high-contrast:active){.mat-ink-bar{outline:solid 2px;height:0}}.mat-tab-header-pagination{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;position:relative;display:none;justify-content:center;align-items:center;min-width:32px;cursor:pointer;z-index:2;-webkit-tap-highlight-color:transparent;touch-action:none}.mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination{display:flex}.mat-tab-header-pagination-before,.mat-tab-header-rtl .mat-tab-header-pagination-after{padding-left:4px}.mat-tab-header-pagination-before .mat-tab-header-pagination-chevron,.mat-tab-header-rtl .mat-tab-header-pagination-after .mat-tab-header-pagination-chevron{transform:rotate(-135deg)}.mat-tab-header-pagination-after,.mat-tab-header-rtl .mat-tab-header-pagination-before{padding-right:4px}.mat-tab-header-pagination-after .mat-tab-header-pagination-chevron,.mat-tab-header-rtl .mat-tab-header-pagination-before .mat-tab-header-pagination-chevron{transform:rotate(45deg)}.mat-tab-header-pagination-chevron{border-style:solid;border-width:2px 2px 0 0;content:'';height:8px;width:8px}.mat-tab-header-pagination-disabled{box-shadow:none;cursor:default}.mat-tab-label-container{display:flex;flex-grow:1;overflow:hidden;z-index:1}.mat-tab-list{flex-grow:1;position:relative;transition:transform .5s cubic-bezier(.35,0,.25,1)}.mat-tab-labels{display:flex}[mat-align-tabs=center] .mat-tab-labels{justify-content:center}[mat-align-tabs=end] .mat-tab-labels{justify-content:flex-end}"],
+                    inputs: ['disableRipple'],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                    host: {
+                        'class': 'mat-tab-header',
+                        '[class.mat-tab-header-pagination-controls-enabled]': '_showPaginationControls',
+                        '[class.mat-tab-header-rtl]': "_getLayoutDirection() == 'rtl'",
+                    },
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabHeader.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] },
+        { type: _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_10__["ViewportRuler"] },
+        { type: _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_6__["Directionality"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] },
+        { type: _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_12__["Platform"] }
+    ]; };
+    MatTabHeader.propDecorators = {
+        _labelWrappers: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChildren"], args: [MatTabLabelWrapper,] }],
+        _inkBar: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [MatInkBar,] }],
+        _tabListContainer: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['tabListContainer',] }],
+        _tabList: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['tabList',] }],
+        _nextPaginator: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['nextPaginator',] }],
+        _previousPaginator: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['previousPaginator',] }],
+        selectedIndex: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        selectFocusedIndex: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        indexFocused: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }]
+    };
+    return MatTabHeader;
+}(_MatTabHeaderMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Used to generate unique ID's for each tab component
+ * @type {?}
+ */
+var nextId = 0;
+/**
+ * A simple change event emitted on focus or selection changes.
+ */
+var  /**
+ * A simple change event emitted on focus or selection changes.
+ */
+MatTabChangeEvent = /** @class */ (function () {
+    function MatTabChangeEvent() {
+    }
+    return MatTabChangeEvent;
+}());
+/**
+ * Injection token that can be used to provide the default options the tabs module.
+ * @type {?}
+ */
+var MAT_TABS_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('MAT_TABS_CONFIG');
+// Boilerplate for applying mixins to MatTabGroup.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatTabGroup.
+/**
+ * \@docs-private
+ */
+MatTabGroupBase = /** @class */ (function () {
+    function MatTabGroupBase(_elementRef) {
+        this._elementRef = _elementRef;
+    }
+    return MatTabGroupBase;
+}());
+/** @type {?} */
+var _MatTabGroupMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinColor"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisableRipple"])(MatTabGroupBase), 'primary');
+/**
+ * Material design tab-group component.  Supports basic tab pairs (label + content) and includes
+ * animated ink-bar, keyboard navigation, and screen reader.
+ * See: https://material.io/design/components/tabs.html
+ */
+var MatTabGroup = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabGroup, _super);
+    function MatTabGroup(elementRef, _changeDetectorRef, defaultConfig) {
+        var _this = _super.call(this, elementRef) || this;
+        _this._changeDetectorRef = _changeDetectorRef;
+        /**
+         * The tab index that should be selected after the content has been checked.
+         */
+        _this._indexToSelect = 0;
+        /**
+         * Snapshot of the height of the tab body wrapper before another tab is activated.
+         */
+        _this._tabBodyWrapperHeight = 0;
+        /**
+         * Subscription to tabs being added/removed.
+         */
+        _this._tabsSubscription = rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"].EMPTY;
+        /**
+         * Subscription to changes in the tab labels.
+         */
+        _this._tabLabelSubscription = rxjs__WEBPACK_IMPORTED_MODULE_4__["Subscription"].EMPTY;
+        _this._dynamicHeight = false;
+        _this._selectedIndex = null;
+        /**
+         * Position of the tab header.
+         */
+        _this.headerPosition = 'above';
+        /**
+         * Output to enable support for two-way binding on `[(selectedIndex)]`
+         */
+        _this.selectedIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted when focus has changed within a tab group.
+         */
+        _this.focusChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted when the body animation has completed
+         */
+        _this.animationDone = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        /**
+         * Event emitted when the tab selection has changed.
+         */
+        _this.selectedTabChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"](true);
+        _this._groupId = nextId++;
+        _this.animationDuration = defaultConfig && defaultConfig.animationDuration ?
+            defaultConfig.animationDuration : '500ms';
+        return _this;
+    }
+    Object.defineProperty(MatTabGroup.prototype, "dynamicHeight", {
+        /** Whether the tab group should grow to the size of the active tab. */
+        get: /**
+         * Whether the tab group should grow to the size of the active tab.
+         * @return {?}
+         */
+        function () { return this._dynamicHeight; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) { this._dynamicHeight = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_8__["coerceBooleanProperty"])(value); },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatTabGroup.prototype, "selectedIndex", {
+        /** The index of the active tab. */
+        get: /**
+         * The index of the active tab.
+         * @return {?}
+         */
+        function () { return this._selectedIndex; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._indexToSelect = Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_8__["coerceNumberProperty"])(value, null);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatTabGroup.prototype, "animationDuration", {
+        /** Duration for the tab animation. Will be normalized to milliseconds if no units are set. */
+        get: /**
+         * Duration for the tab animation. Will be normalized to milliseconds if no units are set.
+         * @return {?}
+         */
+        function () { return this._animationDuration; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            this._animationDuration = /^\d+$/.test(value) ? value + 'ms' : value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatTabGroup.prototype, "backgroundColor", {
+        /** Background color of the tab group. */
+        get: /**
+         * Background color of the tab group.
+         * @return {?}
+         */
+        function () { return this._backgroundColor; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            /** @type {?} */
+            var nativeElement = this._elementRef.nativeElement;
+            nativeElement.classList.remove("mat-background-" + this.backgroundColor);
+            if (value) {
+                nativeElement.classList.add("mat-background-" + value);
+            }
+            this._backgroundColor = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * After the content is checked, this component knows what tabs have been defined
+     * and what the selected index should be. This is where we can know exactly what position
+     * each tab should be in according to the new selected index, and additionally we know how
+     * a new selected tab should transition in (from the left or right).
+     */
+    /**
+     * After the content is checked, this component knows what tabs have been defined
+     * and what the selected index should be. This is where we can know exactly what position
+     * each tab should be in according to the new selected index, and additionally we know how
+     * a new selected tab should transition in (from the left or right).
+     * @return {?}
+     */
+    MatTabGroup.prototype.ngAfterContentChecked = /**
+     * After the content is checked, this component knows what tabs have been defined
+     * and what the selected index should be. This is where we can know exactly what position
+     * each tab should be in according to the new selected index, and additionally we know how
+     * a new selected tab should transition in (from the left or right).
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        // Don't clamp the `indexToSelect` immediately in the setter because it can happen that
+        // the amount of tabs changes before the actual change detection runs.
+        /** @type {?} */
+        var indexToSelect = this._indexToSelect = this._clampTabIndex(this._indexToSelect);
+        // If there is a change in selected index, emit a change event. Should not trigger if
+        // the selected index has not yet been initialized.
+        if (this._selectedIndex != indexToSelect) {
+            /** @type {?} */
+            var isFirstRun_1 = this._selectedIndex == null;
+            if (!isFirstRun_1) {
+                this.selectedTabChange.emit(this._createChangeEvent(indexToSelect));
+            }
+            // Changing these values after change detection has run
+            // since the checked content may contain references to them.
+            Promise.resolve().then(function () {
+                _this._tabs.forEach(function (tab, index) { return tab.isActive = index === indexToSelect; });
+                if (!isFirstRun_1) {
+                    _this.selectedIndexChange.emit(indexToSelect);
+                }
+            });
+        }
+        // Setup the position for each tab and optionally setup an origin on the next selected tab.
+        this._tabs.forEach(function (tab, index) {
+            tab.position = index - indexToSelect;
+            // If there is already a selected tab, then set up an origin for the next selected tab
+            // if it doesn't have one already.
+            if (_this._selectedIndex != null && tab.position == 0 && !tab.origin) {
+                tab.origin = indexToSelect - _this._selectedIndex;
+            }
+        });
+        if (this._selectedIndex !== indexToSelect) {
+            this._selectedIndex = indexToSelect;
+            this._changeDetectorRef.markForCheck();
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatTabGroup.prototype.ngAfterContentInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this._subscribeToTabLabels();
+        // Subscribe to changes in the amount of tabs, in order to be
+        // able to re-render the content as new tabs are added or removed.
+        this._tabsSubscription = this._tabs.changes.subscribe(function () {
+            /** @type {?} */
+            var indexToSelect = _this._clampTabIndex(_this._indexToSelect);
+            // Maintain the previously-selected tab if a new tab is added or removed and there is no
+            // explicit change that selects a different tab.
+            if (indexToSelect === _this._selectedIndex) {
+                /** @type {?} */
+                var tabs = _this._tabs.toArray();
+                for (var i = 0; i < tabs.length; i++) {
+                    if (tabs[i].isActive) {
+                        // Assign both to the `_indexToSelect` and `_selectedIndex` so we don't fire a changed
+                        // event, otherwise the consumer may end up in an infinite loop in some edge cases like
+                        // adding a tab within the `selectedIndexChange` event.
+                        _this._indexToSelect = _this._selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            _this._subscribeToTabLabels();
+            _this._changeDetectorRef.markForCheck();
+        });
+    };
+    /**
+     * @return {?}
+     */
+    MatTabGroup.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._tabsSubscription.unsubscribe();
+        this._tabLabelSubscription.unsubscribe();
+    };
+    /** Re-aligns the ink bar to the selected tab element. */
+    /**
+     * Re-aligns the ink bar to the selected tab element.
+     * @return {?}
+     */
+    MatTabGroup.prototype.realignInkBar = /**
+     * Re-aligns the ink bar to the selected tab element.
+     * @return {?}
+     */
+    function () {
+        if (this._tabHeader) {
+            this._tabHeader._alignInkBarToSelectedTab();
+        }
+    };
+    /**
+     * @param {?} index
+     * @return {?}
+     */
+    MatTabGroup.prototype._focusChanged = /**
+     * @param {?} index
+     * @return {?}
+     */
+    function (index) {
+        this.focusChange.emit(this._createChangeEvent(index));
+    };
+    /**
+     * @private
+     * @param {?} index
+     * @return {?}
+     */
+    MatTabGroup.prototype._createChangeEvent = /**
+     * @private
+     * @param {?} index
+     * @return {?}
+     */
+    function (index) {
+        /** @type {?} */
+        var event = new MatTabChangeEvent;
+        event.index = index;
+        if (this._tabs && this._tabs.length) {
+            event.tab = this._tabs.toArray()[index];
+        }
+        return event;
+    };
+    /**
+     * Subscribes to changes in the tab labels. This is needed, because the @Input for the label is
+     * on the MatTab component, whereas the data binding is inside the MatTabGroup. In order for the
+     * binding to be updated, we need to subscribe to changes in it and trigger change detection
+     * manually.
+     */
+    /**
+     * Subscribes to changes in the tab labels. This is needed, because the \@Input for the label is
+     * on the MatTab component, whereas the data binding is inside the MatTabGroup. In order for the
+     * binding to be updated, we need to subscribe to changes in it and trigger change detection
+     * manually.
+     * @private
+     * @return {?}
+     */
+    MatTabGroup.prototype._subscribeToTabLabels = /**
+     * Subscribes to changes in the tab labels. This is needed, because the \@Input for the label is
+     * on the MatTab component, whereas the data binding is inside the MatTabGroup. In order for the
+     * binding to be updated, we need to subscribe to changes in it and trigger change detection
+     * manually.
+     * @private
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this._tabLabelSubscription) {
+            this._tabLabelSubscription.unsubscribe();
+        }
+        this._tabLabelSubscription = rxjs__WEBPACK_IMPORTED_MODULE_4__["merge"].apply(void 0, this._tabs.map(function (tab) { return tab._stateChanges; })).subscribe(function () { return _this._changeDetectorRef.markForCheck(); });
+    };
+    /** Clamps the given index to the bounds of 0 and the tabs length. */
+    /**
+     * Clamps the given index to the bounds of 0 and the tabs length.
+     * @private
+     * @param {?} index
+     * @return {?}
+     */
+    MatTabGroup.prototype._clampTabIndex = /**
+     * Clamps the given index to the bounds of 0 and the tabs length.
+     * @private
+     * @param {?} index
+     * @return {?}
+     */
+    function (index) {
+        // Note the `|| 0`, which ensures that values like NaN can't get through
+        // and which would otherwise throw the component into an infinite loop
+        // (since Math.max(NaN, 0) === NaN).
+        return Math.min(this._tabs.length - 1, Math.max(index || 0, 0));
+    };
+    /** Returns a unique id for each tab label element */
+    /**
+     * Returns a unique id for each tab label element
+     * @param {?} i
+     * @return {?}
+     */
+    MatTabGroup.prototype._getTabLabelId = /**
+     * Returns a unique id for each tab label element
+     * @param {?} i
+     * @return {?}
+     */
+    function (i) {
+        return "mat-tab-label-" + this._groupId + "-" + i;
+    };
+    /** Returns a unique id for each tab content element */
+    /**
+     * Returns a unique id for each tab content element
+     * @param {?} i
+     * @return {?}
+     */
+    MatTabGroup.prototype._getTabContentId = /**
+     * Returns a unique id for each tab content element
+     * @param {?} i
+     * @return {?}
+     */
+    function (i) {
+        return "mat-tab-content-" + this._groupId + "-" + i;
+    };
+    /**
+     * Sets the height of the body wrapper to the height of the activating tab if dynamic
+     * height property is true.
+     */
+    /**
+     * Sets the height of the body wrapper to the height of the activating tab if dynamic
+     * height property is true.
+     * @param {?} tabHeight
+     * @return {?}
+     */
+    MatTabGroup.prototype._setTabBodyWrapperHeight = /**
+     * Sets the height of the body wrapper to the height of the activating tab if dynamic
+     * height property is true.
+     * @param {?} tabHeight
+     * @return {?}
+     */
+    function (tabHeight) {
+        if (!this._dynamicHeight || !this._tabBodyWrapperHeight) {
+            return;
+        }
+        /** @type {?} */
+        var wrapper = this._tabBodyWrapper.nativeElement;
+        wrapper.style.height = this._tabBodyWrapperHeight + 'px';
+        // This conditional forces the browser to paint the height so that
+        // the animation to the new height can have an origin.
+        if (this._tabBodyWrapper.nativeElement.offsetHeight) {
+            wrapper.style.height = tabHeight + 'px';
+        }
+    };
+    /** Removes the height of the tab body wrapper. */
+    /**
+     * Removes the height of the tab body wrapper.
+     * @return {?}
+     */
+    MatTabGroup.prototype._removeTabBodyWrapperHeight = /**
+     * Removes the height of the tab body wrapper.
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var wrapper = this._tabBodyWrapper.nativeElement;
+        this._tabBodyWrapperHeight = wrapper.clientHeight;
+        wrapper.style.height = '';
+        this.animationDone.emit();
+    };
+    /** Handle click events, setting new selected index if appropriate. */
+    /**
+     * Handle click events, setting new selected index if appropriate.
+     * @param {?} tab
+     * @param {?} tabHeader
+     * @param {?} index
+     * @return {?}
+     */
+    MatTabGroup.prototype._handleClick = /**
+     * Handle click events, setting new selected index if appropriate.
+     * @param {?} tab
+     * @param {?} tabHeader
+     * @param {?} index
+     * @return {?}
+     */
+    function (tab, tabHeader, index) {
+        if (!tab.disabled) {
+            this.selectedIndex = tabHeader.focusIndex = index;
+        }
+    };
+    /** Retrieves the tabindex for the tab. */
+    /**
+     * Retrieves the tabindex for the tab.
+     * @param {?} tab
+     * @param {?} idx
+     * @return {?}
+     */
+    MatTabGroup.prototype._getTabIndex = /**
+     * Retrieves the tabindex for the tab.
+     * @param {?} tab
+     * @param {?} idx
+     * @return {?}
+     */
+    function (tab, idx) {
+        if (tab.disabled) {
+            return null;
+        }
+        return this.selectedIndex === idx ? 0 : -1;
+    };
+    MatTabGroup.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: 'mat-tab-group',
+                    exportAs: 'matTabGroup',
+                    template: "<mat-tab-header #tabHeader [selectedIndex]=\"selectedIndex\" [disableRipple]=\"disableRipple\" (indexFocused)=\"_focusChanged($event)\" (selectFocusedIndex)=\"selectedIndex = $event\"><div class=\"mat-tab-label\" role=\"tab\" matTabLabelWrapper mat-ripple cdkMonitorElementFocus *ngFor=\"let tab of _tabs; let i = index\" [id]=\"_getTabLabelId(i)\" [attr.tabIndex]=\"_getTabIndex(tab, i)\" [attr.aria-posinset]=\"i + 1\" [attr.aria-setsize]=\"_tabs.length\" [attr.aria-controls]=\"_getTabContentId(i)\" [attr.aria-selected]=\"selectedIndex == i\" [attr.aria-label]=\"tab.ariaLabel || null\" [attr.aria-labelledby]=\"(!tab.ariaLabel && tab.ariaLabelledby) ? tab.ariaLabelledby : null\" [class.mat-tab-label-active]=\"selectedIndex == i\" [disabled]=\"tab.disabled\" [matRippleDisabled]=\"tab.disabled || disableRipple\" (click)=\"_handleClick(tab, tabHeader, i)\"><div class=\"mat-tab-label-content\"><ng-template [ngIf]=\"tab.templateLabel\"><ng-template [cdkPortalOutlet]=\"tab.templateLabel\"></ng-template></ng-template><ng-template [ngIf]=\"!tab.templateLabel\">{{tab.textLabel}}</ng-template></div></div></mat-tab-header><div class=\"mat-tab-body-wrapper\" #tabBodyWrapper><mat-tab-body role=\"tabpanel\" *ngFor=\"let tab of _tabs; let i = index\" [id]=\"_getTabContentId(i)\" [attr.aria-labelledby]=\"_getTabLabelId(i)\" [class.mat-tab-body-active]=\"selectedIndex == i\" [content]=\"tab.content\" [position]=\"tab.position\" [origin]=\"tab.origin\" [animationDuration]=\"animationDuration\" (_onCentered)=\"_removeTabBodyWrapperHeight()\" (_onCentering)=\"_setTabBodyWrapperHeight($event)\"></mat-tab-body></div>",
+                    styles: [".mat-tab-group{display:flex;flex-direction:column}.mat-tab-group.mat-tab-group-inverted-header{flex-direction:column-reverse}.mat-tab-label{height:48px;padding:0 24px;cursor:pointer;box-sizing:border-box;opacity:.6;min-width:160px;text-align:center;display:inline-flex;justify-content:center;align-items:center;white-space:nowrap;position:relative}.mat-tab-label:focus{outline:0}.mat-tab-label:focus:not(.mat-tab-disabled){opacity:1}@media (-ms-high-contrast:active){.mat-tab-label:focus{outline:dotted 2px}}.mat-tab-label.mat-tab-disabled{cursor:default}@media (-ms-high-contrast:active){.mat-tab-label.mat-tab-disabled{opacity:.5}}.mat-tab-label .mat-tab-label-content{display:inline-flex;justify-content:center;align-items:center;white-space:nowrap}@media (-ms-high-contrast:active){.mat-tab-label{opacity:1}}@media (max-width:599px){.mat-tab-label{padding:0 12px}}@media (max-width:959px){.mat-tab-label{padding:0 12px}}.mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label{flex-basis:0;flex-grow:1}.mat-tab-body-wrapper{position:relative;overflow:hidden;display:flex;transition:height .5s cubic-bezier(.35,0,.25,1)}.mat-tab-body{top:0;left:0;right:0;bottom:0;position:absolute;display:block;overflow:hidden;flex-basis:100%}.mat-tab-body.mat-tab-body-active{position:relative;overflow-x:hidden;overflow-y:auto;z-index:1;flex-grow:1}.mat-tab-group.mat-tab-group-dynamic-height .mat-tab-body.mat-tab-body-active{overflow-y:hidden}"],
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                    inputs: ['color', 'disableRipple'],
+                    host: {
+                        'class': 'mat-tab-group',
+                        '[class.mat-tab-group-dynamic-height]': 'dynamicHeight',
+                        '[class.mat-tab-group-inverted-header]': 'headerPosition === "below"',
+                    },
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabGroup.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [MAT_TABS_CONFIG,] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }] }
+    ]; };
+    MatTabGroup.propDecorators = {
+        _tabs: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChildren"], args: [MatTab,] }],
+        _tabBodyWrapper: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['tabBodyWrapper',] }],
+        _tabHeader: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['tabHeader',] }],
+        dynamicHeight: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        selectedIndex: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        headerPosition: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        animationDuration: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        backgroundColor: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }],
+        selectedIndexChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        focusChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        animationDone: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }],
+        selectedTabChange: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"] }]
+    };
+    return MatTabGroup;
+}(_MatTabGroupMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// Boilerplate for applying mixins to MatTabNav.
+/**
+ * \@docs-private
+ */
+var  
+// Boilerplate for applying mixins to MatTabNav.
+/**
+ * \@docs-private
+ */
+MatTabNavBase = /** @class */ (function () {
+    function MatTabNavBase(_elementRef) {
+        this._elementRef = _elementRef;
+    }
+    return MatTabNavBase;
+}());
+/** @type {?} */
+var _MatTabNavMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisableRipple"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinColor"])(MatTabNavBase, 'primary'));
+/**
+ * Navigation component matching the styles of the tab group header.
+ * Provides anchored navigation with animated ink bar.
+ */
+var MatTabNav = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabNav, _super);
+    function MatTabNav(elementRef, _dir, _ngZone, _changeDetectorRef, _viewportRuler) {
+        var _this = _super.call(this, elementRef) || this;
+        _this._dir = _dir;
+        _this._ngZone = _ngZone;
+        _this._changeDetectorRef = _changeDetectorRef;
+        _this._viewportRuler = _viewportRuler;
+        /**
+         * Subject that emits when the component has been destroyed.
+         */
+        _this._onDestroy = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        return _this;
+    }
+    Object.defineProperty(MatTabNav.prototype, "backgroundColor", {
+        /** Background color of the tab nav. */
+        get: /**
+         * Background color of the tab nav.
+         * @return {?}
+         */
+        function () { return this._backgroundColor; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            /** @type {?} */
+            var nativeElement = this._elementRef.nativeElement;
+            nativeElement.classList.remove("mat-background-" + this.backgroundColor);
+            if (value) {
+                nativeElement.classList.add("mat-background-" + value);
+            }
+            this._backgroundColor = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Notifies the component that the active link has been changed.
+     * @breaking-change 8.0.0 `element` parameter to be removed.
+     */
+    /**
+     * Notifies the component that the active link has been changed.
+     * \@breaking-change 8.0.0 `element` parameter to be removed.
+     * @param {?} element
+     * @return {?}
+     */
+    MatTabNav.prototype.updateActiveLink = /**
+     * Notifies the component that the active link has been changed.
+     * \@breaking-change 8.0.0 `element` parameter to be removed.
+     * @param {?} element
+     * @return {?}
+     */
+    function (element) {
+        // Note: keeping the `element` for backwards-compat, but isn't being used for anything.
+        // @breaking-change 8.0.0
+        this._activeLinkChanged = !!element;
+        this._changeDetectorRef.markForCheck();
+    };
+    /**
+     * @return {?}
+     */
+    MatTabNav.prototype.ngAfterContentInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this._ngZone.runOutsideAngular(function () {
+            /** @type {?} */
+            var dirChange = _this._dir ? _this._dir.change : Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["merge"])(dirChange, _this._viewportRuler.change(10))
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(_this._onDestroy))
+                .subscribe(function () { return _this._alignInkBar(); });
+        });
+    };
+    /** Checks if the active link has been changed and, if so, will update the ink bar. */
+    /**
+     * Checks if the active link has been changed and, if so, will update the ink bar.
+     * @return {?}
+     */
+    MatTabNav.prototype.ngAfterContentChecked = /**
+     * Checks if the active link has been changed and, if so, will update the ink bar.
+     * @return {?}
+     */
+    function () {
+        if (this._activeLinkChanged) {
+            /** @type {?} */
+            var activeTab = this._tabLinks.find(function (tab) { return tab.active; });
+            this._activeLinkElement = activeTab ? activeTab._elementRef : null;
+            this._alignInkBar();
+            this._activeLinkChanged = false;
+        }
+    };
+    /**
+     * @return {?}
+     */
+    MatTabNav.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._onDestroy.next();
+        this._onDestroy.complete();
+    };
+    /** Aligns the ink bar to the active link. */
+    /**
+     * Aligns the ink bar to the active link.
+     * @return {?}
+     */
+    MatTabNav.prototype._alignInkBar = /**
+     * Aligns the ink bar to the active link.
+     * @return {?}
+     */
+    function () {
+        if (this._activeLinkElement) {
+            this._inkBar.show();
+            this._inkBar.alignToElement(this._activeLinkElement.nativeElement);
+        }
+        else {
+            this._inkBar.hide();
+        }
+    };
+    MatTabNav.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{selector: '[mat-tab-nav-bar]',
+                    exportAs: 'matTabNavBar, matTabNav',
+                    inputs: ['color', 'disableRipple'],
+                    template: "<div class=\"mat-tab-links\" (cdkObserveContent)=\"_alignInkBar()\"><ng-content></ng-content><mat-ink-bar></mat-ink-bar></div>",
+                    styles: [".mat-tab-nav-bar{overflow:hidden;position:relative;flex-shrink:0}.mat-tab-links{position:relative;display:flex}[mat-align-tabs=center] .mat-tab-links{justify-content:center}[mat-align-tabs=end] .mat-tab-links{justify-content:flex-end}.mat-tab-link{height:48px;padding:0 24px;cursor:pointer;box-sizing:border-box;opacity:.6;min-width:160px;text-align:center;display:inline-flex;justify-content:center;align-items:center;white-space:nowrap;vertical-align:top;text-decoration:none;position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}.mat-tab-link:focus{outline:0}.mat-tab-link:focus:not(.mat-tab-disabled){opacity:1}@media (-ms-high-contrast:active){.mat-tab-link:focus{outline:dotted 2px}}.mat-tab-link.mat-tab-disabled{cursor:default}@media (-ms-high-contrast:active){.mat-tab-link.mat-tab-disabled{opacity:.5}}.mat-tab-link .mat-tab-label-content{display:inline-flex;justify-content:center;align-items:center;white-space:nowrap}@media (-ms-high-contrast:active){.mat-tab-link{opacity:1}}[mat-stretch-tabs] .mat-tab-link{flex-basis:0;flex-grow:1}.mat-tab-link.mat-tab-disabled{pointer-events:none}@media (max-width:599px){.mat-tab-link{min-width:72px}}.mat-ink-bar{position:absolute;bottom:0;height:2px;transition:.5s cubic-bezier(.35,0,.25,1)}.mat-tab-group-inverted-header .mat-ink-bar{bottom:auto;top:0}@media (-ms-high-contrast:active){.mat-ink-bar{outline:solid 2px;height:0}}"],
+                    host: { 'class': 'mat-tab-nav-bar' },
+                    encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+                    changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectionStrategy"].OnPush,
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabNav.ctorParameters = function () { return [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_6__["Directionality"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"] },
+        { type: _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_10__["ViewportRuler"] }
+    ]; };
+    MatTabNav.propDecorators = {
+        _inkBar: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [MatInkBar,] }],
+        _tabLinks: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChildren"], args: [Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["forwardRef"])(function () { return MatTabLink; }), { descendants: true },] }],
+        backgroundColor: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }]
+    };
+    return MatTabNav;
+}(_MatTabNavMixinBase));
+// Boilerplate for applying mixins to MatTabLink.
+var  
+// Boilerplate for applying mixins to MatTabLink.
+MatTabLinkBase = /** @class */ (function () {
+    function MatTabLinkBase() {
+    }
+    return MatTabLinkBase;
+}());
+/** @type {?} */
+var _MatTabLinkMixinBase = Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinTabIndex"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisableRipple"])(Object(_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["mixinDisabled"])(MatTabLinkBase)));
+/**
+ * Link inside of a `mat-tab-nav-bar`.
+ */
+var MatTabLink = /** @class */ (function (_super) {
+    Object(tslib__WEBPACK_IMPORTED_MODULE_1__["__extends"])(MatTabLink, _super);
+    function MatTabLink(_tabNavBar, _elementRef, ngZone, platform, globalRippleOptions, tabIndex, _focusMonitor) {
+        var _this = _super.call(this) || this;
+        _this._tabNavBar = _tabNavBar;
+        _this._elementRef = _elementRef;
+        _this._focusMonitor = _focusMonitor;
+        /**
+         * Whether the tab link is active or not.
+         */
+        _this._isActive = false;
+        _this._tabLinkRipple = new _angular_material_core__WEBPACK_IMPORTED_MODULE_3__["RippleRenderer"](_this, ngZone, _elementRef, platform);
+        _this._tabLinkRipple.setupTriggerEvents(_elementRef.nativeElement);
+        _this.rippleConfig = globalRippleOptions || {};
+        _this.tabIndex = parseInt(tabIndex) || 0;
+        if (_focusMonitor) {
+            _focusMonitor.monitor(_elementRef);
+        }
+        return _this;
+    }
+    Object.defineProperty(MatTabLink.prototype, "active", {
+        /** Whether the link is active. */
+        get: /**
+         * Whether the link is active.
+         * @return {?}
+         */
+        function () { return this._isActive; },
+        set: /**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            if (value !== this._isActive) {
+                this._isActive = value;
+                this._tabNavBar.updateActiveLink(this._elementRef);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MatTabLink.prototype, "rippleDisabled", {
+        /**
+         * Whether ripples are disabled on interaction.
+         * @docs-private
+         */
+        get: /**
+         * Whether ripples are disabled on interaction.
+         * \@docs-private
+         * @return {?}
+         */
+        function () {
+            return this.disabled || this.disableRipple || this._tabNavBar.disableRipple ||
+                !!this.rippleConfig.disabled;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    MatTabLink.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._tabLinkRipple._removeTriggerEvents();
+        if (this._focusMonitor) {
+            this._focusMonitor.stopMonitoring(this._elementRef);
+        }
+    };
+    MatTabLink.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"], args: [{
+                    selector: '[mat-tab-link], [matTabLink]',
+                    exportAs: 'matTabLink',
+                    inputs: ['disabled', 'disableRipple', 'tabIndex'],
+                    host: {
+                        'class': 'mat-tab-link',
+                        '[attr.aria-current]': 'active',
+                        '[attr.aria-disabled]': 'disabled.toString()',
+                        '[attr.tabIndex]': 'tabIndex',
+                        '[class.mat-tab-disabled]': 'disabled',
+                        '[class.mat-tab-label-active]': 'active',
+                    }
+                },] },
+    ];
+    /** @nocollapse */
+    MatTabLink.ctorParameters = function () { return [
+        { type: MatTabNav },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] },
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"] },
+        { type: _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_12__["Platform"] },
+        { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_angular_material_core__WEBPACK_IMPORTED_MODULE_3__["MAT_RIPPLE_GLOBAL_OPTIONS"],] }] },
+        { type: String, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Attribute"], args: ['tabindex',] }] },
+        { type: _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__["FocusMonitor"] }
+    ]; };
+    MatTabLink.propDecorators = {
+        active: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"] }]
+    };
+    return MatTabLink;
+}(_MatTabLinkMixinBase));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var MatTabsModule = /** @class */ (function () {
+    function MatTabsModule() {
+    }
+    MatTabsModule.decorators = [
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"], args: [{
+                    imports: [
+                        _angular_common__WEBPACK_IMPORTED_MODULE_14__["CommonModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_3__["MatCommonModule"],
+                        _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_2__["PortalModule"],
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_3__["MatRippleModule"],
+                        _angular_cdk_observers__WEBPACK_IMPORTED_MODULE_13__["ObserversModule"],
+                        _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_11__["A11yModule"],
+                    ],
+                    // Don't export all components because some are only to be used internally.
+                    exports: [
+                        _angular_material_core__WEBPACK_IMPORTED_MODULE_3__["MatCommonModule"],
+                        MatTabGroup,
+                        MatTabLabel,
+                        MatTab,
+                        MatTabNav,
+                        MatTabLink,
+                        MatTabContent,
+                    ],
+                    declarations: [
+                        MatTabGroup,
+                        MatTabLabel,
+                        MatTab,
+                        MatInkBar,
+                        MatTabLabelWrapper,
+                        MatTabNav,
+                        MatTabLink,
+                        MatTabBody,
+                        MatTabBodyPortal,
+                        MatTabHeader,
+                        MatTabContent,
+                    ],
+                },] },
+    ];
+    return MatTabsModule;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+//# sourceMappingURL=tabs.es5.js.map
 
 
 /***/ }),
@@ -143949,6 +152909,6686 @@ var DragScrollModule = /** @class */ (function () {
 
 
 //# sourceMappingURL=cdk-drag-scroll.js.map
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/aes.js":
+/*!***************************************!*\
+  !*** ./node_modules/crypto-js/aes.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./enc-base64 */ "./node_modules/crypto-js/enc-base64.js"), __webpack_require__(/*! ./md5 */ "./node_modules/crypto-js/md5.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var BlockCipher = C_lib.BlockCipher;
+	    var C_algo = C.algo;
+
+	    // Lookup tables
+	    var SBOX = [];
+	    var INV_SBOX = [];
+	    var SUB_MIX_0 = [];
+	    var SUB_MIX_1 = [];
+	    var SUB_MIX_2 = [];
+	    var SUB_MIX_3 = [];
+	    var INV_SUB_MIX_0 = [];
+	    var INV_SUB_MIX_1 = [];
+	    var INV_SUB_MIX_2 = [];
+	    var INV_SUB_MIX_3 = [];
+
+	    // Compute lookup tables
+	    (function () {
+	        // Compute double table
+	        var d = [];
+	        for (var i = 0; i < 256; i++) {
+	            if (i < 128) {
+	                d[i] = i << 1;
+	            } else {
+	                d[i] = (i << 1) ^ 0x11b;
+	            }
+	        }
+
+	        // Walk GF(2^8)
+	        var x = 0;
+	        var xi = 0;
+	        for (var i = 0; i < 256; i++) {
+	            // Compute sbox
+	            var sx = xi ^ (xi << 1) ^ (xi << 2) ^ (xi << 3) ^ (xi << 4);
+	            sx = (sx >>> 8) ^ (sx & 0xff) ^ 0x63;
+	            SBOX[x] = sx;
+	            INV_SBOX[sx] = x;
+
+	            // Compute multiplication
+	            var x2 = d[x];
+	            var x4 = d[x2];
+	            var x8 = d[x4];
+
+	            // Compute sub bytes, mix columns tables
+	            var t = (d[sx] * 0x101) ^ (sx * 0x1010100);
+	            SUB_MIX_0[x] = (t << 24) | (t >>> 8);
+	            SUB_MIX_1[x] = (t << 16) | (t >>> 16);
+	            SUB_MIX_2[x] = (t << 8)  | (t >>> 24);
+	            SUB_MIX_3[x] = t;
+
+	            // Compute inv sub bytes, inv mix columns tables
+	            var t = (x8 * 0x1010101) ^ (x4 * 0x10001) ^ (x2 * 0x101) ^ (x * 0x1010100);
+	            INV_SUB_MIX_0[sx] = (t << 24) | (t >>> 8);
+	            INV_SUB_MIX_1[sx] = (t << 16) | (t >>> 16);
+	            INV_SUB_MIX_2[sx] = (t << 8)  | (t >>> 24);
+	            INV_SUB_MIX_3[sx] = t;
+
+	            // Compute next counter
+	            if (!x) {
+	                x = xi = 1;
+	            } else {
+	                x = x2 ^ d[d[d[x8 ^ x2]]];
+	                xi ^= d[d[xi]];
+	            }
+	        }
+	    }());
+
+	    // Precomputed Rcon lookup
+	    var RCON = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36];
+
+	    /**
+	     * AES block cipher algorithm.
+	     */
+	    var AES = C_algo.AES = BlockCipher.extend({
+	        _doReset: function () {
+	            // Skip reset of nRounds has been set before and key did not change
+	            if (this._nRounds && this._keyPriorReset === this._key) {
+	                return;
+	            }
+
+	            // Shortcuts
+	            var key = this._keyPriorReset = this._key;
+	            var keyWords = key.words;
+	            var keySize = key.sigBytes / 4;
+
+	            // Compute number of rounds
+	            var nRounds = this._nRounds = keySize + 6;
+
+	            // Compute number of key schedule rows
+	            var ksRows = (nRounds + 1) * 4;
+
+	            // Compute key schedule
+	            var keySchedule = this._keySchedule = [];
+	            for (var ksRow = 0; ksRow < ksRows; ksRow++) {
+	                if (ksRow < keySize) {
+	                    keySchedule[ksRow] = keyWords[ksRow];
+	                } else {
+	                    var t = keySchedule[ksRow - 1];
+
+	                    if (!(ksRow % keySize)) {
+	                        // Rot word
+	                        t = (t << 8) | (t >>> 24);
+
+	                        // Sub word
+	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 0xff] << 8) | SBOX[t & 0xff];
+
+	                        // Mix Rcon
+	                        t ^= RCON[(ksRow / keySize) | 0] << 24;
+	                    } else if (keySize > 6 && ksRow % keySize == 4) {
+	                        // Sub word
+	                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 0xff] << 8) | SBOX[t & 0xff];
+	                    }
+
+	                    keySchedule[ksRow] = keySchedule[ksRow - keySize] ^ t;
+	                }
+	            }
+
+	            // Compute inv key schedule
+	            var invKeySchedule = this._invKeySchedule = [];
+	            for (var invKsRow = 0; invKsRow < ksRows; invKsRow++) {
+	                var ksRow = ksRows - invKsRow;
+
+	                if (invKsRow % 4) {
+	                    var t = keySchedule[ksRow];
+	                } else {
+	                    var t = keySchedule[ksRow - 4];
+	                }
+
+	                if (invKsRow < 4 || ksRow <= 4) {
+	                    invKeySchedule[invKsRow] = t;
+	                } else {
+	                    invKeySchedule[invKsRow] = INV_SUB_MIX_0[SBOX[t >>> 24]] ^ INV_SUB_MIX_1[SBOX[(t >>> 16) & 0xff]] ^
+	                                               INV_SUB_MIX_2[SBOX[(t >>> 8) & 0xff]] ^ INV_SUB_MIX_3[SBOX[t & 0xff]];
+	                }
+	            }
+	        },
+
+	        encryptBlock: function (M, offset) {
+	            this._doCryptBlock(M, offset, this._keySchedule, SUB_MIX_0, SUB_MIX_1, SUB_MIX_2, SUB_MIX_3, SBOX);
+	        },
+
+	        decryptBlock: function (M, offset) {
+	            // Swap 2nd and 4th rows
+	            var t = M[offset + 1];
+	            M[offset + 1] = M[offset + 3];
+	            M[offset + 3] = t;
+
+	            this._doCryptBlock(M, offset, this._invKeySchedule, INV_SUB_MIX_0, INV_SUB_MIX_1, INV_SUB_MIX_2, INV_SUB_MIX_3, INV_SBOX);
+
+	            // Inv swap 2nd and 4th rows
+	            var t = M[offset + 1];
+	            M[offset + 1] = M[offset + 3];
+	            M[offset + 3] = t;
+	        },
+
+	        _doCryptBlock: function (M, offset, keySchedule, SUB_MIX_0, SUB_MIX_1, SUB_MIX_2, SUB_MIX_3, SBOX) {
+	            // Shortcut
+	            var nRounds = this._nRounds;
+
+	            // Get input, add round key
+	            var s0 = M[offset]     ^ keySchedule[0];
+	            var s1 = M[offset + 1] ^ keySchedule[1];
+	            var s2 = M[offset + 2] ^ keySchedule[2];
+	            var s3 = M[offset + 3] ^ keySchedule[3];
+
+	            // Key schedule row counter
+	            var ksRow = 4;
+
+	            // Rounds
+	            for (var round = 1; round < nRounds; round++) {
+	                // Shift rows, sub bytes, mix columns, add round key
+	                var t0 = SUB_MIX_0[s0 >>> 24] ^ SUB_MIX_1[(s1 >>> 16) & 0xff] ^ SUB_MIX_2[(s2 >>> 8) & 0xff] ^ SUB_MIX_3[s3 & 0xff] ^ keySchedule[ksRow++];
+	                var t1 = SUB_MIX_0[s1 >>> 24] ^ SUB_MIX_1[(s2 >>> 16) & 0xff] ^ SUB_MIX_2[(s3 >>> 8) & 0xff] ^ SUB_MIX_3[s0 & 0xff] ^ keySchedule[ksRow++];
+	                var t2 = SUB_MIX_0[s2 >>> 24] ^ SUB_MIX_1[(s3 >>> 16) & 0xff] ^ SUB_MIX_2[(s0 >>> 8) & 0xff] ^ SUB_MIX_3[s1 & 0xff] ^ keySchedule[ksRow++];
+	                var t3 = SUB_MIX_0[s3 >>> 24] ^ SUB_MIX_1[(s0 >>> 16) & 0xff] ^ SUB_MIX_2[(s1 >>> 8) & 0xff] ^ SUB_MIX_3[s2 & 0xff] ^ keySchedule[ksRow++];
+
+	                // Update state
+	                s0 = t0;
+	                s1 = t1;
+	                s2 = t2;
+	                s3 = t3;
+	            }
+
+	            // Shift rows, sub bytes, add round key
+	            var t0 = ((SBOX[s0 >>> 24] << 24) | (SBOX[(s1 >>> 16) & 0xff] << 16) | (SBOX[(s2 >>> 8) & 0xff] << 8) | SBOX[s3 & 0xff]) ^ keySchedule[ksRow++];
+	            var t1 = ((SBOX[s1 >>> 24] << 24) | (SBOX[(s2 >>> 16) & 0xff] << 16) | (SBOX[(s3 >>> 8) & 0xff] << 8) | SBOX[s0 & 0xff]) ^ keySchedule[ksRow++];
+	            var t2 = ((SBOX[s2 >>> 24] << 24) | (SBOX[(s3 >>> 16) & 0xff] << 16) | (SBOX[(s0 >>> 8) & 0xff] << 8) | SBOX[s1 & 0xff]) ^ keySchedule[ksRow++];
+	            var t3 = ((SBOX[s3 >>> 24] << 24) | (SBOX[(s0 >>> 16) & 0xff] << 16) | (SBOX[(s1 >>> 8) & 0xff] << 8) | SBOX[s2 & 0xff]) ^ keySchedule[ksRow++];
+
+	            // Set output
+	            M[offset]     = t0;
+	            M[offset + 1] = t1;
+	            M[offset + 2] = t2;
+	            M[offset + 3] = t3;
+	        },
+
+	        keySize: 256/32
+	    });
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.AES.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.AES.decrypt(ciphertext, key, cfg);
+	     */
+	    C.AES = BlockCipher._createHelper(AES);
+	}());
+
+
+	return CryptoJS.AES;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/cipher-core.js":
+/*!***********************************************!*\
+  !*** ./node_modules/crypto-js/cipher-core.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Cipher core components.
+	 */
+	CryptoJS.lib.Cipher || (function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var WordArray = C_lib.WordArray;
+	    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm;
+	    var C_enc = C.enc;
+	    var Utf8 = C_enc.Utf8;
+	    var Base64 = C_enc.Base64;
+	    var C_algo = C.algo;
+	    var EvpKDF = C_algo.EvpKDF;
+
+	    /**
+	     * Abstract base cipher template.
+	     *
+	     * @property {number} keySize This cipher's key size. Default: 4 (128 bits)
+	     * @property {number} ivSize This cipher's IV size. Default: 4 (128 bits)
+	     * @property {number} _ENC_XFORM_MODE A constant representing encryption mode.
+	     * @property {number} _DEC_XFORM_MODE A constant representing decryption mode.
+	     */
+	    var Cipher = C_lib.Cipher = BufferedBlockAlgorithm.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {WordArray} iv The IV to use for this operation.
+	         */
+	        cfg: Base.extend(),
+
+	        /**
+	         * Creates this cipher in encryption mode.
+	         *
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {Cipher} A cipher instance.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipher = CryptoJS.algo.AES.createEncryptor(keyWordArray, { iv: ivWordArray });
+	         */
+	        createEncryptor: function (key, cfg) {
+	            return this.create(this._ENC_XFORM_MODE, key, cfg);
+	        },
+
+	        /**
+	         * Creates this cipher in decryption mode.
+	         *
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {Cipher} A cipher instance.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipher = CryptoJS.algo.AES.createDecryptor(keyWordArray, { iv: ivWordArray });
+	         */
+	        createDecryptor: function (key, cfg) {
+	            return this.create(this._DEC_XFORM_MODE, key, cfg);
+	        },
+
+	        /**
+	         * Initializes a newly created cipher.
+	         *
+	         * @param {number} xformMode Either the encryption or decryption transormation mode constant.
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @example
+	         *
+	         *     var cipher = CryptoJS.algo.AES.create(CryptoJS.algo.AES._ENC_XFORM_MODE, keyWordArray, { iv: ivWordArray });
+	         */
+	        init: function (xformMode, key, cfg) {
+	            // Apply config defaults
+	            this.cfg = this.cfg.extend(cfg);
+
+	            // Store transform mode and key
+	            this._xformMode = xformMode;
+	            this._key = key;
+
+	            // Set initial values
+	            this.reset();
+	        },
+
+	        /**
+	         * Resets this cipher to its initial state.
+	         *
+	         * @example
+	         *
+	         *     cipher.reset();
+	         */
+	        reset: function () {
+	            // Reset data buffer
+	            BufferedBlockAlgorithm.reset.call(this);
+
+	            // Perform concrete-cipher logic
+	            this._doReset();
+	        },
+
+	        /**
+	         * Adds data to be encrypted or decrypted.
+	         *
+	         * @param {WordArray|string} dataUpdate The data to encrypt or decrypt.
+	         *
+	         * @return {WordArray} The data after processing.
+	         *
+	         * @example
+	         *
+	         *     var encrypted = cipher.process('data');
+	         *     var encrypted = cipher.process(wordArray);
+	         */
+	        process: function (dataUpdate) {
+	            // Append
+	            this._append(dataUpdate);
+
+	            // Process available blocks
+	            return this._process();
+	        },
+
+	        /**
+	         * Finalizes the encryption or decryption process.
+	         * Note that the finalize operation is effectively a destructive, read-once operation.
+	         *
+	         * @param {WordArray|string} dataUpdate The final data to encrypt or decrypt.
+	         *
+	         * @return {WordArray} The data after final processing.
+	         *
+	         * @example
+	         *
+	         *     var encrypted = cipher.finalize();
+	         *     var encrypted = cipher.finalize('data');
+	         *     var encrypted = cipher.finalize(wordArray);
+	         */
+	        finalize: function (dataUpdate) {
+	            // Final data update
+	            if (dataUpdate) {
+	                this._append(dataUpdate);
+	            }
+
+	            // Perform concrete-cipher logic
+	            var finalProcessedData = this._doFinalize();
+
+	            return finalProcessedData;
+	        },
+
+	        keySize: 128/32,
+
+	        ivSize: 128/32,
+
+	        _ENC_XFORM_MODE: 1,
+
+	        _DEC_XFORM_MODE: 2,
+
+	        /**
+	         * Creates shortcut functions to a cipher's object interface.
+	         *
+	         * @param {Cipher} cipher The cipher to create a helper for.
+	         *
+	         * @return {Object} An object with encrypt and decrypt shortcut functions.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var AES = CryptoJS.lib.Cipher._createHelper(CryptoJS.algo.AES);
+	         */
+	        _createHelper: (function () {
+	            function selectCipherStrategy(key) {
+	                if (typeof key == 'string') {
+	                    return PasswordBasedCipher;
+	                } else {
+	                    return SerializableCipher;
+	                }
+	            }
+
+	            return function (cipher) {
+	                return {
+	                    encrypt: function (message, key, cfg) {
+	                        return selectCipherStrategy(key).encrypt(cipher, message, key, cfg);
+	                    },
+
+	                    decrypt: function (ciphertext, key, cfg) {
+	                        return selectCipherStrategy(key).decrypt(cipher, ciphertext, key, cfg);
+	                    }
+	                };
+	            };
+	        }())
+	    });
+
+	    /**
+	     * Abstract base stream cipher template.
+	     *
+	     * @property {number} blockSize The number of 32-bit words this cipher operates on. Default: 1 (32 bits)
+	     */
+	    var StreamCipher = C_lib.StreamCipher = Cipher.extend({
+	        _doFinalize: function () {
+	            // Process partial blocks
+	            var finalProcessedBlocks = this._process(!!'flush');
+
+	            return finalProcessedBlocks;
+	        },
+
+	        blockSize: 1
+	    });
+
+	    /**
+	     * Mode namespace.
+	     */
+	    var C_mode = C.mode = {};
+
+	    /**
+	     * Abstract base block cipher mode template.
+	     */
+	    var BlockCipherMode = C_lib.BlockCipherMode = Base.extend({
+	        /**
+	         * Creates this mode for encryption.
+	         *
+	         * @param {Cipher} cipher A block cipher instance.
+	         * @param {Array} iv The IV words.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var mode = CryptoJS.mode.CBC.createEncryptor(cipher, iv.words);
+	         */
+	        createEncryptor: function (cipher, iv) {
+	            return this.Encryptor.create(cipher, iv);
+	        },
+
+	        /**
+	         * Creates this mode for decryption.
+	         *
+	         * @param {Cipher} cipher A block cipher instance.
+	         * @param {Array} iv The IV words.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var mode = CryptoJS.mode.CBC.createDecryptor(cipher, iv.words);
+	         */
+	        createDecryptor: function (cipher, iv) {
+	            return this.Decryptor.create(cipher, iv);
+	        },
+
+	        /**
+	         * Initializes a newly created mode.
+	         *
+	         * @param {Cipher} cipher A block cipher instance.
+	         * @param {Array} iv The IV words.
+	         *
+	         * @example
+	         *
+	         *     var mode = CryptoJS.mode.CBC.Encryptor.create(cipher, iv.words);
+	         */
+	        init: function (cipher, iv) {
+	            this._cipher = cipher;
+	            this._iv = iv;
+	        }
+	    });
+
+	    /**
+	     * Cipher Block Chaining mode.
+	     */
+	    var CBC = C_mode.CBC = (function () {
+	        /**
+	         * Abstract base CBC mode.
+	         */
+	        var CBC = BlockCipherMode.extend();
+
+	        /**
+	         * CBC encryptor.
+	         */
+	        CBC.Encryptor = CBC.extend({
+	            /**
+	             * Processes the data block at offset.
+	             *
+	             * @param {Array} words The data words to operate on.
+	             * @param {number} offset The offset where the block starts.
+	             *
+	             * @example
+	             *
+	             *     mode.processBlock(data.words, offset);
+	             */
+	            processBlock: function (words, offset) {
+	                // Shortcuts
+	                var cipher = this._cipher;
+	                var blockSize = cipher.blockSize;
+
+	                // XOR and encrypt
+	                xorBlock.call(this, words, offset, blockSize);
+	                cipher.encryptBlock(words, offset);
+
+	                // Remember this block to use with next block
+	                this._prevBlock = words.slice(offset, offset + blockSize);
+	            }
+	        });
+
+	        /**
+	         * CBC decryptor.
+	         */
+	        CBC.Decryptor = CBC.extend({
+	            /**
+	             * Processes the data block at offset.
+	             *
+	             * @param {Array} words The data words to operate on.
+	             * @param {number} offset The offset where the block starts.
+	             *
+	             * @example
+	             *
+	             *     mode.processBlock(data.words, offset);
+	             */
+	            processBlock: function (words, offset) {
+	                // Shortcuts
+	                var cipher = this._cipher;
+	                var blockSize = cipher.blockSize;
+
+	                // Remember this block to use with next block
+	                var thisBlock = words.slice(offset, offset + blockSize);
+
+	                // Decrypt and XOR
+	                cipher.decryptBlock(words, offset);
+	                xorBlock.call(this, words, offset, blockSize);
+
+	                // This block becomes the previous block
+	                this._prevBlock = thisBlock;
+	            }
+	        });
+
+	        function xorBlock(words, offset, blockSize) {
+	            // Shortcut
+	            var iv = this._iv;
+
+	            // Choose mixing block
+	            if (iv) {
+	                var block = iv;
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            } else {
+	                var block = this._prevBlock;
+	            }
+
+	            // XOR blocks
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= block[i];
+	            }
+	        }
+
+	        return CBC;
+	    }());
+
+	    /**
+	     * Padding namespace.
+	     */
+	    var C_pad = C.pad = {};
+
+	    /**
+	     * PKCS #5/7 padding strategy.
+	     */
+	    var Pkcs7 = C_pad.Pkcs7 = {
+	        /**
+	         * Pads data using the algorithm defined in PKCS #5/7.
+	         *
+	         * @param {WordArray} data The data to pad.
+	         * @param {number} blockSize The multiple that the data should be padded to.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     CryptoJS.pad.Pkcs7.pad(wordArray, 4);
+	         */
+	        pad: function (data, blockSize) {
+	            // Shortcut
+	            var blockSizeBytes = blockSize * 4;
+
+	            // Count padding bytes
+	            var nPaddingBytes = blockSizeBytes - data.sigBytes % blockSizeBytes;
+
+	            // Create padding word
+	            var paddingWord = (nPaddingBytes << 24) | (nPaddingBytes << 16) | (nPaddingBytes << 8) | nPaddingBytes;
+
+	            // Create padding
+	            var paddingWords = [];
+	            for (var i = 0; i < nPaddingBytes; i += 4) {
+	                paddingWords.push(paddingWord);
+	            }
+	            var padding = WordArray.create(paddingWords, nPaddingBytes);
+
+	            // Add padding
+	            data.concat(padding);
+	        },
+
+	        /**
+	         * Unpads data that had been padded using the algorithm defined in PKCS #5/7.
+	         *
+	         * @param {WordArray} data The data to unpad.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     CryptoJS.pad.Pkcs7.unpad(wordArray);
+	         */
+	        unpad: function (data) {
+	            // Get number of padding bytes from last byte
+	            var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+
+	            // Remove padding
+	            data.sigBytes -= nPaddingBytes;
+	        }
+	    };
+
+	    /**
+	     * Abstract base block cipher template.
+	     *
+	     * @property {number} blockSize The number of 32-bit words this cipher operates on. Default: 4 (128 bits)
+	     */
+	    var BlockCipher = C_lib.BlockCipher = Cipher.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {Mode} mode The block mode to use. Default: CBC
+	         * @property {Padding} padding The padding strategy to use. Default: Pkcs7
+	         */
+	        cfg: Cipher.cfg.extend({
+	            mode: CBC,
+	            padding: Pkcs7
+	        }),
+
+	        reset: function () {
+	            // Reset cipher
+	            Cipher.reset.call(this);
+
+	            // Shortcuts
+	            var cfg = this.cfg;
+	            var iv = cfg.iv;
+	            var mode = cfg.mode;
+
+	            // Reset block mode
+	            if (this._xformMode == this._ENC_XFORM_MODE) {
+	                var modeCreator = mode.createEncryptor;
+	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
+	                var modeCreator = mode.createDecryptor;
+	                // Keep at least one block in the buffer for unpadding
+	                this._minBufferSize = 1;
+	            }
+
+	            if (this._mode && this._mode.__creator == modeCreator) {
+	                this._mode.init(this, iv && iv.words);
+	            } else {
+	                this._mode = modeCreator.call(mode, this, iv && iv.words);
+	                this._mode.__creator = modeCreator;
+	            }
+	        },
+
+	        _doProcessBlock: function (words, offset) {
+	            this._mode.processBlock(words, offset);
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcut
+	            var padding = this.cfg.padding;
+
+	            // Finalize
+	            if (this._xformMode == this._ENC_XFORM_MODE) {
+	                // Pad data
+	                padding.pad(this._data, this.blockSize);
+
+	                // Process final blocks
+	                var finalProcessedBlocks = this._process(!!'flush');
+	            } else /* if (this._xformMode == this._DEC_XFORM_MODE) */ {
+	                // Process final blocks
+	                var finalProcessedBlocks = this._process(!!'flush');
+
+	                // Unpad data
+	                padding.unpad(finalProcessedBlocks);
+	            }
+
+	            return finalProcessedBlocks;
+	        },
+
+	        blockSize: 128/32
+	    });
+
+	    /**
+	     * A collection of cipher parameters.
+	     *
+	     * @property {WordArray} ciphertext The raw ciphertext.
+	     * @property {WordArray} key The key to this ciphertext.
+	     * @property {WordArray} iv The IV used in the ciphering operation.
+	     * @property {WordArray} salt The salt used with a key derivation function.
+	     * @property {Cipher} algorithm The cipher algorithm.
+	     * @property {Mode} mode The block mode used in the ciphering operation.
+	     * @property {Padding} padding The padding scheme used in the ciphering operation.
+	     * @property {number} blockSize The block size of the cipher.
+	     * @property {Format} formatter The default formatting strategy to convert this cipher params object to a string.
+	     */
+	    var CipherParams = C_lib.CipherParams = Base.extend({
+	        /**
+	         * Initializes a newly created cipher params object.
+	         *
+	         * @param {Object} cipherParams An object with any of the possible cipher parameters.
+	         *
+	         * @example
+	         *
+	         *     var cipherParams = CryptoJS.lib.CipherParams.create({
+	         *         ciphertext: ciphertextWordArray,
+	         *         key: keyWordArray,
+	         *         iv: ivWordArray,
+	         *         salt: saltWordArray,
+	         *         algorithm: CryptoJS.algo.AES,
+	         *         mode: CryptoJS.mode.CBC,
+	         *         padding: CryptoJS.pad.PKCS7,
+	         *         blockSize: 4,
+	         *         formatter: CryptoJS.format.OpenSSL
+	         *     });
+	         */
+	        init: function (cipherParams) {
+	            this.mixIn(cipherParams);
+	        },
+
+	        /**
+	         * Converts this cipher params object to a string.
+	         *
+	         * @param {Format} formatter (Optional) The formatting strategy to use.
+	         *
+	         * @return {string} The stringified cipher params.
+	         *
+	         * @throws Error If neither the formatter nor the default formatter is set.
+	         *
+	         * @example
+	         *
+	         *     var string = cipherParams + '';
+	         *     var string = cipherParams.toString();
+	         *     var string = cipherParams.toString(CryptoJS.format.OpenSSL);
+	         */
+	        toString: function (formatter) {
+	            return (formatter || this.formatter).stringify(this);
+	        }
+	    });
+
+	    /**
+	     * Format namespace.
+	     */
+	    var C_format = C.format = {};
+
+	    /**
+	     * OpenSSL formatting strategy.
+	     */
+	    var OpenSSLFormatter = C_format.OpenSSL = {
+	        /**
+	         * Converts a cipher params object to an OpenSSL-compatible string.
+	         *
+	         * @param {CipherParams} cipherParams The cipher params object.
+	         *
+	         * @return {string} The OpenSSL-compatible string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var openSSLString = CryptoJS.format.OpenSSL.stringify(cipherParams);
+	         */
+	        stringify: function (cipherParams) {
+	            // Shortcuts
+	            var ciphertext = cipherParams.ciphertext;
+	            var salt = cipherParams.salt;
+
+	            // Format
+	            if (salt) {
+	                var wordArray = WordArray.create([0x53616c74, 0x65645f5f]).concat(salt).concat(ciphertext);
+	            } else {
+	                var wordArray = ciphertext;
+	            }
+
+	            return wordArray.toString(Base64);
+	        },
+
+	        /**
+	         * Converts an OpenSSL-compatible string to a cipher params object.
+	         *
+	         * @param {string} openSSLStr The OpenSSL-compatible string.
+	         *
+	         * @return {CipherParams} The cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipherParams = CryptoJS.format.OpenSSL.parse(openSSLString);
+	         */
+	        parse: function (openSSLStr) {
+	            // Parse base64
+	            var ciphertext = Base64.parse(openSSLStr);
+
+	            // Shortcut
+	            var ciphertextWords = ciphertext.words;
+
+	            // Test for salt
+	            if (ciphertextWords[0] == 0x53616c74 && ciphertextWords[1] == 0x65645f5f) {
+	                // Extract salt
+	                var salt = WordArray.create(ciphertextWords.slice(2, 4));
+
+	                // Remove salt from ciphertext
+	                ciphertextWords.splice(0, 4);
+	                ciphertext.sigBytes -= 16;
+	            }
+
+	            return CipherParams.create({ ciphertext: ciphertext, salt: salt });
+	        }
+	    };
+
+	    /**
+	     * A cipher wrapper that returns ciphertext as a serializable cipher params object.
+	     */
+	    var SerializableCipher = C_lib.SerializableCipher = Base.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string. Default: OpenSSL
+	         */
+	        cfg: Base.extend({
+	            format: OpenSSLFormatter
+	        }),
+
+	        /**
+	         * Encrypts a message.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {WordArray|string} message The message to encrypt.
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {CipherParams} A cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key);
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv });
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         */
+	        encrypt: function (cipher, message, key, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Encrypt
+	            var encryptor = cipher.createEncryptor(key, cfg);
+	            var ciphertext = encryptor.finalize(message);
+
+	            // Shortcut
+	            var cipherCfg = encryptor.cfg;
+
+	            // Create and return serializable cipher params
+	            return CipherParams.create({
+	                ciphertext: ciphertext,
+	                key: key,
+	                iv: cipherCfg.iv,
+	                algorithm: cipher,
+	                mode: cipherCfg.mode,
+	                padding: cipherCfg.padding,
+	                blockSize: cipher.blockSize,
+	                formatter: cfg.format
+	            });
+	        },
+
+	        /**
+	         * Decrypts serialized ciphertext.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {CipherParams|string} ciphertext The ciphertext to decrypt.
+	         * @param {WordArray} key The key.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {WordArray} The plaintext.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+	         */
+	        decrypt: function (cipher, ciphertext, key, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Convert string to CipherParams
+	            ciphertext = this._parse(ciphertext, cfg.format);
+
+	            // Decrypt
+	            var plaintext = cipher.createDecryptor(key, cfg).finalize(ciphertext.ciphertext);
+
+	            return plaintext;
+	        },
+
+	        /**
+	         * Converts serialized ciphertext to CipherParams,
+	         * else assumed CipherParams already and returns ciphertext unchanged.
+	         *
+	         * @param {CipherParams|string} ciphertext The ciphertext.
+	         * @param {Formatter} format The formatting strategy to use to parse serialized ciphertext.
+	         *
+	         * @return {CipherParams} The unserialized ciphertext.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var ciphertextParams = CryptoJS.lib.SerializableCipher._parse(ciphertextStringOrParams, format);
+	         */
+	        _parse: function (ciphertext, format) {
+	            if (typeof ciphertext == 'string') {
+	                return format.parse(ciphertext, this);
+	            } else {
+	                return ciphertext;
+	            }
+	        }
+	    });
+
+	    /**
+	     * Key derivation function namespace.
+	     */
+	    var C_kdf = C.kdf = {};
+
+	    /**
+	     * OpenSSL key derivation function.
+	     */
+	    var OpenSSLKdf = C_kdf.OpenSSL = {
+	        /**
+	         * Derives a key and IV from a password.
+	         *
+	         * @param {string} password The password to derive from.
+	         * @param {number} keySize The size in words of the key to generate.
+	         * @param {number} ivSize The size in words of the IV to generate.
+	         * @param {WordArray|string} salt (Optional) A 64-bit salt to use. If omitted, a salt will be generated randomly.
+	         *
+	         * @return {CipherParams} A cipher params object with the key, IV, and salt.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32);
+	         *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32, 'saltsalt');
+	         */
+	        execute: function (password, keySize, ivSize, salt) {
+	            // Generate random salt
+	            if (!salt) {
+	                salt = WordArray.random(64/8);
+	            }
+
+	            // Derive key and IV
+	            var key = EvpKDF.create({ keySize: keySize + ivSize }).compute(password, salt);
+
+	            // Separate key and IV
+	            var iv = WordArray.create(key.words.slice(keySize), ivSize * 4);
+	            key.sigBytes = keySize * 4;
+
+	            // Return params
+	            return CipherParams.create({ key: key, iv: iv, salt: salt });
+	        }
+	    };
+
+	    /**
+	     * A serializable cipher wrapper that derives the key from a password,
+	     * and returns ciphertext as a serializable cipher params object.
+	     */
+	    var PasswordBasedCipher = C_lib.PasswordBasedCipher = SerializableCipher.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default: OpenSSL
+	         */
+	        cfg: SerializableCipher.cfg.extend({
+	            kdf: OpenSSLKdf
+	        }),
+
+	        /**
+	         * Encrypts a message using a password.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {WordArray|string} message The message to encrypt.
+	         * @param {string} password The password.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {CipherParams} A cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password');
+	         *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password', { format: CryptoJS.format.OpenSSL });
+	         */
+	        encrypt: function (cipher, message, password, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Derive key and other params
+	            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize);
+
+	            // Add IV to config
+	            cfg.iv = derivedParams.iv;
+
+	            // Encrypt
+	            var ciphertext = SerializableCipher.encrypt.call(this, cipher, message, derivedParams.key, cfg);
+
+	            // Mix in derived params
+	            ciphertext.mixIn(derivedParams);
+
+	            return ciphertext;
+	        },
+
+	        /**
+	         * Decrypts serialized ciphertext using a password.
+	         *
+	         * @param {Cipher} cipher The cipher algorithm to use.
+	         * @param {CipherParams|string} ciphertext The ciphertext to decrypt.
+	         * @param {string} password The password.
+	         * @param {Object} cfg (Optional) The configuration options to use for this operation.
+	         *
+	         * @return {WordArray} The plaintext.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, 'password', { format: CryptoJS.format.OpenSSL });
+	         *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, 'password', { format: CryptoJS.format.OpenSSL });
+	         */
+	        decrypt: function (cipher, ciphertext, password, cfg) {
+	            // Apply config defaults
+	            cfg = this.cfg.extend(cfg);
+
+	            // Convert string to CipherParams
+	            ciphertext = this._parse(ciphertext, cfg.format);
+
+	            // Derive key and other params
+	            var derivedParams = cfg.kdf.execute(password, cipher.keySize, cipher.ivSize, ciphertext.salt);
+
+	            // Add IV to config
+	            cfg.iv = derivedParams.iv;
+
+	            // Decrypt
+	            var plaintext = SerializableCipher.decrypt.call(this, cipher, ciphertext, derivedParams.key, cfg);
+
+	            return plaintext;
+	        }
+	    });
+	}());
+
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/core.js":
+/*!****************************************!*\
+  !*** ./node_modules/crypto-js/core.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory();
+	}
+	else {}
+}(this, function () {
+
+	/**
+	 * CryptoJS core components.
+	 */
+	var CryptoJS = CryptoJS || (function (Math, undefined) {
+	    /*
+	     * Local polyfil of Object.create
+	     */
+	    var create = Object.create || (function () {
+	        function F() {};
+
+	        return function (obj) {
+	            var subtype;
+
+	            F.prototype = obj;
+
+	            subtype = new F();
+
+	            F.prototype = null;
+
+	            return subtype;
+	        };
+	    }())
+
+	    /**
+	     * CryptoJS namespace.
+	     */
+	    var C = {};
+
+	    /**
+	     * Library namespace.
+	     */
+	    var C_lib = C.lib = {};
+
+	    /**
+	     * Base object for prototypal inheritance.
+	     */
+	    var Base = C_lib.Base = (function () {
+
+
+	        return {
+	            /**
+	             * Creates a new object that inherits from this object.
+	             *
+	             * @param {Object} overrides Properties to copy into the new object.
+	             *
+	             * @return {Object} The new object.
+	             *
+	             * @static
+	             *
+	             * @example
+	             *
+	             *     var MyType = CryptoJS.lib.Base.extend({
+	             *         field: 'value',
+	             *
+	             *         method: function () {
+	             *         }
+	             *     });
+	             */
+	            extend: function (overrides) {
+	                // Spawn
+	                var subtype = create(this);
+
+	                // Augment
+	                if (overrides) {
+	                    subtype.mixIn(overrides);
+	                }
+
+	                // Create default initializer
+	                if (!subtype.hasOwnProperty('init') || this.init === subtype.init) {
+	                    subtype.init = function () {
+	                        subtype.$super.init.apply(this, arguments);
+	                    };
+	                }
+
+	                // Initializer's prototype is the subtype object
+	                subtype.init.prototype = subtype;
+
+	                // Reference supertype
+	                subtype.$super = this;
+
+	                return subtype;
+	            },
+
+	            /**
+	             * Extends this object and runs the init method.
+	             * Arguments to create() will be passed to init().
+	             *
+	             * @return {Object} The new object.
+	             *
+	             * @static
+	             *
+	             * @example
+	             *
+	             *     var instance = MyType.create();
+	             */
+	            create: function () {
+	                var instance = this.extend();
+	                instance.init.apply(instance, arguments);
+
+	                return instance;
+	            },
+
+	            /**
+	             * Initializes a newly created object.
+	             * Override this method to add some logic when your objects are created.
+	             *
+	             * @example
+	             *
+	             *     var MyType = CryptoJS.lib.Base.extend({
+	             *         init: function () {
+	             *             // ...
+	             *         }
+	             *     });
+	             */
+	            init: function () {
+	            },
+
+	            /**
+	             * Copies properties into this object.
+	             *
+	             * @param {Object} properties The properties to mix in.
+	             *
+	             * @example
+	             *
+	             *     MyType.mixIn({
+	             *         field: 'value'
+	             *     });
+	             */
+	            mixIn: function (properties) {
+	                for (var propertyName in properties) {
+	                    if (properties.hasOwnProperty(propertyName)) {
+	                        this[propertyName] = properties[propertyName];
+	                    }
+	                }
+
+	                // IE won't copy toString using the loop above
+	                if (properties.hasOwnProperty('toString')) {
+	                    this.toString = properties.toString;
+	                }
+	            },
+
+	            /**
+	             * Creates a copy of this object.
+	             *
+	             * @return {Object} The clone.
+	             *
+	             * @example
+	             *
+	             *     var clone = instance.clone();
+	             */
+	            clone: function () {
+	                return this.init.prototype.extend(this);
+	            }
+	        };
+	    }());
+
+	    /**
+	     * An array of 32-bit words.
+	     *
+	     * @property {Array} words The array of 32-bit words.
+	     * @property {number} sigBytes The number of significant bytes in this word array.
+	     */
+	    var WordArray = C_lib.WordArray = Base.extend({
+	        /**
+	         * Initializes a newly created word array.
+	         *
+	         * @param {Array} words (Optional) An array of 32-bit words.
+	         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.lib.WordArray.create();
+	         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
+	         *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
+	         */
+	        init: function (words, sigBytes) {
+	            words = this.words = words || [];
+
+	            if (sigBytes != undefined) {
+	                this.sigBytes = sigBytes;
+	            } else {
+	                this.sigBytes = words.length * 4;
+	            }
+	        },
+
+	        /**
+	         * Converts this word array to a string.
+	         *
+	         * @param {Encoder} encoder (Optional) The encoding strategy to use. Default: CryptoJS.enc.Hex
+	         *
+	         * @return {string} The stringified word array.
+	         *
+	         * @example
+	         *
+	         *     var string = wordArray + '';
+	         *     var string = wordArray.toString();
+	         *     var string = wordArray.toString(CryptoJS.enc.Utf8);
+	         */
+	        toString: function (encoder) {
+	            return (encoder || Hex).stringify(this);
+	        },
+
+	        /**
+	         * Concatenates a word array to this word array.
+	         *
+	         * @param {WordArray} wordArray The word array to append.
+	         *
+	         * @return {WordArray} This word array.
+	         *
+	         * @example
+	         *
+	         *     wordArray1.concat(wordArray2);
+	         */
+	        concat: function (wordArray) {
+	            // Shortcuts
+	            var thisWords = this.words;
+	            var thatWords = wordArray.words;
+	            var thisSigBytes = this.sigBytes;
+	            var thatSigBytes = wordArray.sigBytes;
+
+	            // Clamp excess bits
+	            this.clamp();
+
+	            // Concat
+	            if (thisSigBytes % 4) {
+	                // Copy one byte at a time
+	                for (var i = 0; i < thatSigBytes; i++) {
+	                    var thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+	                    thisWords[(thisSigBytes + i) >>> 2] |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
+	                }
+	            } else {
+	                // Copy one word at a time
+	                for (var i = 0; i < thatSigBytes; i += 4) {
+	                    thisWords[(thisSigBytes + i) >>> 2] = thatWords[i >>> 2];
+	                }
+	            }
+	            this.sigBytes += thatSigBytes;
+
+	            // Chainable
+	            return this;
+	        },
+
+	        /**
+	         * Removes insignificant bits.
+	         *
+	         * @example
+	         *
+	         *     wordArray.clamp();
+	         */
+	        clamp: function () {
+	            // Shortcuts
+	            var words = this.words;
+	            var sigBytes = this.sigBytes;
+
+	            // Clamp
+	            words[sigBytes >>> 2] &= 0xffffffff << (32 - (sigBytes % 4) * 8);
+	            words.length = Math.ceil(sigBytes / 4);
+	        },
+
+	        /**
+	         * Creates a copy of this word array.
+	         *
+	         * @return {WordArray} The clone.
+	         *
+	         * @example
+	         *
+	         *     var clone = wordArray.clone();
+	         */
+	        clone: function () {
+	            var clone = Base.clone.call(this);
+	            clone.words = this.words.slice(0);
+
+	            return clone;
+	        },
+
+	        /**
+	         * Creates a word array filled with random bytes.
+	         *
+	         * @param {number} nBytes The number of random bytes to generate.
+	         *
+	         * @return {WordArray} The random word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.lib.WordArray.random(16);
+	         */
+	        random: function (nBytes) {
+	            var words = [];
+
+	            var r = (function (m_w) {
+	                var m_w = m_w;
+	                var m_z = 0x3ade68b1;
+	                var mask = 0xffffffff;
+
+	                return function () {
+	                    m_z = (0x9069 * (m_z & 0xFFFF) + (m_z >> 0x10)) & mask;
+	                    m_w = (0x4650 * (m_w & 0xFFFF) + (m_w >> 0x10)) & mask;
+	                    var result = ((m_z << 0x10) + m_w) & mask;
+	                    result /= 0x100000000;
+	                    result += 0.5;
+	                    return result * (Math.random() > .5 ? 1 : -1);
+	                }
+	            });
+
+	            for (var i = 0, rcache; i < nBytes; i += 4) {
+	                var _r = r((rcache || Math.random()) * 0x100000000);
+
+	                rcache = _r() * 0x3ade67b7;
+	                words.push((_r() * 0x100000000) | 0);
+	            }
+
+	            return new WordArray.init(words, nBytes);
+	        }
+	    });
+
+	    /**
+	     * Encoder namespace.
+	     */
+	    var C_enc = C.enc = {};
+
+	    /**
+	     * Hex encoding strategy.
+	     */
+	    var Hex = C_enc.Hex = {
+	        /**
+	         * Converts a word array to a hex string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The hex string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var hexString = CryptoJS.enc.Hex.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+
+	            // Convert
+	            var hexChars = [];
+	            for (var i = 0; i < sigBytes; i++) {
+	                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+	                hexChars.push((bite >>> 4).toString(16));
+	                hexChars.push((bite & 0x0f).toString(16));
+	            }
+
+	            return hexChars.join('');
+	        },
+
+	        /**
+	         * Converts a hex string to a word array.
+	         *
+	         * @param {string} hexStr The hex string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Hex.parse(hexString);
+	         */
+	        parse: function (hexStr) {
+	            // Shortcut
+	            var hexStrLength = hexStr.length;
+
+	            // Convert
+	            var words = [];
+	            for (var i = 0; i < hexStrLength; i += 2) {
+	                words[i >>> 3] |= parseInt(hexStr.substr(i, 2), 16) << (24 - (i % 8) * 4);
+	            }
+
+	            return new WordArray.init(words, hexStrLength / 2);
+	        }
+	    };
+
+	    /**
+	     * Latin1 encoding strategy.
+	     */
+	    var Latin1 = C_enc.Latin1 = {
+	        /**
+	         * Converts a word array to a Latin1 string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The Latin1 string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+
+	            // Convert
+	            var latin1Chars = [];
+	            for (var i = 0; i < sigBytes; i++) {
+	                var bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+	                latin1Chars.push(String.fromCharCode(bite));
+	            }
+
+	            return latin1Chars.join('');
+	        },
+
+	        /**
+	         * Converts a Latin1 string to a word array.
+	         *
+	         * @param {string} latin1Str The Latin1 string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Latin1.parse(latin1String);
+	         */
+	        parse: function (latin1Str) {
+	            // Shortcut
+	            var latin1StrLength = latin1Str.length;
+
+	            // Convert
+	            var words = [];
+	            for (var i = 0; i < latin1StrLength; i++) {
+	                words[i >>> 2] |= (latin1Str.charCodeAt(i) & 0xff) << (24 - (i % 4) * 8);
+	            }
+
+	            return new WordArray.init(words, latin1StrLength);
+	        }
+	    };
+
+	    /**
+	     * UTF-8 encoding strategy.
+	     */
+	    var Utf8 = C_enc.Utf8 = {
+	        /**
+	         * Converts a word array to a UTF-8 string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The UTF-8 string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            try {
+	                return decodeURIComponent(escape(Latin1.stringify(wordArray)));
+	            } catch (e) {
+	                throw new Error('Malformed UTF-8 data');
+	            }
+	        },
+
+	        /**
+	         * Converts a UTF-8 string to a word array.
+	         *
+	         * @param {string} utf8Str The UTF-8 string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
+	         */
+	        parse: function (utf8Str) {
+	            return Latin1.parse(unescape(encodeURIComponent(utf8Str)));
+	        }
+	    };
+
+	    /**
+	     * Abstract buffered block algorithm template.
+	     *
+	     * The property blockSize must be implemented in a concrete subtype.
+	     *
+	     * @property {number} _minBufferSize The number of blocks that should be kept unprocessed in the buffer. Default: 0
+	     */
+	    var BufferedBlockAlgorithm = C_lib.BufferedBlockAlgorithm = Base.extend({
+	        /**
+	         * Resets this block algorithm's data buffer to its initial state.
+	         *
+	         * @example
+	         *
+	         *     bufferedBlockAlgorithm.reset();
+	         */
+	        reset: function () {
+	            // Initial values
+	            this._data = new WordArray.init();
+	            this._nDataBytes = 0;
+	        },
+
+	        /**
+	         * Adds new data to this block algorithm's buffer.
+	         *
+	         * @param {WordArray|string} data The data to append. Strings are converted to a WordArray using UTF-8.
+	         *
+	         * @example
+	         *
+	         *     bufferedBlockAlgorithm._append('data');
+	         *     bufferedBlockAlgorithm._append(wordArray);
+	         */
+	        _append: function (data) {
+	            // Convert string to WordArray, else assume WordArray already
+	            if (typeof data == 'string') {
+	                data = Utf8.parse(data);
+	            }
+
+	            // Append
+	            this._data.concat(data);
+	            this._nDataBytes += data.sigBytes;
+	        },
+
+	        /**
+	         * Processes available data blocks.
+	         *
+	         * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
+	         *
+	         * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
+	         *
+	         * @return {WordArray} The processed data.
+	         *
+	         * @example
+	         *
+	         *     var processedData = bufferedBlockAlgorithm._process();
+	         *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
+	         */
+	        _process: function (doFlush) {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+	            var dataSigBytes = data.sigBytes;
+	            var blockSize = this.blockSize;
+	            var blockSizeBytes = blockSize * 4;
+
+	            // Count blocks ready
+	            var nBlocksReady = dataSigBytes / blockSizeBytes;
+	            if (doFlush) {
+	                // Round up to include partial blocks
+	                nBlocksReady = Math.ceil(nBlocksReady);
+	            } else {
+	                // Round down to include only full blocks,
+	                // less the number of blocks that must remain in the buffer
+	                nBlocksReady = Math.max((nBlocksReady | 0) - this._minBufferSize, 0);
+	            }
+
+	            // Count words ready
+	            var nWordsReady = nBlocksReady * blockSize;
+
+	            // Count bytes ready
+	            var nBytesReady = Math.min(nWordsReady * 4, dataSigBytes);
+
+	            // Process blocks
+	            if (nWordsReady) {
+	                for (var offset = 0; offset < nWordsReady; offset += blockSize) {
+	                    // Perform concrete-algorithm logic
+	                    this._doProcessBlock(dataWords, offset);
+	                }
+
+	                // Remove processed words
+	                var processedWords = dataWords.splice(0, nWordsReady);
+	                data.sigBytes -= nBytesReady;
+	            }
+
+	            // Return processed words
+	            return new WordArray.init(processedWords, nBytesReady);
+	        },
+
+	        /**
+	         * Creates a copy of this object.
+	         *
+	         * @return {Object} The clone.
+	         *
+	         * @example
+	         *
+	         *     var clone = bufferedBlockAlgorithm.clone();
+	         */
+	        clone: function () {
+	            var clone = Base.clone.call(this);
+	            clone._data = this._data.clone();
+
+	            return clone;
+	        },
+
+	        _minBufferSize: 0
+	    });
+
+	    /**
+	     * Abstract hasher template.
+	     *
+	     * @property {number} blockSize The number of 32-bit words this hasher operates on. Default: 16 (512 bits)
+	     */
+	    var Hasher = C_lib.Hasher = BufferedBlockAlgorithm.extend({
+	        /**
+	         * Configuration options.
+	         */
+	        cfg: Base.extend(),
+
+	        /**
+	         * Initializes a newly created hasher.
+	         *
+	         * @param {Object} cfg (Optional) The configuration options to use for this hash computation.
+	         *
+	         * @example
+	         *
+	         *     var hasher = CryptoJS.algo.SHA256.create();
+	         */
+	        init: function (cfg) {
+	            // Apply config defaults
+	            this.cfg = this.cfg.extend(cfg);
+
+	            // Set initial values
+	            this.reset();
+	        },
+
+	        /**
+	         * Resets this hasher to its initial state.
+	         *
+	         * @example
+	         *
+	         *     hasher.reset();
+	         */
+	        reset: function () {
+	            // Reset data buffer
+	            BufferedBlockAlgorithm.reset.call(this);
+
+	            // Perform concrete-hasher logic
+	            this._doReset();
+	        },
+
+	        /**
+	         * Updates this hasher with a message.
+	         *
+	         * @param {WordArray|string} messageUpdate The message to append.
+	         *
+	         * @return {Hasher} This hasher.
+	         *
+	         * @example
+	         *
+	         *     hasher.update('message');
+	         *     hasher.update(wordArray);
+	         */
+	        update: function (messageUpdate) {
+	            // Append
+	            this._append(messageUpdate);
+
+	            // Update the hash
+	            this._process();
+
+	            // Chainable
+	            return this;
+	        },
+
+	        /**
+	         * Finalizes the hash computation.
+	         * Note that the finalize operation is effectively a destructive, read-once operation.
+	         *
+	         * @param {WordArray|string} messageUpdate (Optional) A final message update.
+	         *
+	         * @return {WordArray} The hash.
+	         *
+	         * @example
+	         *
+	         *     var hash = hasher.finalize();
+	         *     var hash = hasher.finalize('message');
+	         *     var hash = hasher.finalize(wordArray);
+	         */
+	        finalize: function (messageUpdate) {
+	            // Final message update
+	            if (messageUpdate) {
+	                this._append(messageUpdate);
+	            }
+
+	            // Perform concrete-hasher logic
+	            var hash = this._doFinalize();
+
+	            return hash;
+	        },
+
+	        blockSize: 512/32,
+
+	        /**
+	         * Creates a shortcut function to a hasher's object interface.
+	         *
+	         * @param {Hasher} hasher The hasher to create a helper for.
+	         *
+	         * @return {Function} The shortcut function.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
+	         */
+	        _createHelper: function (hasher) {
+	            return function (message, cfg) {
+	                return new hasher.init(cfg).finalize(message);
+	            };
+	        },
+
+	        /**
+	         * Creates a shortcut function to the HMAC's object interface.
+	         *
+	         * @param {Hasher} hasher The hasher to use in this HMAC helper.
+	         *
+	         * @return {Function} The shortcut function.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
+	         */
+	        _createHmacHelper: function (hasher) {
+	            return function (message, key) {
+	                return new C_algo.HMAC.init(hasher, key).finalize(message);
+	            };
+	        }
+	    });
+
+	    /**
+	     * Algorithm namespace.
+	     */
+	    var C_algo = C.algo = {};
+
+	    return C;
+	}(Math));
+
+
+	return CryptoJS;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/enc-base64.js":
+/*!**********************************************!*\
+  !*** ./node_modules/crypto-js/enc-base64.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_enc = C.enc;
+
+	    /**
+	     * Base64 encoding strategy.
+	     */
+	    var Base64 = C_enc.Base64 = {
+	        /**
+	         * Converts a word array to a Base64 string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The Base64 string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var base64String = CryptoJS.enc.Base64.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+	            var map = this._map;
+
+	            // Clamp excess bits
+	            wordArray.clamp();
+
+	            // Convert
+	            var base64Chars = [];
+	            for (var i = 0; i < sigBytes; i += 3) {
+	                var byte1 = (words[i >>> 2]       >>> (24 - (i % 4) * 8))       & 0xff;
+	                var byte2 = (words[(i + 1) >>> 2] >>> (24 - ((i + 1) % 4) * 8)) & 0xff;
+	                var byte3 = (words[(i + 2) >>> 2] >>> (24 - ((i + 2) % 4) * 8)) & 0xff;
+
+	                var triplet = (byte1 << 16) | (byte2 << 8) | byte3;
+
+	                for (var j = 0; (j < 4) && (i + j * 0.75 < sigBytes); j++) {
+	                    base64Chars.push(map.charAt((triplet >>> (6 * (3 - j))) & 0x3f));
+	                }
+	            }
+
+	            // Add padding
+	            var paddingChar = map.charAt(64);
+	            if (paddingChar) {
+	                while (base64Chars.length % 4) {
+	                    base64Chars.push(paddingChar);
+	                }
+	            }
+
+	            return base64Chars.join('');
+	        },
+
+	        /**
+	         * Converts a Base64 string to a word array.
+	         *
+	         * @param {string} base64Str The Base64 string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Base64.parse(base64String);
+	         */
+	        parse: function (base64Str) {
+	            // Shortcuts
+	            var base64StrLength = base64Str.length;
+	            var map = this._map;
+	            var reverseMap = this._reverseMap;
+
+	            if (!reverseMap) {
+	                    reverseMap = this._reverseMap = [];
+	                    for (var j = 0; j < map.length; j++) {
+	                        reverseMap[map.charCodeAt(j)] = j;
+	                    }
+	            }
+
+	            // Ignore padding
+	            var paddingChar = map.charAt(64);
+	            if (paddingChar) {
+	                var paddingIndex = base64Str.indexOf(paddingChar);
+	                if (paddingIndex !== -1) {
+	                    base64StrLength = paddingIndex;
+	                }
+	            }
+
+	            // Convert
+	            return parseLoop(base64Str, base64StrLength, reverseMap);
+
+	        },
+
+	        _map: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
+	    };
+
+	    function parseLoop(base64Str, base64StrLength, reverseMap) {
+	      var words = [];
+	      var nBytes = 0;
+	      for (var i = 0; i < base64StrLength; i++) {
+	          if (i % 4) {
+	              var bits1 = reverseMap[base64Str.charCodeAt(i - 1)] << ((i % 4) * 2);
+	              var bits2 = reverseMap[base64Str.charCodeAt(i)] >>> (6 - (i % 4) * 2);
+	              words[nBytes >>> 2] |= (bits1 | bits2) << (24 - (nBytes % 4) * 8);
+	              nBytes++;
+	          }
+	      }
+	      return WordArray.create(words, nBytes);
+	    }
+	}());
+
+
+	return CryptoJS.enc.Base64;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/enc-utf16.js":
+/*!*********************************************!*\
+  !*** ./node_modules/crypto-js/enc-utf16.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_enc = C.enc;
+
+	    /**
+	     * UTF-16 BE encoding strategy.
+	     */
+	    var Utf16BE = C_enc.Utf16 = C_enc.Utf16BE = {
+	        /**
+	         * Converts a word array to a UTF-16 BE string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The UTF-16 BE string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var utf16String = CryptoJS.enc.Utf16.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+
+	            // Convert
+	            var utf16Chars = [];
+	            for (var i = 0; i < sigBytes; i += 2) {
+	                var codePoint = (words[i >>> 2] >>> (16 - (i % 4) * 8)) & 0xffff;
+	                utf16Chars.push(String.fromCharCode(codePoint));
+	            }
+
+	            return utf16Chars.join('');
+	        },
+
+	        /**
+	         * Converts a UTF-16 BE string to a word array.
+	         *
+	         * @param {string} utf16Str The UTF-16 BE string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Utf16.parse(utf16String);
+	         */
+	        parse: function (utf16Str) {
+	            // Shortcut
+	            var utf16StrLength = utf16Str.length;
+
+	            // Convert
+	            var words = [];
+	            for (var i = 0; i < utf16StrLength; i++) {
+	                words[i >>> 1] |= utf16Str.charCodeAt(i) << (16 - (i % 2) * 16);
+	            }
+
+	            return WordArray.create(words, utf16StrLength * 2);
+	        }
+	    };
+
+	    /**
+	     * UTF-16 LE encoding strategy.
+	     */
+	    C_enc.Utf16LE = {
+	        /**
+	         * Converts a word array to a UTF-16 LE string.
+	         *
+	         * @param {WordArray} wordArray The word array.
+	         *
+	         * @return {string} The UTF-16 LE string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var utf16Str = CryptoJS.enc.Utf16LE.stringify(wordArray);
+	         */
+	        stringify: function (wordArray) {
+	            // Shortcuts
+	            var words = wordArray.words;
+	            var sigBytes = wordArray.sigBytes;
+
+	            // Convert
+	            var utf16Chars = [];
+	            for (var i = 0; i < sigBytes; i += 2) {
+	                var codePoint = swapEndian((words[i >>> 2] >>> (16 - (i % 4) * 8)) & 0xffff);
+	                utf16Chars.push(String.fromCharCode(codePoint));
+	            }
+
+	            return utf16Chars.join('');
+	        },
+
+	        /**
+	         * Converts a UTF-16 LE string to a word array.
+	         *
+	         * @param {string} utf16Str The UTF-16 LE string.
+	         *
+	         * @return {WordArray} The word array.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.enc.Utf16LE.parse(utf16Str);
+	         */
+	        parse: function (utf16Str) {
+	            // Shortcut
+	            var utf16StrLength = utf16Str.length;
+
+	            // Convert
+	            var words = [];
+	            for (var i = 0; i < utf16StrLength; i++) {
+	                words[i >>> 1] |= swapEndian(utf16Str.charCodeAt(i) << (16 - (i % 2) * 16));
+	            }
+
+	            return WordArray.create(words, utf16StrLength * 2);
+	        }
+	    };
+
+	    function swapEndian(word) {
+	        return ((word << 8) & 0xff00ff00) | ((word >>> 8) & 0x00ff00ff);
+	    }
+	}());
+
+
+	return CryptoJS.enc.Utf16;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/evpkdf.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/evpkdf.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./sha1 */ "./node_modules/crypto-js/sha1.js"), __webpack_require__(/*! ./hmac */ "./node_modules/crypto-js/hmac.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var WordArray = C_lib.WordArray;
+	    var C_algo = C.algo;
+	    var MD5 = C_algo.MD5;
+
+	    /**
+	     * This key derivation function is meant to conform with EVP_BytesToKey.
+	     * www.openssl.org/docs/crypto/EVP_BytesToKey.html
+	     */
+	    var EvpKDF = C_algo.EvpKDF = Base.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
+	         * @property {Hasher} hasher The hash algorithm to use. Default: MD5
+	         * @property {number} iterations The number of iterations to perform. Default: 1
+	         */
+	        cfg: Base.extend({
+	            keySize: 128/32,
+	            hasher: MD5,
+	            iterations: 1
+	        }),
+
+	        /**
+	         * Initializes a newly created key derivation function.
+	         *
+	         * @param {Object} cfg (Optional) The configuration options to use for the derivation.
+	         *
+	         * @example
+	         *
+	         *     var kdf = CryptoJS.algo.EvpKDF.create();
+	         *     var kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8 });
+	         *     var kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8, iterations: 1000 });
+	         */
+	        init: function (cfg) {
+	            this.cfg = this.cfg.extend(cfg);
+	        },
+
+	        /**
+	         * Derives a key from a password.
+	         *
+	         * @param {WordArray|string} password The password.
+	         * @param {WordArray|string} salt A salt.
+	         *
+	         * @return {WordArray} The derived key.
+	         *
+	         * @example
+	         *
+	         *     var key = kdf.compute(password, salt);
+	         */
+	        compute: function (password, salt) {
+	            // Shortcut
+	            var cfg = this.cfg;
+
+	            // Init hasher
+	            var hasher = cfg.hasher.create();
+
+	            // Initial values
+	            var derivedKey = WordArray.create();
+
+	            // Shortcuts
+	            var derivedKeyWords = derivedKey.words;
+	            var keySize = cfg.keySize;
+	            var iterations = cfg.iterations;
+
+	            // Generate key
+	            while (derivedKeyWords.length < keySize) {
+	                if (block) {
+	                    hasher.update(block);
+	                }
+	                var block = hasher.update(password).finalize(salt);
+	                hasher.reset();
+
+	                // Iterations
+	                for (var i = 1; i < iterations; i++) {
+	                    block = hasher.finalize(block);
+	                    hasher.reset();
+	                }
+
+	                derivedKey.concat(block);
+	            }
+	            derivedKey.sigBytes = keySize * 4;
+
+	            return derivedKey;
+	        }
+	    });
+
+	    /**
+	     * Derives a key from a password.
+	     *
+	     * @param {WordArray|string} password The password.
+	     * @param {WordArray|string} salt A salt.
+	     * @param {Object} cfg (Optional) The configuration options to use for this computation.
+	     *
+	     * @return {WordArray} The derived key.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var key = CryptoJS.EvpKDF(password, salt);
+	     *     var key = CryptoJS.EvpKDF(password, salt, { keySize: 8 });
+	     *     var key = CryptoJS.EvpKDF(password, salt, { keySize: 8, iterations: 1000 });
+	     */
+	    C.EvpKDF = function (password, salt, cfg) {
+	        return EvpKDF.create(cfg).compute(password, salt);
+	    };
+	}());
+
+
+	return CryptoJS.EvpKDF;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/format-hex.js":
+/*!**********************************************!*\
+  !*** ./node_modules/crypto-js/format-hex.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var CipherParams = C_lib.CipherParams;
+	    var C_enc = C.enc;
+	    var Hex = C_enc.Hex;
+	    var C_format = C.format;
+
+	    var HexFormatter = C_format.Hex = {
+	        /**
+	         * Converts the ciphertext of a cipher params object to a hexadecimally encoded string.
+	         *
+	         * @param {CipherParams} cipherParams The cipher params object.
+	         *
+	         * @return {string} The hexadecimally encoded string.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var hexString = CryptoJS.format.Hex.stringify(cipherParams);
+	         */
+	        stringify: function (cipherParams) {
+	            return cipherParams.ciphertext.toString(Hex);
+	        },
+
+	        /**
+	         * Converts a hexadecimally encoded ciphertext string to a cipher params object.
+	         *
+	         * @param {string} input The hexadecimally encoded string.
+	         *
+	         * @return {CipherParams} The cipher params object.
+	         *
+	         * @static
+	         *
+	         * @example
+	         *
+	         *     var cipherParams = CryptoJS.format.Hex.parse(hexString);
+	         */
+	        parse: function (input) {
+	            var ciphertext = Hex.parse(input);
+	            return CipherParams.create({ ciphertext: ciphertext });
+	        }
+	    };
+	}());
+
+
+	return CryptoJS.format.Hex;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/hmac.js":
+/*!****************************************!*\
+  !*** ./node_modules/crypto-js/hmac.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var C_enc = C.enc;
+	    var Utf8 = C_enc.Utf8;
+	    var C_algo = C.algo;
+
+	    /**
+	     * HMAC algorithm.
+	     */
+	    var HMAC = C_algo.HMAC = Base.extend({
+	        /**
+	         * Initializes a newly created HMAC.
+	         *
+	         * @param {Hasher} hasher The hash algorithm to use.
+	         * @param {WordArray|string} key The secret key.
+	         *
+	         * @example
+	         *
+	         *     var hmacHasher = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, key);
+	         */
+	        init: function (hasher, key) {
+	            // Init hasher
+	            hasher = this._hasher = new hasher.init();
+
+	            // Convert string to WordArray, else assume WordArray already
+	            if (typeof key == 'string') {
+	                key = Utf8.parse(key);
+	            }
+
+	            // Shortcuts
+	            var hasherBlockSize = hasher.blockSize;
+	            var hasherBlockSizeBytes = hasherBlockSize * 4;
+
+	            // Allow arbitrary length keys
+	            if (key.sigBytes > hasherBlockSizeBytes) {
+	                key = hasher.finalize(key);
+	            }
+
+	            // Clamp excess bits
+	            key.clamp();
+
+	            // Clone key for inner and outer pads
+	            var oKey = this._oKey = key.clone();
+	            var iKey = this._iKey = key.clone();
+
+	            // Shortcuts
+	            var oKeyWords = oKey.words;
+	            var iKeyWords = iKey.words;
+
+	            // XOR keys with pad constants
+	            for (var i = 0; i < hasherBlockSize; i++) {
+	                oKeyWords[i] ^= 0x5c5c5c5c;
+	                iKeyWords[i] ^= 0x36363636;
+	            }
+	            oKey.sigBytes = iKey.sigBytes = hasherBlockSizeBytes;
+
+	            // Set initial values
+	            this.reset();
+	        },
+
+	        /**
+	         * Resets this HMAC to its initial state.
+	         *
+	         * @example
+	         *
+	         *     hmacHasher.reset();
+	         */
+	        reset: function () {
+	            // Shortcut
+	            var hasher = this._hasher;
+
+	            // Reset
+	            hasher.reset();
+	            hasher.update(this._iKey);
+	        },
+
+	        /**
+	         * Updates this HMAC with a message.
+	         *
+	         * @param {WordArray|string} messageUpdate The message to append.
+	         *
+	         * @return {HMAC} This HMAC instance.
+	         *
+	         * @example
+	         *
+	         *     hmacHasher.update('message');
+	         *     hmacHasher.update(wordArray);
+	         */
+	        update: function (messageUpdate) {
+	            this._hasher.update(messageUpdate);
+
+	            // Chainable
+	            return this;
+	        },
+
+	        /**
+	         * Finalizes the HMAC computation.
+	         * Note that the finalize operation is effectively a destructive, read-once operation.
+	         *
+	         * @param {WordArray|string} messageUpdate (Optional) A final message update.
+	         *
+	         * @return {WordArray} The HMAC.
+	         *
+	         * @example
+	         *
+	         *     var hmac = hmacHasher.finalize();
+	         *     var hmac = hmacHasher.finalize('message');
+	         *     var hmac = hmacHasher.finalize(wordArray);
+	         */
+	        finalize: function (messageUpdate) {
+	            // Shortcut
+	            var hasher = this._hasher;
+
+	            // Compute HMAC
+	            var innerHash = hasher.finalize(messageUpdate);
+	            hasher.reset();
+	            var hmac = hasher.finalize(this._oKey.clone().concat(innerHash));
+
+	            return hmac;
+	        }
+	    });
+	}());
+
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/index.js":
+/*!*****************************************!*\
+  !*** ./node_modules/crypto-js/index.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./x64-core */ "./node_modules/crypto-js/x64-core.js"), __webpack_require__(/*! ./lib-typedarrays */ "./node_modules/crypto-js/lib-typedarrays.js"), __webpack_require__(/*! ./enc-utf16 */ "./node_modules/crypto-js/enc-utf16.js"), __webpack_require__(/*! ./enc-base64 */ "./node_modules/crypto-js/enc-base64.js"), __webpack_require__(/*! ./md5 */ "./node_modules/crypto-js/md5.js"), __webpack_require__(/*! ./sha1 */ "./node_modules/crypto-js/sha1.js"), __webpack_require__(/*! ./sha256 */ "./node_modules/crypto-js/sha256.js"), __webpack_require__(/*! ./sha224 */ "./node_modules/crypto-js/sha224.js"), __webpack_require__(/*! ./sha512 */ "./node_modules/crypto-js/sha512.js"), __webpack_require__(/*! ./sha384 */ "./node_modules/crypto-js/sha384.js"), __webpack_require__(/*! ./sha3 */ "./node_modules/crypto-js/sha3.js"), __webpack_require__(/*! ./ripemd160 */ "./node_modules/crypto-js/ripemd160.js"), __webpack_require__(/*! ./hmac */ "./node_modules/crypto-js/hmac.js"), __webpack_require__(/*! ./pbkdf2 */ "./node_modules/crypto-js/pbkdf2.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"), __webpack_require__(/*! ./mode-cfb */ "./node_modules/crypto-js/mode-cfb.js"), __webpack_require__(/*! ./mode-ctr */ "./node_modules/crypto-js/mode-ctr.js"), __webpack_require__(/*! ./mode-ctr-gladman */ "./node_modules/crypto-js/mode-ctr-gladman.js"), __webpack_require__(/*! ./mode-ofb */ "./node_modules/crypto-js/mode-ofb.js"), __webpack_require__(/*! ./mode-ecb */ "./node_modules/crypto-js/mode-ecb.js"), __webpack_require__(/*! ./pad-ansix923 */ "./node_modules/crypto-js/pad-ansix923.js"), __webpack_require__(/*! ./pad-iso10126 */ "./node_modules/crypto-js/pad-iso10126.js"), __webpack_require__(/*! ./pad-iso97971 */ "./node_modules/crypto-js/pad-iso97971.js"), __webpack_require__(/*! ./pad-zeropadding */ "./node_modules/crypto-js/pad-zeropadding.js"), __webpack_require__(/*! ./pad-nopadding */ "./node_modules/crypto-js/pad-nopadding.js"), __webpack_require__(/*! ./format-hex */ "./node_modules/crypto-js/format-hex.js"), __webpack_require__(/*! ./aes */ "./node_modules/crypto-js/aes.js"), __webpack_require__(/*! ./tripledes */ "./node_modules/crypto-js/tripledes.js"), __webpack_require__(/*! ./rc4 */ "./node_modules/crypto-js/rc4.js"), __webpack_require__(/*! ./rabbit */ "./node_modules/crypto-js/rabbit.js"), __webpack_require__(/*! ./rabbit-legacy */ "./node_modules/crypto-js/rabbit-legacy.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	return CryptoJS;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/lib-typedarrays.js":
+/*!***************************************************!*\
+  !*** ./node_modules/crypto-js/lib-typedarrays.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Check if typed arrays are supported
+	    if (typeof ArrayBuffer != 'function') {
+	        return;
+	    }
+
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+
+	    // Reference original init
+	    var superInit = WordArray.init;
+
+	    // Augment WordArray.init to handle typed arrays
+	    var subInit = WordArray.init = function (typedArray) {
+	        // Convert buffers to uint8
+	        if (typedArray instanceof ArrayBuffer) {
+	            typedArray = new Uint8Array(typedArray);
+	        }
+
+	        // Convert other array views to uint8
+	        if (
+	            typedArray instanceof Int8Array ||
+	            (typeof Uint8ClampedArray !== "undefined" && typedArray instanceof Uint8ClampedArray) ||
+	            typedArray instanceof Int16Array ||
+	            typedArray instanceof Uint16Array ||
+	            typedArray instanceof Int32Array ||
+	            typedArray instanceof Uint32Array ||
+	            typedArray instanceof Float32Array ||
+	            typedArray instanceof Float64Array
+	        ) {
+	            typedArray = new Uint8Array(typedArray.buffer, typedArray.byteOffset, typedArray.byteLength);
+	        }
+
+	        // Handle Uint8Array
+	        if (typedArray instanceof Uint8Array) {
+	            // Shortcut
+	            var typedArrayByteLength = typedArray.byteLength;
+
+	            // Extract bytes
+	            var words = [];
+	            for (var i = 0; i < typedArrayByteLength; i++) {
+	                words[i >>> 2] |= typedArray[i] << (24 - (i % 4) * 8);
+	            }
+
+	            // Initialize this word array
+	            superInit.call(this, words, typedArrayByteLength);
+	        } else {
+	            // Else call normal init
+	            superInit.apply(this, arguments);
+	        }
+	    };
+
+	    subInit.prototype = WordArray;
+	}());
+
+
+	return CryptoJS.lib.WordArray;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/md5.js":
+/*!***************************************!*\
+  !*** ./node_modules/crypto-js/md5.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Constants table
+	    var T = [];
+
+	    // Compute constants
+	    (function () {
+	        for (var i = 0; i < 64; i++) {
+	            T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
+	        }
+	    }());
+
+	    /**
+	     * MD5 hash algorithm.
+	     */
+	    var MD5 = C_algo.MD5 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init([
+	                0x67452301, 0xefcdab89,
+	                0x98badcfe, 0x10325476
+	            ]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Swap endian
+	            for (var i = 0; i < 16; i++) {
+	                // Shortcuts
+	                var offset_i = offset + i;
+	                var M_offset_i = M[offset_i];
+
+	                M[offset_i] = (
+	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
+	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+	                );
+	            }
+
+	            // Shortcuts
+	            var H = this._hash.words;
+
+	            var M_offset_0  = M[offset + 0];
+	            var M_offset_1  = M[offset + 1];
+	            var M_offset_2  = M[offset + 2];
+	            var M_offset_3  = M[offset + 3];
+	            var M_offset_4  = M[offset + 4];
+	            var M_offset_5  = M[offset + 5];
+	            var M_offset_6  = M[offset + 6];
+	            var M_offset_7  = M[offset + 7];
+	            var M_offset_8  = M[offset + 8];
+	            var M_offset_9  = M[offset + 9];
+	            var M_offset_10 = M[offset + 10];
+	            var M_offset_11 = M[offset + 11];
+	            var M_offset_12 = M[offset + 12];
+	            var M_offset_13 = M[offset + 13];
+	            var M_offset_14 = M[offset + 14];
+	            var M_offset_15 = M[offset + 15];
+
+	            // Working varialbes
+	            var a = H[0];
+	            var b = H[1];
+	            var c = H[2];
+	            var d = H[3];
+
+	            // Computation
+	            a = FF(a, b, c, d, M_offset_0,  7,  T[0]);
+	            d = FF(d, a, b, c, M_offset_1,  12, T[1]);
+	            c = FF(c, d, a, b, M_offset_2,  17, T[2]);
+	            b = FF(b, c, d, a, M_offset_3,  22, T[3]);
+	            a = FF(a, b, c, d, M_offset_4,  7,  T[4]);
+	            d = FF(d, a, b, c, M_offset_5,  12, T[5]);
+	            c = FF(c, d, a, b, M_offset_6,  17, T[6]);
+	            b = FF(b, c, d, a, M_offset_7,  22, T[7]);
+	            a = FF(a, b, c, d, M_offset_8,  7,  T[8]);
+	            d = FF(d, a, b, c, M_offset_9,  12, T[9]);
+	            c = FF(c, d, a, b, M_offset_10, 17, T[10]);
+	            b = FF(b, c, d, a, M_offset_11, 22, T[11]);
+	            a = FF(a, b, c, d, M_offset_12, 7,  T[12]);
+	            d = FF(d, a, b, c, M_offset_13, 12, T[13]);
+	            c = FF(c, d, a, b, M_offset_14, 17, T[14]);
+	            b = FF(b, c, d, a, M_offset_15, 22, T[15]);
+
+	            a = GG(a, b, c, d, M_offset_1,  5,  T[16]);
+	            d = GG(d, a, b, c, M_offset_6,  9,  T[17]);
+	            c = GG(c, d, a, b, M_offset_11, 14, T[18]);
+	            b = GG(b, c, d, a, M_offset_0,  20, T[19]);
+	            a = GG(a, b, c, d, M_offset_5,  5,  T[20]);
+	            d = GG(d, a, b, c, M_offset_10, 9,  T[21]);
+	            c = GG(c, d, a, b, M_offset_15, 14, T[22]);
+	            b = GG(b, c, d, a, M_offset_4,  20, T[23]);
+	            a = GG(a, b, c, d, M_offset_9,  5,  T[24]);
+	            d = GG(d, a, b, c, M_offset_14, 9,  T[25]);
+	            c = GG(c, d, a, b, M_offset_3,  14, T[26]);
+	            b = GG(b, c, d, a, M_offset_8,  20, T[27]);
+	            a = GG(a, b, c, d, M_offset_13, 5,  T[28]);
+	            d = GG(d, a, b, c, M_offset_2,  9,  T[29]);
+	            c = GG(c, d, a, b, M_offset_7,  14, T[30]);
+	            b = GG(b, c, d, a, M_offset_12, 20, T[31]);
+
+	            a = HH(a, b, c, d, M_offset_5,  4,  T[32]);
+	            d = HH(d, a, b, c, M_offset_8,  11, T[33]);
+	            c = HH(c, d, a, b, M_offset_11, 16, T[34]);
+	            b = HH(b, c, d, a, M_offset_14, 23, T[35]);
+	            a = HH(a, b, c, d, M_offset_1,  4,  T[36]);
+	            d = HH(d, a, b, c, M_offset_4,  11, T[37]);
+	            c = HH(c, d, a, b, M_offset_7,  16, T[38]);
+	            b = HH(b, c, d, a, M_offset_10, 23, T[39]);
+	            a = HH(a, b, c, d, M_offset_13, 4,  T[40]);
+	            d = HH(d, a, b, c, M_offset_0,  11, T[41]);
+	            c = HH(c, d, a, b, M_offset_3,  16, T[42]);
+	            b = HH(b, c, d, a, M_offset_6,  23, T[43]);
+	            a = HH(a, b, c, d, M_offset_9,  4,  T[44]);
+	            d = HH(d, a, b, c, M_offset_12, 11, T[45]);
+	            c = HH(c, d, a, b, M_offset_15, 16, T[46]);
+	            b = HH(b, c, d, a, M_offset_2,  23, T[47]);
+
+	            a = II(a, b, c, d, M_offset_0,  6,  T[48]);
+	            d = II(d, a, b, c, M_offset_7,  10, T[49]);
+	            c = II(c, d, a, b, M_offset_14, 15, T[50]);
+	            b = II(b, c, d, a, M_offset_5,  21, T[51]);
+	            a = II(a, b, c, d, M_offset_12, 6,  T[52]);
+	            d = II(d, a, b, c, M_offset_3,  10, T[53]);
+	            c = II(c, d, a, b, M_offset_10, 15, T[54]);
+	            b = II(b, c, d, a, M_offset_1,  21, T[55]);
+	            a = II(a, b, c, d, M_offset_8,  6,  T[56]);
+	            d = II(d, a, b, c, M_offset_15, 10, T[57]);
+	            c = II(c, d, a, b, M_offset_6,  15, T[58]);
+	            b = II(b, c, d, a, M_offset_13, 21, T[59]);
+	            a = II(a, b, c, d, M_offset_4,  6,  T[60]);
+	            d = II(d, a, b, c, M_offset_11, 10, T[61]);
+	            c = II(c, d, a, b, M_offset_2,  15, T[62]);
+	            b = II(b, c, d, a, M_offset_9,  21, T[63]);
+
+	            // Intermediate hash value
+	            H[0] = (H[0] + a) | 0;
+	            H[1] = (H[1] + b) | 0;
+	            H[2] = (H[2] + c) | 0;
+	            H[3] = (H[3] + d) | 0;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+
+	            var nBitsTotalH = Math.floor(nBitsTotal / 0x100000000);
+	            var nBitsTotalL = nBitsTotal;
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
+	                (((nBitsTotalH << 8)  | (nBitsTotalH >>> 24)) & 0x00ff00ff) |
+	                (((nBitsTotalH << 24) | (nBitsTotalH >>> 8))  & 0xff00ff00)
+	            );
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+	                (((nBitsTotalL << 8)  | (nBitsTotalL >>> 24)) & 0x00ff00ff) |
+	                (((nBitsTotalL << 24) | (nBitsTotalL >>> 8))  & 0xff00ff00)
+	            );
+
+	            data.sigBytes = (dataWords.length + 1) * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Shortcuts
+	            var hash = this._hash;
+	            var H = hash.words;
+
+	            // Swap endian
+	            for (var i = 0; i < 4; i++) {
+	                // Shortcut
+	                var H_i = H[i];
+
+	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
+	                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+	            }
+
+	            // Return final computed hash
+	            return hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+	    function FF(a, b, c, d, x, s, t) {
+	        var n = a + ((b & c) | (~b & d)) + x + t;
+	        return ((n << s) | (n >>> (32 - s))) + b;
+	    }
+
+	    function GG(a, b, c, d, x, s, t) {
+	        var n = a + ((b & d) | (c & ~d)) + x + t;
+	        return ((n << s) | (n >>> (32 - s))) + b;
+	    }
+
+	    function HH(a, b, c, d, x, s, t) {
+	        var n = a + (b ^ c ^ d) + x + t;
+	        return ((n << s) | (n >>> (32 - s))) + b;
+	    }
+
+	    function II(a, b, c, d, x, s, t) {
+	        var n = a + (c ^ (b | ~d)) + x + t;
+	        return ((n << s) | (n >>> (32 - s))) + b;
+	    }
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.MD5('message');
+	     *     var hash = CryptoJS.MD5(wordArray);
+	     */
+	    C.MD5 = Hasher._createHelper(MD5);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacMD5(message, key);
+	     */
+	    C.HmacMD5 = Hasher._createHmacHelper(MD5);
+	}(Math));
+
+
+	return CryptoJS.MD5;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/mode-cfb.js":
+/*!********************************************!*\
+  !*** ./node_modules/crypto-js/mode-cfb.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Cipher Feedback block mode.
+	 */
+	CryptoJS.mode.CFB = (function () {
+	    var CFB = CryptoJS.lib.BlockCipherMode.extend();
+
+	    CFB.Encryptor = CFB.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher;
+	            var blockSize = cipher.blockSize;
+
+	            generateKeystreamAndEncrypt.call(this, words, offset, blockSize, cipher);
+
+	            // Remember this block to use with next block
+	            this._prevBlock = words.slice(offset, offset + blockSize);
+	        }
+	    });
+
+	    CFB.Decryptor = CFB.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher;
+	            var blockSize = cipher.blockSize;
+
+	            // Remember this block to use with next block
+	            var thisBlock = words.slice(offset, offset + blockSize);
+
+	            generateKeystreamAndEncrypt.call(this, words, offset, blockSize, cipher);
+
+	            // This block becomes the previous block
+	            this._prevBlock = thisBlock;
+	        }
+	    });
+
+	    function generateKeystreamAndEncrypt(words, offset, blockSize, cipher) {
+	        // Shortcut
+	        var iv = this._iv;
+
+	        // Generate keystream
+	        if (iv) {
+	            var keystream = iv.slice(0);
+
+	            // Remove IV for subsequent blocks
+	            this._iv = undefined;
+	        } else {
+	            var keystream = this._prevBlock;
+	        }
+	        cipher.encryptBlock(keystream, 0);
+
+	        // Encrypt
+	        for (var i = 0; i < blockSize; i++) {
+	            words[offset + i] ^= keystream[i];
+	        }
+	    }
+
+	    return CFB;
+	}());
+
+
+	return CryptoJS.mode.CFB;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/mode-ctr-gladman.js":
+/*!****************************************************!*\
+  !*** ./node_modules/crypto-js/mode-ctr-gladman.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/** @preserve
+	 * Counter block mode compatible with  Dr Brian Gladman fileenc.c
+	 * derived from CryptoJS.mode.CTR
+	 * Jan Hruby jhruby.web@gmail.com
+	 */
+	CryptoJS.mode.CTRGladman = (function () {
+	    var CTRGladman = CryptoJS.lib.BlockCipherMode.extend();
+
+		function incWord(word)
+		{
+			if (((word >> 24) & 0xff) === 0xff) { //overflow
+			var b1 = (word >> 16)&0xff;
+			var b2 = (word >> 8)&0xff;
+			var b3 = word & 0xff;
+
+			if (b1 === 0xff) // overflow b1
+			{
+			b1 = 0;
+			if (b2 === 0xff)
+			{
+				b2 = 0;
+				if (b3 === 0xff)
+				{
+					b3 = 0;
+				}
+				else
+				{
+					++b3;
+				}
+			}
+			else
+			{
+				++b2;
+			}
+			}
+			else
+			{
+			++b1;
+			}
+
+			word = 0;
+			word += (b1 << 16);
+			word += (b2 << 8);
+			word += b3;
+			}
+			else
+			{
+			word += (0x01 << 24);
+			}
+			return word;
+		}
+
+		function incCounter(counter)
+		{
+			if ((counter[0] = incWord(counter[0])) === 0)
+			{
+				// encr_data in fileenc.c from  Dr Brian Gladman's counts only with DWORD j < 8
+				counter[1] = incWord(counter[1]);
+			}
+			return counter;
+		}
+
+	    var Encryptor = CTRGladman.Encryptor = CTRGladman.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher
+	            var blockSize = cipher.blockSize;
+	            var iv = this._iv;
+	            var counter = this._counter;
+
+	            // Generate keystream
+	            if (iv) {
+	                counter = this._counter = iv.slice(0);
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            }
+
+				incCounter(counter);
+
+				var keystream = counter.slice(0);
+	            cipher.encryptBlock(keystream, 0);
+
+	            // Encrypt
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= keystream[i];
+	            }
+	        }
+	    });
+
+	    CTRGladman.Decryptor = Encryptor;
+
+	    return CTRGladman;
+	}());
+
+
+
+
+	return CryptoJS.mode.CTRGladman;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/mode-ctr.js":
+/*!********************************************!*\
+  !*** ./node_modules/crypto-js/mode-ctr.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Counter block mode.
+	 */
+	CryptoJS.mode.CTR = (function () {
+	    var CTR = CryptoJS.lib.BlockCipherMode.extend();
+
+	    var Encryptor = CTR.Encryptor = CTR.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher
+	            var blockSize = cipher.blockSize;
+	            var iv = this._iv;
+	            var counter = this._counter;
+
+	            // Generate keystream
+	            if (iv) {
+	                counter = this._counter = iv.slice(0);
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            }
+	            var keystream = counter.slice(0);
+	            cipher.encryptBlock(keystream, 0);
+
+	            // Increment counter
+	            counter[blockSize - 1] = (counter[blockSize - 1] + 1) | 0
+
+	            // Encrypt
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= keystream[i];
+	            }
+	        }
+	    });
+
+	    CTR.Decryptor = Encryptor;
+
+	    return CTR;
+	}());
+
+
+	return CryptoJS.mode.CTR;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/mode-ecb.js":
+/*!********************************************!*\
+  !*** ./node_modules/crypto-js/mode-ecb.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Electronic Codebook block mode.
+	 */
+	CryptoJS.mode.ECB = (function () {
+	    var ECB = CryptoJS.lib.BlockCipherMode.extend();
+
+	    ECB.Encryptor = ECB.extend({
+	        processBlock: function (words, offset) {
+	            this._cipher.encryptBlock(words, offset);
+	        }
+	    });
+
+	    ECB.Decryptor = ECB.extend({
+	        processBlock: function (words, offset) {
+	            this._cipher.decryptBlock(words, offset);
+	        }
+	    });
+
+	    return ECB;
+	}());
+
+
+	return CryptoJS.mode.ECB;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/mode-ofb.js":
+/*!********************************************!*\
+  !*** ./node_modules/crypto-js/mode-ofb.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Output Feedback block mode.
+	 */
+	CryptoJS.mode.OFB = (function () {
+	    var OFB = CryptoJS.lib.BlockCipherMode.extend();
+
+	    var Encryptor = OFB.Encryptor = OFB.extend({
+	        processBlock: function (words, offset) {
+	            // Shortcuts
+	            var cipher = this._cipher
+	            var blockSize = cipher.blockSize;
+	            var iv = this._iv;
+	            var keystream = this._keystream;
+
+	            // Generate keystream
+	            if (iv) {
+	                keystream = this._keystream = iv.slice(0);
+
+	                // Remove IV for subsequent blocks
+	                this._iv = undefined;
+	            }
+	            cipher.encryptBlock(keystream, 0);
+
+	            // Encrypt
+	            for (var i = 0; i < blockSize; i++) {
+	                words[offset + i] ^= keystream[i];
+	            }
+	        }
+	    });
+
+	    OFB.Decryptor = Encryptor;
+
+	    return OFB;
+	}());
+
+
+	return CryptoJS.mode.OFB;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/pad-ansix923.js":
+/*!************************************************!*\
+  !*** ./node_modules/crypto-js/pad-ansix923.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * ANSI X.923 padding strategy.
+	 */
+	CryptoJS.pad.AnsiX923 = {
+	    pad: function (data, blockSize) {
+	        // Shortcuts
+	        var dataSigBytes = data.sigBytes;
+	        var blockSizeBytes = blockSize * 4;
+
+	        // Count padding bytes
+	        var nPaddingBytes = blockSizeBytes - dataSigBytes % blockSizeBytes;
+
+	        // Compute last byte position
+	        var lastBytePos = dataSigBytes + nPaddingBytes - 1;
+
+	        // Pad
+	        data.clamp();
+	        data.words[lastBytePos >>> 2] |= nPaddingBytes << (24 - (lastBytePos % 4) * 8);
+	        data.sigBytes += nPaddingBytes;
+	    },
+
+	    unpad: function (data) {
+	        // Get number of padding bytes from last byte
+	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+
+	        // Remove padding
+	        data.sigBytes -= nPaddingBytes;
+	    }
+	};
+
+
+	return CryptoJS.pad.Ansix923;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/pad-iso10126.js":
+/*!************************************************!*\
+  !*** ./node_modules/crypto-js/pad-iso10126.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * ISO 10126 padding strategy.
+	 */
+	CryptoJS.pad.Iso10126 = {
+	    pad: function (data, blockSize) {
+	        // Shortcut
+	        var blockSizeBytes = blockSize * 4;
+
+	        // Count padding bytes
+	        var nPaddingBytes = blockSizeBytes - data.sigBytes % blockSizeBytes;
+
+	        // Pad
+	        data.concat(CryptoJS.lib.WordArray.random(nPaddingBytes - 1)).
+	             concat(CryptoJS.lib.WordArray.create([nPaddingBytes << 24], 1));
+	    },
+
+	    unpad: function (data) {
+	        // Get number of padding bytes from last byte
+	        var nPaddingBytes = data.words[(data.sigBytes - 1) >>> 2] & 0xff;
+
+	        // Remove padding
+	        data.sigBytes -= nPaddingBytes;
+	    }
+	};
+
+
+	return CryptoJS.pad.Iso10126;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/pad-iso97971.js":
+/*!************************************************!*\
+  !*** ./node_modules/crypto-js/pad-iso97971.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * ISO/IEC 9797-1 Padding Method 2.
+	 */
+	CryptoJS.pad.Iso97971 = {
+	    pad: function (data, blockSize) {
+	        // Add 0x80 byte
+	        data.concat(CryptoJS.lib.WordArray.create([0x80000000], 1));
+
+	        // Zero pad the rest
+	        CryptoJS.pad.ZeroPadding.pad(data, blockSize);
+	    },
+
+	    unpad: function (data) {
+	        // Remove zero padding
+	        CryptoJS.pad.ZeroPadding.unpad(data);
+
+	        // Remove one more byte -- the 0x80 byte
+	        data.sigBytes--;
+	    }
+	};
+
+
+	return CryptoJS.pad.Iso97971;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/pad-nopadding.js":
+/*!*************************************************!*\
+  !*** ./node_modules/crypto-js/pad-nopadding.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * A noop padding strategy.
+	 */
+	CryptoJS.pad.NoPadding = {
+	    pad: function () {
+	    },
+
+	    unpad: function () {
+	    }
+	};
+
+
+	return CryptoJS.pad.NoPadding;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/pad-zeropadding.js":
+/*!***************************************************!*\
+  !*** ./node_modules/crypto-js/pad-zeropadding.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/**
+	 * Zero padding strategy.
+	 */
+	CryptoJS.pad.ZeroPadding = {
+	    pad: function (data, blockSize) {
+	        // Shortcut
+	        var blockSizeBytes = blockSize * 4;
+
+	        // Pad
+	        data.clamp();
+	        data.sigBytes += blockSizeBytes - ((data.sigBytes % blockSizeBytes) || blockSizeBytes);
+	    },
+
+	    unpad: function (data) {
+	        // Shortcut
+	        var dataWords = data.words;
+
+	        // Unpad
+	        var i = data.sigBytes - 1;
+	        while (!((dataWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff)) {
+	            i--;
+	        }
+	        data.sigBytes = i + 1;
+	    }
+	};
+
+
+	return CryptoJS.pad.ZeroPadding;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/pbkdf2.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/pbkdf2.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./sha1 */ "./node_modules/crypto-js/sha1.js"), __webpack_require__(/*! ./hmac */ "./node_modules/crypto-js/hmac.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var WordArray = C_lib.WordArray;
+	    var C_algo = C.algo;
+	    var SHA1 = C_algo.SHA1;
+	    var HMAC = C_algo.HMAC;
+
+	    /**
+	     * Password-Based Key Derivation Function 2 algorithm.
+	     */
+	    var PBKDF2 = C_algo.PBKDF2 = Base.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
+	         * @property {Hasher} hasher The hasher to use. Default: SHA1
+	         * @property {number} iterations The number of iterations to perform. Default: 1
+	         */
+	        cfg: Base.extend({
+	            keySize: 128/32,
+	            hasher: SHA1,
+	            iterations: 1
+	        }),
+
+	        /**
+	         * Initializes a newly created key derivation function.
+	         *
+	         * @param {Object} cfg (Optional) The configuration options to use for the derivation.
+	         *
+	         * @example
+	         *
+	         *     var kdf = CryptoJS.algo.PBKDF2.create();
+	         *     var kdf = CryptoJS.algo.PBKDF2.create({ keySize: 8 });
+	         *     var kdf = CryptoJS.algo.PBKDF2.create({ keySize: 8, iterations: 1000 });
+	         */
+	        init: function (cfg) {
+	            this.cfg = this.cfg.extend(cfg);
+	        },
+
+	        /**
+	         * Computes the Password-Based Key Derivation Function 2.
+	         *
+	         * @param {WordArray|string} password The password.
+	         * @param {WordArray|string} salt A salt.
+	         *
+	         * @return {WordArray} The derived key.
+	         *
+	         * @example
+	         *
+	         *     var key = kdf.compute(password, salt);
+	         */
+	        compute: function (password, salt) {
+	            // Shortcut
+	            var cfg = this.cfg;
+
+	            // Init HMAC
+	            var hmac = HMAC.create(cfg.hasher, password);
+
+	            // Initial values
+	            var derivedKey = WordArray.create();
+	            var blockIndex = WordArray.create([0x00000001]);
+
+	            // Shortcuts
+	            var derivedKeyWords = derivedKey.words;
+	            var blockIndexWords = blockIndex.words;
+	            var keySize = cfg.keySize;
+	            var iterations = cfg.iterations;
+
+	            // Generate key
+	            while (derivedKeyWords.length < keySize) {
+	                var block = hmac.update(salt).finalize(blockIndex);
+	                hmac.reset();
+
+	                // Shortcuts
+	                var blockWords = block.words;
+	                var blockWordsLength = blockWords.length;
+
+	                // Iterations
+	                var intermediate = block;
+	                for (var i = 1; i < iterations; i++) {
+	                    intermediate = hmac.finalize(intermediate);
+	                    hmac.reset();
+
+	                    // Shortcut
+	                    var intermediateWords = intermediate.words;
+
+	                    // XOR intermediate with block
+	                    for (var j = 0; j < blockWordsLength; j++) {
+	                        blockWords[j] ^= intermediateWords[j];
+	                    }
+	                }
+
+	                derivedKey.concat(block);
+	                blockIndexWords[0]++;
+	            }
+	            derivedKey.sigBytes = keySize * 4;
+
+	            return derivedKey;
+	        }
+	    });
+
+	    /**
+	     * Computes the Password-Based Key Derivation Function 2.
+	     *
+	     * @param {WordArray|string} password The password.
+	     * @param {WordArray|string} salt A salt.
+	     * @param {Object} cfg (Optional) The configuration options to use for this computation.
+	     *
+	     * @return {WordArray} The derived key.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var key = CryptoJS.PBKDF2(password, salt);
+	     *     var key = CryptoJS.PBKDF2(password, salt, { keySize: 8 });
+	     *     var key = CryptoJS.PBKDF2(password, salt, { keySize: 8, iterations: 1000 });
+	     */
+	    C.PBKDF2 = function (password, salt, cfg) {
+	        return PBKDF2.create(cfg).compute(password, salt);
+	    };
+	}());
+
+
+	return CryptoJS.PBKDF2;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/rabbit-legacy.js":
+/*!*************************************************!*\
+  !*** ./node_modules/crypto-js/rabbit-legacy.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./enc-base64 */ "./node_modules/crypto-js/enc-base64.js"), __webpack_require__(/*! ./md5 */ "./node_modules/crypto-js/md5.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var StreamCipher = C_lib.StreamCipher;
+	    var C_algo = C.algo;
+
+	    // Reusable objects
+	    var S  = [];
+	    var C_ = [];
+	    var G  = [];
+
+	    /**
+	     * Rabbit stream cipher algorithm.
+	     *
+	     * This is a legacy version that neglected to convert the key to little-endian.
+	     * This error doesn't affect the cipher's security,
+	     * but it does affect its compatibility with other implementations.
+	     */
+	    var RabbitLegacy = C_algo.RabbitLegacy = StreamCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var K = this._key.words;
+	            var iv = this.cfg.iv;
+
+	            // Generate initial state values
+	            var X = this._X = [
+	                K[0], (K[3] << 16) | (K[2] >>> 16),
+	                K[1], (K[0] << 16) | (K[3] >>> 16),
+	                K[2], (K[1] << 16) | (K[0] >>> 16),
+	                K[3], (K[2] << 16) | (K[1] >>> 16)
+	            ];
+
+	            // Generate initial counter values
+	            var C = this._C = [
+	                (K[2] << 16) | (K[2] >>> 16), (K[0] & 0xffff0000) | (K[1] & 0x0000ffff),
+	                (K[3] << 16) | (K[3] >>> 16), (K[1] & 0xffff0000) | (K[2] & 0x0000ffff),
+	                (K[0] << 16) | (K[0] >>> 16), (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
+	                (K[1] << 16) | (K[1] >>> 16), (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
+	            ];
+
+	            // Carry bit
+	            this._b = 0;
+
+	            // Iterate the system four times
+	            for (var i = 0; i < 4; i++) {
+	                nextState.call(this);
+	            }
+
+	            // Modify the counters
+	            for (var i = 0; i < 8; i++) {
+	                C[i] ^= X[(i + 4) & 7];
+	            }
+
+	            // IV setup
+	            if (iv) {
+	                // Shortcuts
+	                var IV = iv.words;
+	                var IV_0 = IV[0];
+	                var IV_1 = IV[1];
+
+	                // Generate four subvectors
+	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & 0x00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & 0xff00ff00);
+	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & 0x00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & 0xff00ff00);
+	                var i1 = (i0 >>> 16) | (i2 & 0xffff0000);
+	                var i3 = (i2 << 16)  | (i0 & 0x0000ffff);
+
+	                // Modify counter values
+	                C[0] ^= i0;
+	                C[1] ^= i1;
+	                C[2] ^= i2;
+	                C[3] ^= i3;
+	                C[4] ^= i0;
+	                C[5] ^= i1;
+	                C[6] ^= i2;
+	                C[7] ^= i3;
+
+	                // Iterate the system four times
+	                for (var i = 0; i < 4; i++) {
+	                    nextState.call(this);
+	                }
+	            }
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var X = this._X;
+
+	            // Iterate the system
+	            nextState.call(this);
+
+	            // Generate four keystream words
+	            S[0] = X[0] ^ (X[5] >>> 16) ^ (X[3] << 16);
+	            S[1] = X[2] ^ (X[7] >>> 16) ^ (X[5] << 16);
+	            S[2] = X[4] ^ (X[1] >>> 16) ^ (X[7] << 16);
+	            S[3] = X[6] ^ (X[3] >>> 16) ^ (X[1] << 16);
+
+	            for (var i = 0; i < 4; i++) {
+	                // Swap endian
+	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & 0x00ff00ff) |
+	                       (((S[i] << 24) | (S[i] >>> 8))  & 0xff00ff00);
+
+	                // Encrypt
+	                M[offset + i] ^= S[i];
+	            }
+	        },
+
+	        blockSize: 128/32,
+
+	        ivSize: 64/32
+	    });
+
+	    function nextState() {
+	        // Shortcuts
+	        var X = this._X;
+	        var C = this._C;
+
+	        // Save old counter values
+	        for (var i = 0; i < 8; i++) {
+	            C_[i] = C[i];
+	        }
+
+	        // Calculate new counter values
+	        C[0] = (C[0] + 0x4d34d34d + this._b) | 0;
+	        C[1] = (C[1] + 0xd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
+	        C[2] = (C[2] + 0x34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
+	        C[3] = (C[3] + 0x4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
+	        C[4] = (C[4] + 0xd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
+	        C[5] = (C[5] + 0x34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
+	        C[6] = (C[6] + 0x4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
+	        C[7] = (C[7] + 0xd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
+	        this._b = (C[7] >>> 0) < (C_[7] >>> 0) ? 1 : 0;
+
+	        // Calculate the g-values
+	        for (var i = 0; i < 8; i++) {
+	            var gx = X[i] + C[i];
+
+	            // Construct high and low argument for squaring
+	            var ga = gx & 0xffff;
+	            var gb = gx >>> 16;
+
+	            // Calculate high and low result of squaring
+	            var gh = ((((ga * ga) >>> 17) + ga * gb) >>> 15) + gb * gb;
+	            var gl = (((gx & 0xffff0000) * gx) | 0) + (((gx & 0x0000ffff) * gx) | 0);
+
+	            // High XOR low
+	            G[i] = gh ^ gl;
+	        }
+
+	        // Calculate new state values
+	        X[0] = (G[0] + ((G[7] << 16) | (G[7] >>> 16)) + ((G[6] << 16) | (G[6] >>> 16))) | 0;
+	        X[1] = (G[1] + ((G[0] << 8)  | (G[0] >>> 24)) + G[7]) | 0;
+	        X[2] = (G[2] + ((G[1] << 16) | (G[1] >>> 16)) + ((G[0] << 16) | (G[0] >>> 16))) | 0;
+	        X[3] = (G[3] + ((G[2] << 8)  | (G[2] >>> 24)) + G[1]) | 0;
+	        X[4] = (G[4] + ((G[3] << 16) | (G[3] >>> 16)) + ((G[2] << 16) | (G[2] >>> 16))) | 0;
+	        X[5] = (G[5] + ((G[4] << 8)  | (G[4] >>> 24)) + G[3]) | 0;
+	        X[6] = (G[6] + ((G[5] << 16) | (G[5] >>> 16)) + ((G[4] << 16) | (G[4] >>> 16))) | 0;
+	        X[7] = (G[7] + ((G[6] << 8)  | (G[6] >>> 24)) + G[5]) | 0;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.RabbitLegacy.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.RabbitLegacy.decrypt(ciphertext, key, cfg);
+	     */
+	    C.RabbitLegacy = StreamCipher._createHelper(RabbitLegacy);
+	}());
+
+
+	return CryptoJS.RabbitLegacy;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/rabbit.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/rabbit.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./enc-base64 */ "./node_modules/crypto-js/enc-base64.js"), __webpack_require__(/*! ./md5 */ "./node_modules/crypto-js/md5.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var StreamCipher = C_lib.StreamCipher;
+	    var C_algo = C.algo;
+
+	    // Reusable objects
+	    var S  = [];
+	    var C_ = [];
+	    var G  = [];
+
+	    /**
+	     * Rabbit stream cipher algorithm
+	     */
+	    var Rabbit = C_algo.Rabbit = StreamCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var K = this._key.words;
+	            var iv = this.cfg.iv;
+
+	            // Swap endian
+	            for (var i = 0; i < 4; i++) {
+	                K[i] = (((K[i] << 8)  | (K[i] >>> 24)) & 0x00ff00ff) |
+	                       (((K[i] << 24) | (K[i] >>> 8))  & 0xff00ff00);
+	            }
+
+	            // Generate initial state values
+	            var X = this._X = [
+	                K[0], (K[3] << 16) | (K[2] >>> 16),
+	                K[1], (K[0] << 16) | (K[3] >>> 16),
+	                K[2], (K[1] << 16) | (K[0] >>> 16),
+	                K[3], (K[2] << 16) | (K[1] >>> 16)
+	            ];
+
+	            // Generate initial counter values
+	            var C = this._C = [
+	                (K[2] << 16) | (K[2] >>> 16), (K[0] & 0xffff0000) | (K[1] & 0x0000ffff),
+	                (K[3] << 16) | (K[3] >>> 16), (K[1] & 0xffff0000) | (K[2] & 0x0000ffff),
+	                (K[0] << 16) | (K[0] >>> 16), (K[2] & 0xffff0000) | (K[3] & 0x0000ffff),
+	                (K[1] << 16) | (K[1] >>> 16), (K[3] & 0xffff0000) | (K[0] & 0x0000ffff)
+	            ];
+
+	            // Carry bit
+	            this._b = 0;
+
+	            // Iterate the system four times
+	            for (var i = 0; i < 4; i++) {
+	                nextState.call(this);
+	            }
+
+	            // Modify the counters
+	            for (var i = 0; i < 8; i++) {
+	                C[i] ^= X[(i + 4) & 7];
+	            }
+
+	            // IV setup
+	            if (iv) {
+	                // Shortcuts
+	                var IV = iv.words;
+	                var IV_0 = IV[0];
+	                var IV_1 = IV[1];
+
+	                // Generate four subvectors
+	                var i0 = (((IV_0 << 8) | (IV_0 >>> 24)) & 0x00ff00ff) | (((IV_0 << 24) | (IV_0 >>> 8)) & 0xff00ff00);
+	                var i2 = (((IV_1 << 8) | (IV_1 >>> 24)) & 0x00ff00ff) | (((IV_1 << 24) | (IV_1 >>> 8)) & 0xff00ff00);
+	                var i1 = (i0 >>> 16) | (i2 & 0xffff0000);
+	                var i3 = (i2 << 16)  | (i0 & 0x0000ffff);
+
+	                // Modify counter values
+	                C[0] ^= i0;
+	                C[1] ^= i1;
+	                C[2] ^= i2;
+	                C[3] ^= i3;
+	                C[4] ^= i0;
+	                C[5] ^= i1;
+	                C[6] ^= i2;
+	                C[7] ^= i3;
+
+	                // Iterate the system four times
+	                for (var i = 0; i < 4; i++) {
+	                    nextState.call(this);
+	                }
+	            }
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var X = this._X;
+
+	            // Iterate the system
+	            nextState.call(this);
+
+	            // Generate four keystream words
+	            S[0] = X[0] ^ (X[5] >>> 16) ^ (X[3] << 16);
+	            S[1] = X[2] ^ (X[7] >>> 16) ^ (X[5] << 16);
+	            S[2] = X[4] ^ (X[1] >>> 16) ^ (X[7] << 16);
+	            S[3] = X[6] ^ (X[3] >>> 16) ^ (X[1] << 16);
+
+	            for (var i = 0; i < 4; i++) {
+	                // Swap endian
+	                S[i] = (((S[i] << 8)  | (S[i] >>> 24)) & 0x00ff00ff) |
+	                       (((S[i] << 24) | (S[i] >>> 8))  & 0xff00ff00);
+
+	                // Encrypt
+	                M[offset + i] ^= S[i];
+	            }
+	        },
+
+	        blockSize: 128/32,
+
+	        ivSize: 64/32
+	    });
+
+	    function nextState() {
+	        // Shortcuts
+	        var X = this._X;
+	        var C = this._C;
+
+	        // Save old counter values
+	        for (var i = 0; i < 8; i++) {
+	            C_[i] = C[i];
+	        }
+
+	        // Calculate new counter values
+	        C[0] = (C[0] + 0x4d34d34d + this._b) | 0;
+	        C[1] = (C[1] + 0xd34d34d3 + ((C[0] >>> 0) < (C_[0] >>> 0) ? 1 : 0)) | 0;
+	        C[2] = (C[2] + 0x34d34d34 + ((C[1] >>> 0) < (C_[1] >>> 0) ? 1 : 0)) | 0;
+	        C[3] = (C[3] + 0x4d34d34d + ((C[2] >>> 0) < (C_[2] >>> 0) ? 1 : 0)) | 0;
+	        C[4] = (C[4] + 0xd34d34d3 + ((C[3] >>> 0) < (C_[3] >>> 0) ? 1 : 0)) | 0;
+	        C[5] = (C[5] + 0x34d34d34 + ((C[4] >>> 0) < (C_[4] >>> 0) ? 1 : 0)) | 0;
+	        C[6] = (C[6] + 0x4d34d34d + ((C[5] >>> 0) < (C_[5] >>> 0) ? 1 : 0)) | 0;
+	        C[7] = (C[7] + 0xd34d34d3 + ((C[6] >>> 0) < (C_[6] >>> 0) ? 1 : 0)) | 0;
+	        this._b = (C[7] >>> 0) < (C_[7] >>> 0) ? 1 : 0;
+
+	        // Calculate the g-values
+	        for (var i = 0; i < 8; i++) {
+	            var gx = X[i] + C[i];
+
+	            // Construct high and low argument for squaring
+	            var ga = gx & 0xffff;
+	            var gb = gx >>> 16;
+
+	            // Calculate high and low result of squaring
+	            var gh = ((((ga * ga) >>> 17) + ga * gb) >>> 15) + gb * gb;
+	            var gl = (((gx & 0xffff0000) * gx) | 0) + (((gx & 0x0000ffff) * gx) | 0);
+
+	            // High XOR low
+	            G[i] = gh ^ gl;
+	        }
+
+	        // Calculate new state values
+	        X[0] = (G[0] + ((G[7] << 16) | (G[7] >>> 16)) + ((G[6] << 16) | (G[6] >>> 16))) | 0;
+	        X[1] = (G[1] + ((G[0] << 8)  | (G[0] >>> 24)) + G[7]) | 0;
+	        X[2] = (G[2] + ((G[1] << 16) | (G[1] >>> 16)) + ((G[0] << 16) | (G[0] >>> 16))) | 0;
+	        X[3] = (G[3] + ((G[2] << 8)  | (G[2] >>> 24)) + G[1]) | 0;
+	        X[4] = (G[4] + ((G[3] << 16) | (G[3] >>> 16)) + ((G[2] << 16) | (G[2] >>> 16))) | 0;
+	        X[5] = (G[5] + ((G[4] << 8)  | (G[4] >>> 24)) + G[3]) | 0;
+	        X[6] = (G[6] + ((G[5] << 16) | (G[5] >>> 16)) + ((G[4] << 16) | (G[4] >>> 16))) | 0;
+	        X[7] = (G[7] + ((G[6] << 8)  | (G[6] >>> 24)) + G[5]) | 0;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.Rabbit.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.Rabbit.decrypt(ciphertext, key, cfg);
+	     */
+	    C.Rabbit = StreamCipher._createHelper(Rabbit);
+	}());
+
+
+	return CryptoJS.Rabbit;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/rc4.js":
+/*!***************************************!*\
+  !*** ./node_modules/crypto-js/rc4.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./enc-base64 */ "./node_modules/crypto-js/enc-base64.js"), __webpack_require__(/*! ./md5 */ "./node_modules/crypto-js/md5.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var StreamCipher = C_lib.StreamCipher;
+	    var C_algo = C.algo;
+
+	    /**
+	     * RC4 stream cipher algorithm.
+	     */
+	    var RC4 = C_algo.RC4 = StreamCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var key = this._key;
+	            var keyWords = key.words;
+	            var keySigBytes = key.sigBytes;
+
+	            // Init sbox
+	            var S = this._S = [];
+	            for (var i = 0; i < 256; i++) {
+	                S[i] = i;
+	            }
+
+	            // Key setup
+	            for (var i = 0, j = 0; i < 256; i++) {
+	                var keyByteIndex = i % keySigBytes;
+	                var keyByte = (keyWords[keyByteIndex >>> 2] >>> (24 - (keyByteIndex % 4) * 8)) & 0xff;
+
+	                j = (j + S[i] + keyByte) % 256;
+
+	                // Swap
+	                var t = S[i];
+	                S[i] = S[j];
+	                S[j] = t;
+	            }
+
+	            // Counters
+	            this._i = this._j = 0;
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            M[offset] ^= generateKeystreamWord.call(this);
+	        },
+
+	        keySize: 256/32,
+
+	        ivSize: 0
+	    });
+
+	    function generateKeystreamWord() {
+	        // Shortcuts
+	        var S = this._S;
+	        var i = this._i;
+	        var j = this._j;
+
+	        // Generate keystream word
+	        var keystreamWord = 0;
+	        for (var n = 0; n < 4; n++) {
+	            i = (i + 1) % 256;
+	            j = (j + S[i]) % 256;
+
+	            // Swap
+	            var t = S[i];
+	            S[i] = S[j];
+	            S[j] = t;
+
+	            keystreamWord |= S[(S[i] + S[j]) % 256] << (24 - n * 8);
+	        }
+
+	        // Update counters
+	        this._i = i;
+	        this._j = j;
+
+	        return keystreamWord;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.RC4.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.RC4.decrypt(ciphertext, key, cfg);
+	     */
+	    C.RC4 = StreamCipher._createHelper(RC4);
+
+	    /**
+	     * Modified RC4 stream cipher algorithm.
+	     */
+	    var RC4Drop = C_algo.RC4Drop = RC4.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} drop The number of keystream words to drop. Default 192
+	         */
+	        cfg: RC4.cfg.extend({
+	            drop: 192
+	        }),
+
+	        _doReset: function () {
+	            RC4._doReset.call(this);
+
+	            // Drop
+	            for (var i = this.cfg.drop; i > 0; i--) {
+	                generateKeystreamWord.call(this);
+	            }
+	        }
+	    });
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.RC4Drop.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.RC4Drop.decrypt(ciphertext, key, cfg);
+	     */
+	    C.RC4Drop = StreamCipher._createHelper(RC4Drop);
+	}());
+
+
+	return CryptoJS.RC4;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/ripemd160.js":
+/*!*********************************************!*\
+  !*** ./node_modules/crypto-js/ripemd160.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	/** @preserve
+	(c) 2012 by Cédric Mesnil. All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+	    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+	    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	*/
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Constants table
+	    var _zl = WordArray.create([
+	        0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
+	        7,  4, 13,  1, 10,  6, 15,  3, 12,  0,  9,  5,  2, 14, 11,  8,
+	        3, 10, 14,  4,  9, 15,  8,  1,  2,  7,  0,  6, 13, 11,  5, 12,
+	        1,  9, 11, 10,  0,  8, 12,  4, 13,  3,  7, 15, 14,  5,  6,  2,
+	        4,  0,  5,  9,  7, 12,  2, 10, 14,  1,  3,  8, 11,  6, 15, 13]);
+	    var _zr = WordArray.create([
+	        5, 14,  7,  0,  9,  2, 11,  4, 13,  6, 15,  8,  1, 10,  3, 12,
+	        6, 11,  3,  7,  0, 13,  5, 10, 14, 15,  8, 12,  4,  9,  1,  2,
+	        15,  5,  1,  3,  7, 14,  6,  9, 11,  8, 12,  2, 10,  0,  4, 13,
+	        8,  6,  4,  1,  3, 11, 15,  0,  5, 12,  2, 13,  9,  7, 10, 14,
+	        12, 15, 10,  4,  1,  5,  8,  7,  6,  2, 13, 14,  0,  3,  9, 11]);
+	    var _sl = WordArray.create([
+	         11, 14, 15, 12,  5,  8,  7,  9, 11, 13, 14, 15,  6,  7,  9,  8,
+	        7, 6,   8, 13, 11,  9,  7, 15,  7, 12, 15,  9, 11,  7, 13, 12,
+	        11, 13,  6,  7, 14,  9, 13, 15, 14,  8, 13,  6,  5, 12,  7,  5,
+	          11, 12, 14, 15, 14, 15,  9,  8,  9, 14,  5,  6,  8,  6,  5, 12,
+	        9, 15,  5, 11,  6,  8, 13, 12,  5, 12, 13, 14, 11,  8,  5,  6 ]);
+	    var _sr = WordArray.create([
+	        8,  9,  9, 11, 13, 15, 15,  5,  7,  7,  8, 11, 14, 14, 12,  6,
+	        9, 13, 15,  7, 12,  8,  9, 11,  7,  7, 12,  7,  6, 15, 13, 11,
+	        9,  7, 15, 11,  8,  6,  6, 14, 12, 13,  5, 14, 13, 13,  7,  5,
+	        15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
+	        8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11 ]);
+
+	    var _hl =  WordArray.create([ 0x00000000, 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xA953FD4E]);
+	    var _hr =  WordArray.create([ 0x50A28BE6, 0x5C4DD124, 0x6D703EF3, 0x7A6D76E9, 0x00000000]);
+
+	    /**
+	     * RIPEMD160 hash algorithm.
+	     */
+	    var RIPEMD160 = C_algo.RIPEMD160 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash  = WordArray.create([0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+
+	            // Swap endian
+	            for (var i = 0; i < 16; i++) {
+	                // Shortcuts
+	                var offset_i = offset + i;
+	                var M_offset_i = M[offset_i];
+
+	                // Swap
+	                M[offset_i] = (
+	                    (((M_offset_i << 8)  | (M_offset_i >>> 24)) & 0x00ff00ff) |
+	                    (((M_offset_i << 24) | (M_offset_i >>> 8))  & 0xff00ff00)
+	                );
+	            }
+	            // Shortcut
+	            var H  = this._hash.words;
+	            var hl = _hl.words;
+	            var hr = _hr.words;
+	            var zl = _zl.words;
+	            var zr = _zr.words;
+	            var sl = _sl.words;
+	            var sr = _sr.words;
+
+	            // Working variables
+	            var al, bl, cl, dl, el;
+	            var ar, br, cr, dr, er;
+
+	            ar = al = H[0];
+	            br = bl = H[1];
+	            cr = cl = H[2];
+	            dr = dl = H[3];
+	            er = el = H[4];
+	            // Computation
+	            var t;
+	            for (var i = 0; i < 80; i += 1) {
+	                t = (al +  M[offset+zl[i]])|0;
+	                if (i<16){
+		            t +=  f1(bl,cl,dl) + hl[0];
+	                } else if (i<32) {
+		            t +=  f2(bl,cl,dl) + hl[1];
+	                } else if (i<48) {
+		            t +=  f3(bl,cl,dl) + hl[2];
+	                } else if (i<64) {
+		            t +=  f4(bl,cl,dl) + hl[3];
+	                } else {// if (i<80) {
+		            t +=  f5(bl,cl,dl) + hl[4];
+	                }
+	                t = t|0;
+	                t =  rotl(t,sl[i]);
+	                t = (t+el)|0;
+	                al = el;
+	                el = dl;
+	                dl = rotl(cl, 10);
+	                cl = bl;
+	                bl = t;
+
+	                t = (ar + M[offset+zr[i]])|0;
+	                if (i<16){
+		            t +=  f5(br,cr,dr) + hr[0];
+	                } else if (i<32) {
+		            t +=  f4(br,cr,dr) + hr[1];
+	                } else if (i<48) {
+		            t +=  f3(br,cr,dr) + hr[2];
+	                } else if (i<64) {
+		            t +=  f2(br,cr,dr) + hr[3];
+	                } else {// if (i<80) {
+		            t +=  f1(br,cr,dr) + hr[4];
+	                }
+	                t = t|0;
+	                t =  rotl(t,sr[i]) ;
+	                t = (t+er)|0;
+	                ar = er;
+	                er = dr;
+	                dr = rotl(cr, 10);
+	                cr = br;
+	                br = t;
+	            }
+	            // Intermediate hash value
+	            t    = (H[1] + cl + dr)|0;
+	            H[1] = (H[2] + dl + er)|0;
+	            H[2] = (H[3] + el + ar)|0;
+	            H[3] = (H[4] + al + br)|0;
+	            H[4] = (H[0] + bl + cr)|0;
+	            H[0] =  t;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+	                (((nBitsTotal << 8)  | (nBitsTotal >>> 24)) & 0x00ff00ff) |
+	                (((nBitsTotal << 24) | (nBitsTotal >>> 8))  & 0xff00ff00)
+	            );
+	            data.sigBytes = (dataWords.length + 1) * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Shortcuts
+	            var hash = this._hash;
+	            var H = hash.words;
+
+	            // Swap endian
+	            for (var i = 0; i < 5; i++) {
+	                // Shortcut
+	                var H_i = H[i];
+
+	                // Swap
+	                H[i] = (((H_i << 8)  | (H_i >>> 24)) & 0x00ff00ff) |
+	                       (((H_i << 24) | (H_i >>> 8))  & 0xff00ff00);
+	            }
+
+	            // Return final computed hash
+	            return hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+
+	    function f1(x, y, z) {
+	        return ((x) ^ (y) ^ (z));
+
+	    }
+
+	    function f2(x, y, z) {
+	        return (((x)&(y)) | ((~x)&(z)));
+	    }
+
+	    function f3(x, y, z) {
+	        return (((x) | (~(y))) ^ (z));
+	    }
+
+	    function f4(x, y, z) {
+	        return (((x) & (z)) | ((y)&(~(z))));
+	    }
+
+	    function f5(x, y, z) {
+	        return ((x) ^ ((y) |(~(z))));
+
+	    }
+
+	    function rotl(x,n) {
+	        return (x<<n) | (x>>>(32-n));
+	    }
+
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.RIPEMD160('message');
+	     *     var hash = CryptoJS.RIPEMD160(wordArray);
+	     */
+	    C.RIPEMD160 = Hasher._createHelper(RIPEMD160);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacRIPEMD160(message, key);
+	     */
+	    C.HmacRIPEMD160 = Hasher._createHmacHelper(RIPEMD160);
+	}(Math));
+
+
+	return CryptoJS.RIPEMD160;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/sha1.js":
+/*!****************************************!*\
+  !*** ./node_modules/crypto-js/sha1.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Reusable object
+	    var W = [];
+
+	    /**
+	     * SHA-1 hash algorithm.
+	     */
+	    var SHA1 = C_algo.SHA1 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init([
+	                0x67452301, 0xefcdab89,
+	                0x98badcfe, 0x10325476,
+	                0xc3d2e1f0
+	            ]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var H = this._hash.words;
+
+	            // Working variables
+	            var a = H[0];
+	            var b = H[1];
+	            var c = H[2];
+	            var d = H[3];
+	            var e = H[4];
+
+	            // Computation
+	            for (var i = 0; i < 80; i++) {
+	                if (i < 16) {
+	                    W[i] = M[offset + i] | 0;
+	                } else {
+	                    var n = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
+	                    W[i] = (n << 1) | (n >>> 31);
+	                }
+
+	                var t = ((a << 5) | (a >>> 27)) + e + W[i];
+	                if (i < 20) {
+	                    t += ((b & c) | (~b & d)) + 0x5a827999;
+	                } else if (i < 40) {
+	                    t += (b ^ c ^ d) + 0x6ed9eba1;
+	                } else if (i < 60) {
+	                    t += ((b & c) | (b & d) | (c & d)) - 0x70e44324;
+	                } else /* if (i < 80) */ {
+	                    t += (b ^ c ^ d) - 0x359d3e2a;
+	                }
+
+	                e = d;
+	                d = c;
+	                c = (b << 30) | (b >>> 2);
+	                b = a;
+	                a = t;
+	            }
+
+	            // Intermediate hash value
+	            H[0] = (H[0] + a) | 0;
+	            H[1] = (H[1] + b) | 0;
+	            H[2] = (H[2] + c) | 0;
+	            H[3] = (H[3] + d) | 0;
+	            H[4] = (H[4] + e) | 0;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Return final computed hash
+	            return this._hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA1('message');
+	     *     var hash = CryptoJS.SHA1(wordArray);
+	     */
+	    C.SHA1 = Hasher._createHelper(SHA1);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA1(message, key);
+	     */
+	    C.HmacSHA1 = Hasher._createHmacHelper(SHA1);
+	}());
+
+
+	return CryptoJS.SHA1;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/sha224.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/sha224.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./sha256 */ "./node_modules/crypto-js/sha256.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var C_algo = C.algo;
+	    var SHA256 = C_algo.SHA256;
+
+	    /**
+	     * SHA-224 hash algorithm.
+	     */
+	    var SHA224 = C_algo.SHA224 = SHA256.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init([
+	                0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
+	                0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
+	            ]);
+	        },
+
+	        _doFinalize: function () {
+	            var hash = SHA256._doFinalize.call(this);
+
+	            hash.sigBytes -= 4;
+
+	            return hash;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA224('message');
+	     *     var hash = CryptoJS.SHA224(wordArray);
+	     */
+	    C.SHA224 = SHA256._createHelper(SHA224);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA224(message, key);
+	     */
+	    C.HmacSHA224 = SHA256._createHmacHelper(SHA224);
+	}());
+
+
+	return CryptoJS.SHA224;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/sha256.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/sha256.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_algo = C.algo;
+
+	    // Initialization and round constants tables
+	    var H = [];
+	    var K = [];
+
+	    // Compute constants
+	    (function () {
+	        function isPrime(n) {
+	            var sqrtN = Math.sqrt(n);
+	            for (var factor = 2; factor <= sqrtN; factor++) {
+	                if (!(n % factor)) {
+	                    return false;
+	                }
+	            }
+
+	            return true;
+	        }
+
+	        function getFractionalBits(n) {
+	            return ((n - (n | 0)) * 0x100000000) | 0;
+	        }
+
+	        var n = 2;
+	        var nPrime = 0;
+	        while (nPrime < 64) {
+	            if (isPrime(n)) {
+	                if (nPrime < 8) {
+	                    H[nPrime] = getFractionalBits(Math.pow(n, 1 / 2));
+	                }
+	                K[nPrime] = getFractionalBits(Math.pow(n, 1 / 3));
+
+	                nPrime++;
+	            }
+
+	            n++;
+	        }
+	    }());
+
+	    // Reusable object
+	    var W = [];
+
+	    /**
+	     * SHA-256 hash algorithm.
+	     */
+	    var SHA256 = C_algo.SHA256 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new WordArray.init(H.slice(0));
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcut
+	            var H = this._hash.words;
+
+	            // Working variables
+	            var a = H[0];
+	            var b = H[1];
+	            var c = H[2];
+	            var d = H[3];
+	            var e = H[4];
+	            var f = H[5];
+	            var g = H[6];
+	            var h = H[7];
+
+	            // Computation
+	            for (var i = 0; i < 64; i++) {
+	                if (i < 16) {
+	                    W[i] = M[offset + i] | 0;
+	                } else {
+	                    var gamma0x = W[i - 15];
+	                    var gamma0  = ((gamma0x << 25) | (gamma0x >>> 7))  ^
+	                                  ((gamma0x << 14) | (gamma0x >>> 18)) ^
+	                                   (gamma0x >>> 3);
+
+	                    var gamma1x = W[i - 2];
+	                    var gamma1  = ((gamma1x << 15) | (gamma1x >>> 17)) ^
+	                                  ((gamma1x << 13) | (gamma1x >>> 19)) ^
+	                                   (gamma1x >>> 10);
+
+	                    W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16];
+	                }
+
+	                var ch  = (e & f) ^ (~e & g);
+	                var maj = (a & b) ^ (a & c) ^ (b & c);
+
+	                var sigma0 = ((a << 30) | (a >>> 2)) ^ ((a << 19) | (a >>> 13)) ^ ((a << 10) | (a >>> 22));
+	                var sigma1 = ((e << 26) | (e >>> 6)) ^ ((e << 21) | (e >>> 11)) ^ ((e << 7)  | (e >>> 25));
+
+	                var t1 = h + sigma1 + ch + K[i] + W[i];
+	                var t2 = sigma0 + maj;
+
+	                h = g;
+	                g = f;
+	                f = e;
+	                e = (d + t1) | 0;
+	                d = c;
+	                c = b;
+	                b = a;
+	                a = (t1 + t2) | 0;
+	            }
+
+	            // Intermediate hash value
+	            H[0] = (H[0] + a) | 0;
+	            H[1] = (H[1] + b) | 0;
+	            H[2] = (H[2] + c) | 0;
+	            H[3] = (H[3] + d) | 0;
+	            H[4] = (H[4] + e) | 0;
+	            H[5] = (H[5] + f) | 0;
+	            H[6] = (H[6] + g) | 0;
+	            H[7] = (H[7] + h) | 0;
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Return final computed hash
+	            return this._hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA256('message');
+	     *     var hash = CryptoJS.SHA256(wordArray);
+	     */
+	    C.SHA256 = Hasher._createHelper(SHA256);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA256(message, key);
+	     */
+	    C.HmacSHA256 = Hasher._createHmacHelper(SHA256);
+	}(Math));
+
+
+	return CryptoJS.SHA256;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/sha3.js":
+/*!****************************************!*\
+  !*** ./node_modules/crypto-js/sha3.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./x64-core */ "./node_modules/crypto-js/x64-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (Math) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var Hasher = C_lib.Hasher;
+	    var C_x64 = C.x64;
+	    var X64Word = C_x64.Word;
+	    var C_algo = C.algo;
+
+	    // Constants tables
+	    var RHO_OFFSETS = [];
+	    var PI_INDEXES  = [];
+	    var ROUND_CONSTANTS = [];
+
+	    // Compute Constants
+	    (function () {
+	        // Compute rho offset constants
+	        var x = 1, y = 0;
+	        for (var t = 0; t < 24; t++) {
+	            RHO_OFFSETS[x + 5 * y] = ((t + 1) * (t + 2) / 2) % 64;
+
+	            var newX = y % 5;
+	            var newY = (2 * x + 3 * y) % 5;
+	            x = newX;
+	            y = newY;
+	        }
+
+	        // Compute pi index constants
+	        for (var x = 0; x < 5; x++) {
+	            for (var y = 0; y < 5; y++) {
+	                PI_INDEXES[x + 5 * y] = y + ((2 * x + 3 * y) % 5) * 5;
+	            }
+	        }
+
+	        // Compute round constants
+	        var LFSR = 0x01;
+	        for (var i = 0; i < 24; i++) {
+	            var roundConstantMsw = 0;
+	            var roundConstantLsw = 0;
+
+	            for (var j = 0; j < 7; j++) {
+	                if (LFSR & 0x01) {
+	                    var bitPosition = (1 << j) - 1;
+	                    if (bitPosition < 32) {
+	                        roundConstantLsw ^= 1 << bitPosition;
+	                    } else /* if (bitPosition >= 32) */ {
+	                        roundConstantMsw ^= 1 << (bitPosition - 32);
+	                    }
+	                }
+
+	                // Compute next LFSR
+	                if (LFSR & 0x80) {
+	                    // Primitive polynomial over GF(2): x^8 + x^6 + x^5 + x^4 + 1
+	                    LFSR = (LFSR << 1) ^ 0x71;
+	                } else {
+	                    LFSR <<= 1;
+	                }
+	            }
+
+	            ROUND_CONSTANTS[i] = X64Word.create(roundConstantMsw, roundConstantLsw);
+	        }
+	    }());
+
+	    // Reusable objects for temporary values
+	    var T = [];
+	    (function () {
+	        for (var i = 0; i < 25; i++) {
+	            T[i] = X64Word.create();
+	        }
+	    }());
+
+	    /**
+	     * SHA-3 hash algorithm.
+	     */
+	    var SHA3 = C_algo.SHA3 = Hasher.extend({
+	        /**
+	         * Configuration options.
+	         *
+	         * @property {number} outputLength
+	         *   The desired number of bits in the output hash.
+	         *   Only values permitted are: 224, 256, 384, 512.
+	         *   Default: 512
+	         */
+	        cfg: Hasher.cfg.extend({
+	            outputLength: 512
+	        }),
+
+	        _doReset: function () {
+	            var state = this._state = []
+	            for (var i = 0; i < 25; i++) {
+	                state[i] = new X64Word.init();
+	            }
+
+	            this.blockSize = (1600 - 2 * this.cfg.outputLength) / 32;
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcuts
+	            var state = this._state;
+	            var nBlockSizeLanes = this.blockSize / 2;
+
+	            // Absorb
+	            for (var i = 0; i < nBlockSizeLanes; i++) {
+	                // Shortcuts
+	                var M2i  = M[offset + 2 * i];
+	                var M2i1 = M[offset + 2 * i + 1];
+
+	                // Swap endian
+	                M2i = (
+	                    (((M2i << 8)  | (M2i >>> 24)) & 0x00ff00ff) |
+	                    (((M2i << 24) | (M2i >>> 8))  & 0xff00ff00)
+	                );
+	                M2i1 = (
+	                    (((M2i1 << 8)  | (M2i1 >>> 24)) & 0x00ff00ff) |
+	                    (((M2i1 << 24) | (M2i1 >>> 8))  & 0xff00ff00)
+	                );
+
+	                // Absorb message into state
+	                var lane = state[i];
+	                lane.high ^= M2i1;
+	                lane.low  ^= M2i;
+	            }
+
+	            // Rounds
+	            for (var round = 0; round < 24; round++) {
+	                // Theta
+	                for (var x = 0; x < 5; x++) {
+	                    // Mix column lanes
+	                    var tMsw = 0, tLsw = 0;
+	                    for (var y = 0; y < 5; y++) {
+	                        var lane = state[x + 5 * y];
+	                        tMsw ^= lane.high;
+	                        tLsw ^= lane.low;
+	                    }
+
+	                    // Temporary values
+	                    var Tx = T[x];
+	                    Tx.high = tMsw;
+	                    Tx.low  = tLsw;
+	                }
+	                for (var x = 0; x < 5; x++) {
+	                    // Shortcuts
+	                    var Tx4 = T[(x + 4) % 5];
+	                    var Tx1 = T[(x + 1) % 5];
+	                    var Tx1Msw = Tx1.high;
+	                    var Tx1Lsw = Tx1.low;
+
+	                    // Mix surrounding columns
+	                    var tMsw = Tx4.high ^ ((Tx1Msw << 1) | (Tx1Lsw >>> 31));
+	                    var tLsw = Tx4.low  ^ ((Tx1Lsw << 1) | (Tx1Msw >>> 31));
+	                    for (var y = 0; y < 5; y++) {
+	                        var lane = state[x + 5 * y];
+	                        lane.high ^= tMsw;
+	                        lane.low  ^= tLsw;
+	                    }
+	                }
+
+	                // Rho Pi
+	                for (var laneIndex = 1; laneIndex < 25; laneIndex++) {
+	                    // Shortcuts
+	                    var lane = state[laneIndex];
+	                    var laneMsw = lane.high;
+	                    var laneLsw = lane.low;
+	                    var rhoOffset = RHO_OFFSETS[laneIndex];
+
+	                    // Rotate lanes
+	                    if (rhoOffset < 32) {
+	                        var tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
+	                        var tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
+	                    } else /* if (rhoOffset >= 32) */ {
+	                        var tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
+	                        var tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
+	                    }
+
+	                    // Transpose lanes
+	                    var TPiLane = T[PI_INDEXES[laneIndex]];
+	                    TPiLane.high = tMsw;
+	                    TPiLane.low  = tLsw;
+	                }
+
+	                // Rho pi at x = y = 0
+	                var T0 = T[0];
+	                var state0 = state[0];
+	                T0.high = state0.high;
+	                T0.low  = state0.low;
+
+	                // Chi
+	                for (var x = 0; x < 5; x++) {
+	                    for (var y = 0; y < 5; y++) {
+	                        // Shortcuts
+	                        var laneIndex = x + 5 * y;
+	                        var lane = state[laneIndex];
+	                        var TLane = T[laneIndex];
+	                        var Tx1Lane = T[((x + 1) % 5) + 5 * y];
+	                        var Tx2Lane = T[((x + 2) % 5) + 5 * y];
+
+	                        // Mix rows
+	                        lane.high = TLane.high ^ (~Tx1Lane.high & Tx2Lane.high);
+	                        lane.low  = TLane.low  ^ (~Tx1Lane.low  & Tx2Lane.low);
+	                    }
+	                }
+
+	                // Iota
+	                var lane = state[0];
+	                var roundConstant = ROUND_CONSTANTS[round];
+	                lane.high ^= roundConstant.high;
+	                lane.low  ^= roundConstant.low;;
+	            }
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+	            var blockSizeBits = this.blockSize * 32;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x1 << (24 - nBitsLeft % 32);
+	            dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= 0x80;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Shortcuts
+	            var state = this._state;
+	            var outputLengthBytes = this.cfg.outputLength / 8;
+	            var outputLengthLanes = outputLengthBytes / 8;
+
+	            // Squeeze
+	            var hashWords = [];
+	            for (var i = 0; i < outputLengthLanes; i++) {
+	                // Shortcuts
+	                var lane = state[i];
+	                var laneMsw = lane.high;
+	                var laneLsw = lane.low;
+
+	                // Swap endian
+	                laneMsw = (
+	                    (((laneMsw << 8)  | (laneMsw >>> 24)) & 0x00ff00ff) |
+	                    (((laneMsw << 24) | (laneMsw >>> 8))  & 0xff00ff00)
+	                );
+	                laneLsw = (
+	                    (((laneLsw << 8)  | (laneLsw >>> 24)) & 0x00ff00ff) |
+	                    (((laneLsw << 24) | (laneLsw >>> 8))  & 0xff00ff00)
+	                );
+
+	                // Squeeze state to retrieve hash
+	                hashWords.push(laneLsw);
+	                hashWords.push(laneMsw);
+	            }
+
+	            // Return final computed hash
+	            return new WordArray.init(hashWords, outputLengthBytes);
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+
+	            var state = clone._state = this._state.slice(0);
+	            for (var i = 0; i < 25; i++) {
+	                state[i] = state[i].clone();
+	            }
+
+	            return clone;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA3('message');
+	     *     var hash = CryptoJS.SHA3(wordArray);
+	     */
+	    C.SHA3 = Hasher._createHelper(SHA3);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA3(message, key);
+	     */
+	    C.HmacSHA3 = Hasher._createHmacHelper(SHA3);
+	}(Math));
+
+
+	return CryptoJS.SHA3;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/sha384.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/sha384.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./x64-core */ "./node_modules/crypto-js/x64-core.js"), __webpack_require__(/*! ./sha512 */ "./node_modules/crypto-js/sha512.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_x64 = C.x64;
+	    var X64Word = C_x64.Word;
+	    var X64WordArray = C_x64.WordArray;
+	    var C_algo = C.algo;
+	    var SHA512 = C_algo.SHA512;
+
+	    /**
+	     * SHA-384 hash algorithm.
+	     */
+	    var SHA384 = C_algo.SHA384 = SHA512.extend({
+	        _doReset: function () {
+	            this._hash = new X64WordArray.init([
+	                new X64Word.init(0xcbbb9d5d, 0xc1059ed8), new X64Word.init(0x629a292a, 0x367cd507),
+	                new X64Word.init(0x9159015a, 0x3070dd17), new X64Word.init(0x152fecd8, 0xf70e5939),
+	                new X64Word.init(0x67332667, 0xffc00b31), new X64Word.init(0x8eb44a87, 0x68581511),
+	                new X64Word.init(0xdb0c2e0d, 0x64f98fa7), new X64Word.init(0x47b5481d, 0xbefa4fa4)
+	            ]);
+	        },
+
+	        _doFinalize: function () {
+	            var hash = SHA512._doFinalize.call(this);
+
+	            hash.sigBytes -= 16;
+
+	            return hash;
+	        }
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA384('message');
+	     *     var hash = CryptoJS.SHA384(wordArray);
+	     */
+	    C.SHA384 = SHA512._createHelper(SHA384);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA384(message, key);
+	     */
+	    C.HmacSHA384 = SHA512._createHmacHelper(SHA384);
+	}());
+
+
+	return CryptoJS.SHA384;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/sha512.js":
+/*!******************************************!*\
+  !*** ./node_modules/crypto-js/sha512.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./x64-core */ "./node_modules/crypto-js/x64-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Hasher = C_lib.Hasher;
+	    var C_x64 = C.x64;
+	    var X64Word = C_x64.Word;
+	    var X64WordArray = C_x64.WordArray;
+	    var C_algo = C.algo;
+
+	    function X64Word_create() {
+	        return X64Word.create.apply(X64Word, arguments);
+	    }
+
+	    // Constants
+	    var K = [
+	        X64Word_create(0x428a2f98, 0xd728ae22), X64Word_create(0x71374491, 0x23ef65cd),
+	        X64Word_create(0xb5c0fbcf, 0xec4d3b2f), X64Word_create(0xe9b5dba5, 0x8189dbbc),
+	        X64Word_create(0x3956c25b, 0xf348b538), X64Word_create(0x59f111f1, 0xb605d019),
+	        X64Word_create(0x923f82a4, 0xaf194f9b), X64Word_create(0xab1c5ed5, 0xda6d8118),
+	        X64Word_create(0xd807aa98, 0xa3030242), X64Word_create(0x12835b01, 0x45706fbe),
+	        X64Word_create(0x243185be, 0x4ee4b28c), X64Word_create(0x550c7dc3, 0xd5ffb4e2),
+	        X64Word_create(0x72be5d74, 0xf27b896f), X64Word_create(0x80deb1fe, 0x3b1696b1),
+	        X64Word_create(0x9bdc06a7, 0x25c71235), X64Word_create(0xc19bf174, 0xcf692694),
+	        X64Word_create(0xe49b69c1, 0x9ef14ad2), X64Word_create(0xefbe4786, 0x384f25e3),
+	        X64Word_create(0x0fc19dc6, 0x8b8cd5b5), X64Word_create(0x240ca1cc, 0x77ac9c65),
+	        X64Word_create(0x2de92c6f, 0x592b0275), X64Word_create(0x4a7484aa, 0x6ea6e483),
+	        X64Word_create(0x5cb0a9dc, 0xbd41fbd4), X64Word_create(0x76f988da, 0x831153b5),
+	        X64Word_create(0x983e5152, 0xee66dfab), X64Word_create(0xa831c66d, 0x2db43210),
+	        X64Word_create(0xb00327c8, 0x98fb213f), X64Word_create(0xbf597fc7, 0xbeef0ee4),
+	        X64Word_create(0xc6e00bf3, 0x3da88fc2), X64Word_create(0xd5a79147, 0x930aa725),
+	        X64Word_create(0x06ca6351, 0xe003826f), X64Word_create(0x14292967, 0x0a0e6e70),
+	        X64Word_create(0x27b70a85, 0x46d22ffc), X64Word_create(0x2e1b2138, 0x5c26c926),
+	        X64Word_create(0x4d2c6dfc, 0x5ac42aed), X64Word_create(0x53380d13, 0x9d95b3df),
+	        X64Word_create(0x650a7354, 0x8baf63de), X64Word_create(0x766a0abb, 0x3c77b2a8),
+	        X64Word_create(0x81c2c92e, 0x47edaee6), X64Word_create(0x92722c85, 0x1482353b),
+	        X64Word_create(0xa2bfe8a1, 0x4cf10364), X64Word_create(0xa81a664b, 0xbc423001),
+	        X64Word_create(0xc24b8b70, 0xd0f89791), X64Word_create(0xc76c51a3, 0x0654be30),
+	        X64Word_create(0xd192e819, 0xd6ef5218), X64Word_create(0xd6990624, 0x5565a910),
+	        X64Word_create(0xf40e3585, 0x5771202a), X64Word_create(0x106aa070, 0x32bbd1b8),
+	        X64Word_create(0x19a4c116, 0xb8d2d0c8), X64Word_create(0x1e376c08, 0x5141ab53),
+	        X64Word_create(0x2748774c, 0xdf8eeb99), X64Word_create(0x34b0bcb5, 0xe19b48a8),
+	        X64Word_create(0x391c0cb3, 0xc5c95a63), X64Word_create(0x4ed8aa4a, 0xe3418acb),
+	        X64Word_create(0x5b9cca4f, 0x7763e373), X64Word_create(0x682e6ff3, 0xd6b2b8a3),
+	        X64Word_create(0x748f82ee, 0x5defb2fc), X64Word_create(0x78a5636f, 0x43172f60),
+	        X64Word_create(0x84c87814, 0xa1f0ab72), X64Word_create(0x8cc70208, 0x1a6439ec),
+	        X64Word_create(0x90befffa, 0x23631e28), X64Word_create(0xa4506ceb, 0xde82bde9),
+	        X64Word_create(0xbef9a3f7, 0xb2c67915), X64Word_create(0xc67178f2, 0xe372532b),
+	        X64Word_create(0xca273ece, 0xea26619c), X64Word_create(0xd186b8c7, 0x21c0c207),
+	        X64Word_create(0xeada7dd6, 0xcde0eb1e), X64Word_create(0xf57d4f7f, 0xee6ed178),
+	        X64Word_create(0x06f067aa, 0x72176fba), X64Word_create(0x0a637dc5, 0xa2c898a6),
+	        X64Word_create(0x113f9804, 0xbef90dae), X64Word_create(0x1b710b35, 0x131c471b),
+	        X64Word_create(0x28db77f5, 0x23047d84), X64Word_create(0x32caab7b, 0x40c72493),
+	        X64Word_create(0x3c9ebe0a, 0x15c9bebc), X64Word_create(0x431d67c4, 0x9c100d4c),
+	        X64Word_create(0x4cc5d4be, 0xcb3e42b6), X64Word_create(0x597f299c, 0xfc657e2a),
+	        X64Word_create(0x5fcb6fab, 0x3ad6faec), X64Word_create(0x6c44198c, 0x4a475817)
+	    ];
+
+	    // Reusable objects
+	    var W = [];
+	    (function () {
+	        for (var i = 0; i < 80; i++) {
+	            W[i] = X64Word_create();
+	        }
+	    }());
+
+	    /**
+	     * SHA-512 hash algorithm.
+	     */
+	    var SHA512 = C_algo.SHA512 = Hasher.extend({
+	        _doReset: function () {
+	            this._hash = new X64WordArray.init([
+	                new X64Word.init(0x6a09e667, 0xf3bcc908), new X64Word.init(0xbb67ae85, 0x84caa73b),
+	                new X64Word.init(0x3c6ef372, 0xfe94f82b), new X64Word.init(0xa54ff53a, 0x5f1d36f1),
+	                new X64Word.init(0x510e527f, 0xade682d1), new X64Word.init(0x9b05688c, 0x2b3e6c1f),
+	                new X64Word.init(0x1f83d9ab, 0xfb41bd6b), new X64Word.init(0x5be0cd19, 0x137e2179)
+	            ]);
+	        },
+
+	        _doProcessBlock: function (M, offset) {
+	            // Shortcuts
+	            var H = this._hash.words;
+
+	            var H0 = H[0];
+	            var H1 = H[1];
+	            var H2 = H[2];
+	            var H3 = H[3];
+	            var H4 = H[4];
+	            var H5 = H[5];
+	            var H6 = H[6];
+	            var H7 = H[7];
+
+	            var H0h = H0.high;
+	            var H0l = H0.low;
+	            var H1h = H1.high;
+	            var H1l = H1.low;
+	            var H2h = H2.high;
+	            var H2l = H2.low;
+	            var H3h = H3.high;
+	            var H3l = H3.low;
+	            var H4h = H4.high;
+	            var H4l = H4.low;
+	            var H5h = H5.high;
+	            var H5l = H5.low;
+	            var H6h = H6.high;
+	            var H6l = H6.low;
+	            var H7h = H7.high;
+	            var H7l = H7.low;
+
+	            // Working variables
+	            var ah = H0h;
+	            var al = H0l;
+	            var bh = H1h;
+	            var bl = H1l;
+	            var ch = H2h;
+	            var cl = H2l;
+	            var dh = H3h;
+	            var dl = H3l;
+	            var eh = H4h;
+	            var el = H4l;
+	            var fh = H5h;
+	            var fl = H5l;
+	            var gh = H6h;
+	            var gl = H6l;
+	            var hh = H7h;
+	            var hl = H7l;
+
+	            // Rounds
+	            for (var i = 0; i < 80; i++) {
+	                // Shortcut
+	                var Wi = W[i];
+
+	                // Extend message
+	                if (i < 16) {
+	                    var Wih = Wi.high = M[offset + i * 2]     | 0;
+	                    var Wil = Wi.low  = M[offset + i * 2 + 1] | 0;
+	                } else {
+	                    // Gamma0
+	                    var gamma0x  = W[i - 15];
+	                    var gamma0xh = gamma0x.high;
+	                    var gamma0xl = gamma0x.low;
+	                    var gamma0h  = ((gamma0xh >>> 1) | (gamma0xl << 31)) ^ ((gamma0xh >>> 8) | (gamma0xl << 24)) ^ (gamma0xh >>> 7);
+	                    var gamma0l  = ((gamma0xl >>> 1) | (gamma0xh << 31)) ^ ((gamma0xl >>> 8) | (gamma0xh << 24)) ^ ((gamma0xl >>> 7) | (gamma0xh << 25));
+
+	                    // Gamma1
+	                    var gamma1x  = W[i - 2];
+	                    var gamma1xh = gamma1x.high;
+	                    var gamma1xl = gamma1x.low;
+	                    var gamma1h  = ((gamma1xh >>> 19) | (gamma1xl << 13)) ^ ((gamma1xh << 3) | (gamma1xl >>> 29)) ^ (gamma1xh >>> 6);
+	                    var gamma1l  = ((gamma1xl >>> 19) | (gamma1xh << 13)) ^ ((gamma1xl << 3) | (gamma1xh >>> 29)) ^ ((gamma1xl >>> 6) | (gamma1xh << 26));
+
+	                    // W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16]
+	                    var Wi7  = W[i - 7];
+	                    var Wi7h = Wi7.high;
+	                    var Wi7l = Wi7.low;
+
+	                    var Wi16  = W[i - 16];
+	                    var Wi16h = Wi16.high;
+	                    var Wi16l = Wi16.low;
+
+	                    var Wil = gamma0l + Wi7l;
+	                    var Wih = gamma0h + Wi7h + ((Wil >>> 0) < (gamma0l >>> 0) ? 1 : 0);
+	                    var Wil = Wil + gamma1l;
+	                    var Wih = Wih + gamma1h + ((Wil >>> 0) < (gamma1l >>> 0) ? 1 : 0);
+	                    var Wil = Wil + Wi16l;
+	                    var Wih = Wih + Wi16h + ((Wil >>> 0) < (Wi16l >>> 0) ? 1 : 0);
+
+	                    Wi.high = Wih;
+	                    Wi.low  = Wil;
+	                }
+
+	                var chh  = (eh & fh) ^ (~eh & gh);
+	                var chl  = (el & fl) ^ (~el & gl);
+	                var majh = (ah & bh) ^ (ah & ch) ^ (bh & ch);
+	                var majl = (al & bl) ^ (al & cl) ^ (bl & cl);
+
+	                var sigma0h = ((ah >>> 28) | (al << 4))  ^ ((ah << 30)  | (al >>> 2)) ^ ((ah << 25) | (al >>> 7));
+	                var sigma0l = ((al >>> 28) | (ah << 4))  ^ ((al << 30)  | (ah >>> 2)) ^ ((al << 25) | (ah >>> 7));
+	                var sigma1h = ((eh >>> 14) | (el << 18)) ^ ((eh >>> 18) | (el << 14)) ^ ((eh << 23) | (el >>> 9));
+	                var sigma1l = ((el >>> 14) | (eh << 18)) ^ ((el >>> 18) | (eh << 14)) ^ ((el << 23) | (eh >>> 9));
+
+	                // t1 = h + sigma1 + ch + K[i] + W[i]
+	                var Ki  = K[i];
+	                var Kih = Ki.high;
+	                var Kil = Ki.low;
+
+	                var t1l = hl + sigma1l;
+	                var t1h = hh + sigma1h + ((t1l >>> 0) < (hl >>> 0) ? 1 : 0);
+	                var t1l = t1l + chl;
+	                var t1h = t1h + chh + ((t1l >>> 0) < (chl >>> 0) ? 1 : 0);
+	                var t1l = t1l + Kil;
+	                var t1h = t1h + Kih + ((t1l >>> 0) < (Kil >>> 0) ? 1 : 0);
+	                var t1l = t1l + Wil;
+	                var t1h = t1h + Wih + ((t1l >>> 0) < (Wil >>> 0) ? 1 : 0);
+
+	                // t2 = sigma0 + maj
+	                var t2l = sigma0l + majl;
+	                var t2h = sigma0h + majh + ((t2l >>> 0) < (sigma0l >>> 0) ? 1 : 0);
+
+	                // Update working variables
+	                hh = gh;
+	                hl = gl;
+	                gh = fh;
+	                gl = fl;
+	                fh = eh;
+	                fl = el;
+	                el = (dl + t1l) | 0;
+	                eh = (dh + t1h + ((el >>> 0) < (dl >>> 0) ? 1 : 0)) | 0;
+	                dh = ch;
+	                dl = cl;
+	                ch = bh;
+	                cl = bl;
+	                bh = ah;
+	                bl = al;
+	                al = (t1l + t2l) | 0;
+	                ah = (t1h + t2h + ((al >>> 0) < (t1l >>> 0) ? 1 : 0)) | 0;
+	            }
+
+	            // Intermediate hash value
+	            H0l = H0.low  = (H0l + al);
+	            H0.high = (H0h + ah + ((H0l >>> 0) < (al >>> 0) ? 1 : 0));
+	            H1l = H1.low  = (H1l + bl);
+	            H1.high = (H1h + bh + ((H1l >>> 0) < (bl >>> 0) ? 1 : 0));
+	            H2l = H2.low  = (H2l + cl);
+	            H2.high = (H2h + ch + ((H2l >>> 0) < (cl >>> 0) ? 1 : 0));
+	            H3l = H3.low  = (H3l + dl);
+	            H3.high = (H3h + dh + ((H3l >>> 0) < (dl >>> 0) ? 1 : 0));
+	            H4l = H4.low  = (H4l + el);
+	            H4.high = (H4h + eh + ((H4l >>> 0) < (el >>> 0) ? 1 : 0));
+	            H5l = H5.low  = (H5l + fl);
+	            H5.high = (H5h + fh + ((H5l >>> 0) < (fl >>> 0) ? 1 : 0));
+	            H6l = H6.low  = (H6l + gl);
+	            H6.high = (H6h + gh + ((H6l >>> 0) < (gl >>> 0) ? 1 : 0));
+	            H7l = H7.low  = (H7l + hl);
+	            H7.high = (H7h + hh + ((H7l >>> 0) < (hl >>> 0) ? 1 : 0));
+	        },
+
+	        _doFinalize: function () {
+	            // Shortcuts
+	            var data = this._data;
+	            var dataWords = data.words;
+
+	            var nBitsTotal = this._nDataBytes * 8;
+	            var nBitsLeft = data.sigBytes * 8;
+
+	            // Add padding
+	            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 30] = Math.floor(nBitsTotal / 0x100000000);
+	            dataWords[(((nBitsLeft + 128) >>> 10) << 5) + 31] = nBitsTotal;
+	            data.sigBytes = dataWords.length * 4;
+
+	            // Hash final blocks
+	            this._process();
+
+	            // Convert hash to 32-bit word array before returning
+	            var hash = this._hash.toX32();
+
+	            // Return final computed hash
+	            return hash;
+	        },
+
+	        clone: function () {
+	            var clone = Hasher.clone.call(this);
+	            clone._hash = this._hash.clone();
+
+	            return clone;
+	        },
+
+	        blockSize: 1024/32
+	    });
+
+	    /**
+	     * Shortcut function to the hasher's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     *
+	     * @return {WordArray} The hash.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hash = CryptoJS.SHA512('message');
+	     *     var hash = CryptoJS.SHA512(wordArray);
+	     */
+	    C.SHA512 = Hasher._createHelper(SHA512);
+
+	    /**
+	     * Shortcut function to the HMAC's object interface.
+	     *
+	     * @param {WordArray|string} message The message to hash.
+	     * @param {WordArray|string} key The secret key.
+	     *
+	     * @return {WordArray} The HMAC.
+	     *
+	     * @static
+	     *
+	     * @example
+	     *
+	     *     var hmac = CryptoJS.HmacSHA512(message, key);
+	     */
+	    C.HmacSHA512 = Hasher._createHmacHelper(SHA512);
+	}());
+
+
+	return CryptoJS.SHA512;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/tripledes.js":
+/*!*********************************************!*\
+  !*** ./node_modules/crypto-js/tripledes.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory, undef) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"), __webpack_require__(/*! ./enc-base64 */ "./node_modules/crypto-js/enc-base64.js"), __webpack_require__(/*! ./md5 */ "./node_modules/crypto-js/md5.js"), __webpack_require__(/*! ./evpkdf */ "./node_modules/crypto-js/evpkdf.js"), __webpack_require__(/*! ./cipher-core */ "./node_modules/crypto-js/cipher-core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function () {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var WordArray = C_lib.WordArray;
+	    var BlockCipher = C_lib.BlockCipher;
+	    var C_algo = C.algo;
+
+	    // Permuted Choice 1 constants
+	    var PC1 = [
+	        57, 49, 41, 33, 25, 17, 9,  1,
+	        58, 50, 42, 34, 26, 18, 10, 2,
+	        59, 51, 43, 35, 27, 19, 11, 3,
+	        60, 52, 44, 36, 63, 55, 47, 39,
+	        31, 23, 15, 7,  62, 54, 46, 38,
+	        30, 22, 14, 6,  61, 53, 45, 37,
+	        29, 21, 13, 5,  28, 20, 12, 4
+	    ];
+
+	    // Permuted Choice 2 constants
+	    var PC2 = [
+	        14, 17, 11, 24, 1,  5,
+	        3,  28, 15, 6,  21, 10,
+	        23, 19, 12, 4,  26, 8,
+	        16, 7,  27, 20, 13, 2,
+	        41, 52, 31, 37, 47, 55,
+	        30, 40, 51, 45, 33, 48,
+	        44, 49, 39, 56, 34, 53,
+	        46, 42, 50, 36, 29, 32
+	    ];
+
+	    // Cumulative bit shift constants
+	    var BIT_SHIFTS = [1,  2,  4,  6,  8,  10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28];
+
+	    // SBOXes and round permutation constants
+	    var SBOX_P = [
+	        {
+	            0x0: 0x808200,
+	            0x10000000: 0x8000,
+	            0x20000000: 0x808002,
+	            0x30000000: 0x2,
+	            0x40000000: 0x200,
+	            0x50000000: 0x808202,
+	            0x60000000: 0x800202,
+	            0x70000000: 0x800000,
+	            0x80000000: 0x202,
+	            0x90000000: 0x800200,
+	            0xa0000000: 0x8200,
+	            0xb0000000: 0x808000,
+	            0xc0000000: 0x8002,
+	            0xd0000000: 0x800002,
+	            0xe0000000: 0x0,
+	            0xf0000000: 0x8202,
+	            0x8000000: 0x0,
+	            0x18000000: 0x808202,
+	            0x28000000: 0x8202,
+	            0x38000000: 0x8000,
+	            0x48000000: 0x808200,
+	            0x58000000: 0x200,
+	            0x68000000: 0x808002,
+	            0x78000000: 0x2,
+	            0x88000000: 0x800200,
+	            0x98000000: 0x8200,
+	            0xa8000000: 0x808000,
+	            0xb8000000: 0x800202,
+	            0xc8000000: 0x800002,
+	            0xd8000000: 0x8002,
+	            0xe8000000: 0x202,
+	            0xf8000000: 0x800000,
+	            0x1: 0x8000,
+	            0x10000001: 0x2,
+	            0x20000001: 0x808200,
+	            0x30000001: 0x800000,
+	            0x40000001: 0x808002,
+	            0x50000001: 0x8200,
+	            0x60000001: 0x200,
+	            0x70000001: 0x800202,
+	            0x80000001: 0x808202,
+	            0x90000001: 0x808000,
+	            0xa0000001: 0x800002,
+	            0xb0000001: 0x8202,
+	            0xc0000001: 0x202,
+	            0xd0000001: 0x800200,
+	            0xe0000001: 0x8002,
+	            0xf0000001: 0x0,
+	            0x8000001: 0x808202,
+	            0x18000001: 0x808000,
+	            0x28000001: 0x800000,
+	            0x38000001: 0x200,
+	            0x48000001: 0x8000,
+	            0x58000001: 0x800002,
+	            0x68000001: 0x2,
+	            0x78000001: 0x8202,
+	            0x88000001: 0x8002,
+	            0x98000001: 0x800202,
+	            0xa8000001: 0x202,
+	            0xb8000001: 0x808200,
+	            0xc8000001: 0x800200,
+	            0xd8000001: 0x0,
+	            0xe8000001: 0x8200,
+	            0xf8000001: 0x808002
+	        },
+	        {
+	            0x0: 0x40084010,
+	            0x1000000: 0x4000,
+	            0x2000000: 0x80000,
+	            0x3000000: 0x40080010,
+	            0x4000000: 0x40000010,
+	            0x5000000: 0x40084000,
+	            0x6000000: 0x40004000,
+	            0x7000000: 0x10,
+	            0x8000000: 0x84000,
+	            0x9000000: 0x40004010,
+	            0xa000000: 0x40000000,
+	            0xb000000: 0x84010,
+	            0xc000000: 0x80010,
+	            0xd000000: 0x0,
+	            0xe000000: 0x4010,
+	            0xf000000: 0x40080000,
+	            0x800000: 0x40004000,
+	            0x1800000: 0x84010,
+	            0x2800000: 0x10,
+	            0x3800000: 0x40004010,
+	            0x4800000: 0x40084010,
+	            0x5800000: 0x40000000,
+	            0x6800000: 0x80000,
+	            0x7800000: 0x40080010,
+	            0x8800000: 0x80010,
+	            0x9800000: 0x0,
+	            0xa800000: 0x4000,
+	            0xb800000: 0x40080000,
+	            0xc800000: 0x40000010,
+	            0xd800000: 0x84000,
+	            0xe800000: 0x40084000,
+	            0xf800000: 0x4010,
+	            0x10000000: 0x0,
+	            0x11000000: 0x40080010,
+	            0x12000000: 0x40004010,
+	            0x13000000: 0x40084000,
+	            0x14000000: 0x40080000,
+	            0x15000000: 0x10,
+	            0x16000000: 0x84010,
+	            0x17000000: 0x4000,
+	            0x18000000: 0x4010,
+	            0x19000000: 0x80000,
+	            0x1a000000: 0x80010,
+	            0x1b000000: 0x40000010,
+	            0x1c000000: 0x84000,
+	            0x1d000000: 0x40004000,
+	            0x1e000000: 0x40000000,
+	            0x1f000000: 0x40084010,
+	            0x10800000: 0x84010,
+	            0x11800000: 0x80000,
+	            0x12800000: 0x40080000,
+	            0x13800000: 0x4000,
+	            0x14800000: 0x40004000,
+	            0x15800000: 0x40084010,
+	            0x16800000: 0x10,
+	            0x17800000: 0x40000000,
+	            0x18800000: 0x40084000,
+	            0x19800000: 0x40000010,
+	            0x1a800000: 0x40004010,
+	            0x1b800000: 0x80010,
+	            0x1c800000: 0x0,
+	            0x1d800000: 0x4010,
+	            0x1e800000: 0x40080010,
+	            0x1f800000: 0x84000
+	        },
+	        {
+	            0x0: 0x104,
+	            0x100000: 0x0,
+	            0x200000: 0x4000100,
+	            0x300000: 0x10104,
+	            0x400000: 0x10004,
+	            0x500000: 0x4000004,
+	            0x600000: 0x4010104,
+	            0x700000: 0x4010000,
+	            0x800000: 0x4000000,
+	            0x900000: 0x4010100,
+	            0xa00000: 0x10100,
+	            0xb00000: 0x4010004,
+	            0xc00000: 0x4000104,
+	            0xd00000: 0x10000,
+	            0xe00000: 0x4,
+	            0xf00000: 0x100,
+	            0x80000: 0x4010100,
+	            0x180000: 0x4010004,
+	            0x280000: 0x0,
+	            0x380000: 0x4000100,
+	            0x480000: 0x4000004,
+	            0x580000: 0x10000,
+	            0x680000: 0x10004,
+	            0x780000: 0x104,
+	            0x880000: 0x4,
+	            0x980000: 0x100,
+	            0xa80000: 0x4010000,
+	            0xb80000: 0x10104,
+	            0xc80000: 0x10100,
+	            0xd80000: 0x4000104,
+	            0xe80000: 0x4010104,
+	            0xf80000: 0x4000000,
+	            0x1000000: 0x4010100,
+	            0x1100000: 0x10004,
+	            0x1200000: 0x10000,
+	            0x1300000: 0x4000100,
+	            0x1400000: 0x100,
+	            0x1500000: 0x4010104,
+	            0x1600000: 0x4000004,
+	            0x1700000: 0x0,
+	            0x1800000: 0x4000104,
+	            0x1900000: 0x4000000,
+	            0x1a00000: 0x4,
+	            0x1b00000: 0x10100,
+	            0x1c00000: 0x4010000,
+	            0x1d00000: 0x104,
+	            0x1e00000: 0x10104,
+	            0x1f00000: 0x4010004,
+	            0x1080000: 0x4000000,
+	            0x1180000: 0x104,
+	            0x1280000: 0x4010100,
+	            0x1380000: 0x0,
+	            0x1480000: 0x10004,
+	            0x1580000: 0x4000100,
+	            0x1680000: 0x100,
+	            0x1780000: 0x4010004,
+	            0x1880000: 0x10000,
+	            0x1980000: 0x4010104,
+	            0x1a80000: 0x10104,
+	            0x1b80000: 0x4000004,
+	            0x1c80000: 0x4000104,
+	            0x1d80000: 0x4010000,
+	            0x1e80000: 0x4,
+	            0x1f80000: 0x10100
+	        },
+	        {
+	            0x0: 0x80401000,
+	            0x10000: 0x80001040,
+	            0x20000: 0x401040,
+	            0x30000: 0x80400000,
+	            0x40000: 0x0,
+	            0x50000: 0x401000,
+	            0x60000: 0x80000040,
+	            0x70000: 0x400040,
+	            0x80000: 0x80000000,
+	            0x90000: 0x400000,
+	            0xa0000: 0x40,
+	            0xb0000: 0x80001000,
+	            0xc0000: 0x80400040,
+	            0xd0000: 0x1040,
+	            0xe0000: 0x1000,
+	            0xf0000: 0x80401040,
+	            0x8000: 0x80001040,
+	            0x18000: 0x40,
+	            0x28000: 0x80400040,
+	            0x38000: 0x80001000,
+	            0x48000: 0x401000,
+	            0x58000: 0x80401040,
+	            0x68000: 0x0,
+	            0x78000: 0x80400000,
+	            0x88000: 0x1000,
+	            0x98000: 0x80401000,
+	            0xa8000: 0x400000,
+	            0xb8000: 0x1040,
+	            0xc8000: 0x80000000,
+	            0xd8000: 0x400040,
+	            0xe8000: 0x401040,
+	            0xf8000: 0x80000040,
+	            0x100000: 0x400040,
+	            0x110000: 0x401000,
+	            0x120000: 0x80000040,
+	            0x130000: 0x0,
+	            0x140000: 0x1040,
+	            0x150000: 0x80400040,
+	            0x160000: 0x80401000,
+	            0x170000: 0x80001040,
+	            0x180000: 0x80401040,
+	            0x190000: 0x80000000,
+	            0x1a0000: 0x80400000,
+	            0x1b0000: 0x401040,
+	            0x1c0000: 0x80001000,
+	            0x1d0000: 0x400000,
+	            0x1e0000: 0x40,
+	            0x1f0000: 0x1000,
+	            0x108000: 0x80400000,
+	            0x118000: 0x80401040,
+	            0x128000: 0x0,
+	            0x138000: 0x401000,
+	            0x148000: 0x400040,
+	            0x158000: 0x80000000,
+	            0x168000: 0x80001040,
+	            0x178000: 0x40,
+	            0x188000: 0x80000040,
+	            0x198000: 0x1000,
+	            0x1a8000: 0x80001000,
+	            0x1b8000: 0x80400040,
+	            0x1c8000: 0x1040,
+	            0x1d8000: 0x80401000,
+	            0x1e8000: 0x400000,
+	            0x1f8000: 0x401040
+	        },
+	        {
+	            0x0: 0x80,
+	            0x1000: 0x1040000,
+	            0x2000: 0x40000,
+	            0x3000: 0x20000000,
+	            0x4000: 0x20040080,
+	            0x5000: 0x1000080,
+	            0x6000: 0x21000080,
+	            0x7000: 0x40080,
+	            0x8000: 0x1000000,
+	            0x9000: 0x20040000,
+	            0xa000: 0x20000080,
+	            0xb000: 0x21040080,
+	            0xc000: 0x21040000,
+	            0xd000: 0x0,
+	            0xe000: 0x1040080,
+	            0xf000: 0x21000000,
+	            0x800: 0x1040080,
+	            0x1800: 0x21000080,
+	            0x2800: 0x80,
+	            0x3800: 0x1040000,
+	            0x4800: 0x40000,
+	            0x5800: 0x20040080,
+	            0x6800: 0x21040000,
+	            0x7800: 0x20000000,
+	            0x8800: 0x20040000,
+	            0x9800: 0x0,
+	            0xa800: 0x21040080,
+	            0xb800: 0x1000080,
+	            0xc800: 0x20000080,
+	            0xd800: 0x21000000,
+	            0xe800: 0x1000000,
+	            0xf800: 0x40080,
+	            0x10000: 0x40000,
+	            0x11000: 0x80,
+	            0x12000: 0x20000000,
+	            0x13000: 0x21000080,
+	            0x14000: 0x1000080,
+	            0x15000: 0x21040000,
+	            0x16000: 0x20040080,
+	            0x17000: 0x1000000,
+	            0x18000: 0x21040080,
+	            0x19000: 0x21000000,
+	            0x1a000: 0x1040000,
+	            0x1b000: 0x20040000,
+	            0x1c000: 0x40080,
+	            0x1d000: 0x20000080,
+	            0x1e000: 0x0,
+	            0x1f000: 0x1040080,
+	            0x10800: 0x21000080,
+	            0x11800: 0x1000000,
+	            0x12800: 0x1040000,
+	            0x13800: 0x20040080,
+	            0x14800: 0x20000000,
+	            0x15800: 0x1040080,
+	            0x16800: 0x80,
+	            0x17800: 0x21040000,
+	            0x18800: 0x40080,
+	            0x19800: 0x21040080,
+	            0x1a800: 0x0,
+	            0x1b800: 0x21000000,
+	            0x1c800: 0x1000080,
+	            0x1d800: 0x40000,
+	            0x1e800: 0x20040000,
+	            0x1f800: 0x20000080
+	        },
+	        {
+	            0x0: 0x10000008,
+	            0x100: 0x2000,
+	            0x200: 0x10200000,
+	            0x300: 0x10202008,
+	            0x400: 0x10002000,
+	            0x500: 0x200000,
+	            0x600: 0x200008,
+	            0x700: 0x10000000,
+	            0x800: 0x0,
+	            0x900: 0x10002008,
+	            0xa00: 0x202000,
+	            0xb00: 0x8,
+	            0xc00: 0x10200008,
+	            0xd00: 0x202008,
+	            0xe00: 0x2008,
+	            0xf00: 0x10202000,
+	            0x80: 0x10200000,
+	            0x180: 0x10202008,
+	            0x280: 0x8,
+	            0x380: 0x200000,
+	            0x480: 0x202008,
+	            0x580: 0x10000008,
+	            0x680: 0x10002000,
+	            0x780: 0x2008,
+	            0x880: 0x200008,
+	            0x980: 0x2000,
+	            0xa80: 0x10002008,
+	            0xb80: 0x10200008,
+	            0xc80: 0x0,
+	            0xd80: 0x10202000,
+	            0xe80: 0x202000,
+	            0xf80: 0x10000000,
+	            0x1000: 0x10002000,
+	            0x1100: 0x10200008,
+	            0x1200: 0x10202008,
+	            0x1300: 0x2008,
+	            0x1400: 0x200000,
+	            0x1500: 0x10000000,
+	            0x1600: 0x10000008,
+	            0x1700: 0x202000,
+	            0x1800: 0x202008,
+	            0x1900: 0x0,
+	            0x1a00: 0x8,
+	            0x1b00: 0x10200000,
+	            0x1c00: 0x2000,
+	            0x1d00: 0x10002008,
+	            0x1e00: 0x10202000,
+	            0x1f00: 0x200008,
+	            0x1080: 0x8,
+	            0x1180: 0x202000,
+	            0x1280: 0x200000,
+	            0x1380: 0x10000008,
+	            0x1480: 0x10002000,
+	            0x1580: 0x2008,
+	            0x1680: 0x10202008,
+	            0x1780: 0x10200000,
+	            0x1880: 0x10202000,
+	            0x1980: 0x10200008,
+	            0x1a80: 0x2000,
+	            0x1b80: 0x202008,
+	            0x1c80: 0x200008,
+	            0x1d80: 0x0,
+	            0x1e80: 0x10000000,
+	            0x1f80: 0x10002008
+	        },
+	        {
+	            0x0: 0x100000,
+	            0x10: 0x2000401,
+	            0x20: 0x400,
+	            0x30: 0x100401,
+	            0x40: 0x2100401,
+	            0x50: 0x0,
+	            0x60: 0x1,
+	            0x70: 0x2100001,
+	            0x80: 0x2000400,
+	            0x90: 0x100001,
+	            0xa0: 0x2000001,
+	            0xb0: 0x2100400,
+	            0xc0: 0x2100000,
+	            0xd0: 0x401,
+	            0xe0: 0x100400,
+	            0xf0: 0x2000000,
+	            0x8: 0x2100001,
+	            0x18: 0x0,
+	            0x28: 0x2000401,
+	            0x38: 0x2100400,
+	            0x48: 0x100000,
+	            0x58: 0x2000001,
+	            0x68: 0x2000000,
+	            0x78: 0x401,
+	            0x88: 0x100401,
+	            0x98: 0x2000400,
+	            0xa8: 0x2100000,
+	            0xb8: 0x100001,
+	            0xc8: 0x400,
+	            0xd8: 0x2100401,
+	            0xe8: 0x1,
+	            0xf8: 0x100400,
+	            0x100: 0x2000000,
+	            0x110: 0x100000,
+	            0x120: 0x2000401,
+	            0x130: 0x2100001,
+	            0x140: 0x100001,
+	            0x150: 0x2000400,
+	            0x160: 0x2100400,
+	            0x170: 0x100401,
+	            0x180: 0x401,
+	            0x190: 0x2100401,
+	            0x1a0: 0x100400,
+	            0x1b0: 0x1,
+	            0x1c0: 0x0,
+	            0x1d0: 0x2100000,
+	            0x1e0: 0x2000001,
+	            0x1f0: 0x400,
+	            0x108: 0x100400,
+	            0x118: 0x2000401,
+	            0x128: 0x2100001,
+	            0x138: 0x1,
+	            0x148: 0x2000000,
+	            0x158: 0x100000,
+	            0x168: 0x401,
+	            0x178: 0x2100400,
+	            0x188: 0x2000001,
+	            0x198: 0x2100000,
+	            0x1a8: 0x0,
+	            0x1b8: 0x2100401,
+	            0x1c8: 0x100401,
+	            0x1d8: 0x400,
+	            0x1e8: 0x2000400,
+	            0x1f8: 0x100001
+	        },
+	        {
+	            0x0: 0x8000820,
+	            0x1: 0x20000,
+	            0x2: 0x8000000,
+	            0x3: 0x20,
+	            0x4: 0x20020,
+	            0x5: 0x8020820,
+	            0x6: 0x8020800,
+	            0x7: 0x800,
+	            0x8: 0x8020000,
+	            0x9: 0x8000800,
+	            0xa: 0x20800,
+	            0xb: 0x8020020,
+	            0xc: 0x820,
+	            0xd: 0x0,
+	            0xe: 0x8000020,
+	            0xf: 0x20820,
+	            0x80000000: 0x800,
+	            0x80000001: 0x8020820,
+	            0x80000002: 0x8000820,
+	            0x80000003: 0x8000000,
+	            0x80000004: 0x8020000,
+	            0x80000005: 0x20800,
+	            0x80000006: 0x20820,
+	            0x80000007: 0x20,
+	            0x80000008: 0x8000020,
+	            0x80000009: 0x820,
+	            0x8000000a: 0x20020,
+	            0x8000000b: 0x8020800,
+	            0x8000000c: 0x0,
+	            0x8000000d: 0x8020020,
+	            0x8000000e: 0x8000800,
+	            0x8000000f: 0x20000,
+	            0x10: 0x20820,
+	            0x11: 0x8020800,
+	            0x12: 0x20,
+	            0x13: 0x800,
+	            0x14: 0x8000800,
+	            0x15: 0x8000020,
+	            0x16: 0x8020020,
+	            0x17: 0x20000,
+	            0x18: 0x0,
+	            0x19: 0x20020,
+	            0x1a: 0x8020000,
+	            0x1b: 0x8000820,
+	            0x1c: 0x8020820,
+	            0x1d: 0x20800,
+	            0x1e: 0x820,
+	            0x1f: 0x8000000,
+	            0x80000010: 0x20000,
+	            0x80000011: 0x800,
+	            0x80000012: 0x8020020,
+	            0x80000013: 0x20820,
+	            0x80000014: 0x20,
+	            0x80000015: 0x8020000,
+	            0x80000016: 0x8000000,
+	            0x80000017: 0x8000820,
+	            0x80000018: 0x8020820,
+	            0x80000019: 0x8000020,
+	            0x8000001a: 0x8000800,
+	            0x8000001b: 0x0,
+	            0x8000001c: 0x20800,
+	            0x8000001d: 0x820,
+	            0x8000001e: 0x20020,
+	            0x8000001f: 0x8020800
+	        }
+	    ];
+
+	    // Masks that select the SBOX input
+	    var SBOX_MASK = [
+	        0xf8000001, 0x1f800000, 0x01f80000, 0x001f8000,
+	        0x0001f800, 0x00001f80, 0x000001f8, 0x8000001f
+	    ];
+
+	    /**
+	     * DES block cipher algorithm.
+	     */
+	    var DES = C_algo.DES = BlockCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var key = this._key;
+	            var keyWords = key.words;
+
+	            // Select 56 bits according to PC1
+	            var keyBits = [];
+	            for (var i = 0; i < 56; i++) {
+	                var keyBitPos = PC1[i] - 1;
+	                keyBits[i] = (keyWords[keyBitPos >>> 5] >>> (31 - keyBitPos % 32)) & 1;
+	            }
+
+	            // Assemble 16 subkeys
+	            var subKeys = this._subKeys = [];
+	            for (var nSubKey = 0; nSubKey < 16; nSubKey++) {
+	                // Create subkey
+	                var subKey = subKeys[nSubKey] = [];
+
+	                // Shortcut
+	                var bitShift = BIT_SHIFTS[nSubKey];
+
+	                // Select 48 bits according to PC2
+	                for (var i = 0; i < 24; i++) {
+	                    // Select from the left 28 key bits
+	                    subKey[(i / 6) | 0] |= keyBits[((PC2[i] - 1) + bitShift) % 28] << (31 - i % 6);
+
+	                    // Select from the right 28 key bits
+	                    subKey[4 + ((i / 6) | 0)] |= keyBits[28 + (((PC2[i + 24] - 1) + bitShift) % 28)] << (31 - i % 6);
+	                }
+
+	                // Since each subkey is applied to an expanded 32-bit input,
+	                // the subkey can be broken into 8 values scaled to 32-bits,
+	                // which allows the key to be used without expansion
+	                subKey[0] = (subKey[0] << 1) | (subKey[0] >>> 31);
+	                for (var i = 1; i < 7; i++) {
+	                    subKey[i] = subKey[i] >>> ((i - 1) * 4 + 3);
+	                }
+	                subKey[7] = (subKey[7] << 5) | (subKey[7] >>> 27);
+	            }
+
+	            // Compute inverse subkeys
+	            var invSubKeys = this._invSubKeys = [];
+	            for (var i = 0; i < 16; i++) {
+	                invSubKeys[i] = subKeys[15 - i];
+	            }
+	        },
+
+	        encryptBlock: function (M, offset) {
+	            this._doCryptBlock(M, offset, this._subKeys);
+	        },
+
+	        decryptBlock: function (M, offset) {
+	            this._doCryptBlock(M, offset, this._invSubKeys);
+	        },
+
+	        _doCryptBlock: function (M, offset, subKeys) {
+	            // Get input
+	            this._lBlock = M[offset];
+	            this._rBlock = M[offset + 1];
+
+	            // Initial permutation
+	            exchangeLR.call(this, 4,  0x0f0f0f0f);
+	            exchangeLR.call(this, 16, 0x0000ffff);
+	            exchangeRL.call(this, 2,  0x33333333);
+	            exchangeRL.call(this, 8,  0x00ff00ff);
+	            exchangeLR.call(this, 1,  0x55555555);
+
+	            // Rounds
+	            for (var round = 0; round < 16; round++) {
+	                // Shortcuts
+	                var subKey = subKeys[round];
+	                var lBlock = this._lBlock;
+	                var rBlock = this._rBlock;
+
+	                // Feistel function
+	                var f = 0;
+	                for (var i = 0; i < 8; i++) {
+	                    f |= SBOX_P[i][((rBlock ^ subKey[i]) & SBOX_MASK[i]) >>> 0];
+	                }
+	                this._lBlock = rBlock;
+	                this._rBlock = lBlock ^ f;
+	            }
+
+	            // Undo swap from last round
+	            var t = this._lBlock;
+	            this._lBlock = this._rBlock;
+	            this._rBlock = t;
+
+	            // Final permutation
+	            exchangeLR.call(this, 1,  0x55555555);
+	            exchangeRL.call(this, 8,  0x00ff00ff);
+	            exchangeRL.call(this, 2,  0x33333333);
+	            exchangeLR.call(this, 16, 0x0000ffff);
+	            exchangeLR.call(this, 4,  0x0f0f0f0f);
+
+	            // Set output
+	            M[offset] = this._lBlock;
+	            M[offset + 1] = this._rBlock;
+	        },
+
+	        keySize: 64/32,
+
+	        ivSize: 64/32,
+
+	        blockSize: 64/32
+	    });
+
+	    // Swap bits across the left and right words
+	    function exchangeLR(offset, mask) {
+	        var t = ((this._lBlock >>> offset) ^ this._rBlock) & mask;
+	        this._rBlock ^= t;
+	        this._lBlock ^= t << offset;
+	    }
+
+	    function exchangeRL(offset, mask) {
+	        var t = ((this._rBlock >>> offset) ^ this._lBlock) & mask;
+	        this._lBlock ^= t;
+	        this._rBlock ^= t << offset;
+	    }
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.DES.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.DES.decrypt(ciphertext, key, cfg);
+	     */
+	    C.DES = BlockCipher._createHelper(DES);
+
+	    /**
+	     * Triple-DES block cipher algorithm.
+	     */
+	    var TripleDES = C_algo.TripleDES = BlockCipher.extend({
+	        _doReset: function () {
+	            // Shortcuts
+	            var key = this._key;
+	            var keyWords = key.words;
+
+	            // Create DES instances
+	            this._des1 = DES.createEncryptor(WordArray.create(keyWords.slice(0, 2)));
+	            this._des2 = DES.createEncryptor(WordArray.create(keyWords.slice(2, 4)));
+	            this._des3 = DES.createEncryptor(WordArray.create(keyWords.slice(4, 6)));
+	        },
+
+	        encryptBlock: function (M, offset) {
+	            this._des1.encryptBlock(M, offset);
+	            this._des2.decryptBlock(M, offset);
+	            this._des3.encryptBlock(M, offset);
+	        },
+
+	        decryptBlock: function (M, offset) {
+	            this._des3.decryptBlock(M, offset);
+	            this._des2.encryptBlock(M, offset);
+	            this._des1.decryptBlock(M, offset);
+	        },
+
+	        keySize: 192/32,
+
+	        ivSize: 64/32,
+
+	        blockSize: 64/32
+	    });
+
+	    /**
+	     * Shortcut functions to the cipher's object interface.
+	     *
+	     * @example
+	     *
+	     *     var ciphertext = CryptoJS.TripleDES.encrypt(message, key, cfg);
+	     *     var plaintext  = CryptoJS.TripleDES.decrypt(ciphertext, key, cfg);
+	     */
+	    C.TripleDES = BlockCipher._createHelper(TripleDES);
+	}());
+
+
+	return CryptoJS.TripleDES;
+
+}));
+
+/***/ }),
+
+/***/ "./node_modules/crypto-js/x64-core.js":
+/*!********************************************!*\
+  !*** ./node_modules/crypto-js/x64-core.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+;(function (root, factory) {
+	if (true) {
+		// CommonJS
+		module.exports = exports = factory(__webpack_require__(/*! ./core */ "./node_modules/crypto-js/core.js"));
+	}
+	else {}
+}(this, function (CryptoJS) {
+
+	(function (undefined) {
+	    // Shortcuts
+	    var C = CryptoJS;
+	    var C_lib = C.lib;
+	    var Base = C_lib.Base;
+	    var X32WordArray = C_lib.WordArray;
+
+	    /**
+	     * x64 namespace.
+	     */
+	    var C_x64 = C.x64 = {};
+
+	    /**
+	     * A 64-bit word.
+	     */
+	    var X64Word = C_x64.Word = Base.extend({
+	        /**
+	         * Initializes a newly created 64-bit word.
+	         *
+	         * @param {number} high The high 32 bits.
+	         * @param {number} low The low 32 bits.
+	         *
+	         * @example
+	         *
+	         *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
+	         */
+	        init: function (high, low) {
+	            this.high = high;
+	            this.low = low;
+	        }
+
+	        /**
+	         * Bitwise NOTs this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after negating.
+	         *
+	         * @example
+	         *
+	         *     var negated = x64Word.not();
+	         */
+	        // not: function () {
+	            // var high = ~this.high;
+	            // var low = ~this.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise ANDs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to AND with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after ANDing.
+	         *
+	         * @example
+	         *
+	         *     var anded = x64Word.and(anotherX64Word);
+	         */
+	        // and: function (word) {
+	            // var high = this.high & word.high;
+	            // var low = this.low & word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise ORs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to OR with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after ORing.
+	         *
+	         * @example
+	         *
+	         *     var ored = x64Word.or(anotherX64Word);
+	         */
+	        // or: function (word) {
+	            // var high = this.high | word.high;
+	            // var low = this.low | word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Bitwise XORs this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to XOR with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after XORing.
+	         *
+	         * @example
+	         *
+	         *     var xored = x64Word.xor(anotherX64Word);
+	         */
+	        // xor: function (word) {
+	            // var high = this.high ^ word.high;
+	            // var low = this.low ^ word.low;
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Shifts this word n bits to the left.
+	         *
+	         * @param {number} n The number of bits to shift.
+	         *
+	         * @return {X64Word} A new x64-Word object after shifting.
+	         *
+	         * @example
+	         *
+	         *     var shifted = x64Word.shiftL(25);
+	         */
+	        // shiftL: function (n) {
+	            // if (n < 32) {
+	                // var high = (this.high << n) | (this.low >>> (32 - n));
+	                // var low = this.low << n;
+	            // } else {
+	                // var high = this.low << (n - 32);
+	                // var low = 0;
+	            // }
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Shifts this word n bits to the right.
+	         *
+	         * @param {number} n The number of bits to shift.
+	         *
+	         * @return {X64Word} A new x64-Word object after shifting.
+	         *
+	         * @example
+	         *
+	         *     var shifted = x64Word.shiftR(7);
+	         */
+	        // shiftR: function (n) {
+	            // if (n < 32) {
+	                // var low = (this.low >>> n) | (this.high << (32 - n));
+	                // var high = this.high >>> n;
+	            // } else {
+	                // var low = this.high >>> (n - 32);
+	                // var high = 0;
+	            // }
+
+	            // return X64Word.create(high, low);
+	        // },
+
+	        /**
+	         * Rotates this word n bits to the left.
+	         *
+	         * @param {number} n The number of bits to rotate.
+	         *
+	         * @return {X64Word} A new x64-Word object after rotating.
+	         *
+	         * @example
+	         *
+	         *     var rotated = x64Word.rotL(25);
+	         */
+	        // rotL: function (n) {
+	            // return this.shiftL(n).or(this.shiftR(64 - n));
+	        // },
+
+	        /**
+	         * Rotates this word n bits to the right.
+	         *
+	         * @param {number} n The number of bits to rotate.
+	         *
+	         * @return {X64Word} A new x64-Word object after rotating.
+	         *
+	         * @example
+	         *
+	         *     var rotated = x64Word.rotR(7);
+	         */
+	        // rotR: function (n) {
+	            // return this.shiftR(n).or(this.shiftL(64 - n));
+	        // },
+
+	        /**
+	         * Adds this word with the passed word.
+	         *
+	         * @param {X64Word} word The x64-Word to add with this word.
+	         *
+	         * @return {X64Word} A new x64-Word object after adding.
+	         *
+	         * @example
+	         *
+	         *     var added = x64Word.add(anotherX64Word);
+	         */
+	        // add: function (word) {
+	            // var low = (this.low + word.low) | 0;
+	            // var carry = (low >>> 0) < (this.low >>> 0) ? 1 : 0;
+	            // var high = (this.high + word.high + carry) | 0;
+
+	            // return X64Word.create(high, low);
+	        // }
+	    });
+
+	    /**
+	     * An array of 64-bit words.
+	     *
+	     * @property {Array} words The array of CryptoJS.x64.Word objects.
+	     * @property {number} sigBytes The number of significant bytes in this word array.
+	     */
+	    var X64WordArray = C_x64.WordArray = Base.extend({
+	        /**
+	         * Initializes a newly created word array.
+	         *
+	         * @param {Array} words (Optional) An array of CryptoJS.x64.Word objects.
+	         * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+	         *
+	         * @example
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create();
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create([
+	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *     ]);
+	         *
+	         *     var wordArray = CryptoJS.x64.WordArray.create([
+	         *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+	         *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+	         *     ], 10);
+	         */
+	        init: function (words, sigBytes) {
+	            words = this.words = words || [];
+
+	            if (sigBytes != undefined) {
+	                this.sigBytes = sigBytes;
+	            } else {
+	                this.sigBytes = words.length * 8;
+	            }
+	        },
+
+	        /**
+	         * Converts this 64-bit word array to a 32-bit word array.
+	         *
+	         * @return {CryptoJS.lib.WordArray} This word array's data as a 32-bit word array.
+	         *
+	         * @example
+	         *
+	         *     var x32WordArray = x64WordArray.toX32();
+	         */
+	        toX32: function () {
+	            // Shortcuts
+	            var x64Words = this.words;
+	            var x64WordsLength = x64Words.length;
+
+	            // Convert
+	            var x32Words = [];
+	            for (var i = 0; i < x64WordsLength; i++) {
+	                var x64Word = x64Words[i];
+	                x32Words.push(x64Word.high);
+	                x32Words.push(x64Word.low);
+	            }
+
+	            return X32WordArray.create(x32Words, this.sigBytes);
+	        },
+
+	        /**
+	         * Creates a copy of this word array.
+	         *
+	         * @return {X64WordArray} The clone.
+	         *
+	         * @example
+	         *
+	         *     var clone = x64WordArray.clone();
+	         */
+	        clone: function () {
+	            var clone = Base.clone.call(this);
+
+	            // Clone "words" array
+	            var words = clone.words = this.words.slice(0);
+
+	            // Clone each X64Word object
+	            var wordsLength = words.length;
+	            for (var i = 0; i < wordsLength; i++) {
+	                words[i] = words[i].clone();
+	            }
+
+	            return clone;
+	        }
+	    });
+	}());
+
+
+	return CryptoJS;
+
+}));
 
 /***/ }),
 

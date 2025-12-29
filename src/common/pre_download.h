@@ -22,11 +22,16 @@ namespace tools
   };
 
 #ifndef TESTNET
+  static constexpr pre_download_entry c_pre_download_lmdb = { 
+    "http://download.nirmata-network.com/nirmata-blockchain-lmdb-2M.deflate", 
+    "fdb50866d6f302615fe505c929bffeb64b4550c99e7328ced20345f51f7f3e92", 
+    4930402700, 
+    6984818688 
+  };
   static constexpr pre_download_entry c_pre_download_mdbx = { "", "", 0, 0 };
-  static constexpr pre_download_entry c_pre_download_lmdb = { "", "", 0, 0 };
 #else
-  static constexpr pre_download_entry c_pre_download_mdbx = { "", "", 0, 0 };
   static constexpr pre_download_entry c_pre_download_lmdb = { "", "", 0, 0 };
+  static constexpr pre_download_entry c_pre_download_mdbx = { "", "", 0, 0 };
 #endif
 
   static constexpr uint64_t pre_download_min_size_difference = 512 * 1024 * 1024; // minimum difference in size between local DB and the downloadable one to start downloading

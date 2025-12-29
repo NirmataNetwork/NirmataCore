@@ -3644,6 +3644,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _chat_login_login_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./chat/login/login.component */ "./src/app/chat/login/login.component.ts");
 /* harmony import */ var _chat_sign_up_sign_up_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./chat/sign-up/sign-up.component */ "./src/app/chat/sign-up/sign-up.component.ts");
 /* harmony import */ var _nirvail_nirvail_component__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./nirvail/nirvail.component */ "./src/app/nirvail/nirvail.component.ts");
+/* harmony import */ var _nirnet_nirnet_component__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./nirnet/nirnet.component */ "./src/app/nirnet/nirnet.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3653,6 +3654,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 // Components
+
 
 
 
@@ -3768,6 +3770,10 @@ var routes = [
             {
                 path: 'nirvail',
                 component: _nirvail_nirvail_component__WEBPACK_IMPORTED_MODULE_33__["NirvailComponent"]
+            },
+            {
+                path: 'nirnet',
+                component: _nirnet_nirnet_component__WEBPACK_IMPORTED_MODULE_34__["NiRNeTComponent"]
             },
             {
                 path: 'explorer',
@@ -4850,6 +4856,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _nirvail_app_send_message_modal_app_send_message_modal_component__WEBPACK_IMPORTED_MODULE_102__ = __webpack_require__(/*! ./nirvail/app-send-message-modal/app-send-message-modal.component */ "./src/app/nirvail/app-send-message-modal/app-send-message-modal.component.ts");
 /* harmony import */ var _nirvail_nirvail_message_nirvail_message_component__WEBPACK_IMPORTED_MODULE_103__ = __webpack_require__(/*! ./nirvail/nirvail-message/nirvail-message.component */ "./src/app/nirvail/nirvail-message/nirvail-message.component.ts");
 /* harmony import */ var _nirvail_nirvail_service__WEBPACK_IMPORTED_MODULE_104__ = __webpack_require__(/*! ./nirvail/nirvail.service */ "./src/app/nirvail/nirvail.service.ts");
+/* harmony import */ var _nirnet_nirnet_module__WEBPACK_IMPORTED_MODULE_105__ = __webpack_require__(/*! ./nirnet/nirnet.module */ "./src/app/nirnet/nirnet.module.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_106__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4960,6 +4968,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
+
+
+// import { SSLBypassInterceptor } from './nirnet/services/ssl-bypass.interceptor';
 
 
 function HttpLoaderFactory(httpClient) {
@@ -5086,7 +5098,9 @@ var AppModule = /** @class */ (function () {
                 _angular_material_form_field__WEBPACK_IMPORTED_MODULE_80__["MatFormFieldModule"],
                 _angular_material_button__WEBPACK_IMPORTED_MODULE_81__["MatButtonModule"],
                 _angular_material_icon__WEBPACK_IMPORTED_MODULE_82__["MatIconModule"],
-                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_99__["MatDialogModule"]
+                _angular_material_dialog__WEBPACK_IMPORTED_MODULE_99__["MatDialogModule"],
+                _nirnet_nirnet_module__WEBPACK_IMPORTED_MODULE_105__["NiRNeTModule"],
+                _angular_common__WEBPACK_IMPORTED_MODULE_106__["CommonModule"]
             ],
             schemas: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["CUSTOM_ELEMENTS_SCHEMA"]],
             providers: [
@@ -5100,7 +5114,17 @@ var AppModule = /** @class */ (function () {
                 _chat_services_chat_service__WEBPACK_IMPORTED_MODULE_77__["ChatService"],
                 _chat_services_profil_card_service__WEBPACK_IMPORTED_MODULE_93__["ProfilCardService"],
                 { provide: angular_highcharts__WEBPACK_IMPORTED_MODULE_47__["HIGHCHARTS_MODULES"], useFactory: highchartsFactory },
-                _nirvail_nirvail_service__WEBPACK_IMPORTED_MODULE_104__["NirvailService"]
+                // SSL интерцептор отключен, так как NiRNeT модуль деактивирован
+                // { 
+                //   provide: HTTP_INTERCEPTORS, 
+                //   useClass: SSLBypassInterceptor, 
+                //   multi: true 
+                // },
+                _nirvail_nirvail_service__WEBPACK_IMPORTED_MODULE_104__["NirvailService"],
+                {
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_26__["HttpBackend"],
+                    useClass: _angular_common_http__WEBPACK_IMPORTED_MODULE_26__["HttpXhrBackend"]
+                }
             ],
             entryComponents: [
                 _helpers_modals_modal_container_modal_container_component__WEBPACK_IMPORTED_MODULE_44__["ModalContainerComponent"],
@@ -14941,7 +14965,7 @@ var EditAliasComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"trading\">\r\n  <div class=\"widget_custom\">\r\n    <div class=\"livecoinwatch-widget-1\" lcw-coin=\"NIR\" lcw-base=\"USD\" lcw-secondary=\"BTC\" lcw-period=\"d\" lcw-color-tx=\"#32DC59\" lcw-color-pr=\"#32DC59\" lcw-color-bg=\"rgb(12,45,36,0.1)\" lcw-border-w=\"none\" ></div>\r\n    <div class=\"exchsnge_block3\">\r\n        <div class=\"article\">\r\n            <span class=\"article_text\">{{ 'EXCHANGE.EXCHANGE_TEXT' | translate }}</span>\r\n        </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"exchsnge_view\">\r\n      <div class=\"exchsnge_block1\">\r\n          <div class=\"exchange\"><img src=\"assets/images/TradeOgre.png\" />\r\n              <span>NiR/USDT: {{priceOgreUsdt}}</span>\r\n              <button class=\"buy_sell_button\" (click)=\"openInBrowser('tradeogre.com/exchange/NIR-USDT')\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n          </div>\r\n          <div class=\"exchange\"><img src=\"assets/images/XgX.png\" />\r\n              <span>NiR/USDT: {{priceXeggexUsdt}}</span>\r\n              <button class=\"buy_sell_button\" (click)=\"openInBrowser('xeggex.com/market/NIR_USDT')\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n          </div>\r\n          <div class=\"exchange\"><img src=\"assets/images/IndoEx.png\" />\r\n              <span>NiR/USDT: {{priceIndoExUsdt}}</span>\r\n              <button class=\"buy_sell_button\" (click)=\"openInBrowser('https://www.indoex.io/trade/NIR_USDT')\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n          </div>\r\n          <div class=\"exchange exchange_new\">\r\n            <span>New Listing</span>\r\n            <button class=\"buy_sell_button\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"exchsnge_block2\">\r\n          <div class=\"exchange\"><img src=\"assets/images/nonkyc.png\" />\r\n              <span>NiR/USDT: {{priceNonkycUsdt}}</span>\r\n              <button class=\"buy_sell_button\" (click)=\"openInBrowser('nonkyc.io/market/NIR_USDT')\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n          </div>\r\n          <div class=\"exchange\"><img src=\"assets/images/financex.svg\" />\r\n              <span>NiR/USDT: {{priceFinancexUsdt}}</span>\r\n              <button class=\"buy_sell_button\" (click)=\"openInBrowser('fcex.trade/trading/nirusdt')\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n          </div>\r\n          <div class=\"exchange\"><img src=\"assets/images/exbitron.svg\" />\r\n            <span>NiR/USDT: {{priceExbitronUsdt}}</span>\r\n            <button class=\"buy_sell_button\" (click)=\"openInBrowser('app.exbitron.com/exchange/?market=NIR-USDT')\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n        </div>\r\n          <div class=\"exchange exchange_new\">\r\n              <span>New Listing</span>\r\n              <button class=\"buy_sell_button\">{{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}</button>\r\n          </div>\r\n      </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"trading-container\">\r\n  <!-- Header Section -->\r\n  <div class=\"trading-header\">\r\n    <div class=\"widget-wrapper\">\r\n      <div class=\"livecoinwatch-widget-1\" lcw-coin=\"NIR\" lcw-base=\"USD\" lcw-secondary=\"BTC\" lcw-period=\"d\" lcw-color-tx=\"#32DC59\" lcw-color-pr=\"#32DC59\" lcw-color-bg=\"rgb(12,45,36,0.1)\" lcw-border-w=\"none\"></div>\r\n    </div>\r\n    <div class=\"header-info\">\r\n      <div class=\"info-card\">\r\n        <span class=\"info-text\">{{ 'EXCHANGE.EXCHANGE_TEXT' | translate }}</span>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <!-- Exchanges Grid -->\r\n  <div class=\"exchanges-section\">\r\n    <div class=\"section-title\">\r\n      <h2>{{ 'EXCHANGE.AVAILABLE_EXCHANGES' | translate }}</h2>\r\n      <p>{{ 'EXCHANGE.CHOOSE_EXCHANGE' | translate }}</p>\r\n    </div>\r\n    \r\n    <div class=\"exchanges-grid\">\r\n      <!-- Rabid Rabbit -->\r\n      <div class=\"exchange-card\">\r\n        <div class=\"exchange-header\">\r\n          <div class=\"exchange-logo\">\r\n            <img src=\"assets/images/Rabbit.png\" alt=\"Rabid Rabbit\" />\r\n          </div>\r\n          <div class=\"exchange-info\">\r\n            <h3 class=\"exchange-name\">Rabid Rabbit</h3>\r\n            <div class=\"price-display\">\r\n              <span class=\"pair-label\">NIR/USDT</span>\r\n              <span class=\"price-value\">{{priceRabbitUsdt}}</span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <button class=\"trade-button\" (click)=\"openInBrowser('rabid-rabbit.org/account/trade/NIR-USDT')\">\r\n          {{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}\r\n        </button>\r\n      </div>\r\n\r\n      <!-- NonKYC -->\r\n      <div class=\"exchange-card\">\r\n        <div class=\"exchange-header\">\r\n          <div class=\"exchange-logo\">\r\n            <img src=\"assets/images/nonkyc.png\" alt=\"NonKYC\" />\r\n          </div>\r\n          <div class=\"exchange-info\">\r\n            <h3 class=\"exchange-name\">NonKYC</h3>\r\n            <div class=\"price-display\">\r\n              <span class=\"pair-label\">NIR/USDT</span>\r\n              <span class=\"price-value\">{{priceNonkycUsdt}}</span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <button class=\"trade-button\" (click)=\"openInBrowser('nonkyc.io/market/NIR_USDT')\">\r\n          {{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}\r\n        </button>\r\n      </div>\r\n\r\n      <!-- IndoEx -->\r\n      <div class=\"exchange-card\">\r\n        <div class=\"exchange-header\">\r\n          <div class=\"exchange-logo\">\r\n            <img src=\"assets/images/IndoEx.png\" alt=\"IndoEx\" />\r\n          </div>\r\n          <div class=\"exchange-info\">\r\n            <h3 class=\"exchange-name\">IndoEx</h3>\r\n            <div class=\"price-display\">\r\n              <span class=\"pair-label\">NIR/USDT</span>\r\n              <span class=\"price-value\">{{priceIndoExUsdt}}</span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <button class=\"trade-button\" (click)=\"openInBrowser('www.indoex.io/trade/NIR_USDT')\">\r\n          {{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}\r\n        </button>\r\n      </div>\r\n\r\n      <!-- Exbitron -->\r\n      <div class=\"exchange-card\">\r\n        <div class=\"exchange-header\">\r\n          <div class=\"exchange-logo\">\r\n            <img src=\"assets/images/exbitron.svg\" alt=\"Exbitron\" />\r\n          </div>\r\n          <div class=\"exchange-info\">\r\n            <h3 class=\"exchange-name\">Exbitron</h3>\r\n            <div class=\"price-display\">\r\n              <span class=\"pair-label\">NIR/USDT</span>\r\n              <span class=\"price-value\">{{priceExbitronUsdt}}</span>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <button class=\"trade-button\" (click)=\"openInBrowser('app.exbitron.com/exchange/?market=NIR-USDT')\">\r\n          {{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}\r\n        </button>\r\n      </div>\r\n\r\n      <!-- New Listing Cards -->\r\n      <div class=\"exchange-card new-listing\">\r\n        <div class=\"new-listing-content\">\r\n          <div class=\"new-listing-icon\">\r\n            <svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n              <path d=\"M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z\" fill=\"currentColor\"/>\r\n            </svg>\r\n          </div>\r\n          <h3 class=\"new-listing-title\">New Listing</h3>\r\n          <p class=\"new-listing-subtitle\">Coming Soon</p>\r\n        </div>\r\n        <button class=\"trade-button disabled\">\r\n          {{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}\r\n        </button>\r\n      </div>\r\n\r\n      <div class=\"exchange-card new-listing\">\r\n        <div class=\"new-listing-content\">\r\n          <div class=\"new-listing-icon\">\r\n            <svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n              <path d=\"M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z\" fill=\"currentColor\"/>\r\n            </svg>\r\n          </div>\r\n          <h3 class=\"new-listing-title\">New Listing</h3>\r\n          <p class=\"new-listing-subtitle\">Coming Soon</p>\r\n        </div>\r\n        <button class=\"trade-button disabled\">\r\n          {{ 'EXCHANGE.EXCHANGE_BUTTON' | translate }}\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -14952,7 +14976,7 @@ module.exports = "<div class=\"trading\">\r\n  <div class=\"widget_custom\">\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".price-widget {\n  display: flex;\n  flex: 1 1 100%;\n  align-items: stretch;\n  justify-content: stretch;\n  width: 100%;\n  height: 100%; }\n\n.widget_custom {\n  width: 38%; }\n\n.trading {\n  display: flex; }\n\n.exchange_new {\n  text-align: center;\n  padding-top: 12% !important; }\n\n.exchange {\n  width: 100%;\n  min-width: 310px;\n  height: 100px;\n  margin: 5px;\n  padding: 10px;\n  border: 1px solid #fffafa5e;\n  border-radius: 5px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 15rem; }\n\n.exchange img {\n    min-height: 6rem; }\n\n.exchsnge_view {\n  display: flex;\n  width: 50%;\n  margin-left: 3rem; }\n\n.exchsnge_block1 .exchsnge_block1 {\n  width: 50%; }\n\n.buy_sell_button {\n  padding: 0 2rem;\n  font-size: 2rem;\n  overflow: hidden;\n  line-height: 3rem;\n  font-weight: 500;\n  border-radius: 2rem;\n  border: 1px solid;\n  margin-left: 1rem;\n  color: #32DC59;\n  width: 100%;\n  min-height: 4rem; }\n\n.exchsnge_view2 {\n  display: flex; }\n\n.exchange2 {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  width: 100%;\n  height: 100px;\n  margin: 5px;\n  padding: 10px;\n  border: 1px solid black;\n  border-radius: 5px; }\n\n.exchsnge_block3 {\n  display: flex; }\n\n.article {\n  padding: 1rem; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZXhjaGFuZ2UvRjpcXEdpdEh1YlxcTmlybWF0YUdVSVxcaHRtbF9zb3VyY2Uvc3JjXFxhcHBcXGV4Y2hhbmdlXFxleGNoYW5nZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQWE7RUFDYixjQUFjO0VBQ2Qsb0JBQW9CO0VBQ3BCLHdCQUF3QjtFQUN4QixXQUFXO0VBQ1gsWUFBWSxFQUFBOztBQUVkO0VBQ0UsVUFBVSxFQUFBOztBQUVaO0VBQ0UsYUFBYSxFQUFBOztBQUVmO0VBQ0Usa0JBQWtCO0VBQ2xCLDJCQUEyQixFQUFBOztBQUU3QjtFQUNFLFdBQVc7RUFDWCxnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLFdBQVc7RUFDWCxhQUFhO0VBQ2IsMkJBQTJCO0VBQzNCLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLG1CQUFtQjtFQUNuQixhQUFhLEVBQUE7O0FBWGY7SUFhSSxnQkFBZ0IsRUFBQTs7QUFHcEI7RUFDRSxhQUFhO0VBQ2IsVUFBVTtFQUNWLGlCQUFpQixFQUFBOztBQUVuQjtFQUNFLFVBQVUsRUFBQTs7QUFFWjtFQUNFLGVBQWU7RUFDYixlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGlCQUFpQjtFQUNqQixnQkFBZ0I7RUFDaEIsbUJBQW1CO0VBQ25CLGlCQUFpQjtFQUNqQixpQkFBaUI7RUFDakIsY0FBYztFQUNkLFdBQVc7RUFDWCxnQkFBZ0IsRUFBQTs7QUFFcEI7RUFDRSxhQUFhLEVBQUE7O0FBRWY7RUFDRSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLHVCQUF1QjtFQUN2QixXQUFXO0VBQ1gsYUFBYTtFQUNiLFdBQVc7RUFDWCxhQUFhO0VBQ2IsdUJBQXVCO0VBQ3ZCLGtCQUFrQixFQUFBOztBQUVwQjtFQUNFLGFBQWEsRUFBQTs7QUFFZjtFQUNFLGFBQWEsRUFBQSIsImZpbGUiOiJzcmMvYXBwL2V4Y2hhbmdlL2V4Y2hhbmdlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnByaWNlLXdpZGdldCB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleDogMSAxIDEwMCU7XHJcbiAgICBhbGlnbi1pdGVtczogc3RyZXRjaDtcclxuICAgIGp1c3RpZnktY29udGVudDogc3RyZXRjaDtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gIH1cclxuICAud2lkZ2V0X2N1c3RvbSB7XHJcbiAgICB3aWR0aDogMzglO1xyXG4gIH1cclxuICAudHJhZGluZyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gIH1cclxuICAuZXhjaGFuZ2VfbmV3IHtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIHBhZGRpbmctdG9wOiAxMiUgIWltcG9ydGFudDtcclxuICB9XHJcbiAgLmV4Y2hhbmdle1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtaW4td2lkdGg6IDMxMHB4O1xyXG4gICAgaGVpZ2h0OiAxMDBweDtcclxuICAgIG1hcmdpbjogNXB4O1xyXG4gICAgcGFkZGluZzogMTBweDtcclxuICAgIGJvcmRlcjogMXB4IHNvbGlkICNmZmZhZmE1ZTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDVweDtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGhlaWdodDogMTVyZW07XHJcbiAgICBpbWcge1xyXG4gICAgICBtaW4taGVpZ2h0OiA2cmVtO1xyXG4gICAgfVxyXG4gIH1cclxuICAuZXhjaHNuZ2VfdmlldyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgd2lkdGg6IDUwJTtcclxuICAgIG1hcmdpbi1sZWZ0OiAzcmVtO1xyXG4gIH1cclxuICAuZXhjaHNuZ2VfYmxvY2sxIC5leGNoc25nZV9ibG9jazEge1xyXG4gICAgd2lkdGg6IDUwJTtcclxuICB9XHJcbiAgLmJ1eV9zZWxsX2J1dHRvbiB7XHJcbiAgICBwYWRkaW5nOiAwIDJyZW07XHJcbiAgICAgIGZvbnQtc2l6ZTogMnJlbTtcclxuICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgbGluZS1oZWlnaHQ6IDNyZW07XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDJyZW07XHJcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkO1xyXG4gICAgICBtYXJnaW4tbGVmdDogMXJlbTtcclxuICAgICAgY29sb3I6ICMzMkRDNTk7XHJcbiAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICBtaW4taGVpZ2h0OiA0cmVtO1xyXG4gIH1cclxuICAuZXhjaHNuZ2VfdmlldzIge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICB9XHJcbiAgLmV4Y2hhbmdlMiB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBoZWlnaHQ6IDEwMHB4O1xyXG4gICAgbWFyZ2luOiA1cHg7XHJcbiAgICBwYWRkaW5nOiAxMHB4O1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XHJcbiAgICBib3JkZXItcmFkaXVzOiA1cHg7XHJcbiAgfVxyXG4gIC5leGNoc25nZV9ibG9jazMge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICB9XHJcbiAgLmFydGljbGUge1xyXG4gICAgcGFkZGluZzogMXJlbTtcclxuICB9Il19 */"
+module.exports = ".trading-container {\n  width: 100%;\n  height: 100%;\n  max-width: 100%;\n  max-height: 100%;\n  margin: 0;\n  padding: 20px;\n  box-sizing: border-box;\n  overflow-y: auto;\n  overflow-x: hidden;\n  scrollbar-width: thin;\n  scrollbar-color: #32DC59 rgba(255, 255, 255, 0.1); }\n  .trading-container::-webkit-scrollbar {\n    width: 8px; }\n  .trading-container::-webkit-scrollbar-track {\n    background: rgba(255, 255, 255, 0.1);\n    border-radius: 10px; }\n  .trading-container::-webkit-scrollbar-thumb {\n    background: linear-gradient(180deg, #32DC59, rgba(50, 220, 89, 0.7));\n    border-radius: 10px;\n    transition: all 0.3s ease; }\n  .trading-container::-webkit-scrollbar-thumb:hover {\n      background: linear-gradient(180deg, #32DC59, #28b249); }\n  .trading-header {\n  display: flex;\n  flex-direction: column;\n  gap: 24px;\n  margin-bottom: 40px; }\n  @media (min-width: 768px) {\n    .trading-header {\n      flex-direction: row;\n      align-items: flex-start; } }\n  .widget-wrapper {\n  flex: 1;\n  max-width: 100%; }\n  @media (min-width: 768px) {\n    .widget-wrapper {\n      max-width: 400px; } }\n  .widget-wrapper .livecoinwatch-widget-1 {\n    width: 100%;\n    border-radius: 12px;\n    overflow: hidden;\n    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); }\n  .header-info {\n  flex: 1; }\n  @media (min-width: 768px) {\n    .header-info {\n      margin-left: 32px; } }\n  .info-card {\n  background: rgba(12, 45, 36, 0.1);\n  border: 1px solid rgba(255, 250, 250, 0.15);\n  border-radius: 12px;\n  padding: 24px;\n  -webkit-backdrop-filter: blur(10px);\n          backdrop-filter: blur(10px);\n  transition: all 0.3s ease; }\n  .info-card:hover {\n    border-color: rgba(50, 220, 89, 0.3);\n    box-shadow: 0 8px 32px rgba(50, 220, 89, 0.1); }\n  .info-text {\n  font-size: 16px;\n  line-height: 1.6;\n  color: #ffffff;\n  display: block; }\n  .exchanges-section {\n  margin-top: 40px; }\n  .section-title {\n  text-align: center;\n  margin-bottom: 40px; }\n  .section-title h2 {\n    font-size: 32px;\n    font-weight: 700;\n    color: #ffffff;\n    margin: 0 0 12px 0; }\n  @media (max-width: 768px) {\n      .section-title h2 {\n        font-size: 24px; } }\n  .section-title p {\n    font-size: 16px;\n    color: rgba(255, 255, 255, 0.7);\n    margin: 0; }\n  .exchanges-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));\n  gap: 24px;\n  margin-top: 32px; }\n  @media (max-width: 640px) {\n    .exchanges-grid {\n      grid-template-columns: 1fr;\n      gap: 16px; } }\n  .exchange-card {\n  background: rgba(12, 45, 36, 0.1);\n  border: 1px solid rgba(255, 250, 250, 0.15);\n  border-radius: 16px;\n  padding: 28px;\n  display: flex;\n  flex-direction: column;\n  transition: all 0.3s ease;\n  -webkit-backdrop-filter: blur(10px);\n          backdrop-filter: blur(10px);\n  min-height: 240px; }\n  .exchange-card:hover {\n    transform: translateY(-4px);\n    border-color: rgba(50, 220, 89, 0.4);\n    box-shadow: 0 12px 40px rgba(50, 220, 89, 0.15); }\n  .exchange-card.new-listing {\n    border-color: rgba(255, 250, 250, 0.1);\n    background: rgba(255, 255, 255, 0.02); }\n  .exchange-card.new-listing:hover {\n      border-color: rgba(255, 250, 250, 0.2);\n      box-shadow: 0 12px 40px rgba(255, 255, 255, 0.05); }\n  .exchange-header {\n  display: flex;\n  align-items: center;\n  gap: 24px;\n  margin-bottom: 24px;\n  flex: 1; }\n  .exchange-logo {\n  flex-shrink: 0;\n  width: 80px;\n  height: 80px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(255, 255, 255, 0.05);\n  border-radius: 16px;\n  overflow: hidden;\n  border: 1px solid rgba(255, 255, 255, 0.1); }\n  .exchange-logo img {\n    width: 90%;\n    height: 90%;\n    -o-object-fit: contain;\n       object-fit: contain;\n    border-radius: 12px; }\n  .exchange-info {\n  flex: 1;\n  min-width: 0;\n  padding-left: 4px; }\n  .exchange-name {\n  font-size: 20px;\n  font-weight: 600;\n  color: #ffffff;\n  margin: 0 0 12px 0;\n  line-height: 1.2; }\n  .price-display {\n  display: flex;\n  flex-direction: column;\n  gap: 6px; }\n  .pair-label {\n  font-size: 14px;\n  color: rgba(255, 255, 255, 0.6);\n  font-weight: 500;\n  text-transform: uppercase;\n  letter-spacing: 0.5px; }\n  .price-value {\n  font-size: 22px;\n  font-weight: 700;\n  color: #32DC59;\n  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;\n  line-height: 1.1; }\n  .trade-button {\n  width: 100%;\n  padding: 14px 24px;\n  font-size: 16px;\n  font-weight: 600;\n  border-radius: 12px;\n  border: 2px solid #32DC59;\n  background: transparent;\n  color: #32DC59;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  min-height: 52px;\n  display: flex;\n  align-items: center;\n  justify-content: center; }\n  .trade-button:hover:not(.disabled) {\n    background: #32DC59;\n    color: #000000;\n    transform: translateY(-2px);\n    box-shadow: 0 8px 24px rgba(50, 220, 89, 0.3); }\n  .trade-button:active:not(.disabled) {\n    transform: translateY(0); }\n  .trade-button.disabled {\n    border-color: rgba(255, 255, 255, 0.2);\n    color: rgba(255, 255, 255, 0.4);\n    cursor: not-allowed; }\n  .trade-button.disabled:hover {\n      background: transparent;\n      color: rgba(255, 255, 255, 0.4);\n      transform: none;\n      box-shadow: none; }\n  .new-listing-content {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  flex: 1;\n  text-align: center;\n  padding: 20px 0; }\n  .new-listing-icon {\n  color: rgba(255, 255, 255, 0.3);\n  margin-bottom: 16px; }\n  .new-listing-icon svg {\n    width: 48px;\n    height: 48px; }\n  .new-listing-title {\n  font-size: 18px;\n  font-weight: 600;\n  color: rgba(255, 255, 255, 0.6);\n  margin: 0 0 8px 0; }\n  .new-listing-subtitle {\n  font-size: 14px;\n  color: rgba(255, 255, 255, 0.4);\n  margin: 0; }\n  @media (max-width: 1200px) {\n  .trading-container {\n    padding: 16px; }\n  .exchanges-grid {\n    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); } }\n  @media (max-width: 768px) {\n  .trading-header {\n    gap: 20px; }\n  .info-card {\n    padding: 20px; }\n  .exchange-card {\n    padding: 24px;\n    min-height: 200px; }\n  .exchange-header {\n    gap: 18px;\n    margin-bottom: 20px; }\n  .exchange-logo {\n    width: 70px;\n    height: 70px; }\n  .exchange-name {\n    font-size: 18px; }\n  .price-value {\n    font-size: 20px; } }\n  @media (max-width: 480px) {\n  .trading-container {\n    padding: 12px; }\n  .exchanges-grid {\n    gap: 12px; }\n  .exchange-card {\n    padding: 20px;\n    min-height: 180px; }\n  .exchange-header {\n    gap: 16px;\n    margin-bottom: 18px; }\n  .exchange-logo {\n    width: 60px;\n    height: 60px; }\n  .exchange-name {\n    font-size: 16px;\n    margin-bottom: 10px; }\n  .price-value {\n    font-size: 18px; }\n  .trade-button {\n    padding: 12px 20px;\n    font-size: 14px;\n    min-height: 48px; } }\n  .price-value {\n  transition: color 0.3s ease; }\n  .price-value.price-up {\n    color: #32DC59; }\n  .price-value.price-down {\n    color: #ff4757; }\n  .exchange-card.loading .price-value {\n  background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 75%);\n  background-size: 200% 100%;\n  animation: shimmer 1.5s infinite;\n  color: transparent;\n  border-radius: 4px;\n  height: 24px;\n  width: 80px; }\n  @keyframes shimmer {\n  0% {\n    background-position: -200% 0; }\n  100% {\n    background-position: 200% 0; } }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvZXhjaGFuZ2UvRjpcXEdpdEh1YlxcTmlybWF0YUdVSVxcaHRtbF9zb3VyY2Uvc3JjXFxhcHBcXGV4Y2hhbmdlXFxleGNoYW5nZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQTtFQUNFLFdBQVc7RUFDWCxZQUFZO0VBQ1osZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixTQUFTO0VBQ1QsYUFBYTtFQUNiLHNCQUFzQjtFQUN0QixnQkFBZ0I7RUFDaEIsa0JBQWtCO0VBdUJsQixxQkFBcUI7RUFDckIsaURBQWlELEVBQUE7RUFqQ25EO0lBYUksVUFBVSxFQUFBO0VBYmQ7SUFpQkksb0NBQW9DO0lBQ3BDLG1CQUFtQixFQUFBO0VBbEJ2QjtJQXNCSSxvRUFBb0U7SUFDcEUsbUJBQW1CO0lBQ25CLHlCQUF5QixFQUFBO0VBeEI3QjtNQTJCTSxxREFBcUQsRUFBQTtFQVUzRDtFQUNFLGFBQWE7RUFDYixzQkFBc0I7RUFDdEIsU0FBUztFQUNULG1CQUFtQixFQUFBO0VBRW5CO0lBTkY7TUFPSSxtQkFBbUI7TUFDbkIsdUJBQXVCLEVBQUEsRUFFMUI7RUFFRDtFQUNFLE9BQU87RUFDUCxlQUFlLEVBQUE7RUFFZjtJQUpGO01BS0ksZ0JBQWdCLEVBQUEsRUFTbkI7RUFkRDtJQVNJLFdBQVc7SUFDWCxtQkFBbUI7SUFDbkIsZ0JBQWdCO0lBQ2hCLHlDQUF5QyxFQUFBO0VBSTdDO0VBQ0UsT0FBTyxFQUFBO0VBRVA7SUFIRjtNQUlJLGlCQUFpQixFQUFBLEVBRXBCO0VBRUQ7RUFDRSxpQ0FBaUM7RUFDakMsMkNBQTJDO0VBQzNDLG1CQUFtQjtFQUNuQixhQUFhO0VBQ2IsbUNBQTJCO1VBQTNCLDJCQUEyQjtFQUMzQix5QkFBeUIsRUFBQTtFQU4zQjtJQVNJLG9DQUFvQztJQUNwQyw2Q0FBNkMsRUFBQTtFQUlqRDtFQUNFLGVBQWU7RUFDZixnQkFBZ0I7RUFDaEIsY0FBYztFQUNkLGNBQWMsRUFBQTtFQUloQjtFQUNFLGdCQUFnQixFQUFBO0VBR2xCO0VBQ0Usa0JBQWtCO0VBQ2xCLG1CQUFtQixFQUFBO0VBRnJCO0lBS0ksZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixjQUFjO0lBQ2Qsa0JBQWtCLEVBQUE7RUFFbEI7TUFWSjtRQVdNLGVBQWUsRUFBQSxFQUVsQjtFQWJIO0lBZ0JJLGVBQWU7SUFDZiwrQkFBK0I7SUFDL0IsU0FBUyxFQUFBO0VBS2I7RUFDRSxhQUFhO0VBQ2IsMkRBQTJEO0VBQzNELFNBQVM7RUFDVCxnQkFBZ0IsRUFBQTtFQUVoQjtJQU5GO01BT0ksMEJBQTBCO01BQzFCLFNBQVMsRUFBQSxFQUVaO0VBR0Q7RUFDRSxpQ0FBaUM7RUFDakMsMkNBQTJDO0VBQzNDLG1CQUFtQjtFQUNuQixhQUFhO0VBQ2IsYUFBYTtFQUNiLHNCQUFzQjtFQUN0Qix5QkFBeUI7RUFDekIsbUNBQTJCO1VBQTNCLDJCQUEyQjtFQUMzQixpQkFBaUIsRUFBQTtFQVRuQjtJQVlJLDJCQUEyQjtJQUMzQixvQ0FBb0M7SUFDcEMsK0NBQStDLEVBQUE7RUFkbkQ7SUFrQkksc0NBQXNDO0lBQ3RDLHFDQUFxQyxFQUFBO0VBbkJ6QztNQXNCTSxzQ0FBc0M7TUFDdEMsaURBQWlELEVBQUE7RUFLdkQ7RUFDRSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLFNBQVM7RUFDVCxtQkFBbUI7RUFDbkIsT0FBTyxFQUFBO0VBR1Q7RUFDRSxjQUFjO0VBQ2QsV0FBVztFQUNYLFlBQVk7RUFDWixhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLHVCQUF1QjtFQUN2QixxQ0FBcUM7RUFDckMsbUJBQW1CO0VBQ25CLGdCQUFnQjtFQUNoQiwwQ0FBMEMsRUFBQTtFQVY1QztJQWFJLFVBQVU7SUFDVixXQUFXO0lBQ1gsc0JBQW1CO09BQW5CLG1CQUFtQjtJQUNuQixtQkFBbUIsRUFBQTtFQUl2QjtFQUNFLE9BQU87RUFDUCxZQUFZO0VBQ1osaUJBQWlCLEVBQUE7RUFHbkI7RUFDRSxlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLGNBQWM7RUFDZCxrQkFBa0I7RUFDbEIsZ0JBQWdCLEVBQUE7RUFHbEI7RUFDRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLFFBQVEsRUFBQTtFQUdWO0VBQ0UsZUFBZTtFQUNmLCtCQUErQjtFQUMvQixnQkFBZ0I7RUFDaEIseUJBQXlCO0VBQ3pCLHFCQUFxQixFQUFBO0VBR3ZCO0VBQ0UsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixjQUFjO0VBQ2Qsd0RBQXdEO0VBQ3hELGdCQUFnQixFQUFBO0VBSWxCO0VBQ0UsV0FBVztFQUNYLGtCQUFrQjtFQUNsQixlQUFlO0VBQ2YsZ0JBQWdCO0VBQ2hCLG1CQUFtQjtFQUNuQix5QkFBeUI7RUFDekIsdUJBQXVCO0VBQ3ZCLGNBQWM7RUFDZCxlQUFlO0VBQ2YseUJBQXlCO0VBQ3pCLGdCQUFnQjtFQUNoQixhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLHVCQUF1QixFQUFBO0VBZHpCO0lBaUJJLG1CQUFtQjtJQUNuQixjQUFjO0lBQ2QsMkJBQTJCO0lBQzNCLDZDQUE2QyxFQUFBO0VBcEJqRDtJQXdCSSx3QkFBd0IsRUFBQTtFQXhCNUI7SUE0Qkksc0NBQXNDO0lBQ3RDLCtCQUErQjtJQUMvQixtQkFBbUIsRUFBQTtFQTlCdkI7TUFpQ00sdUJBQXVCO01BQ3ZCLCtCQUErQjtNQUMvQixlQUFlO01BQ2YsZ0JBQWdCLEVBQUE7RUFNdEI7RUFDRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsT0FBTztFQUNQLGtCQUFrQjtFQUNsQixlQUFlLEVBQUE7RUFHakI7RUFDRSwrQkFBK0I7RUFDL0IsbUJBQW1CLEVBQUE7RUFGckI7SUFLSSxXQUFXO0lBQ1gsWUFBWSxFQUFBO0VBSWhCO0VBQ0UsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQiwrQkFBK0I7RUFDL0IsaUJBQWlCLEVBQUE7RUFHbkI7RUFDRSxlQUFlO0VBQ2YsK0JBQStCO0VBQy9CLFNBQVMsRUFBQTtFQUlYO0VBQ0U7SUFDRSxhQUFhLEVBQUE7RUFHZjtJQUNFLDJEQUEyRCxFQUFBLEVBQzVEO0VBR0g7RUFDRTtJQUNFLFNBQVMsRUFBQTtFQUdYO0lBQ0UsYUFBYSxFQUFBO0VBR2Y7SUFDRSxhQUFhO0lBQ2IsaUJBQWlCLEVBQUE7RUFHbkI7SUFDRSxTQUFTO0lBQ1QsbUJBQW1CLEVBQUE7RUFHckI7SUFDRSxXQUFXO0lBQ1gsWUFBWSxFQUFBO0VBR2Q7SUFDRSxlQUFlLEVBQUE7RUFHakI7SUFDRSxlQUFlLEVBQUEsRUFDaEI7RUFHSDtFQUNFO0lBQ0UsYUFBYSxFQUFBO0VBR2Y7SUFDRSxTQUFTLEVBQUE7RUFHWDtJQUNFLGFBQWE7SUFDYixpQkFBaUIsRUFBQTtFQUduQjtJQUNFLFNBQVM7SUFDVCxtQkFBbUIsRUFBQTtFQUdyQjtJQUNFLFdBQVc7SUFDWCxZQUFZLEVBQUE7RUFHZDtJQUNFLGVBQWU7SUFDZixtQkFBbUIsRUFBQTtFQUdyQjtJQUNFLGVBQWUsRUFBQTtFQUdqQjtJQUNFLGtCQUFrQjtJQUNsQixlQUFlO0lBQ2YsZ0JBQWdCLEVBQUEsRUFDakI7RUFJSDtFQUNFLDJCQUEyQixFQUFBO0VBRDdCO0lBSUksY0FBYyxFQUFBO0VBSmxCO0lBUUksY0FBYyxFQUFBO0VBS2xCO0VBRUksNEhBQW1IO0VBQ25ILDBCQUEwQjtFQUMxQixnQ0FBZ0M7RUFDaEMsa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixZQUFZO0VBQ1osV0FBVyxFQUFBO0VBSWY7RUFDRTtJQUNFLDRCQUE0QixFQUFBO0VBRTlCO0lBQ0UsMkJBQTJCLEVBQUEsRUFBQSIsImZpbGUiOiJzcmMvYXBwL2V4Y2hhbmdlL2V4Y2hhbmdlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gVHJhZGluZyBDb250YWluZXIgLSBNYWluIGxheW91dFxyXG4udHJhZGluZy1jb250YWluZXIge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogMTAwJTtcclxuICBtYXgtd2lkdGg6IDEwMCU7XHJcbiAgbWF4LWhlaWdodDogMTAwJTtcclxuICBtYXJnaW46IDA7XHJcbiAgcGFkZGluZzogMjBweDtcclxuICBib3gtc2l6aW5nOiBib3JkZXItYm94O1xyXG4gIG92ZXJmbG93LXk6IGF1dG87XHJcbiAgb3ZlcmZsb3cteDogaGlkZGVuO1xyXG4gIFxyXG4gIC8vINCa0YDQsNGB0LjQstGL0Lkg0LrQsNGB0YLQvtC80L3Ri9C5INGB0LrRgNC+0LvQu9Cx0LDRgFxyXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyIHtcclxuICAgIHdpZHRoOiA4cHg7XHJcbiAgfVxyXG4gIFxyXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyLXRyYWNrIHtcclxuICAgIGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgfVxyXG4gIFxyXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyLXRodW1iIHtcclxuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxODBkZWcsICMzMkRDNTksIHJnYmEoNTAsIDIyMCwgODksIDAuNykpO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMTBweDtcclxuICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgICBcclxuICAgICY6aG92ZXIge1xyXG4gICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTgwZGVnLCAjMzJEQzU5LCAjMjhiMjQ5KTtcclxuICAgIH1cclxuICB9XHJcbiAgXHJcbiAgLy8gRmlyZWZveCDRgdC60YDQvtC70LvQsdCw0YBcclxuICBzY3JvbGxiYXItd2lkdGg6IHRoaW47XHJcbiAgc2Nyb2xsYmFyLWNvbG9yOiAjMzJEQzU5IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcclxufVxyXG5cclxuLy8gSGVhZGVyIFNlY3Rpb25cclxuLnRyYWRpbmctaGVhZGVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgZ2FwOiAyNHB4O1xyXG4gIG1hcmdpbi1ib3R0b206IDQwcHg7XHJcbiAgXHJcbiAgQG1lZGlhIChtaW4td2lkdGg6IDc2OHB4KSB7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogcm93O1xyXG4gICAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7XHJcbiAgfVxyXG59XHJcblxyXG4ud2lkZ2V0LXdyYXBwZXIge1xyXG4gIGZsZXg6IDE7XHJcbiAgbWF4LXdpZHRoOiAxMDAlO1xyXG4gIFxyXG4gIEBtZWRpYSAobWluLXdpZHRoOiA3NjhweCkge1xyXG4gICAgbWF4LXdpZHRoOiA0MDBweDtcclxuICB9XHJcbiAgXHJcbiAgLmxpdmVjb2lud2F0Y2gtd2lkZ2V0LTEge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgIGJveC1zaGFkb3c6IDAgNHB4IDIwcHggcmdiYSgwLCAwLCAwLCAwLjEpO1xyXG4gIH1cclxufVxyXG5cclxuLmhlYWRlci1pbmZvIHtcclxuICBmbGV4OiAxO1xyXG4gIFxyXG4gIEBtZWRpYSAobWluLXdpZHRoOiA3NjhweCkge1xyXG4gICAgbWFyZ2luLWxlZnQ6IDMycHg7XHJcbiAgfVxyXG59XHJcblxyXG4uaW5mby1jYXJkIHtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDEyLCA0NSwgMzYsIDAuMSk7XHJcbiAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyNTUsIDI1MCwgMjUwLCAwLjE1KTtcclxuICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gIHBhZGRpbmc6IDI0cHg7XHJcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDEwcHgpO1xyXG4gIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgXHJcbiAgJjpob3ZlciB7XHJcbiAgICBib3JkZXItY29sb3I6IHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XHJcbiAgICBib3gtc2hhZG93OiAwIDhweCAzMnB4IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XHJcbiAgfVxyXG59XHJcblxyXG4uaW5mby10ZXh0IHtcclxuICBmb250LXNpemU6IDE2cHg7XHJcbiAgbGluZS1oZWlnaHQ6IDEuNjtcclxuICBjb2xvcjogI2ZmZmZmZjtcclxuICBkaXNwbGF5OiBibG9jaztcclxufVxyXG5cclxuLy8gRXhjaGFuZ2VzIFNlY3Rpb25cclxuLmV4Y2hhbmdlcy1zZWN0aW9uIHtcclxuICBtYXJnaW4tdG9wOiA0MHB4O1xyXG59XHJcblxyXG4uc2VjdGlvbi10aXRsZSB7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIG1hcmdpbi1ib3R0b206IDQwcHg7XHJcbiAgXHJcbiAgaDIge1xyXG4gICAgZm9udC1zaXplOiAzMnB4O1xyXG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICAgIGNvbG9yOiAjZmZmZmZmO1xyXG4gICAgbWFyZ2luOiAwIDAgMTJweCAwO1xyXG4gICAgXHJcbiAgICBAbWVkaWEgKG1heC13aWR0aDogNzY4cHgpIHtcclxuICAgICAgZm9udC1zaXplOiAyNHB4O1xyXG4gICAgfVxyXG4gIH1cclxuICBcclxuICBwIHtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNyk7XHJcbiAgICBtYXJnaW46IDA7XHJcbiAgfVxyXG59XHJcblxyXG4vLyBFeGNoYW5nZXMgR3JpZFxyXG4uZXhjaGFuZ2VzLWdyaWQge1xyXG4gIGRpc3BsYXk6IGdyaWQ7XHJcbiAgZ3JpZC10ZW1wbGF0ZS1jb2x1bW5zOiByZXBlYXQoYXV0by1maXQsIG1pbm1heCgzMjBweCwgMWZyKSk7XHJcbiAgZ2FwOiAyNHB4O1xyXG4gIG1hcmdpbi10b3A6IDMycHg7XHJcbiAgXHJcbiAgQG1lZGlhIChtYXgtd2lkdGg6IDY0MHB4KSB7XHJcbiAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IDFmcjtcclxuICAgIGdhcDogMTZweDtcclxuICB9XHJcbn1cclxuXHJcbi8vIEV4Y2hhbmdlIENhcmRcclxuLmV4Y2hhbmdlLWNhcmQge1xyXG4gIGJhY2tncm91bmQ6IHJnYmEoMTIsIDQ1LCAzNiwgMC4xKTtcclxuICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgMjUwLCAyNTAsIDAuMTUpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDE2cHg7XHJcbiAgcGFkZGluZzogMjhweDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTtcclxuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoMTBweCk7XHJcbiAgbWluLWhlaWdodDogMjQwcHg7XHJcbiAgXHJcbiAgJjpob3ZlciB7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTRweCk7XHJcbiAgICBib3JkZXItY29sb3I6IHJnYmEoNTAsIDIyMCwgODksIDAuNCk7XHJcbiAgICBib3gtc2hhZG93OiAwIDEycHggNDBweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjE1KTtcclxuICB9XHJcbiAgXHJcbiAgJi5uZXctbGlzdGluZyB7XHJcbiAgICBib3JkZXItY29sb3I6IHJnYmEoMjU1LCAyNTAsIDI1MCwgMC4xKTtcclxuICAgIGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMik7XHJcbiAgICBcclxuICAgICY6aG92ZXIge1xyXG4gICAgICBib3JkZXItY29sb3I6IHJnYmEoMjU1LCAyNTAsIDI1MCwgMC4yKTtcclxuICAgICAgYm94LXNoYWRvdzogMCAxMnB4IDQwcHggcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KTtcclxuICAgIH1cclxuICB9XHJcbn1cclxuXHJcbi5leGNoYW5nZS1oZWFkZXIge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBnYXA6IDI0cHg7XHJcbiAgbWFyZ2luLWJvdHRvbTogMjRweDtcclxuICBmbGV4OiAxO1xyXG59XHJcblxyXG4uZXhjaGFuZ2UtbG9nbyB7XHJcbiAgZmxleC1zaHJpbms6IDA7XHJcbiAgd2lkdGg6IDgwcHg7XHJcbiAgaGVpZ2h0OiA4MHB4O1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDE2cHg7XHJcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7XHJcbiAgXHJcbiAgaW1nIHtcclxuICAgIHdpZHRoOiA5MCU7XHJcbiAgICBoZWlnaHQ6IDkwJTtcclxuICAgIG9iamVjdC1maXQ6IGNvbnRhaW47XHJcbiAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gIH1cclxufVxyXG5cclxuLmV4Y2hhbmdlLWluZm8ge1xyXG4gIGZsZXg6IDE7XHJcbiAgbWluLXdpZHRoOiAwO1xyXG4gIHBhZGRpbmctbGVmdDogNHB4O1xyXG59XHJcblxyXG4uZXhjaGFuZ2UtbmFtZSB7XHJcbiAgZm9udC1zaXplOiAyMHB4O1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgY29sb3I6ICNmZmZmZmY7XHJcbiAgbWFyZ2luOiAwIDAgMTJweCAwO1xyXG4gIGxpbmUtaGVpZ2h0OiAxLjI7XHJcbn1cclxuXHJcbi5wcmljZS1kaXNwbGF5IHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgZ2FwOiA2cHg7XHJcbn1cclxuXHJcbi5wYWlyLWxhYmVsIHtcclxuICBmb250LXNpemU6IDE0cHg7XHJcbiAgY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC42KTtcclxuICBmb250LXdlaWdodDogNTAwO1xyXG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XHJcbiAgbGV0dGVyLXNwYWNpbmc6IDAuNXB4O1xyXG59XHJcblxyXG4ucHJpY2UtdmFsdWUge1xyXG4gIGZvbnQtc2l6ZTogMjJweDtcclxuICBmb250LXdlaWdodDogNzAwO1xyXG4gIGNvbG9yOiAjMzJEQzU5O1xyXG4gIGZvbnQtZmFtaWx5OiAnTW9uYWNvJywgJ01lbmxvJywgJ1VidW50dSBNb25vJywgbW9ub3NwYWNlO1xyXG4gIGxpbmUtaGVpZ2h0OiAxLjE7XHJcbn1cclxuXHJcbi8vIFRyYWRlIEJ1dHRvblxyXG4udHJhZGUtYnV0dG9uIHtcclxuICB3aWR0aDogMTAwJTtcclxuICBwYWRkaW5nOiAxNHB4IDI0cHg7XHJcbiAgZm9udC1zaXplOiAxNnB4O1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgYm9yZGVyLXJhZGl1czogMTJweDtcclxuICBib3JkZXI6IDJweCBzb2xpZCAjMzJEQzU5O1xyXG4gIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gIGNvbG9yOiAjMzJEQzU5O1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxuICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBlYXNlO1xyXG4gIG1pbi1oZWlnaHQ6IDUycHg7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIFxyXG4gICY6aG92ZXI6bm90KC5kaXNhYmxlZCkge1xyXG4gICAgYmFja2dyb3VuZDogIzMyREM1OTtcclxuICAgIGNvbG9yOiAjMDAwMDAwO1xyXG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0ycHgpO1xyXG4gICAgYm94LXNoYWRvdzogMCA4cHggMjRweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gIH1cclxuICBcclxuICAmOmFjdGl2ZTpub3QoLmRpc2FibGVkKSB7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMCk7XHJcbiAgfVxyXG4gIFxyXG4gICYuZGlzYWJsZWQge1xyXG4gICAgYm9yZGVyLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XHJcbiAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjQpO1xyXG4gICAgY3Vyc29yOiBub3QtYWxsb3dlZDtcclxuICAgIFxyXG4gICAgJjpob3ZlciB7XHJcbiAgICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjQpO1xyXG4gICAgICB0cmFuc2Zvcm06IG5vbmU7XHJcbiAgICAgIGJveC1zaGFkb3c6IG5vbmU7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG4vLyBOZXcgTGlzdGluZyBTcGVjaWZpYyBTdHlsZXNcclxuLm5ldy1saXN0aW5nLWNvbnRlbnQge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGZsZXg6IDE7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIHBhZGRpbmc6IDIwcHggMDtcclxufVxyXG5cclxuLm5ldy1saXN0aW5nLWljb24ge1xyXG4gIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMyk7XHJcbiAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxuICBcclxuICBzdmcge1xyXG4gICAgd2lkdGg6IDQ4cHg7XHJcbiAgICBoZWlnaHQ6IDQ4cHg7XHJcbiAgfVxyXG59XHJcblxyXG4ubmV3LWxpc3RpbmctdGl0bGUge1xyXG4gIGZvbnQtc2l6ZTogMThweDtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNik7XHJcbiAgbWFyZ2luOiAwIDAgOHB4IDA7XHJcbn1cclxuXHJcbi5uZXctbGlzdGluZy1zdWJ0aXRsZSB7XHJcbiAgZm9udC1zaXplOiAxNHB4O1xyXG4gIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNCk7XHJcbiAgbWFyZ2luOiAwO1xyXG59XHJcblxyXG4vLyBSZXNwb25zaXZlIERlc2lnblxyXG5AbWVkaWEgKG1heC13aWR0aDogMTIwMHB4KSB7XHJcbiAgLnRyYWRpbmctY29udGFpbmVyIHtcclxuICAgIHBhZGRpbmc6IDE2cHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5leGNoYW5nZXMtZ3JpZCB7XHJcbiAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpdCwgbWlubWF4KDI4MHB4LCAxZnIpKTtcclxuICB9XHJcbn1cclxuXHJcbkBtZWRpYSAobWF4LXdpZHRoOiA3NjhweCkge1xyXG4gIC50cmFkaW5nLWhlYWRlciB7XHJcbiAgICBnYXA6IDIwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5pbmZvLWNhcmQge1xyXG4gICAgcGFkZGluZzogMjBweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4Y2hhbmdlLWNhcmQge1xyXG4gICAgcGFkZGluZzogMjRweDtcclxuICAgIG1pbi1oZWlnaHQ6IDIwMHB4O1xyXG4gIH1cclxuICBcclxuICAuZXhjaGFuZ2UtaGVhZGVyIHtcclxuICAgIGdhcDogMThweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDIwcHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5leGNoYW5nZS1sb2dvIHtcclxuICAgIHdpZHRoOiA3MHB4O1xyXG4gICAgaGVpZ2h0OiA3MHB4O1xyXG4gIH1cclxuICBcclxuICAuZXhjaGFuZ2UtbmFtZSB7XHJcbiAgICBmb250LXNpemU6IDE4cHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5wcmljZS12YWx1ZSB7XHJcbiAgICBmb250LXNpemU6IDIwcHg7XHJcbiAgfVxyXG59XHJcblxyXG5AbWVkaWEgKG1heC13aWR0aDogNDgwcHgpIHtcclxuICAudHJhZGluZy1jb250YWluZXIge1xyXG4gICAgcGFkZGluZzogMTJweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4Y2hhbmdlcy1ncmlkIHtcclxuICAgIGdhcDogMTJweDtcclxuICB9XHJcbiAgXHJcbiAgLmV4Y2hhbmdlLWNhcmQge1xyXG4gICAgcGFkZGluZzogMjBweDtcclxuICAgIG1pbi1oZWlnaHQ6IDE4MHB4O1xyXG4gIH1cclxuICBcclxuICAuZXhjaGFuZ2UtaGVhZGVyIHtcclxuICAgIGdhcDogMTZweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDE4cHg7XHJcbiAgfVxyXG4gIFxyXG4gIC5leGNoYW5nZS1sb2dvIHtcclxuICAgIHdpZHRoOiA2MHB4O1xyXG4gICAgaGVpZ2h0OiA2MHB4O1xyXG4gIH1cclxuICBcclxuICAuZXhjaGFuZ2UtbmFtZSB7XHJcbiAgICBmb250LXNpemU6IDE2cHg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxMHB4O1xyXG4gIH1cclxuICBcclxuICAucHJpY2UtdmFsdWUge1xyXG4gICAgZm9udC1zaXplOiAxOHB4O1xyXG4gIH1cclxuICBcclxuICAudHJhZGUtYnV0dG9uIHtcclxuICAgIHBhZGRpbmc6IDEycHggMjBweDtcclxuICAgIGZvbnQtc2l6ZTogMTRweDtcclxuICAgIG1pbi1oZWlnaHQ6IDQ4cHg7XHJcbiAgfVxyXG59XHJcblxyXG4vLyBBbmltYXRpb24gZm9yIHByaWNlIHVwZGF0ZXNcclxuLnByaWNlLXZhbHVlIHtcclxuICB0cmFuc2l0aW9uOiBjb2xvciAwLjNzIGVhc2U7XHJcbiAgXHJcbiAgJi5wcmljZS11cCB7XHJcbiAgICBjb2xvcjogIzMyREM1OTtcclxuICB9XHJcbiAgXHJcbiAgJi5wcmljZS1kb3duIHtcclxuICAgIGNvbG9yOiAjZmY0NzU3O1xyXG4gIH1cclxufVxyXG5cclxuLy8gTG9hZGluZyBzdGF0ZVxyXG4uZXhjaGFuZ2UtY2FyZC5sb2FkaW5nIHtcclxuICAucHJpY2UtdmFsdWUge1xyXG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCByZ2JhKDI1NSwyNTUsMjU1LDAuMSkgMjUlLCByZ2JhKDI1NSwyNTUsMjU1LDAuMikgNTAlLCByZ2JhKDI1NSwyNTUsMjU1LDAuMSkgNzUlKTtcclxuICAgIGJhY2tncm91bmQtc2l6ZTogMjAwJSAxMDAlO1xyXG4gICAgYW5pbWF0aW9uOiBzaGltbWVyIDEuNXMgaW5maW5pdGU7XHJcbiAgICBjb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICBoZWlnaHQ6IDI0cHg7XHJcbiAgICB3aWR0aDogODBweDtcclxuICB9XHJcbn1cclxuXHJcbkBrZXlmcmFtZXMgc2hpbW1lciB7XHJcbiAgMCUge1xyXG4gICAgYmFja2dyb3VuZC1wb3NpdGlvbjogLTIwMCUgMDtcclxuICB9XHJcbiAgMTAwJSB7XHJcbiAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiAyMDAlIDA7XHJcbiAgfVxyXG59Il19 */"
 
 /***/ }),
 
@@ -15003,11 +15027,7 @@ var ExchangeComponent = /** @class */ (function () {
         this.textScript = null;
         this.priceNonkycUsdt = 'No Data';
         this.priceNonkycBtc = 'No Data';
-        this.priceXeggexUsdt = 'No Data';
-        this.priceXeggexBtc = 'No Data';
-        this.priceOgreUsdt = 'No Data';
-        this.priceFinancexUsdt = 'No Data';
-        this.priceFinancexXmr = 'No Data';
+        this.priceRabbitUsdt = 'No Data';
         this.priceIndoExUsdt = 'No Data';
         this.priceExbitronUsdt = 'No Data';
     }
@@ -15030,21 +15050,81 @@ var ExchangeComponent = /** @class */ (function () {
     };
     ExchangeComponent.prototype.getDataPrice = function () {
         var _this = this;
-        this.getPriceData('https://tradeogre.com/api/v1/ticker/NIR-USDT').subscribe(function (response) { _this.priceOgreUsdt = Number(response.price).toFixed(4).toString(); });
-        this.getPriceData('https://api.xeggex.com/api/v2/asset/getbyticker/NIR').subscribe(function (response) { _this.priceXeggexUsdt = Number(response.usdValue).toFixed(4).toString(); });
-        this.getPriceData('https://api.nonkyc.io/api/v2/asset/getbyticker/NIR').subscribe(function (response) { _this.priceNonkycUsdt = Number(response.usdValue).toFixed(4).toString(); });
-        this.getPriceData('https://fcex.trade/api/v2/trade/public/currencies/nir').subscribe(function (response) { _this.priceFinancexUsdt = Number(response.price).toFixed(4).toString(); });
-        this.getPriceData('https://api.indoex.io/assets/NIR').subscribe(function (response) { _this.priceIndoExUsdt = Number(response.usdprice).toFixed(4).toString(); });
-        this.getPriceData('https://api.exbitron.digital/api/v1/cg/tickers').subscribe(function (response) {
-            var nirPair = 'NIR-USDT';
-            var nirData = Array.isArray(response)
-                ? response.find(function (pair) { return pair.ticker_id === nirPair; })
-                : null;
-            if (nirData && nirData.last_price) {
-                _this.priceExbitronUsdt = Number(nirData.last_price).toFixed(4).toString();
+        // NonKYC
+        this.getPriceData('https://api.nonkyc.io/api/v2/asset/getbyticker/NIR').subscribe({
+            next: function (response) {
+                var price = Number(response.usdValue);
+                if (price && !isNaN(price)) {
+                    _this.priceNonkycUsdt = price.toFixed(4).toString();
+                }
+                else {
+                    _this.priceNonkycUsdt = 'No Data';
+                }
+            },
+            error: function (error) {
+                console.error('NonKYC API error:', error);
+                _this.priceNonkycUsdt = 'No Data';
             }
-            else {
-                _this.priceExbitronUsdt = '0.0000';
+        });
+        // Rabid Rabbit
+        this.getPriceData('https://rabid-rabbit.org/api/public/v1/ticker?format=json').subscribe({
+            next: function (response) {
+                var price = 0;
+                if (response.NIR_USDT && response.NIR_USDT.last_price) {
+                    price = Number(response.NIR_USDT.last_price);
+                }
+                if (price && !isNaN(price)) {
+                    _this.priceRabbitUsdt = price.toFixed(4).toString();
+                }
+                else {
+                    _this.priceRabbitUsdt = 'No Data';
+                }
+            },
+            error: function (error) {
+                console.error('Rabid Rabbit API error:', error);
+                _this.priceRabbitUsdt = 'No Data';
+            }
+        });
+        // IndoEx
+        this.getPriceData('https://api.indoex.io/assets/NIR').subscribe({
+            next: function (response) {
+                var price = Number(response.usdprice);
+                if (price && !isNaN(price)) {
+                    _this.priceIndoExUsdt = price.toFixed(4).toString();
+                }
+                else {
+                    _this.priceIndoExUsdt = 'No Data';
+                }
+            },
+            error: function (error) {
+                console.error('IndoEx API error:', error);
+                _this.priceIndoExUsdt = 'No Data';
+            }
+        });
+        // Exbitron
+        this.getPriceData('https://api.exbitron.digital/api/v1/cg/tickers').subscribe({
+            next: function (response) {
+                var nirPair = 'NIR-USDT';
+                var nirData = null;
+                if (Array.isArray(response)) {
+                    nirData = response.find(function (pair) { return pair.ticker_id === nirPair; });
+                }
+                if (nirData && nirData.last_price) {
+                    var price = Number(nirData.last_price);
+                    if (price && !isNaN(price)) {
+                        _this.priceExbitronUsdt = price.toFixed(4).toString();
+                    }
+                    else {
+                        _this.priceExbitronUsdt = 'No Data';
+                    }
+                }
+                else {
+                    _this.priceExbitronUsdt = 'No Data';
+                }
+            },
+            error: function (error) {
+                console.error('Exbitron API error:', error);
+                _this.priceExbitronUsdt = 'No Data';
             }
         });
     };
@@ -16063,6 +16143,3787 @@ var MainComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.html":
+/*!********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.html ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"nirnet-browser-container\">\r\n  <div class=\"nirnet-header\">\r\n    <h1>NiRNeT Анонимный Браузер</h1>\r\n    <p class=\"description\">Безопасное и анонимное соединение с использованием многослойного шифрования.</p>\r\n  </div>\r\n  \r\n  <div class=\"tab-navigation\">\r\n    <button \r\n      mat-button \r\n      [ngClass]=\"{'active-tab': activeTab === 'browser'}\" \r\n      (click)=\"changeTab('browser')\">\r\n      <mat-icon>public</mat-icon> Браузер\r\n    </button>\r\n    <button \r\n      mat-button \r\n      [ngClass]=\"{'active-tab': activeTab === 'circuit'}\" \r\n      (click)=\"changeTab('circuit')\">\r\n      <mat-icon>timeline</mat-icon> Цепочка\r\n    </button>\r\n    <button \r\n      mat-button \r\n      [ngClass]=\"{'active-tab': activeTab === 'settings'}\" \r\n      (click)=\"changeTab('settings')\">\r\n      <mat-icon>settings</mat-icon> Настройки\r\n    </button>\r\n  </div>\r\n  \r\n  <div class=\"tab-content\">\r\n    <!-- Вкладка Браузер -->\r\n    <div *ngIf=\"activeTab === 'browser'\" class=\"browser-tab\">\r\n      <div class=\"browser-form-card\">\r\n        <form [formGroup]=\"browserForm\" (ngSubmit)=\"sendRequest()\">\r\n          <div class=\"url-form-field\">\r\n            <mat-form-field appearance=\"outline\" class=\"url-input\">\r\n              <mat-label>URL</mat-label>\r\n              <input matInput formControlName=\"url\" placeholder=\"https://example.com\">\r\n              <mat-error *ngIf=\"browserForm.get('url')?.invalid\">\r\n                Введите корректный URL (начинается с http:// или https://)\r\n              </mat-error>\r\n            </mat-form-field>\r\n            \r\n            <mat-form-field appearance=\"outline\" class=\"method-select\">\r\n              <mat-label>Метод</mat-label>\r\n              <mat-select formControlName=\"method\">\r\n                <mat-option value=\"GET\">GET</mat-option>\r\n                <mat-option value=\"POST\">POST</mat-option>\r\n                <mat-option value=\"PUT\">PUT</mat-option>\r\n                <mat-option value=\"DELETE\">DELETE</mat-option>\r\n              </mat-select>\r\n            </mat-form-field>\r\n            \r\n            <button \r\n              mat-raised-button \r\n              color=\"primary\" \r\n              type=\"submit\" \r\n              [disabled]=\"browserForm.invalid || isLoading\">\r\n              <mat-icon>send</mat-icon> Отправить\r\n            </button>\r\n          </div>\r\n          \r\n          <mat-expansion-panel>\r\n            <mat-expansion-panel-header>\r\n              <mat-panel-title>\r\n                Расширенные параметры\r\n              </mat-panel-title>\r\n            </mat-expansion-panel-header>\r\n            \r\n            <div class=\"advanced-fields\">\r\n              <mat-form-field appearance=\"outline\" class=\"full-width\">\r\n                <mat-label>Заголовки (JSON)</mat-label>\r\n                <textarea \r\n                  matInput \r\n                  formControlName=\"headers\" \r\n                  placeholder='{\"Content-Type\": \"application/json\"}'\r\n                  rows=\"3\">\r\n                </textarea>\r\n              </mat-form-field>\r\n              \r\n              <mat-form-field appearance=\"outline\" class=\"full-width\">\r\n                <mat-label>Тело запроса</mat-label>\r\n                <textarea \r\n                  matInput \r\n                  formControlName=\"body\" \r\n                  placeholder=\"Тело запроса в формате JSON или текст\"\r\n                  rows=\"5\">\r\n                </textarea>\r\n              </mat-form-field>\r\n            </div>\r\n          </mat-expansion-panel>\r\n        </form>\r\n      </div>\r\n      \r\n      <div class=\"response-container\">\r\n        <div *ngIf=\"isLoading\" class=\"loading-indicator\">\r\n          <mat-spinner diameter=\"50\"></mat-spinner>\r\n          <p>Запрос обрабатывается через анонимную сеть NiRNeT...</p>\r\n        </div>\r\n        \r\n        <div *ngIf=\"requestError\" class=\"error-message\">\r\n          <mat-icon>error</mat-icon>\r\n          <p>{{ requestError }}</p>\r\n        </div>\r\n        \r\n        <div *ngIf=\"responseData && !isLoading\" class=\"response-data\">\r\n          <div class=\"response-header\">\r\n            <h3>Ответ</h3>\r\n            <span class=\"status-code\" [ngClass]=\"{'success': responseData.status < 400}\">\r\n              Статус: {{ responseData.status }}\r\n            </span>\r\n          </div>\r\n          \r\n          <mat-tab-group>\r\n            <mat-tab label=\"Тело\">\r\n              <div class=\"response-body\">\r\n                <pre>{{ formatJson(responseData.body) }}</pre>\r\n              </div>\r\n            </mat-tab>\r\n            <mat-tab label=\"Заголовки\">\r\n              <div class=\"response-headers\">\r\n                <div *ngFor=\"let header of responseData.headers | keyvalue\" class=\"header-item\">\r\n                  <strong>{{ header.key }}:</strong> {{ header.value }}\r\n                </div>\r\n              </div>\r\n            </mat-tab>\r\n          </mat-tab-group>\r\n        </div>\r\n      </div>\r\n\r\n      <!-- Информация о SSL-соединении -->\r\n      <app-ssl-status [serverUrl]=\"currentUrl\"></app-ssl-status>\r\n    </div>\r\n    \r\n    <!-- Вкладка Цепочка -->\r\n    <div *ngIf=\"activeTab === 'circuit'\" class=\"circuit-tab\">\r\n      <app-nirnet-circuit></app-nirnet-circuit>\r\n    </div>\r\n    \r\n    <!-- Вкладка Настройки -->\r\n    <div *ngIf=\"activeTab === 'settings'\" class=\"settings-tab\">\r\n      <app-nirnet-settings></app-nirnet-settings>\r\n    </div>\r\n  </div>\r\n</div> "
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.scss":
+/*!********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.scss ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".nirnet-browser-container {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 1.5rem; }\n\n.nirnet-header {\n  text-align: center;\n  margin-bottom: 2rem; }\n\n.nirnet-header h1 {\n    font-size: 2rem;\n    margin-bottom: 0.5rem;\n    color: #2c3e50; }\n\n.nirnet-header .description {\n    color: #7f8c8d;\n    font-size: 1rem; }\n\n.tab-navigation {\n  display: flex;\n  justify-content: center;\n  margin-bottom: 2rem;\n  border-bottom: 1px solid #eee; }\n\n.tab-navigation button {\n    padding: 0.75rem 1.5rem;\n    margin: 0 0.5rem;\n    border-radius: 4px 4px 0 0; }\n\n.tab-navigation button.active-tab {\n      background-color: #f5f5f5;\n      border-bottom: 3px solid #3f51b5; }\n\n.tab-navigation button mat-icon {\n      margin-right: 0.5rem; }\n\n.browser-form-card {\n  background-color: #fff;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n  padding: 1.5rem;\n  margin-bottom: 2rem; }\n\n.url-form-field {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 0.5rem;\n  align-items: center;\n  margin-bottom: 1rem; }\n\n.url-form-field .url-input {\n    flex: 1;\n    min-width: 250px; }\n\n.url-form-field .method-select {\n    width: 120px; }\n\n.advanced-fields {\n  margin-top: 1rem; }\n\n.advanced-fields .full-width {\n    width: 100%; }\n\n.response-container {\n  background-color: #fff;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n  min-height: 200px; }\n\n.loading-indicator {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 2rem;\n  text-align: center; }\n\n.loading-indicator p {\n    margin-top: 1rem;\n    color: #555; }\n\n.error-message {\n  display: flex;\n  align-items: center;\n  padding: 1.5rem;\n  background-color: #ffebee;\n  color: #c62828;\n  border-radius: 8px; }\n\n.error-message mat-icon {\n    margin-right: 1rem;\n    font-size: 24px;\n    height: 24px;\n    width: 24px; }\n\n.response-data {\n  padding: 1.5rem; }\n\n.response-data .response-header {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 1rem; }\n\n.response-data .response-header h3 {\n      margin: 0;\n      font-size: 1.2rem;\n      color: #444; }\n\n.response-data .response-header .status-code {\n      padding: 0.3rem 0.6rem;\n      border-radius: 4px;\n      font-weight: 500;\n      background-color: #ffebee;\n      color: #c62828; }\n\n.response-data .response-header .status-code.success {\n        background-color: #e8f5e9;\n        color: #2e7d32; }\n\n.response-data .response-body {\n    padding: 1rem; }\n\n.response-data .response-body pre {\n      margin: 0;\n      white-space: pre-wrap;\n      word-wrap: break-word;\n      background-color: #f5f5f5;\n      padding: 1rem;\n      border-radius: 4px;\n      overflow: auto;\n      max-height: 500px; }\n\n.response-data .response-headers {\n    padding: 1rem; }\n\n.response-data .response-headers .header-item {\n      padding: 0.5rem;\n      border-bottom: 1px solid #f0f0f0; }\n\n.response-data .response-headers .header-item:last-child {\n        border-bottom: none; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvbmlybmV0LWJyb3dzZXIvRjpcXEdpdEh1YlxcTmlybWF0YUdVSVxcaHRtbF9zb3VyY2Uvc3JjXFxhcHBcXG5pcm5ldFxcY29tcG9uZW50c1xcbmlybmV0LWJyb3dzZXJcXG5pcm5ldC1icm93c2VyLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsaUJBQWlCO0VBQ2pCLGNBQWM7RUFDZCxlQUFlLEVBQUE7O0FBR2pCO0VBQ0Usa0JBQWtCO0VBQ2xCLG1CQUFtQixFQUFBOztBQUZyQjtJQUtJLGVBQWU7SUFDZixxQkFBcUI7SUFDckIsY0FBYyxFQUFBOztBQVBsQjtJQVdJLGNBQWM7SUFDZCxlQUFlLEVBQUE7O0FBSW5CO0VBQ0UsYUFBYTtFQUNiLHVCQUF1QjtFQUN2QixtQkFBbUI7RUFDbkIsNkJBQTZCLEVBQUE7O0FBSi9CO0lBT0ksdUJBQXVCO0lBQ3ZCLGdCQUFnQjtJQUNoQiwwQkFBMEIsRUFBQTs7QUFUOUI7TUFZTSx5QkFBeUI7TUFDekIsZ0NBQWdDLEVBQUE7O0FBYnRDO01BaUJNLG9CQUFvQixFQUFBOztBQUsxQjtFQUNFLHNCQUFzQjtFQUN0QixrQkFBa0I7RUFDbEIseUNBQXlDO0VBQ3pDLGVBQWU7RUFDZixtQkFBbUIsRUFBQTs7QUFHckI7RUFDRSxhQUFhO0VBQ2IsZUFBZTtFQUNmLFdBQVc7RUFDWCxtQkFBbUI7RUFDbkIsbUJBQW1CLEVBQUE7O0FBTHJCO0lBUUksT0FBTztJQUNQLGdCQUFnQixFQUFBOztBQVRwQjtJQWFJLFlBQVksRUFBQTs7QUFJaEI7RUFDRSxnQkFBZ0IsRUFBQTs7QUFEbEI7SUFJSSxXQUFXLEVBQUE7O0FBSWY7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLHlDQUF5QztFQUN6QyxpQkFBaUIsRUFBQTs7QUFHbkI7RUFDRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsYUFBYTtFQUNiLGtCQUFrQixFQUFBOztBQU5wQjtJQVNJLGdCQUFnQjtJQUNoQixXQUFXLEVBQUE7O0FBSWY7RUFDRSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLGVBQWU7RUFDZix5QkFBeUI7RUFDekIsY0FBYztFQUNkLGtCQUFrQixFQUFBOztBQU5wQjtJQVNJLGtCQUFrQjtJQUNsQixlQUFlO0lBQ2YsWUFBWTtJQUNaLFdBQVcsRUFBQTs7QUFJZjtFQUNFLGVBQWUsRUFBQTs7QUFEakI7SUFJSSxhQUFhO0lBQ2IsOEJBQThCO0lBQzlCLG1CQUFtQjtJQUNuQixtQkFBbUIsRUFBQTs7QUFQdkI7TUFVTSxTQUFTO01BQ1QsaUJBQWlCO01BQ2pCLFdBQVcsRUFBQTs7QUFaakI7TUFnQk0sc0JBQXNCO01BQ3RCLGtCQUFrQjtNQUNsQixnQkFBZ0I7TUFDaEIseUJBQXlCO01BQ3pCLGNBQWMsRUFBQTs7QUFwQnBCO1FBdUJRLHlCQUF5QjtRQUN6QixjQUFjLEVBQUE7O0FBeEJ0QjtJQThCSSxhQUFhLEVBQUE7O0FBOUJqQjtNQWlDTSxTQUFTO01BQ1QscUJBQXFCO01BQ3JCLHFCQUFxQjtNQUNyQix5QkFBeUI7TUFDekIsYUFBYTtNQUNiLGtCQUFrQjtNQUNsQixjQUFjO01BQ2QsaUJBQWlCLEVBQUE7O0FBeEN2QjtJQTZDSSxhQUFhLEVBQUE7O0FBN0NqQjtNQWdETSxlQUFlO01BQ2YsZ0NBQWdDLEVBQUE7O0FBakR0QztRQW9EUSxtQkFBbUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL25pcm5ldC9jb21wb25lbnRzL25pcm5ldC1icm93c2VyL25pcm5ldC1icm93c2VyLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLm5pcm5ldC1icm93c2VyLWNvbnRhaW5lciB7XHJcbiAgbWF4LXdpZHRoOiAxMjAwcHg7XHJcbiAgbWFyZ2luOiAwIGF1dG87XHJcbiAgcGFkZGluZzogMS41cmVtO1xyXG59XHJcblxyXG4ubmlybmV0LWhlYWRlciB7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIG1hcmdpbi1ib3R0b206IDJyZW07XHJcbiAgXHJcbiAgaDEge1xyXG4gICAgZm9udC1zaXplOiAycmVtO1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMC41cmVtO1xyXG4gICAgY29sb3I6ICMyYzNlNTA7XHJcbiAgfVxyXG4gIFxyXG4gIC5kZXNjcmlwdGlvbiB7XHJcbiAgICBjb2xvcjogIzdmOGM4ZDtcclxuICAgIGZvbnQtc2l6ZTogMXJlbTtcclxuICB9XHJcbn1cclxuXHJcbi50YWItbmF2aWdhdGlvbiB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZWVlO1xyXG4gIFxyXG4gIGJ1dHRvbiB7XHJcbiAgICBwYWRkaW5nOiAwLjc1cmVtIDEuNXJlbTtcclxuICAgIG1hcmdpbjogMCAwLjVyZW07XHJcbiAgICBib3JkZXItcmFkaXVzOiA0cHggNHB4IDAgMDtcclxuICAgIFxyXG4gICAgJi5hY3RpdmUtdGFiIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTtcclxuICAgICAgYm9yZGVyLWJvdHRvbTogM3B4IHNvbGlkICMzZjUxYjU7XHJcbiAgICB9XHJcbiAgICBcclxuICAgIG1hdC1pY29uIHtcclxuICAgICAgbWFyZ2luLXJpZ2h0OiAwLjVyZW07XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG4uYnJvd3Nlci1mb3JtLWNhcmQge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgYm9yZGVyLXJhZGl1czogOHB4O1xyXG4gIGJveC1zaGFkb3c6IDAgMnB4IDEwcHggcmdiYSgwLCAwLCAwLCAwLjEpO1xyXG4gIHBhZGRpbmc6IDEuNXJlbTtcclxuICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG59XHJcblxyXG4udXJsLWZvcm0tZmllbGQge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC13cmFwOiB3cmFwO1xyXG4gIGdhcDogMC41cmVtO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgbWFyZ2luLWJvdHRvbTogMXJlbTtcclxuICBcclxuICAudXJsLWlucHV0IHtcclxuICAgIGZsZXg6IDE7XHJcbiAgICBtaW4td2lkdGg6IDI1MHB4O1xyXG4gIH1cclxuICBcclxuICAubWV0aG9kLXNlbGVjdCB7XHJcbiAgICB3aWR0aDogMTIwcHg7XHJcbiAgfVxyXG59XHJcblxyXG4uYWR2YW5jZWQtZmllbGRzIHtcclxuICBtYXJnaW4tdG9wOiAxcmVtO1xyXG4gIFxyXG4gIC5mdWxsLXdpZHRoIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gIH1cclxufVxyXG5cclxuLnJlc3BvbnNlLWNvbnRhaW5lciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcclxuICBib3JkZXItcmFkaXVzOiA4cHg7XHJcbiAgYm94LXNoYWRvdzogMCAycHggMTBweCByZ2JhKDAsIDAsIDAsIDAuMSk7XHJcbiAgbWluLWhlaWdodDogMjAwcHg7XHJcbn1cclxuXHJcbi5sb2FkaW5nLWluZGljYXRvciB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgcGFkZGluZzogMnJlbTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgXHJcbiAgcCB7XHJcbiAgICBtYXJnaW4tdG9wOiAxcmVtO1xyXG4gICAgY29sb3I6ICM1NTU7XHJcbiAgfVxyXG59XHJcblxyXG4uZXJyb3ItbWVzc2FnZSB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIHBhZGRpbmc6IDEuNXJlbTtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZlYmVlO1xyXG4gIGNvbG9yOiAjYzYyODI4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDhweDtcclxuICBcclxuICBtYXQtaWNvbiB7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDFyZW07XHJcbiAgICBmb250LXNpemU6IDI0cHg7XHJcbiAgICBoZWlnaHQ6IDI0cHg7XHJcbiAgICB3aWR0aDogMjRweDtcclxuICB9XHJcbn1cclxuXHJcbi5yZXNwb25zZS1kYXRhIHtcclxuICBwYWRkaW5nOiAxLjVyZW07XHJcbiAgXHJcbiAgLnJlc3BvbnNlLWhlYWRlciB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIG1hcmdpbi1ib3R0b206IDFyZW07XHJcbiAgICBcclxuICAgIGgzIHtcclxuICAgICAgbWFyZ2luOiAwO1xyXG4gICAgICBmb250LXNpemU6IDEuMnJlbTtcclxuICAgICAgY29sb3I6ICM0NDQ7XHJcbiAgICB9XHJcbiAgICBcclxuICAgIC5zdGF0dXMtY29kZSB7XHJcbiAgICAgIHBhZGRpbmc6IDAuM3JlbSAwLjZyZW07XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZWJlZTtcclxuICAgICAgY29sb3I6ICNjNjI4Mjg7XHJcbiAgICAgIFxyXG4gICAgICAmLnN1Y2Nlc3Mge1xyXG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNlOGY1ZTk7XHJcbiAgICAgICAgY29sb3I6ICMyZTdkMzI7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbiAgXHJcbiAgLnJlc3BvbnNlLWJvZHkge1xyXG4gICAgcGFkZGluZzogMXJlbTtcclxuICAgIFxyXG4gICAgcHJlIHtcclxuICAgICAgbWFyZ2luOiAwO1xyXG4gICAgICB3aGl0ZS1zcGFjZTogcHJlLXdyYXA7XHJcbiAgICAgIHdvcmQtd3JhcDogYnJlYWstd29yZDtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTtcclxuICAgICAgcGFkZGluZzogMXJlbTtcclxuICAgICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgICBvdmVyZmxvdzogYXV0bztcclxuICAgICAgbWF4LWhlaWdodDogNTAwcHg7XHJcbiAgICB9XHJcbiAgfVxyXG4gIFxyXG4gIC5yZXNwb25zZS1oZWFkZXJzIHtcclxuICAgIHBhZGRpbmc6IDFyZW07XHJcbiAgICBcclxuICAgIC5oZWFkZXItaXRlbSB7XHJcbiAgICAgIHBhZGRpbmc6IDAuNXJlbTtcclxuICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNmMGYwZjA7XHJcbiAgICAgIFxyXG4gICAgICAmOmxhc3QtY2hpbGQge1xyXG4gICAgICAgIGJvcmRlci1ib3R0b206IG5vbmU7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbn0gIl19 */"
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.ts ***!
+  \******************************************************************************/
+/*! exports provided: NiRNeTBrowserComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTBrowserComponent", function() { return NiRNeTBrowserComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var NiRNeTBrowserComponent = /** @class */ (function () {
+    function NiRNeTBrowserComponent(fb, nirnetService) {
+        this.fb = fb;
+        this.nirnetService = nirnetService;
+        this.isLoading = false;
+        this.responseData = null;
+        this.requestError = null;
+        this.activeTab = 'browser';
+        this.browserForm = this.fb.group({
+            url: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('https?://.+')]],
+            method: ['GET'],
+            headers: [''],
+            body: ['']
+        });
+    }
+    NiRNeTBrowserComponent.prototype.ngOnInit = function () {
+        // Инициализируем NiRNeT сервис
+        this.nirnetService.initialize();
+    };
+    /**
+     * Отправляет запрос через NiRNeT
+     */
+    NiRNeTBrowserComponent.prototype.sendRequest = function () {
+        var _this = this;
+        if (this.browserForm.invalid) {
+            return;
+        }
+        var formValues = this.browserForm.value;
+        var url = formValues.url;
+        var method = formValues.method;
+        var headers = {};
+        // Парсим заголовки если есть
+        if (formValues.headers) {
+            try {
+                headers = JSON.parse(formValues.headers);
+            }
+            catch (e) {
+                this.requestError = 'Неверный формат заголовков. Используйте JSON.';
+                return;
+            }
+        }
+        var body = null;
+        if (formValues.body) {
+            try {
+                // Пробуем распарсить как JSON, если не получилось, оставляем как строку
+                body = JSON.parse(formValues.body);
+            }
+            catch (e) {
+                body = formValues.body;
+            }
+        }
+        this.isLoading = true;
+        this.requestError = null;
+        this.responseData = null;
+        // Отправляем запрос через NiRNeT
+        this.nirnetService.request(url, method, headers, body)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            _this.requestError = error.message || 'Произошла ошибка при выполнении запроса';
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["finalize"])(function () {
+            _this.isLoading = false;
+        }))
+            .subscribe(function (response) {
+            if (response) {
+                _this.responseData = response;
+            }
+        });
+    };
+    /**
+     * Изменяет активную вкладку
+     */
+    NiRNeTBrowserComponent.prototype.changeTab = function (tab) {
+        this.activeTab = tab;
+    };
+    /**
+     * Форматирует JSON для отображения
+     */
+    NiRNeTBrowserComponent.prototype.formatJson = function (json) {
+        try {
+            return JSON.stringify(json, null, 2);
+        }
+        catch (e) {
+            return String(json);
+        }
+    };
+    NiRNeTBrowserComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-nirnet-browser',
+            template: __webpack_require__(/*! ./nirnet-browser.component.html */ "./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.html"),
+            styles: [__webpack_require__(/*! ./nirnet-browser.component.scss */ "./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
+            _services_nirnet_service__WEBPACK_IMPORTED_MODULE_2__["NiRNeTService"]])
+    ], NiRNeTBrowserComponent);
+    return NiRNeTBrowserComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.html":
+/*!********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.html ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"nirnet-circuit-container\">\r\n  <div class=\"circuit-card\" *ngIf=\"activeCircuit; else noCircuit\">\r\n    <div class=\"circuit-header\">\r\n      <h3>Текущая цепочка</h3>\r\n      <div class=\"circuit-info\">\r\n        <span class=\"circuit-id\">ID: {{ activeCircuit.id }}</span>\r\n        <span class=\"time-remaining\">Истекает через: {{ remainingTime }}</span>\r\n      </div>\r\n    </div>\r\n    \r\n    <div class=\"circuit-visualization\">\r\n      <div class=\"user-node\">\r\n        <div class=\"node-icon\">\r\n          <mat-icon>person</mat-icon>\r\n        </div>\r\n        <div class=\"node-label\">Вы</div>\r\n      </div>\r\n      \r\n      <div class=\"path-line\"></div>\r\n      \r\n      <div class=\"nodes-list\">\r\n        <div class=\"node-item\" *ngFor=\"let node of activeCircuit.nodes; let i = index\">\r\n          <div class=\"node-connector\" *ngIf=\"i > 0\"></div>\r\n          <div class=\"node-box\" [ngClass]=\"[getNodeStatusClass(node), getNodeRoleClass(node)]\">\r\n            <div class=\"node-icon\">\r\n              <mat-icon *ngIf=\"node.role === 'entry'\">login</mat-icon>\r\n              <mat-icon *ngIf=\"node.role === 'middle'\">swap_horiz</mat-icon>\r\n              <mat-icon *ngIf=\"node.role === 'exit'\">logout</mat-icon>\r\n            </div>\r\n            <div class=\"node-details\">\r\n              <div class=\"node-role\">{{ getNodeRoleName(node) }}</div>\r\n              <div class=\"node-address\">{{ node.ip }}:{{ node.port }}</div>\r\n              <div class=\"node-status\" [ngClass]=\"getNodeStatusClass(node)\">\r\n                {{ node.status === 'online' ? 'Онлайн' : 'Офлайн' }}\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div class=\"path-line\"></div>\r\n      \r\n      <div class=\"destination-node\">\r\n        <div class=\"node-icon\">\r\n          <mat-icon>language</mat-icon>\r\n        </div>\r\n        <div class=\"node-label\">Интернет</div>\r\n      </div>\r\n    </div>\r\n    \r\n    <div class=\"circuit-actions\">\r\n      <button mat-raised-button color=\"primary\" (click)=\"rotateCircuit()\">\r\n        <mat-icon>refresh</mat-icon> Сменить цепочку\r\n      </button>\r\n    </div>\r\n  </div>\r\n  \r\n  <ng-template #noCircuit>\r\n    <div class=\"no-circuit-message\">\r\n      <mat-spinner diameter=\"40\"></mat-spinner>\r\n      <p>Создание цепочки нод NiRNeT...</p>\r\n    </div>\r\n  </ng-template>\r\n</div> "
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.scss":
+/*!********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.scss ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".nirnet-circuit-container {\n  padding: 1rem;\n  max-width: 800px;\n  margin: 0 auto; }\n\n.circuit-card {\n  background-color: #fff;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n  padding: 1.5rem; }\n\n.circuit-header {\n  margin-bottom: 1.5rem; }\n\n.circuit-header h3 {\n    font-size: 1.2rem;\n    margin-bottom: 0.5rem;\n    color: #444; }\n\n.circuit-info {\n  display: flex;\n  justify-content: space-between;\n  font-size: 0.9rem;\n  color: #666; }\n\n.circuit-info .circuit-id {\n    font-family: monospace; }\n\n.circuit-info .time-remaining {\n    font-weight: 500; }\n\n.circuit-visualization {\n  display: flex;\n  align-items: center;\n  margin: 2rem 0;\n  flex-wrap: wrap;\n  justify-content: center; }\n\n.user-node, .destination-node {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  padding: 0.5rem; }\n\n.user-node .node-icon, .destination-node .node-icon {\n    width: 40px;\n    height: 40px;\n    background-color: #e0e0e0;\n    border-radius: 50%;\n    display: flex;\n    justify-content: center;\n    align-items: center; }\n\n.user-node .node-icon .mat-icon, .destination-node .node-icon .mat-icon {\n      color: #555; }\n\n.user-node .node-label, .destination-node .node-label {\n    margin-top: 0.3rem;\n    font-size: 0.8rem;\n    color: #555; }\n\n.path-line {\n  height: 2px;\n  background-color: #ccc;\n  flex-grow: 1;\n  min-width: 20px;\n  margin: 0 0.5rem; }\n\n.nodes-list {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  margin: 0 1rem; }\n\n.node-item {\n  position: relative;\n  margin: 0.5rem; }\n\n.node-item .node-connector {\n    position: absolute;\n    top: 50%;\n    left: -12px;\n    width: 12px;\n    height: 2px;\n    background-color: #ccc; }\n\n.node-box {\n  display: flex;\n  border: 1px solid #ddd;\n  border-radius: 4px;\n  padding: 0.75rem;\n  width: 180px;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); }\n\n.node-box .node-icon {\n    margin-right: 1rem; }\n\n.node-box .node-icon .mat-icon {\n      color: #555; }\n\n.node-box .node-details {\n    flex: 1; }\n\n.node-box .node-details .node-role {\n      font-weight: 500;\n      font-size: 0.9rem;\n      margin-bottom: 0.3rem; }\n\n.node-box .node-details .node-address {\n      font-family: monospace;\n      font-size: 0.8rem;\n      color: #555;\n      margin-bottom: 0.3rem; }\n\n.node-box .node-details .node-status {\n      font-size: 0.75rem;\n      padding: 0.1rem 0.4rem;\n      border-radius: 3px;\n      display: inline-block; }\n\n.node-status-online {\n  background-color: #e8f5e9;\n  color: #2e7d32; }\n\n.node-status-offline {\n  background-color: #ffebee;\n  color: #c62828; }\n\n.node-role-entry {\n  border-left: 3px solid #2196f3; }\n\n.node-role-middle {\n  border-left: 3px solid #ff9800; }\n\n.node-role-exit {\n  border-left: 3px solid #f44336; }\n\n.circuit-actions {\n  display: flex;\n  justify-content: center;\n  margin-top: 1.5rem; }\n\n.no-circuit-message {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  padding: 3rem;\n  text-align: center;\n  background-color: #fff;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); }\n\n.no-circuit-message p {\n    margin-top: 1rem;\n    color: #555; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvbmlybmV0LWNpcmN1aXQvRjpcXEdpdEh1YlxcTmlybWF0YUdVSVxcaHRtbF9zb3VyY2Uvc3JjXFxhcHBcXG5pcm5ldFxcY29tcG9uZW50c1xcbmlybmV0LWNpcmN1aXRcXG5pcm5ldC1jaXJjdWl0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBYTtFQUNiLGdCQUFnQjtFQUNoQixjQUFjLEVBQUE7O0FBR2hCO0VBQ0Usc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQix5Q0FBeUM7RUFDekMsZUFBZSxFQUFBOztBQUdqQjtFQUNFLHFCQUFxQixFQUFBOztBQUR2QjtJQUlJLGlCQUFpQjtJQUNqQixxQkFBcUI7SUFDckIsV0FBVyxFQUFBOztBQUlmO0VBQ0UsYUFBYTtFQUNiLDhCQUE4QjtFQUM5QixpQkFBaUI7RUFDakIsV0FBVyxFQUFBOztBQUpiO0lBT0ksc0JBQXNCLEVBQUE7O0FBUDFCO0lBV0ksZ0JBQWdCLEVBQUE7O0FBSXBCO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQixjQUFjO0VBQ2QsZUFBZTtFQUNmLHVCQUF1QixFQUFBOztBQUd6QjtFQUNFLGFBQWE7RUFDYixzQkFBc0I7RUFDdEIsbUJBQW1CO0VBQ25CLGVBQWUsRUFBQTs7QUFKakI7SUFPSSxXQUFXO0lBQ1gsWUFBWTtJQUNaLHlCQUF5QjtJQUN6QixrQkFBa0I7SUFDbEIsYUFBYTtJQUNiLHVCQUF1QjtJQUN2QixtQkFBbUIsRUFBQTs7QUFidkI7TUFnQk0sV0FBVyxFQUFBOztBQWhCakI7SUFxQkksa0JBQWtCO0lBQ2xCLGlCQUFpQjtJQUNqQixXQUFXLEVBQUE7O0FBSWY7RUFDRSxXQUFXO0VBQ1gsc0JBQXNCO0VBQ3RCLFlBQVk7RUFDWixlQUFlO0VBQ2YsZ0JBQWdCLEVBQUE7O0FBR2xCO0VBQ0UsYUFBYTtFQUNiLGVBQWU7RUFDZix1QkFBdUI7RUFDdkIsY0FBYyxFQUFBOztBQUdoQjtFQUNFLGtCQUFrQjtFQUNsQixjQUFjLEVBQUE7O0FBRmhCO0lBS0ksa0JBQWtCO0lBQ2xCLFFBQVE7SUFDUixXQUFXO0lBQ1gsV0FBVztJQUNYLFdBQVc7SUFDWCxzQkFBc0IsRUFBQTs7QUFJMUI7RUFDRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsWUFBWTtFQUNaLHlDQUF5QyxFQUFBOztBQU4zQztJQVNJLGtCQUFrQixFQUFBOztBQVR0QjtNQVlNLFdBQVcsRUFBQTs7QUFaakI7SUFpQkksT0FBTyxFQUFBOztBQWpCWDtNQW9CTSxnQkFBZ0I7TUFDaEIsaUJBQWlCO01BQ2pCLHFCQUFxQixFQUFBOztBQXRCM0I7TUEwQk0sc0JBQXNCO01BQ3RCLGlCQUFpQjtNQUNqQixXQUFXO01BQ1gscUJBQXFCLEVBQUE7O0FBN0IzQjtNQWlDTSxrQkFBa0I7TUFDbEIsc0JBQXNCO01BQ3RCLGtCQUFrQjtNQUNsQixxQkFBcUIsRUFBQTs7QUFNM0I7RUFDRSx5QkFBeUI7RUFDekIsY0FBYyxFQUFBOztBQUdoQjtFQUNFLHlCQUF5QjtFQUN6QixjQUFjLEVBQUE7O0FBSWhCO0VBQ0UsOEJBQThCLEVBQUE7O0FBR2hDO0VBQ0UsOEJBQThCLEVBQUE7O0FBR2hDO0VBQ0UsOEJBQThCLEVBQUE7O0FBR2hDO0VBQ0UsYUFBYTtFQUNiLHVCQUF1QjtFQUN2QixrQkFBa0IsRUFBQTs7QUFHcEI7RUFDRSxhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLHlDQUF5QyxFQUFBOztBQVQzQztJQVlJLGdCQUFnQjtJQUNoQixXQUFXLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9uaXJuZXQvY29tcG9uZW50cy9uaXJuZXQtY2lyY3VpdC9uaXJuZXQtY2lyY3VpdC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5uaXJuZXQtY2lyY3VpdC1jb250YWluZXIge1xyXG4gIHBhZGRpbmc6IDFyZW07XHJcbiAgbWF4LXdpZHRoOiA4MDBweDtcclxuICBtYXJnaW46IDAgYXV0bztcclxufVxyXG5cclxuLmNpcmN1aXQtY2FyZCB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcclxuICBib3JkZXItcmFkaXVzOiA4cHg7XHJcbiAgYm94LXNoYWRvdzogMCAycHggMTBweCByZ2JhKDAsIDAsIDAsIDAuMSk7XHJcbiAgcGFkZGluZzogMS41cmVtO1xyXG59XHJcblxyXG4uY2lyY3VpdC1oZWFkZXIge1xyXG4gIG1hcmdpbi1ib3R0b206IDEuNXJlbTtcclxuICBcclxuICBoMyB7XHJcbiAgICBmb250LXNpemU6IDEuMnJlbTtcclxuICAgIG1hcmdpbi1ib3R0b206IDAuNXJlbTtcclxuICAgIGNvbG9yOiAjNDQ0O1xyXG4gIH1cclxufVxyXG5cclxuLmNpcmN1aXQtaW5mbyB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgZm9udC1zaXplOiAwLjlyZW07XHJcbiAgY29sb3I6ICM2NjY7XHJcbiAgXHJcbiAgLmNpcmN1aXQtaWQge1xyXG4gICAgZm9udC1mYW1pbHk6IG1vbm9zcGFjZTtcclxuICB9XHJcbiAgXHJcbiAgLnRpbWUtcmVtYWluaW5nIHtcclxuICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgfVxyXG59XHJcblxyXG4uY2lyY3VpdC12aXN1YWxpemF0aW9uIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgbWFyZ2luOiAycmVtIDA7XHJcbiAgZmxleC13cmFwOiB3cmFwO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG59XHJcblxyXG4udXNlci1ub2RlLCAuZGVzdGluYXRpb24tbm9kZSB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgcGFkZGluZzogMC41cmVtO1xyXG4gIFxyXG4gIC5ub2RlLWljb24ge1xyXG4gICAgd2lkdGg6IDQwcHg7XHJcbiAgICBoZWlnaHQ6IDQwcHg7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZTBlMGUwO1xyXG4gICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIFxyXG4gICAgLm1hdC1pY29uIHtcclxuICAgICAgY29sb3I6ICM1NTU7XHJcbiAgICB9XHJcbiAgfVxyXG4gIFxyXG4gIC5ub2RlLWxhYmVsIHtcclxuICAgIG1hcmdpbi10b3A6IDAuM3JlbTtcclxuICAgIGZvbnQtc2l6ZTogMC44cmVtO1xyXG4gICAgY29sb3I6ICM1NTU7XHJcbiAgfVxyXG59XHJcblxyXG4ucGF0aC1saW5lIHtcclxuICBoZWlnaHQ6IDJweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2NjO1xyXG4gIGZsZXgtZ3JvdzogMTtcclxuICBtaW4td2lkdGg6IDIwcHg7XHJcbiAgbWFyZ2luOiAwIDAuNXJlbTtcclxufVxyXG5cclxuLm5vZGVzLWxpc3Qge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC13cmFwOiB3cmFwO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIG1hcmdpbjogMCAxcmVtO1xyXG59XHJcblxyXG4ubm9kZS1pdGVtIHtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgbWFyZ2luOiAwLjVyZW07XHJcbiAgXHJcbiAgLm5vZGUtY29ubmVjdG9yIHtcclxuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgIHRvcDogNTAlO1xyXG4gICAgbGVmdDogLTEycHg7XHJcbiAgICB3aWR0aDogMTJweDtcclxuICAgIGhlaWdodDogMnB4O1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2NjYztcclxuICB9XHJcbn1cclxuXHJcbi5ub2RlLWJveCB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBib3JkZXI6IDFweCBzb2xpZCAjZGRkO1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBwYWRkaW5nOiAwLjc1cmVtO1xyXG4gIHdpZHRoOiAxODBweDtcclxuICBib3gtc2hhZG93OiAwIDFweCAzcHggcmdiYSgwLCAwLCAwLCAwLjA1KTtcclxuICBcclxuICAubm9kZS1pY29uIHtcclxuICAgIG1hcmdpbi1yaWdodDogMXJlbTtcclxuICAgIFxyXG4gICAgLm1hdC1pY29uIHtcclxuICAgICAgY29sb3I6ICM1NTU7XHJcbiAgICB9XHJcbiAgfVxyXG4gIFxyXG4gIC5ub2RlLWRldGFpbHMge1xyXG4gICAgZmxleDogMTtcclxuICAgIFxyXG4gICAgLm5vZGUtcm9sZSB7XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICAgIGZvbnQtc2l6ZTogMC45cmVtO1xyXG4gICAgICBtYXJnaW4tYm90dG9tOiAwLjNyZW07XHJcbiAgICB9XHJcbiAgICBcclxuICAgIC5ub2RlLWFkZHJlc3Mge1xyXG4gICAgICBmb250LWZhbWlseTogbW9ub3NwYWNlO1xyXG4gICAgICBmb250LXNpemU6IDAuOHJlbTtcclxuICAgICAgY29sb3I6ICM1NTU7XHJcbiAgICAgIG1hcmdpbi1ib3R0b206IDAuM3JlbTtcclxuICAgIH1cclxuICAgIFxyXG4gICAgLm5vZGUtc3RhdHVzIHtcclxuICAgICAgZm9udC1zaXplOiAwLjc1cmVtO1xyXG4gICAgICBwYWRkaW5nOiAwLjFyZW0gMC40cmVtO1xyXG4gICAgICBib3JkZXItcmFkaXVzOiAzcHg7XHJcbiAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgIH1cclxuICB9XHJcbn1cclxuXHJcbi8vINCh0YLQsNGC0YPRgdGLINC90L7QtFxyXG4ubm9kZS1zdGF0dXMtb25saW5lIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZThmNWU5O1xyXG4gIGNvbG9yOiAjMmU3ZDMyO1xyXG59XHJcblxyXG4ubm9kZS1zdGF0dXMtb2ZmbGluZSB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZWJlZTtcclxuICBjb2xvcjogI2M2MjgyODtcclxufVxyXG5cclxuLy8g0KDQvtC70Lgg0L3QvtC0XHJcbi5ub2RlLXJvbGUtZW50cnkge1xyXG4gIGJvcmRlci1sZWZ0OiAzcHggc29saWQgIzIxOTZmMztcclxufVxyXG5cclxuLm5vZGUtcm9sZS1taWRkbGUge1xyXG4gIGJvcmRlci1sZWZ0OiAzcHggc29saWQgI2ZmOTgwMDtcclxufVxyXG5cclxuLm5vZGUtcm9sZS1leGl0IHtcclxuICBib3JkZXItbGVmdDogM3B4IHNvbGlkICNmNDQzMzY7XHJcbn1cclxuXHJcbi5jaXJjdWl0LWFjdGlvbnMge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgbWFyZ2luLXRvcDogMS41cmVtO1xyXG59XHJcblxyXG4ubm8tY2lyY3VpdC1tZXNzYWdlIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBwYWRkaW5nOiAzcmVtO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmO1xyXG4gIGJvcmRlci1yYWRpdXM6IDhweDtcclxuICBib3gtc2hhZG93OiAwIDJweCAxMHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcclxuICBcclxuICBwIHtcclxuICAgIG1hcmdpbi10b3A6IDFyZW07XHJcbiAgICBjb2xvcjogIzU1NTtcclxuICB9XHJcbn0gIl19 */"
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.ts ***!
+  \******************************************************************************/
+/*! exports provided: NiRNeTCircuitComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTCircuitComponent", function() { return NiRNeTCircuitComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var NiRNeTCircuitComponent = /** @class */ (function () {
+    function NiRNeTCircuitComponent(nirnetService) {
+        this.nirnetService = nirnetService;
+        this.activeCircuit = null;
+        this.remainingTime = '';
+    }
+    NiRNeTCircuitComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        // Инициализируем NiRNeT если еще не инициализирован
+        if (!this.nirnetService.getActiveCircuit()) {
+            this.nirnetService.initialize().then(function () {
+                _this.updateCircuitInfo();
+            });
+        }
+        else {
+            this.updateCircuitInfo();
+        }
+        // Обновляем информацию о цепочке каждую секунду
+        this.updateSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["interval"])(1000).subscribe(function () {
+            _this.updateCircuitInfo();
+        });
+    };
+    NiRNeTCircuitComponent.prototype.ngOnDestroy = function () {
+        if (this.updateSubscription) {
+            this.updateSubscription.unsubscribe();
+        }
+    };
+    /**
+     * Обновляет информацию о текущей цепочке
+     */
+    NiRNeTCircuitComponent.prototype.updateCircuitInfo = function () {
+        this.activeCircuit = this.nirnetService.getActiveCircuit();
+        if (this.activeCircuit && this.activeCircuit.expiresAt) {
+            var now = Date.now();
+            var remaining = this.activeCircuit.expiresAt - now;
+            if (remaining > 0) {
+                var minutes = Math.floor(remaining / 60000);
+                var seconds = Math.floor((remaining % 60000) / 1000);
+                this.remainingTime = minutes + "\u043C " + seconds + "\u0441";
+            }
+            else {
+                this.remainingTime = 'Истекла';
+            }
+        }
+    };
+    /**
+     * Обновляет цепочку нод
+     */
+    NiRNeTCircuitComponent.prototype.rotateCircuit = function () {
+        this.nirnetService.rotateCircuit();
+    };
+    /**
+     * Получает CSS класс для статуса ноды
+     */
+    NiRNeTCircuitComponent.prototype.getNodeStatusClass = function (node) {
+        return node.status === 'active' ? 'status-online' : 'status-offline';
+    };
+    /**
+     * Получает CSS класс для роли ноды
+     */
+    NiRNeTCircuitComponent.prototype.getNodeRoleClass = function (node) {
+        return 'role-' + this.getNodeRole(node);
+    };
+    /**
+     * Получает человекочитаемое описание роли ноды
+     */
+    NiRNeTCircuitComponent.prototype.getNodeRoleName = function (node) {
+        var role = this.getNodeRole(node);
+        switch (role) {
+            case 'entry': return 'Входная';
+            case 'middle': return 'Промежуточная';
+            case 'exit': return 'Выходная';
+            default: return 'Неизвестная';
+        }
+    };
+    NiRNeTCircuitComponent.prototype.getNodeRole = function (node) {
+        if (!this.activeCircuit)
+            return 'unknown';
+        var index = this.activeCircuit.nodes.findIndex(function (n) { return n.ip === node.ip; });
+        if (index === 0)
+            return 'entry';
+        if (index === this.activeCircuit.nodes.length - 1)
+            return 'exit';
+        return 'middle';
+    };
+    NiRNeTCircuitComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-nirnet-circuit',
+            template: __webpack_require__(/*! ./nirnet-circuit.component.html */ "./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.html"),
+            styles: [__webpack_require__(/*! ./nirnet-circuit.component.scss */ "./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_nirnet_service__WEBPACK_IMPORTED_MODULE_2__["NiRNeTService"]])
+    ], NiRNeTCircuitComponent);
+    return NiRNeTCircuitComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.html":
+/*!**********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.html ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"nirnet-settings-container\">\r\n  <h2 class=\"settings-title\">Настройки NiRNeT</h2>\r\n  \r\n  <div class=\"settings-card\">\r\n    <form [formGroup]=\"settingsForm\">\r\n      <div class=\"settings-section\">\r\n        <h3>Приватность</h3>\r\n        \r\n        <div class=\"form-group\">\r\n          <mat-checkbox formControlName=\"blockCookies\">\r\n            Блокировать cookies\r\n          </mat-checkbox>\r\n          <div class=\"form-help\">Блокировать cookies от сайтов, улучшает анонимность</div>\r\n        </div>\r\n        \r\n        <div class=\"form-group\">\r\n          <mat-checkbox formControlName=\"useRandomUserAgent\">\r\n            Случайный User-Agent\r\n          </mat-checkbox>\r\n          <div class=\"form-help\">Использовать случайный User-Agent при каждом запросе</div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div class=\"settings-section\">\r\n        <h3>Настройки цепочки</h3>\r\n        \r\n        <div class=\"form-group\">\r\n          <label>Уровень безопасности:</label>\r\n          <mat-button-toggle-group formControlName=\"securityLevel\">\r\n            <mat-button-toggle *ngFor=\"let level of securityLevels\" [value]=\"level.value\">\r\n              {{ level.label }}\r\n            </mat-button-toggle>\r\n          </mat-button-toggle-group>\r\n          <div class=\"form-help\" *ngIf=\"settingsForm.value.securityLevel\">\r\n            {{ getSecurityLevelDescription(settingsForm.value.securityLevel) }}\r\n          </div>\r\n        </div>\r\n        \r\n        <div class=\"form-group\">\r\n          <label>Длина цепочки:</label>\r\n          <mat-slider\r\n            formControlName=\"circuitLength\"\r\n            [min]=\"2\"\r\n            [max]=\"5\"\r\n            [step]=\"1\"\r\n            [tickInterval]=\"1\">\r\n          </mat-slider>\r\n          <div class=\"slider-value\">{{ settingsForm.value.circuitLength }}</div>\r\n          <div class=\"form-help\">Количество нод в цепочке. Большее количество повышает анонимность, но снижает скорость.</div>\r\n        </div>\r\n        \r\n        <div class=\"form-group\">\r\n          <label>Время ротации цепочки (мин):</label>\r\n          <mat-select formControlName=\"rotateCircuitTime\">\r\n            <mat-option *ngFor=\"let time of rotateTimeOptions\" [value]=\"time\">\r\n              {{ time }}\r\n            </mat-option>\r\n          </mat-select>\r\n          <div class=\"form-help\">Как часто будет происходить автоматическая смена цепочки нод.</div>\r\n        </div>\r\n      </div>\r\n      \r\n      <div class=\"button-container\">\r\n        <button mat-raised-button color=\"primary\" (click)=\"rotateCircuit()\">\r\n          Сменить цепочку сейчас\r\n        </button>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div> "
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.scss":
+/*!**********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.scss ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".nirnet-settings-container {\n  padding: 1rem;\n  max-width: 800px;\n  margin: 0 auto; }\n\n.settings-title {\n  font-size: 1.5rem;\n  margin-bottom: 1.5rem;\n  color: #333; }\n\n.settings-card {\n  background-color: #fff;\n  border-radius: 8px;\n  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n  padding: 1.5rem; }\n\n.settings-section {\n  margin-bottom: 2rem; }\n\n.settings-section h3 {\n    font-size: 1.2rem;\n    margin-bottom: 1rem;\n    color: #444;\n    border-bottom: 1px solid #eee;\n    padding-bottom: 0.5rem; }\n\n.form-group {\n  margin-bottom: 1.5rem; }\n\n.form-group label {\n    display: block;\n    margin-bottom: 0.5rem;\n    font-weight: 500; }\n\n.form-help {\n  font-size: 0.8rem;\n  color: #777;\n  margin-top: 0.3rem; }\n\n.slider-value {\n  text-align: center;\n  font-weight: bold;\n  margin-top: 0.5rem; }\n\n.button-container {\n  display: flex;\n  justify-content: flex-end;\n  margin-top: 2rem; }\n\n::ng-deep .mat-button-toggle-group {\n  display: flex;\n  width: 100%; }\n\n::ng-deep .mat-button-toggle-group .mat-button-toggle {\n    flex: 1;\n    text-align: center; }\n\n::ng-deep .mat-slider {\n  width: 100%; }\n\n::ng-deep .mat-select {\n  width: 100%;\n  max-width: 300px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvbmlybmV0LXNldHRpbmdzL0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxuaXJuZXRcXGNvbXBvbmVudHNcXG5pcm5ldC1zZXR0aW5nc1xcbmlybmV0LXNldHRpbmdzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBYTtFQUNiLGdCQUFnQjtFQUNoQixjQUFjLEVBQUE7O0FBR2hCO0VBQ0UsaUJBQWlCO0VBQ2pCLHFCQUFxQjtFQUNyQixXQUFXLEVBQUE7O0FBR2I7RUFDRSxzQkFBc0I7RUFDdEIsa0JBQWtCO0VBQ2xCLHlDQUF5QztFQUN6QyxlQUFlLEVBQUE7O0FBR2pCO0VBQ0UsbUJBQW1CLEVBQUE7O0FBRHJCO0lBSUksaUJBQWlCO0lBQ2pCLG1CQUFtQjtJQUNuQixXQUFXO0lBQ1gsNkJBQTZCO0lBQzdCLHNCQUFzQixFQUFBOztBQUkxQjtFQUNFLHFCQUFxQixFQUFBOztBQUR2QjtJQUlJLGNBQWM7SUFDZCxxQkFBcUI7SUFDckIsZ0JBQWdCLEVBQUE7O0FBSXBCO0VBQ0UsaUJBQWlCO0VBQ2pCLFdBQVc7RUFDWCxrQkFBa0IsRUFBQTs7QUFHcEI7RUFDRSxrQkFBa0I7RUFDbEIsaUJBQWlCO0VBQ2pCLGtCQUFrQixFQUFBOztBQUdwQjtFQUNFLGFBQWE7RUFDYix5QkFBeUI7RUFDekIsZ0JBQWdCLEVBQUE7O0FBR2xCO0VBRUksYUFBYTtFQUNiLFdBQVcsRUFBQTs7QUFIZjtJQU1NLE9BQU87SUFDUCxrQkFBa0IsRUFBQTs7QUFQeEI7RUFZSSxXQUFXLEVBQUE7O0FBWmY7RUFnQkksV0FBVztFQUNYLGdCQUFnQixFQUFBIiwiZmlsZSI6InNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvbmlybmV0LXNldHRpbmdzL25pcm5ldC1zZXR0aW5ncy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5uaXJuZXQtc2V0dGluZ3MtY29udGFpbmVyIHtcclxuICBwYWRkaW5nOiAxcmVtO1xyXG4gIG1heC13aWR0aDogODAwcHg7XHJcbiAgbWFyZ2luOiAwIGF1dG87XHJcbn1cclxuXHJcbi5zZXR0aW5ncy10aXRsZSB7XHJcbiAgZm9udC1zaXplOiAxLjVyZW07XHJcbiAgbWFyZ2luLWJvdHRvbTogMS41cmVtO1xyXG4gIGNvbG9yOiAjMzMzO1xyXG59XHJcblxyXG4uc2V0dGluZ3MtY2FyZCB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZjtcclxuICBib3JkZXItcmFkaXVzOiA4cHg7XHJcbiAgYm94LXNoYWRvdzogMCAycHggMTBweCByZ2JhKDAsIDAsIDAsIDAuMSk7XHJcbiAgcGFkZGluZzogMS41cmVtO1xyXG59XHJcblxyXG4uc2V0dGluZ3Mtc2VjdGlvbiB7XHJcbiAgbWFyZ2luLWJvdHRvbTogMnJlbTtcclxuICBcclxuICBoMyB7XHJcbiAgICBmb250LXNpemU6IDEuMnJlbTtcclxuICAgIG1hcmdpbi1ib3R0b206IDFyZW07XHJcbiAgICBjb2xvcjogIzQ0NDtcclxuICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZWVlO1xyXG4gICAgcGFkZGluZy1ib3R0b206IDAuNXJlbTtcclxuICB9XHJcbn1cclxuXHJcbi5mb3JtLWdyb3VwIHtcclxuICBtYXJnaW4tYm90dG9tOiAxLjVyZW07XHJcbiAgXHJcbiAgbGFiZWwge1xyXG4gICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAwLjVyZW07XHJcbiAgICBmb250LXdlaWdodDogNTAwO1xyXG4gIH1cclxufVxyXG5cclxuLmZvcm0taGVscCB7XHJcbiAgZm9udC1zaXplOiAwLjhyZW07XHJcbiAgY29sb3I6ICM3Nzc7XHJcbiAgbWFyZ2luLXRvcDogMC4zcmVtO1xyXG59XHJcblxyXG4uc2xpZGVyLXZhbHVlIHtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgbWFyZ2luLXRvcDogMC41cmVtO1xyXG59XHJcblxyXG4uYnV0dG9uLWNvbnRhaW5lciB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtZW5kO1xyXG4gIG1hcmdpbi10b3A6IDJyZW07XHJcbn1cclxuXHJcbjo6bmctZGVlcCB7XHJcbiAgLm1hdC1idXR0b24tdG9nZ2xlLWdyb3VwIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIFxyXG4gICAgLm1hdC1idXR0b24tdG9nZ2xlIHtcclxuICAgICAgZmxleDogMTtcclxuICAgICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgfVxyXG4gIH1cclxuICBcclxuICAubWF0LXNsaWRlciB7XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICB9XHJcbiAgXHJcbiAgLm1hdC1zZWxlY3Qge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtYXgtd2lkdGg6IDMwMHB4O1xyXG4gIH1cclxufSAiXX0= */"
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.ts":
+/*!********************************************************************************!*\
+  !*** ./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.ts ***!
+  \********************************************************************************/
+/*! exports provided: NiRNeTSettingsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTSettingsComponent", function() { return NiRNeTSettingsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var NiRNeTSettingsComponent = /** @class */ (function () {
+    function NiRNeTSettingsComponent(fb, nirnetService) {
+        this.fb = fb;
+        this.nirnetService = nirnetService;
+        this.securityLevels = [
+            { value: 'low', label: 'Низкий' },
+            { value: 'medium', label: 'Средний' },
+            { value: 'high', label: 'Высокий' }
+        ];
+        this.circuitLengthOptions = [2, 3, 4, 5];
+        this.rotateTimeOptions = [5, 10, 15, 30, 60];
+        this.settingsForm = this.fb.group({
+            blockCookies: [true],
+            useRandomUserAgent: [true],
+            privacyLevel: ['high'],
+            circuitLength: [3],
+            rotateCircuitTime: [15]
+        });
+    }
+    NiRNeTSettingsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        // Загружаем текущие настройки
+        var currentSettings = this.nirnetService.getPrivacySettings();
+        this.settingsForm.patchValue({
+            blockCookies: currentSettings.blockCookies,
+            useRandomUserAgent: currentSettings.useRandomUserAgent || true,
+            privacyLevel: currentSettings.privacyLevel,
+            circuitLength: currentSettings.circuitLength || 3,
+            rotateCircuitTime: currentSettings.rotateCircuitTime
+        });
+        // Подписываемся на изменения в форме и обновляем настройки
+        this.settingsForm.valueChanges.subscribe(function (values) {
+            var settings = {
+                blockCookies: values.blockCookies,
+                privacyLevel: values.privacyLevel,
+                useRandomUserAgent: values.useRandomUserAgent,
+                circuitLength: values.circuitLength,
+                rotateCircuitTime: values.rotateCircuitTime
+            };
+            _this.nirnetService.updatePrivacySettings(settings);
+        });
+    };
+    // Применить новые настройки и перезапустить цепочку
+    NiRNeTSettingsComponent.prototype.applySettings = function () {
+        this.nirnetService.rotateCircuit();
+    };
+    /**
+     * Получает описание уровня безопасности
+     */
+    NiRNeTSettingsComponent.prototype.getSecurityLevelDescription = function (level) {
+        switch (level) {
+            case 'low':
+                return 'Базовая анонимность, более высокая скорость';
+            case 'medium':
+                return 'Баланс между анонимностью и скоростью';
+            case 'high':
+                return 'Максимальная анонимность, возможно снижение скорости';
+            default:
+                return '';
+        }
+    };
+    NiRNeTSettingsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-nirnet-settings',
+            template: __webpack_require__(/*! ./nirnet-settings.component.html */ "./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.html"),
+            styles: [__webpack_require__(/*! ./nirnet-settings.component.scss */ "./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
+            _services_nirnet_service__WEBPACK_IMPORTED_MODULE_2__["NiRNeTService"]])
+    ], NiRNeTSettingsComponent);
+    return NiRNeTSettingsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/ssl-status/ssl-status.component.html":
+/*!************************************************************************!*\
+  !*** ./src/app/nirnet/components/ssl-status/ssl-status.component.html ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"ssl-status-container\">\r\n  <div class=\"ssl-header\">\r\n    <h3>Статус SSL-соединения</h3>\r\n    <button mat-icon-button (click)=\"refreshSSLStatus()\" title=\"Обновить статус\">\r\n      <mat-icon>refresh</mat-icon>\r\n    </button>\r\n  </div>\r\n  \r\n  <div class=\"ssl-status\" *ngIf=\"sslStatus\">\r\n    <div class=\"status-indicator\" [ngClass]=\"{\r\n      'secure': sslStatus.isSecure && sslStatus.isTrusted,\r\n      'warning': sslStatus.isSecure && !sslStatus.isTrusted,\r\n      'danger': !sslStatus.isSecure\r\n    }\">\r\n      <mat-icon *ngIf=\"sslStatus.isSecure && sslStatus.isTrusted\">lock</mat-icon>\r\n      <mat-icon *ngIf=\"sslStatus.isSecure && !sslStatus.isTrusted\">warning</mat-icon>\r\n      <mat-icon *ngIf=\"!sslStatus.isSecure\">lock_open</mat-icon>\r\n      \r\n      <span *ngIf=\"sslStatus.isSecure && sslStatus.isTrusted\">Безопасное соединение</span>\r\n      <span *ngIf=\"sslStatus.isSecure && !sslStatus.isTrusted\">Ненадежный сертификат</span>\r\n      <span *ngIf=\"!sslStatus.isSecure\">Небезопасное соединение</span>\r\n    </div>\r\n    \r\n    <div class=\"ssl-details\">\r\n      <div class=\"detail-row\">\r\n        <span class=\"detail-label\">Шифрование:</span>\r\n        <span class=\"detail-value\">{{ sslStatus.encryptionLevel }}</span>\r\n      </div>\r\n      <div class=\"detail-row\" *ngIf=\"sslStatus.protocol\">\r\n        <span class=\"detail-label\">Протокол:</span>\r\n        <span class=\"detail-value\">{{ sslStatus.protocol }}</span>\r\n      </div>\r\n      <div class=\"detail-row\" *ngIf=\"sslStatus.cipher\">\r\n        <span class=\"detail-label\">Шифр:</span>\r\n        <span class=\"detail-value\">{{ sslStatus.cipher }}</span>\r\n      </div>\r\n    </div>\r\n    \r\n    <div class=\"server-trust-status\">\r\n      <div *ngIf=\"isTrustedServer\" class=\"trusted-server\">\r\n        <mat-icon>verified_user</mat-icon>\r\n        <span>Сервер в списке доверенных</span>\r\n        <button mat-button color=\"warn\" (click)=\"removeTrustedServer()\">\r\n          Удалить из доверенных\r\n        </button>\r\n      </div>\r\n      \r\n      <div *ngIf=\"!isTrustedServer\" class=\"untrusted-server\">\r\n        <mat-icon>help_outline</mat-icon>\r\n        <span>Сервер не в списке доверенных</span>\r\n        <button mat-button color=\"primary\" (click)=\"addTrustedServer()\">\r\n          Добавить в доверенные\r\n        </button>\r\n      </div>\r\n    </div>\r\n    \r\n    <div class=\"certificate-actions\">\r\n      <button mat-button color=\"primary\" (click)=\"loadRootCertificate()\">\r\n        Обновить корневой сертификат\r\n      </button>\r\n    </div>\r\n  </div>\r\n  \r\n  <div class=\"error-message\" *ngIf=\"!sslStatus\">\r\n    <mat-icon>error_outline</mat-icon>\r\n    <span>Информация о SSL-соединении недоступна</span>\r\n  </div>\r\n  \r\n  <div class=\"trusted-nodes-container\" *ngIf=\"trustedNodes && trustedNodes.length > 0\">\r\n    <h4>Доверенные узлы NiRNeT</h4>\r\n    <div class=\"trusted-nodes-list\">\r\n      <div class=\"trusted-node\" *ngFor=\"let node of trustedNodes\">\r\n        <div class=\"node-url\">{{ node.nodeUrl }}</div>\r\n        <div class=\"node-fingerprint\">{{ node.fingerprint }}</div>\r\n        <div class=\"node-validity\">\r\n          Действителен до: {{ node.validUntil | date:'dd.MM.yyyy' }}\r\n        </div>\r\n        <div class=\"node-description\" *ngIf=\"node.description\">\r\n          {{ node.description }}\r\n        </div>\r\n        <button mat-icon-button color=\"warn\" (click)=\"certificateManager.removeTrustedNode(node.nodeUrl); loadData()\">\r\n          <mat-icon>delete</mat-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div> "
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/ssl-status/ssl-status.component.scss":
+/*!************************************************************************!*\
+  !*** ./src/app/nirnet/components/ssl-status/ssl-status.component.scss ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".ssl-status-container {\n  padding: 16px;\n  border-radius: 4px;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);\n  background-color: #fff;\n  margin-bottom: 20px; }\n\n.ssl-header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  margin-bottom: 16px; }\n\n.ssl-header h3 {\n    margin: 0;\n    font-size: 18px;\n    font-weight: 500;\n    color: #333; }\n\n.ssl-status .status-indicator {\n  display: flex;\n  align-items: center;\n  padding: 12px;\n  border-radius: 4px;\n  margin-bottom: 16px; }\n\n.ssl-status .status-indicator mat-icon {\n    margin-right: 8px; }\n\n.ssl-status .status-indicator.secure {\n    background-color: #e8f5e9;\n    color: #2e7d32;\n    border-left: 4px solid #2e7d32; }\n\n.ssl-status .status-indicator.warning {\n    background-color: #fff8e1;\n    color: #f57f17;\n    border-left: 4px solid #f57f17; }\n\n.ssl-status .status-indicator.danger {\n    background-color: #ffebee;\n    color: #c62828;\n    border-left: 4px solid #c62828; }\n\n.ssl-details {\n  margin-bottom: 16px; }\n\n.ssl-details .detail-row {\n    display: flex;\n    padding: 8px 0;\n    border-bottom: 1px solid #f0f0f0; }\n\n.ssl-details .detail-row:last-child {\n      border-bottom: none; }\n\n.ssl-details .detail-row .detail-label {\n      width: 120px;\n      font-weight: 500;\n      color: #666; }\n\n.ssl-details .detail-row .detail-value {\n      flex: 1;\n      color: #333; }\n\n.server-trust-status {\n  margin-bottom: 16px;\n  padding: 12px;\n  border-radius: 4px;\n  background-color: #f5f5f5; }\n\n.server-trust-status .trusted-server, .server-trust-status .untrusted-server {\n    display: flex;\n    align-items: center; }\n\n.server-trust-status .trusted-server mat-icon, .server-trust-status .untrusted-server mat-icon {\n      margin-right: 8px; }\n\n.server-trust-status .trusted-server span, .server-trust-status .untrusted-server span {\n      flex: 1;\n      margin-right: 16px; }\n\n.server-trust-status .trusted-server mat-icon {\n    color: #2e7d32; }\n\n.server-trust-status .untrusted-server mat-icon {\n    color: #f57f17; }\n\n.certificate-actions {\n  margin-top: 16px; }\n\n.error-message {\n  display: flex;\n  align-items: center;\n  padding: 16px;\n  background-color: #f5f5f5;\n  border-radius: 4px;\n  color: #757575; }\n\n.error-message mat-icon {\n    margin-right: 8px; }\n\n.trusted-nodes-container {\n  margin-top: 24px; }\n\n.trusted-nodes-container h4 {\n    font-size: 16px;\n    font-weight: 500;\n    margin-bottom: 12px;\n    color: #333; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node {\n    padding: 12px;\n    border-radius: 4px;\n    background-color: #f5f5f5;\n    margin-bottom: 8px;\n    position: relative; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node:last-child {\n      margin-bottom: 0; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node .node-url {\n      font-weight: 500;\n      margin-bottom: 4px; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node .node-fingerprint {\n      font-family: monospace;\n      font-size: 12px;\n      color: #666;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      margin-bottom: 4px; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node .node-validity {\n      font-size: 12px;\n      color: #757575; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node .node-description {\n      font-size: 12px;\n      font-style: italic;\n      color: #757575;\n      margin-top: 4px; }\n\n.trusted-nodes-container .trusted-nodes-list .trusted-node button {\n      position: absolute;\n      top: 8px;\n      right: 8px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvc3NsLXN0YXR1cy9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcbmlybmV0XFxjb21wb25lbnRzXFxzc2wtc3RhdHVzXFxzc2wtc3RhdHVzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBYTtFQUNiLGtCQUFrQjtFQUNsQix3Q0FBd0M7RUFDeEMsc0JBQXNCO0VBQ3RCLG1CQUFtQixFQUFBOztBQUdyQjtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7RUFDOUIsbUJBQW1CO0VBQ25CLG1CQUFtQixFQUFBOztBQUpyQjtJQU9JLFNBQVM7SUFDVCxlQUFlO0lBQ2YsZ0JBQWdCO0lBQ2hCLFdBQVcsRUFBQTs7QUFJZjtFQUVJLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixtQkFBbUIsRUFBQTs7QUFOdkI7SUFTTSxpQkFBaUIsRUFBQTs7QUFUdkI7SUFhTSx5QkFBeUI7SUFDekIsY0FBYztJQUNkLDhCQUE4QixFQUFBOztBQWZwQztJQW1CTSx5QkFBeUI7SUFDekIsY0FBYztJQUNkLDhCQUE4QixFQUFBOztBQXJCcEM7SUF5Qk0seUJBQXlCO0lBQ3pCLGNBQWM7SUFDZCw4QkFBOEIsRUFBQTs7QUFLcEM7RUFDRSxtQkFBbUIsRUFBQTs7QUFEckI7SUFJSSxhQUFhO0lBQ2IsY0FBYztJQUNkLGdDQUFnQyxFQUFBOztBQU5wQztNQVNNLG1CQUFtQixFQUFBOztBQVR6QjtNQWFNLFlBQVk7TUFDWixnQkFBZ0I7TUFDaEIsV0FBVyxFQUFBOztBQWZqQjtNQW1CTSxPQUFPO01BQ1AsV0FBVyxFQUFBOztBQUtqQjtFQUNFLG1CQUFtQjtFQUNuQixhQUFhO0VBQ2Isa0JBQWtCO0VBQ2xCLHlCQUF5QixFQUFBOztBQUozQjtJQU9JLGFBQWE7SUFDYixtQkFBbUIsRUFBQTs7QUFSdkI7TUFXTSxpQkFBaUIsRUFBQTs7QUFYdkI7TUFlTSxPQUFPO01BQ1Asa0JBQWtCLEVBQUE7O0FBaEJ4QjtJQXFCSSxjQUFjLEVBQUE7O0FBckJsQjtJQXlCSSxjQUFjLEVBQUE7O0FBSWxCO0VBQ0UsZ0JBQWdCLEVBQUE7O0FBR2xCO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQixhQUFhO0VBQ2IseUJBQXlCO0VBQ3pCLGtCQUFrQjtFQUNsQixjQUFjLEVBQUE7O0FBTmhCO0lBU0ksaUJBQWlCLEVBQUE7O0FBSXJCO0VBQ0UsZ0JBQWdCLEVBQUE7O0FBRGxCO0lBSUksZUFBZTtJQUNmLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIsV0FBVyxFQUFBOztBQVBmO0lBWU0sYUFBYTtJQUNiLGtCQUFrQjtJQUNsQix5QkFBeUI7SUFDekIsa0JBQWtCO0lBQ2xCLGtCQUFrQixFQUFBOztBQWhCeEI7TUFtQlEsZ0JBQWdCLEVBQUE7O0FBbkJ4QjtNQXVCUSxnQkFBZ0I7TUFDaEIsa0JBQWtCLEVBQUE7O0FBeEIxQjtNQTRCUSxzQkFBc0I7TUFDdEIsZUFBZTtNQUNmLFdBQVc7TUFDWCxnQkFBZ0I7TUFDaEIsdUJBQXVCO01BQ3ZCLGtCQUFrQixFQUFBOztBQWpDMUI7TUFxQ1EsZUFBZTtNQUNmLGNBQWMsRUFBQTs7QUF0Q3RCO01BMENRLGVBQWU7TUFDZixrQkFBa0I7TUFDbEIsY0FBYztNQUNkLGVBQWUsRUFBQTs7QUE3Q3ZCO01BaURRLGtCQUFrQjtNQUNsQixRQUFRO01BQ1IsVUFBVSxFQUFBIiwiZmlsZSI6InNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvc3NsLXN0YXR1cy9zc2wtc3RhdHVzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnNzbC1zdGF0dXMtY29udGFpbmVyIHtcclxuICBwYWRkaW5nOiAxNnB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgbWFyZ2luLWJvdHRvbTogMjBweDtcclxufVxyXG5cclxuLnNzbC1oZWFkZXIge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxuICBcclxuICBoMyB7XHJcbiAgICBtYXJnaW46IDA7XHJcbiAgICBmb250LXNpemU6IDE4cHg7XHJcbiAgICBmb250LXdlaWdodDogNTAwO1xyXG4gICAgY29sb3I6ICMzMzM7XHJcbiAgfVxyXG59XHJcblxyXG4uc3NsLXN0YXR1cyB7XHJcbiAgLnN0YXR1cy1pbmRpY2F0b3Ige1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBwYWRkaW5nOiAxMnB4O1xyXG4gICAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxuICAgIFxyXG4gICAgbWF0LWljb24ge1xyXG4gICAgICBtYXJnaW4tcmlnaHQ6IDhweDtcclxuICAgIH1cclxuICAgIFxyXG4gICAgJi5zZWN1cmUge1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZThmNWU5O1xyXG4gICAgICBjb2xvcjogIzJlN2QzMjtcclxuICAgICAgYm9yZGVyLWxlZnQ6IDRweCBzb2xpZCAjMmU3ZDMyO1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICAmLndhcm5pbmcge1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmOGUxO1xyXG4gICAgICBjb2xvcjogI2Y1N2YxNztcclxuICAgICAgYm9yZGVyLWxlZnQ6IDRweCBzb2xpZCAjZjU3ZjE3O1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICAmLmRhbmdlciB7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZmViZWU7XHJcbiAgICAgIGNvbG9yOiAjYzYyODI4O1xyXG4gICAgICBib3JkZXItbGVmdDogNHB4IHNvbGlkICNjNjI4Mjg7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG4uc3NsLWRldGFpbHMge1xyXG4gIG1hcmdpbi1ib3R0b206IDE2cHg7XHJcbiAgXHJcbiAgLmRldGFpbC1yb3cge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIHBhZGRpbmc6IDhweCAwO1xyXG4gICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNmMGYwZjA7XHJcbiAgICBcclxuICAgICY6bGFzdC1jaGlsZCB7XHJcbiAgICAgIGJvcmRlci1ib3R0b206IG5vbmU7XHJcbiAgICB9XHJcbiAgICBcclxuICAgIC5kZXRhaWwtbGFiZWwge1xyXG4gICAgICB3aWR0aDogMTIwcHg7XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICAgIGNvbG9yOiAjNjY2O1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICAuZGV0YWlsLXZhbHVlIHtcclxuICAgICAgZmxleDogMTtcclxuICAgICAgY29sb3I6ICMzMzM7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG4uc2VydmVyLXRydXN0LXN0YXR1cyB7XHJcbiAgbWFyZ2luLWJvdHRvbTogMTZweDtcclxuICBwYWRkaW5nOiAxMnB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjVmNWY1O1xyXG4gIFxyXG4gIC50cnVzdGVkLXNlcnZlciwgLnVudHJ1c3RlZC1zZXJ2ZXIge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBcclxuICAgIG1hdC1pY29uIHtcclxuICAgICAgbWFyZ2luLXJpZ2h0OiA4cHg7XHJcbiAgICB9XHJcbiAgICBcclxuICAgIHNwYW4ge1xyXG4gICAgICBmbGV4OiAxO1xyXG4gICAgICBtYXJnaW4tcmlnaHQ6IDE2cHg7XHJcbiAgICB9XHJcbiAgfVxyXG4gIFxyXG4gIC50cnVzdGVkLXNlcnZlciBtYXQtaWNvbiB7XHJcbiAgICBjb2xvcjogIzJlN2QzMjtcclxuICB9XHJcbiAgXHJcbiAgLnVudHJ1c3RlZC1zZXJ2ZXIgbWF0LWljb24ge1xyXG4gICAgY29sb3I6ICNmNTdmMTc7XHJcbiAgfVxyXG59XHJcblxyXG4uY2VydGlmaWNhdGUtYWN0aW9ucyB7XHJcbiAgbWFyZ2luLXRvcDogMTZweDtcclxufVxyXG5cclxuLmVycm9yLW1lc3NhZ2Uge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBwYWRkaW5nOiAxNnB4O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gIGNvbG9yOiAjNzU3NTc1O1xyXG4gIFxyXG4gIG1hdC1pY29uIHtcclxuICAgIG1hcmdpbi1yaWdodDogOHB4O1xyXG4gIH1cclxufVxyXG5cclxuLnRydXN0ZWQtbm9kZXMtY29udGFpbmVyIHtcclxuICBtYXJnaW4tdG9wOiAyNHB4O1xyXG4gIFxyXG4gIGg0IHtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxMnB4O1xyXG4gICAgY29sb3I6ICMzMzM7XHJcbiAgfVxyXG4gIFxyXG4gIC50cnVzdGVkLW5vZGVzLWxpc3Qge1xyXG4gICAgLnRydXN0ZWQtbm9kZSB7XHJcbiAgICAgIHBhZGRpbmc6IDEycHg7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTtcclxuICAgICAgbWFyZ2luLWJvdHRvbTogOHB4O1xyXG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgIFxyXG4gICAgICAmOmxhc3QtY2hpbGQge1xyXG4gICAgICAgIG1hcmdpbi1ib3R0b206IDA7XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgIC5ub2RlLXVybCB7XHJcbiAgICAgICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgICAgICBtYXJnaW4tYm90dG9tOiA0cHg7XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgIC5ub2RlLWZpbmdlcnByaW50IHtcclxuICAgICAgICBmb250LWZhbWlseTogbW9ub3NwYWNlO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMTJweDtcclxuICAgICAgICBjb2xvcjogIzY2NjtcclxuICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xyXG4gICAgICAgIG1hcmdpbi1ib3R0b206IDRweDtcclxuICAgICAgfVxyXG4gICAgICBcclxuICAgICAgLm5vZGUtdmFsaWRpdHkge1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMTJweDtcclxuICAgICAgICBjb2xvcjogIzc1NzU3NTtcclxuICAgICAgfVxyXG4gICAgICBcclxuICAgICAgLm5vZGUtZGVzY3JpcHRpb24ge1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMTJweDtcclxuICAgICAgICBmb250LXN0eWxlOiBpdGFsaWM7XHJcbiAgICAgICAgY29sb3I6ICM3NTc1NzU7XHJcbiAgICAgICAgbWFyZ2luLXRvcDogNHB4O1xyXG4gICAgICB9XHJcbiAgICAgIFxyXG4gICAgICBidXR0b24ge1xyXG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICB0b3A6IDhweDtcclxuICAgICAgICByaWdodDogOHB4O1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG59ICJdfQ== */"
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/ssl-status/ssl-status.component.ts":
+/*!**********************************************************************!*\
+  !*** ./src/app/nirnet/components/ssl-status/ssl-status.component.ts ***!
+  \**********************************************************************/
+/*! exports provided: SSLStatusComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SSLStatusComponent", function() { return SSLStatusComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+/* harmony import */ var _services_certificate_manager_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/certificate-manager.service */ "./src/app/nirnet/services/certificate-manager.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var SSLStatusComponent = /** @class */ (function () {
+    function SSLStatusComponent(nirnetService, certificateManager) {
+        this.nirnetService = nirnetService;
+        this.certificateManager = certificateManager;
+        // URL текущего сервера
+        this.serverUrl = '';
+        // Статус SSL-соединения
+        this.sslStatus = null;
+        // Список доверенных узлов
+        this.trustedNodes = [];
+        // Флаг, показывающий, является ли текущий сервер доверенным
+        this.isTrustedServer = false;
+    }
+    SSLStatusComponent.prototype.ngOnInit = function () {
+        this.loadData();
+    };
+    SSLStatusComponent.prototype.ngOnChanges = function (changes) {
+        if (changes['serverUrl'] && !changes['serverUrl'].firstChange) {
+            this.loadData();
+        }
+    };
+    /**
+     * Загружает данные о статусе SSL и доверенных узлах
+     */
+    SSLStatusComponent.prototype.loadData = function () {
+        var _this = this;
+        // Получаем последний статус SSL
+        this.nirnetService.getSSLStatus().subscribe(function (status) {
+            _this.sslStatus = status;
+        });
+        // Если URL сервера задан, проверяем статус SSL и доверенность
+        if (this.serverUrl) {
+            this.certificateManager.checkSSLStatus(this.serverUrl, true)
+                .subscribe(function (status) {
+                _this.sslStatus = status;
+                _this.isTrustedServer = _this.certificateManager.isTrustedNode(_this.serverUrl);
+            });
+        }
+        // Получаем список доверенных узлов
+        this.trustedNodes = this.certificateManager.getTrustedNodes();
+    };
+    /**
+     * Добавляет текущий сервер в список доверенных
+     */
+    SSLStatusComponent.prototype.addTrustedServer = function () {
+        if (!this.serverUrl)
+            return;
+        // Создаем объект для доверенного узла
+        var trustedNode = {
+            nodeUrl: this.serverUrl,
+            fingerprint: 'SHA256:' + Array.from({ length: 16 }, function () {
+                return Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+            }).join(':'),
+            trustedSince: new Date(),
+            validUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 2)),
+            description: 'Добавлен вручную'
+        };
+        // Добавляем узел в список доверенных
+        this.certificateManager.addTrustedNode(trustedNode);
+        // Обновляем данные
+        this.loadData();
+    };
+    /**
+     * Удаляет сервер из списка доверенных
+     */
+    SSLStatusComponent.prototype.removeTrustedServer = function () {
+        if (!this.serverUrl)
+            return;
+        this.certificateManager.removeTrustedNode(this.serverUrl);
+        // Обновляем данные
+        this.loadData();
+    };
+    /**
+     * Обновляет статус SSL
+     */
+    SSLStatusComponent.prototype.refreshSSLStatus = function () {
+        this.loadData();
+    };
+    /**
+     * Загружает корневой сертификат с сервера
+     */
+    SSLStatusComponent.prototype.loadRootCertificate = function () {
+        var _this = this;
+        if (!this.serverUrl)
+            return;
+        this.certificateManager.loadRootCertificate(this.serverUrl)
+            .subscribe({
+            next: function () {
+                alert('Корневой сертификат успешно загружен');
+                _this.loadData();
+            },
+            error: function (err) {
+                alert('Ошибка при загрузке сертификата: ' + err);
+            }
+        });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], SSLStatusComponent.prototype, "serverUrl", void 0);
+    SSLStatusComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-ssl-status',
+            template: __webpack_require__(/*! ./ssl-status.component.html */ "./src/app/nirnet/components/ssl-status/ssl-status.component.html"),
+            styles: [__webpack_require__(/*! ./ssl-status.component.scss */ "./src/app/nirnet/components/ssl-status/ssl-status.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_nirnet_service__WEBPACK_IMPORTED_MODULE_1__["NiRNeTService"],
+            _services_certificate_manager_service__WEBPACK_IMPORTED_MODULE_2__["CertificateManagerService"]])
+    ], SSLStatusComponent);
+    return SSLStatusComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/status/status.component.html":
+/*!****************************************************************!*\
+  !*** ./src/app/nirnet/components/status/status.component.html ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"nirnet-status-container\">\r\n  <h2>Статус NiRNeT</h2>\r\n  \r\n  <div class=\"status-panel\">\r\n    <div class=\"status-indicator\" [class.active]=\"serverStatus?.status === 'active'\" [class.inactive]=\"serverStatus?.status === 'inactive'\" [class.unknown]=\"!serverStatus\">\r\n      <span class=\"status-dot\"></span>\r\n      <span class=\"status-text\">\r\n        {{ serverStatus?.status === 'active' ? 'Активен' : (serverStatus?.status === 'inactive' ? 'Неактивен' : 'Неизвестно') }}\r\n      </span>\r\n    </div>\r\n    \r\n    <button class=\"check-button\" (click)=\"checkStatus()\" [disabled]=\"isRefreshing\">\r\n      <span *ngIf=\"!isRefreshing\">Проверить статус</span>\r\n      <span *ngIf=\"isRefreshing\">Проверка...</span>\r\n    </button>\r\n  </div>\r\n  \r\n  <div class=\"server-status\" *ngIf=\"serverStatus\">\r\n    <h3>Информация о сервере</h3>\r\n    <ul>\r\n      <li><strong>Статус:</strong> {{ serverStatus.status }}</li>\r\n      <li><strong>Версия:</strong> {{ serverStatus.version }}</li>\r\n      <li><strong>Активные соединения:</strong> {{ serverStatus.connections }}</li>\r\n      <li><strong>Время работы:</strong> {{ formatUptime(serverStatus.uptime) }}</li>\r\n      <li><strong>Загрузка CPU:</strong> {{ serverStatus.cpuLoad | percent:'1.0-1' }}</li>\r\n      <li><strong>Использование памяти:</strong> {{ serverStatus.memoryUsage | percent:'1.0-1' }}</li>\r\n      <li><strong>Активные цепочки:</strong> {{ serverStatus.activeCircuits }}</li>\r\n      <li><strong>Обновлено:</strong> {{ formatDate(serverStatus.lastUpdate) }}</li>\r\n    </ul>\r\n  </div>\r\n  \r\n  <div class=\"circuit-info\" *ngIf=\"activeCircuit\">\r\n    <h3>Активная цепочка</h3>\r\n    <div class=\"circuit-nodes\">\r\n      <div class=\"node\" *ngFor=\"let node of activeCircuit.nodes; let i = index\">\r\n        <div class=\"node-number\">{{ i + 1 }}</div>\r\n        <div class=\"node-details\">\r\n          <div><strong>Публичный ключ:</strong> {{ truncateKey(node.publicKey) }}</div>\r\n          <div><strong>Статус:</strong> {{ node.status }}</div>\r\n          <div><strong>Нагрузка:</strong> {{ formatLoad(node.load) }}</div>\r\n          <div><strong>Соединения:</strong> {{ node.connections }}</div>\r\n          <div><strong>Обновлено:</strong> {{ formatDate(node.lastUpdate) }}</div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <button class=\"rotate-button\" (click)=\"rotateCircuit()\" [disabled]=\"isRefreshing\">\r\n      <span *ngIf=\"!isRefreshing\">Сменить цепочку</span>\r\n      <span *ngIf=\"isRefreshing\">Смена...</span>\r\n    </button>\r\n  </div>\r\n</div> "
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/status/status.component.scss":
+/*!****************************************************************!*\
+  !*** ./src/app/nirnet/components/status/status.component.scss ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".nirnet-status-container {\n  padding: 20px;\n  max-width: 800px;\n  margin: 0 auto; }\n  .nirnet-status-container h2 {\n    color: #333;\n    margin-bottom: 20px;\n    text-align: center; }\n  .nirnet-status-container .status-panel {\n    background-color: #f5f5f5;\n    border-radius: 8px;\n    padding: 15px;\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    margin-bottom: 20px; }\n  .nirnet-status-container .status-panel .status-indicator {\n      display: flex;\n      align-items: center; }\n  .nirnet-status-container .status-panel .status-indicator .status-dot {\n        width: 12px;\n        height: 12px;\n        border-radius: 50%;\n        margin-right: 8px; }\n  .nirnet-status-container .status-panel .status-indicator .status-text {\n        font-weight: bold; }\n  .nirnet-status-container .status-panel .status-indicator.active .status-dot {\n        background-color: #4caf50;\n        box-shadow: 0 0 10px #4caf50; }\n  .nirnet-status-container .status-panel .status-indicator.active .status-text {\n        color: #4caf50; }\n  .nirnet-status-container .status-panel .status-indicator.inactive .status-dot {\n        background-color: #f44336;\n        box-shadow: 0 0 10px #f44336; }\n  .nirnet-status-container .status-panel .status-indicator.inactive .status-text {\n        color: #f44336; }\n  .nirnet-status-container .status-panel .status-indicator.unknown .status-dot {\n        background-color: #ff9800;\n        box-shadow: 0 0 10px #ff9800; }\n  .nirnet-status-container .status-panel .status-indicator.unknown .status-text {\n        color: #ff9800; }\n  .nirnet-status-container .status-panel button {\n      background-color: #2196f3;\n      color: white;\n      border: none;\n      border-radius: 4px;\n      padding: 8px 12px;\n      cursor: pointer;\n      font-weight: bold; }\n  .nirnet-status-container .status-panel button:hover {\n        background-color: #0b7dda; }\n  .nirnet-status-container .status-panel button:disabled {\n        background-color: #cccccc;\n        cursor: not-allowed; }\n  .nirnet-status-container .status-panel button.direct-check-button {\n        background-color: #673ab7;\n        margin-left: 10px; }\n  .nirnet-status-container .status-panel button.direct-check-button:hover {\n          background-color: #5e35b1; }\n  .nirnet-status-container .server-status, .nirnet-status-container .circuit-info {\n    background-color: #f5f5f5;\n    border-radius: 8px;\n    padding: 15px;\n    margin-bottom: 20px; }\n  .nirnet-status-container .server-status h3, .nirnet-status-container .circuit-info h3 {\n      color: #333;\n      margin-top: 0;\n      margin-bottom: 10px; }\n  .nirnet-status-container .server-status ul, .nirnet-status-container .circuit-info ul {\n      list-style-type: none;\n      padding-left: 0; }\n  .nirnet-status-container .server-status ul li, .nirnet-status-container .circuit-info ul li {\n        margin-bottom: 5px; }\n  .nirnet-status-container .circuit-nodes {\n    display: flex;\n    flex-direction: column;\n    gap: 15px;\n    margin-bottom: 15px; }\n  .nirnet-status-container .circuit-nodes .node {\n      display: flex;\n      align-items: flex-start;\n      background-color: white;\n      border-radius: 8px;\n      padding: 15px;\n      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);\n      transition: transform 0.2s, box-shadow 0.2s; }\n  .nirnet-status-container .circuit-nodes .node:hover {\n        transform: translateY(-3px);\n        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); }\n  .nirnet-status-container .circuit-nodes .node .node-number {\n        width: 36px;\n        height: 36px;\n        background-color: #2196f3;\n        color: white;\n        border-radius: 50%;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        font-weight: bold;\n        margin-right: 15px;\n        font-size: 16px;\n        box-shadow: 0 2px 5px rgba(33, 150, 243, 0.3); }\n  .nirnet-status-container .circuit-nodes .node .node-details {\n        flex: 1;\n        display: grid;\n        grid-template-columns: 1fr 1fr;\n        gap: 10px; }\n  .nirnet-status-container .circuit-nodes .node .node-details div {\n          margin-bottom: 6px; }\n  .nirnet-status-container .circuit-nodes .node .node-details div strong {\n            color: #555;\n            margin-right: 5px; }\n  @media (max-width: 600px) {\n          .nirnet-status-container .circuit-nodes .node .node-details {\n            grid-template-columns: 1fr; } }\n  .nirnet-status-container .rotate-button {\n    background-color: #ff9800;\n    color: white;\n    border: none;\n    border-radius: 4px;\n    padding: 10px 15px;\n    cursor: pointer;\n    font-weight: bold;\n    width: 100%; }\n  .nirnet-status-container .rotate-button:hover {\n      background-color: #f57c00; }\n  .nirnet-status-container .rotate-button:disabled {\n      background-color: #cccccc;\n      cursor: not-allowed; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlybmV0L2NvbXBvbmVudHMvc3RhdHVzL0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxuaXJuZXRcXGNvbXBvbmVudHNcXHN0YXR1c1xcc3RhdHVzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsYUFBYTtFQUNiLGdCQUFnQjtFQUNoQixjQUFjLEVBQUE7RUFIaEI7SUFNSSxXQUFXO0lBQ1gsbUJBQW1CO0lBQ25CLGtCQUFrQixFQUFBO0VBUnRCO0lBWUkseUJBQXlCO0lBQ3pCLGtCQUFrQjtJQUNsQixhQUFhO0lBQ2IsYUFBYTtJQUNiLG1CQUFtQjtJQUNuQiw4QkFBOEI7SUFDOUIsbUJBQW1CLEVBQUE7RUFsQnZCO01BcUJNLGFBQWE7TUFDYixtQkFBbUIsRUFBQTtFQXRCekI7UUF5QlEsV0FBVztRQUNYLFlBQVk7UUFDWixrQkFBa0I7UUFDbEIsaUJBQWlCLEVBQUE7RUE1QnpCO1FBZ0NRLGlCQUFpQixFQUFBO0VBaEN6QjtRQXFDVSx5QkFBeUI7UUFDekIsNEJBQTRCLEVBQUE7RUF0Q3RDO1FBeUNVLGNBQWMsRUFBQTtFQXpDeEI7UUErQ1UseUJBQXlCO1FBQ3pCLDRCQUE0QixFQUFBO0VBaER0QztRQW1EVSxjQUFjLEVBQUE7RUFuRHhCO1FBeURVLHlCQUF5QjtRQUN6Qiw0QkFBNEIsRUFBQTtFQTFEdEM7UUE2RFUsY0FBYyxFQUFBO0VBN0R4QjtNQW1FTSx5QkFBeUI7TUFDekIsWUFBWTtNQUNaLFlBQVk7TUFDWixrQkFBa0I7TUFDbEIsaUJBQWlCO01BQ2pCLGVBQWU7TUFDZixpQkFBaUIsRUFBQTtFQXpFdkI7UUE0RVEseUJBQXlCLEVBQUE7RUE1RWpDO1FBZ0ZRLHlCQUF5QjtRQUN6QixtQkFBbUIsRUFBQTtFQWpGM0I7UUFxRlEseUJBQXlCO1FBQ3pCLGlCQUFpQixFQUFBO0VBdEZ6QjtVQXlGVSx5QkFBeUIsRUFBQTtFQXpGbkM7SUFnR0kseUJBQXlCO0lBQ3pCLGtCQUFrQjtJQUNsQixhQUFhO0lBQ2IsbUJBQW1CLEVBQUE7RUFuR3ZCO01Bc0dNLFdBQVc7TUFDWCxhQUFhO01BQ2IsbUJBQW1CLEVBQUE7RUF4R3pCO01BNEdNLHFCQUFxQjtNQUNyQixlQUFlLEVBQUE7RUE3R3JCO1FBZ0hRLGtCQUFrQixFQUFBO0VBaEgxQjtJQXNISSxhQUFhO0lBQ2Isc0JBQXNCO0lBQ3RCLFNBQVM7SUFDVCxtQkFBbUIsRUFBQTtFQXpIdkI7TUE0SE0sYUFBYTtNQUNiLHVCQUF1QjtNQUN2Qix1QkFBdUI7TUFDdkIsa0JBQWtCO01BQ2xCLGFBQWE7TUFDYix3Q0FBd0M7TUFDeEMsMkNBQTJDLEVBQUE7RUFsSWpEO1FBcUlRLDJCQUEyQjtRQUMzQiwwQ0FBMEMsRUFBQTtFQXRJbEQ7UUEwSVEsV0FBVztRQUNYLFlBQVk7UUFDWix5QkFBeUI7UUFDekIsWUFBWTtRQUNaLGtCQUFrQjtRQUNsQixhQUFhO1FBQ2IsbUJBQW1CO1FBQ25CLHVCQUF1QjtRQUN2QixpQkFBaUI7UUFDakIsa0JBQWtCO1FBQ2xCLGVBQWU7UUFDZiw2Q0FBNkMsRUFBQTtFQXJKckQ7UUF5SlEsT0FBTztRQUNQLGFBQWE7UUFDYiw4QkFBOEI7UUFDOUIsU0FBUyxFQUFBO0VBNUpqQjtVQStKVSxrQkFBa0IsRUFBQTtFQS9KNUI7WUFrS1ksV0FBVztZQUNYLGlCQUFpQixFQUFBO0VBSXJCO1VBdktSO1lBd0tVLDBCQUEwQixFQUFBLEVBRTdCO0VBMUtQO0lBK0tJLHlCQUF5QjtJQUN6QixZQUFZO0lBQ1osWUFBWTtJQUNaLGtCQUFrQjtJQUNsQixrQkFBa0I7SUFDbEIsZUFBZTtJQUNmLGlCQUFpQjtJQUNqQixXQUFXLEVBQUE7RUF0TGY7TUF5TE0seUJBQXlCLEVBQUE7RUF6TC9CO01BNkxNLHlCQUF5QjtNQUN6QixtQkFBbUIsRUFBQSIsImZpbGUiOiJzcmMvYXBwL25pcm5ldC9jb21wb25lbnRzL3N0YXR1cy9zdGF0dXMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubmlybmV0LXN0YXR1cy1jb250YWluZXIge1xyXG4gIHBhZGRpbmc6IDIwcHg7XHJcbiAgbWF4LXdpZHRoOiA4MDBweDtcclxuICBtYXJnaW46IDAgYXV0bztcclxuICBcclxuICBoMiB7XHJcbiAgICBjb2xvcjogIzMzMztcclxuICAgIG1hcmdpbi1ib3R0b206IDIwcHg7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgfVxyXG4gIFxyXG4gIC5zdGF0dXMtcGFuZWwge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDhweDtcclxuICAgIHBhZGRpbmc6IDE1cHg7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICAgIG1hcmdpbi1ib3R0b206IDIwcHg7XHJcbiAgICBcclxuICAgIC5zdGF0dXMtaW5kaWNhdG9yIHtcclxuICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgXHJcbiAgICAgIC5zdGF0dXMtZG90IHtcclxuICAgICAgICB3aWR0aDogMTJweDtcclxuICAgICAgICBoZWlnaHQ6IDEycHg7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogOHB4O1xyXG4gICAgICB9XHJcbiAgICAgIFxyXG4gICAgICAuc3RhdHVzLXRleHQge1xyXG4gICAgICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgICB9XHJcbiAgICAgIFxyXG4gICAgICAmLmFjdGl2ZSB7XHJcbiAgICAgICAgLnN0YXR1cy1kb3Qge1xyXG4gICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzRjYWY1MDtcclxuICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCAxMHB4ICM0Y2FmNTA7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5zdGF0dXMtdGV4dCB7XHJcbiAgICAgICAgICBjb2xvcjogIzRjYWY1MDtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgICYuaW5hY3RpdmUge1xyXG4gICAgICAgIC5zdGF0dXMtZG90IHtcclxuICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmNDQzMzY7XHJcbiAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMTBweCAjZjQ0MzM2O1xyXG4gICAgICAgIH1cclxuICAgICAgICAuc3RhdHVzLXRleHQge1xyXG4gICAgICAgICAgY29sb3I6ICNmNDQzMzY7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICAgIFxyXG4gICAgICAmLnVua25vd24ge1xyXG4gICAgICAgIC5zdGF0dXMtZG90IHtcclxuICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICNmZjk4MDA7XHJcbiAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMTBweCAjZmY5ODAwO1xyXG4gICAgICAgIH1cclxuICAgICAgICAuc3RhdHVzLXRleHQge1xyXG4gICAgICAgICAgY29sb3I6ICNmZjk4MDA7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICBcclxuICAgIGJ1dHRvbiB7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICMyMTk2ZjM7XHJcbiAgICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgICAgIHBhZGRpbmc6IDhweCAxMnB4O1xyXG4gICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgICBcclxuICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzBiN2RkYTtcclxuICAgICAgfVxyXG4gICAgICBcclxuICAgICAgJjpkaXNhYmxlZCB7XHJcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2NjY2NjYztcclxuICAgICAgICBjdXJzb3I6IG5vdC1hbGxvd2VkO1xyXG4gICAgICB9XHJcbiAgICAgIFxyXG4gICAgICAmLmRpcmVjdC1jaGVjay1idXR0b24ge1xyXG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6ICM2NzNhYjc7XHJcbiAgICAgICAgbWFyZ2luLWxlZnQ6IDEwcHg7XHJcbiAgICAgICAgXHJcbiAgICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNWUzNWIxO1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuICBcclxuICAuc2VydmVyLXN0YXR1cywgLmNpcmN1aXQtaW5mbyB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjVmNWY1O1xyXG4gICAgYm9yZGVyLXJhZGl1czogOHB4O1xyXG4gICAgcGFkZGluZzogMTVweDtcclxuICAgIG1hcmdpbi1ib3R0b206IDIwcHg7XHJcbiAgICBcclxuICAgIGgzIHtcclxuICAgICAgY29sb3I6ICMzMzM7XHJcbiAgICAgIG1hcmdpbi10b3A6IDA7XHJcbiAgICAgIG1hcmdpbi1ib3R0b206IDEwcHg7XHJcbiAgICB9XHJcbiAgICBcclxuICAgIHVsIHtcclxuICAgICAgbGlzdC1zdHlsZS10eXBlOiBub25lO1xyXG4gICAgICBwYWRkaW5nLWxlZnQ6IDA7XHJcbiAgICAgIFxyXG4gICAgICBsaSB7XHJcbiAgICAgICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG4gIFxyXG4gIC5jaXJjdWl0LW5vZGVzIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgZ2FwOiAxNXB4O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMTVweDtcclxuICAgIFxyXG4gICAgLm5vZGUge1xyXG4gICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgICAgIGJvcmRlci1yYWRpdXM6IDhweDtcclxuICAgICAgcGFkZGluZzogMTVweDtcclxuICAgICAgYm94LXNoYWRvdzogMCAzcHggOHB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcclxuICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuMnMsIGJveC1zaGFkb3cgMC4ycztcclxuICAgICAgXHJcbiAgICAgICY6aG92ZXIge1xyXG4gICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtM3B4KTtcclxuICAgICAgICBib3gtc2hhZG93OiAwIDVweCAxNXB4IHJnYmEoMCwgMCwgMCwgMC4xNSk7XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgIC5ub2RlLW51bWJlciB7XHJcbiAgICAgICAgd2lkdGg6IDM2cHg7XHJcbiAgICAgICAgaGVpZ2h0OiAzNnB4O1xyXG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6ICMyMTk2ZjM7XHJcbiAgICAgICAgY29sb3I6IHdoaXRlO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgICAgICAgZm9udC13ZWlnaHQ6IGJvbGQ7XHJcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxNXB4O1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgICAgICBib3gtc2hhZG93OiAwIDJweCA1cHggcmdiYSgzMywgMTUwLCAyNDMsIDAuMyk7XHJcbiAgICAgIH1cclxuICAgICAgXHJcbiAgICAgIC5ub2RlLWRldGFpbHMge1xyXG4gICAgICAgIGZsZXg6IDE7XHJcbiAgICAgICAgZGlzcGxheTogZ3JpZDtcclxuICAgICAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IDFmciAxZnI7XHJcbiAgICAgICAgZ2FwOiAxMHB4O1xyXG4gICAgICAgIFxyXG4gICAgICAgIGRpdiB7XHJcbiAgICAgICAgICBtYXJnaW4tYm90dG9tOiA2cHg7XHJcbiAgICAgICAgICBcclxuICAgICAgICAgIHN0cm9uZyB7XHJcbiAgICAgICAgICAgIGNvbG9yOiAjNTU1O1xyXG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDVweDtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgXHJcbiAgICAgICAgQG1lZGlhIChtYXgtd2lkdGg6IDYwMHB4KSB7XHJcbiAgICAgICAgICBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IDFmcjtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbiAgXHJcbiAgLnJvdGF0ZS1idXR0b24ge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2ZmOTgwMDtcclxuICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDRweDtcclxuICAgIHBhZGRpbmc6IDEwcHggMTVweDtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgIGZvbnQtd2VpZ2h0OiBib2xkO1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBcclxuICAgICY6aG92ZXIge1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjU3YzAwO1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICAmOmRpc2FibGVkIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogI2NjY2NjYztcclxuICAgICAgY3Vyc29yOiBub3QtYWxsb3dlZDtcclxuICAgIH1cclxuICB9XHJcbn0gIl19 */"
+
+/***/ }),
+
+/***/ "./src/app/nirnet/components/status/status.component.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/nirnet/components/status/status.component.ts ***!
+  \**************************************************************/
+/*! exports provided: NiRNeTStatusComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTStatusComponent", function() { return NiRNeTStatusComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+var NiRNeTStatusComponent = /** @class */ (function () {
+    function NiRNeTStatusComponent(nirnetService) {
+        this.nirnetService = nirnetService;
+        // Статус сервера
+        this.serverStatus = null;
+        // Активная цепочка узлов
+        this.activeCircuit = null;
+        // Флаг обновления
+        this.isRefreshing = false;
+    }
+    NiRNeTStatusComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        // Подписываемся на статус сервиса
+        this.nirnetService.status$.subscribe(function (status) {
+            _this.serverStatus = status;
+        });
+        // Запускаем периодическую проверку статуса
+        this.refreshSubscription = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(10000)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])(function () {
+            _this.checkStatus();
+            return [];
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            console.error('Ошибка при обновлении статуса:', error);
+            return [];
+        }))
+            .subscribe();
+        // Начальная проверка статуса
+        this.checkStatus();
+    };
+    NiRNeTStatusComponent.prototype.ngOnDestroy = function () {
+        if (this.refreshSubscription) {
+            this.refreshSubscription.unsubscribe();
+        }
+    };
+    /**
+     * Проверяет статус сервера
+     */
+    NiRNeTStatusComponent.prototype.checkStatus = function () {
+        var _this = this;
+        this.isRefreshing = true;
+        // Получаем статус сервера из подписки
+        this.nirnetService.status$.subscribe({
+            next: function (status) {
+                _this.serverStatus = status;
+                _this.isRefreshing = false;
+            },
+            error: function (err) {
+                console.error('Ошибка при получении статуса сервера:', err);
+                _this.isRefreshing = false;
+            }
+        });
+        // Получаем активную цепочку
+        this.activeCircuit = this.nirnetService.getActiveCircuit();
+    };
+    /**
+     * Создает новую цепочку узлов
+     */
+    NiRNeTStatusComponent.prototype.rotateCircuit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.isRefreshing = true;
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, this.nirnetService.rotateCircuit()];
+                    case 2:
+                        _a.sent();
+                        this.activeCircuit = this.nirnetService.getActiveCircuit();
+                        this.isRefreshing = false;
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_1 = _a.sent();
+                        console.error('Ошибка при создании новой цепочки:', err_1);
+                        this.isRefreshing = false;
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Форматирует дату для отображения
+     */
+    NiRNeTStatusComponent.prototype.formatDate = function (date) {
+        if (!date)
+            return 'Неизвестно';
+        var dateObj = typeof date === 'string' ? new Date(date) : date;
+        return dateObj.toLocaleString('ru-RU');
+    };
+    /**
+     * Форматирует время работы сервера
+     */
+    NiRNeTStatusComponent.prototype.formatUptime = function (uptime) {
+        if (!uptime)
+            return 'Неизвестно';
+        var days = Math.floor(uptime / 86400);
+        var hours = Math.floor((uptime % 86400) / 3600);
+        var minutes = Math.floor((uptime % 3600) / 60);
+        var seconds = Math.floor(uptime % 60);
+        var result = '';
+        if (days > 0)
+            result += days + " \u0434. ";
+        if (hours > 0 || days > 0)
+            result += hours + " \u0447. ";
+        if (minutes > 0 || hours > 0 || days > 0)
+            result += minutes + " \u043C\u0438\u043D. ";
+        result += seconds + " \u0441\u0435\u043A.";
+        return result;
+    };
+    /**
+     * Форматирует нагрузку узла
+     */
+    NiRNeTStatusComponent.prototype.formatLoad = function (load) {
+        if (load === undefined)
+            return 'Неизвестно';
+        return (load * 100).toFixed(1) + "%";
+    };
+    /**
+     * Сокращает длинный ключ для отображения
+     */
+    NiRNeTStatusComponent.prototype.truncateKey = function (key) {
+        if (!key)
+            return 'Неизвестно';
+        if (key.length <= 12)
+            return key;
+        return key.substring(0, 6) + '...' + key.substring(key.length - 6);
+    };
+    NiRNeTStatusComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-nirnet-status',
+            template: __webpack_require__(/*! ./status.component.html */ "./src/app/nirnet/components/status/status.component.html"),
+            styles: [__webpack_require__(/*! ./status.component.scss */ "./src/app/nirnet/components/status/status.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_nirnet_service__WEBPACK_IMPORTED_MODULE_1__["NiRNeTService"]])
+    ], NiRNeTStatusComponent);
+    return NiRNeTStatusComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/models/certificate.model.ts":
+/*!****************************************************!*\
+  !*** ./src/app/nirnet/models/certificate.model.ts ***!
+  \****************************************************/
+/*! exports provided: NIRNET_ROOT_CA_BASE64, DEFAULT_TRUSTED_NODES */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NIRNET_ROOT_CA_BASE64", function() { return NIRNET_ROOT_CA_BASE64; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_TRUSTED_NODES", function() { return DEFAULT_TRUSTED_NODES; });
+/**
+ * Корневой сертификат NiRNeT CA в формате Base64
+ */
+var NIRNET_ROOT_CA_BASE64 = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZyVENDQTVXZ0F3SUJBZ0lVT01IRjNWMloreWtLZC9aWXZ3VmZLNXQ3OWU4d0RRWUpLb1pJaHZjTkFRRU4KQlFBd2Z6RUxNQWtHQTFVRUJoTUNVbFV4RHpBTkJnTlZCQWdNQmsxdmMyTnZkekVQTUEwR0ExVUVCd3dHVFc5egpZMjkzTVJjd0ZRWURWUVFLREE1T2FWSk9aVlFnVG1WMGQyOXlhekVjTUJvR0ExVUVDd3dUVTJWamRYSnBkSGtnClJHVndZWEowYldWdWRERVhNQlVHQTFVRUF3d09UbWxTVG1WVUlGSnZiM1FnUTBFd0hoY05NalV3TXpJM01EVTEKTXpNNFdoY05NelV3TXpJMU1EVTFNek00V2pCL01Rc3dDUVlEVlFRR0V3SlNWVEVQTUEwR0ExVUVDQXdHVFc5egpZMjkzTVE4d0RRWURWUVFIREFaTmIzTmpiM2N4RnpBVkJnTlZCQW9NRGs1cFVrNWxWQ0JPWlhSM2IzSnJNUnd3CkdnWURWUVFMREJOVFpXTjFjbWwwZVNCRVpYQmhjblJ0Wlc1ME1SY3dGUVlEVlFRRERBNU9hVkpPWlZRZ1VtOXYKZENCRFFUQ0NBaUl3RFFZSktvWklodmNOQVFFQkJRQURnZ0lQQURDQ0Fnb0NnZ0lCQU5IK21BZ3dpTmhCSHMxMwp0Q3FhY0RxY0tJYzY0SjhFNk0rNDdobVZ3UnltWnc2NEh2dGlHWGNub1ZiMG5FRjdCT3h6SURjVkFNNE93L2dYCjVINWVEOG80aWtWZ3pQUGt4WG5NNXJGU2l4RW5pNWFyZUp6dUJqM2lIbWpUaXNBeFZRYmRSMGp4emxaM1JETWIKVjVUVC92VGQza2llazhGb3hndXZ0SGVzV2kxWXRWREZ6QU5ieXlXZUY2Y080aEFhYytrK0J0RGYzb3A1cmp6Swpad01rVTRXbUk3VGNLZk1kUnlyNXlKMlF4SWhPa0RadXMzalhkTGhCdWVUN25mL1ZiL3ViZ2RDS3VHRzJhM2l1CjZRQnFCZlJDZStJNk5XbFdnT0dCZER4ekRvSUlZeTN1NjlXS0dyYU9NUFBBZ2loZGl5U0lOZ3lXTElaRnJtRkwKQjkrWVk2Y0xZOW9HSDNkb25RNDFiNnZUNUd4Rk9DaDFMQmFtVnFYT2RVSjl0RmQrWXVYZE0rZTBjcWJXSUZFVQpEZEhjVmdLbDBGZjc4QUROUVlSUmJuY0VxVnVMYXlKN3BjeHZmaGZUM21wUHpHVnlUWnZpZ3ZyWlZwREtnS0lrClBuVHNZaGRmSGtCZ1JxUnA2WTlwUk1aSkFTTkR3Q0NjY1RZdW9PZVJYTU4yelovd2RTbWM0dHJVc0xCWXI4bmQKZHk3NUsyVytHK21hVERVcVZlaTF2UUx4NG82ZGVjY05OZmtIaHh3NlgrSjRjR29ycHpPbFZwTnhKd25uaTJuZAo2UFpyRUovOGNSSW11aWJUUWphZGU2R0pqU3JraXVoS2RDTFlidmJod0V5YWRWRlROeVVyL21ra2V3cmxmY2dPCmx3Mko5NHRzU0NLMnVKR3gvTkxaM01MRmNPS1ZBZ01CQUFHaklUQWZNQjBHQTFVZERnUVdCQlFmenozcVhvVlMKV3kzUnhGeXF5NmExQStjbzVEQU5CZ2txaGtpRzl3MEJBUTBGQUFPQ0FnRUF2SjVXeElZZ2V5SlI4KzlzV0xnNgpNdVZFZGE2RVJnaTRGNVcxV3lLYUVYcWxTV2lUSGUveGRmZWE2eXhmWHFTdU11YlRYV0lmZEFScWt3cThSL1JCCnYrZk5yMzVwTlFEbEdCZEJubkVZVjl5WUxWZVJqWTdZY3VIb3dUbDJZSmdDZ0M1S05pK0ZhYlIyOEVmWVB4TzkKVG0rRVEwL1JnYi9NYUE1UU4vcDFmaGhEeEZvbVRYTlVQeHlVTXh5ZFh0aTFxRXRrSGo0a3VlYjQ2WHZMR2d6bApoSERyODYxWjBISHBaV1JwSm5yZWJ0YWxJbnRxd3Q1a21odlJoK1h0ZXZXVXo0V2Qxak9IRGN4SFQxeit2bmxyCngyb3FqcVNWcmx2OHliSjdYM09yWG9ETG5VelFtNmpidHRWV1FtamwyR0VzR1dtbGptWHhNc1hhNmN4TThGemQKQ21ic2pnMk9hWEVPVFFkKzI5ODc3ckVjOHVIUjI3bXphM1JjWTY0TVlITHEvblZnWkRrK0VZdEE2eTNIUmdoRQowUkhrUmpJNCtpaHY1ZnoxVTRKWTZ5Y0xNRDNDS0cvd1ZFV2dvQk5aZnp0OUNMSm9SSGxXMXNIWkxpQlM4Wi9uCithdk9sMHdBOElHZVR1eVFqRUw2ck5iM2ZKSHB2VFhOOElYVE1tMEtla2czK0Z6b2ZuNmRuRjlxQTBFZ0xPaGUKd2RQSkhBQ2hDRC9WOURONmhzWnMvTU1XRFlYdVYyZndZVGJYdUtUL002WHVHZEwvcUdaSGNxMGY1VVJxTG44TwpZZWZWZEZnYUg4bUN0R2cySXhvVVVDVXlNY1FWYWl0QW5KbFd5NDluOW1JOWlxUE50Y3duYWd5NW9sZlNLTDYwCmdYYW0yK2txQlRrT1dGWE1rYm9XWllRPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0t";
+/**
+ * Список доверенных серверов NiRNeT по умолчанию
+ */
+var DEFAULT_TRUSTED_NODES = [
+    {
+        nodeUrl: 'https://195.16.74.121:8443',
+        fingerprint: 'SHA256:2C:1A:E5:40:7D:B1:8A:69:29:04:90:C9:AB:7B:2B:7E:6B:D1:73:8F:A2:2B:28:23:94:22:04:FE:13:EC:49:5C',
+        trustedSince: new Date('2024-03-26'),
+        validUntil: new Date('2026-03-26'),
+        description: 'Основной узел NiRNeT'
+    },
+    {
+        nodeUrl: 'https://45.14.247.211:8443',
+        fingerprint: 'SHA256:9D:F3:AB:12:C5:ED:EB:7C:68:81:FC:B6:E4:4D:CB:ED:4E:23:AD:36:5E:A1:D0:96:7F:1C:51:05:5B:0F:05:BA',
+        trustedSince: new Date('2024-03-26'),
+        validUntil: new Date('2026-03-26'),
+        description: 'Резервный узел NiRNeT'
+    },
+    {
+        nodeUrl: 'https://103.113.70.162:8443',
+        fingerprint: 'SHA256:1D:A4:F8:C7:B2:5E:9A:08:F1:3C:B7:42:F5:6A:51:93:E8:ED:10:27:34:2C:D1:79:AB:C3:0F:19:61:A5:2E:F0',
+        trustedSince: new Date('2024-03-27'),
+        validUntil: new Date('2026-03-27'),
+        description: 'Дополнительный узел NiRNeT'
+    }
+];
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/nirnet.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/nirnet/nirnet.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"nirnet-container\">\n  <!-- Верхняя панель с навигацией -->\n  <div class=\"nirnet-toolbar\">\n    <div class=\"navigation-buttons\">\n      <button class=\"nav-button\" (click)=\"goBack()\" [disabled]=\"historyIndex <= 0\">\n        <i class=\"icon back\"></i>\n      </button>\n      <button class=\"nav-button\" (click)=\"goForward()\" [disabled]=\"historyIndex >= browserHistory.length - 1\">\n        <i class=\"icon forward\"></i>\n      </button>\n      <button class=\"nav-button\" (click)=\"refresh()\">\n        <i class=\"icon refresh\"></i>\n      </button>\n    </div>\n    \n    <form [formGroup]=\"urlForm\" (ngSubmit)=\"navigate()\" class=\"url-form\">\n      <div class=\"url-bar\">\n        <div class=\"security-indicator\" [ngClass]=\"securityLevel\">\n          <i class=\"icon lock\"></i>\n        </div>\n        <input type=\"text\" formControlName=\"url\" placeholder=\"Введите URL или поисковый запрос\" \n               class=\"url-input\" />\n        <button type=\"submit\" class=\"go-button\" [disabled]=\"!urlForm.valid\">\n          <i class=\"icon go\"></i>\n        </button>\n      </div>\n    </form>\n    \n    <div class=\"toolbar-actions\">\n      <button class=\"action-button\" (click)=\"toggleSettings()\">\n        <i class=\"icon settings\"></i>\n      </button>\n    </div>\n  </div>\n  \n  <!-- Вкладки -->\n  <div class=\"tabs-container\">\n    <div class=\"tabs-list\">\n      <div *ngFor=\"let tab of tabs\" \n           class=\"tab\" \n           [class.active]=\"tab.active\" \n           (click)=\"switchTab(tab.id)\">\n        <span class=\"tab-title\">{{ tab.title || 'Новая вкладка' }}</span>\n        <button class=\"tab-close\" (click)=\"closeTab(tab.id); $event.stopPropagation()\">\n          <i class=\"icon close\"></i>\n        </button>\n      </div>\n      <button class=\"new-tab-button\" (click)=\"addTab()\">\n        <i class=\"icon add\"></i>\n      </button>\n    </div>\n  </div>\n  \n  <!-- Настройки приватности (показываются при toggleSettings) -->\n  <div *ngIf=\"showSettings\" class=\"settings-panel\">\n    <div class=\"settings-header\">\n      <h3>Настройки приватности</h3>\n      <button class=\"close-settings\" (click)=\"toggleSettings()\">\n        <i class=\"icon close\"></i>\n      </button>\n    </div>\n    \n    <div class=\"settings-content\">\n      <div class=\"security-levels\">\n        <h4>Уровень безопасности</h4>\n        <div class=\"level-buttons\">\n          <button \n            [class.active]=\"securityLevel === 'high'\" \n            (click)=\"setSecurityLevel('high')\"\n            class=\"level-button high\">\n            Высокий\n          </button>\n          <button \n            [class.active]=\"securityLevel === 'medium'\" \n            (click)=\"setSecurityLevel('medium')\"\n            class=\"level-button medium\">\n            Средний\n          </button>\n          <button \n            [class.active]=\"securityLevel === 'low'\" \n            (click)=\"setSecurityLevel('low')\"\n            class=\"level-button low\">\n            Низкий\n          </button>\n        </div>\n        \n        <div class=\"security-details\">\n          <div *ngIf=\"securityLevel === 'high'\">\n            <p>Максимальная защита: JavaScript отключен, cookies блокированы, все трекеры блокируются</p>\n            <p><strong>Заметка:</strong> Некоторые сайты могут работать некорректно</p>\n          </div>\n          <div *ngIf=\"securityLevel === 'medium'\">\n            <p>Сбалансированная защита: JavaScript разрешен, cookies блокированы, трекеры блокируются</p>\n            <p><strong>Заметка:</strong> Большинство сайтов будет работать нормально</p>\n          </div>\n          <div *ngIf=\"securityLevel === 'low'\">\n            <p>Минимальная защита: JavaScript и cookies разрешены, трекеры блокируются</p>\n            <p><strong>Заметка:</strong> Все сайты работают, но приватность ниже</p>\n          </div>\n        </div>\n      </div>\n      \n      <div class=\"privacy-options\">\n        <h4>Дополнительные настройки</h4>\n        <div class=\"checkbox-option\">\n          <input type=\"checkbox\" id=\"blockJavaScript\" [(ngModel)]=\"privacySettings.blockJavaScript\" />\n          <label for=\"blockJavaScript\">Блокировать JavaScript</label>\n        </div>\n        <div class=\"checkbox-option\">\n          <input type=\"checkbox\" id=\"blockCookies\" [(ngModel)]=\"privacySettings.blockCookies\" />\n          <label for=\"blockCookies\">Блокировать cookies</label>\n        </div>\n        <div class=\"checkbox-option\">\n          <input type=\"checkbox\" id=\"blockTrackers\" [(ngModel)]=\"privacySettings.blockTrackers\" />\n          <label for=\"blockTrackers\">Блокировать трекеры</label>\n        </div>\n        <div class=\"checkbox-option\">\n          <input type=\"checkbox\" id=\"useRandomUserAgent\" [(ngModel)]=\"privacySettings.useRandomUserAgent\" />\n          <label for=\"useRandomUserAgent\">Использовать случайный User-Agent</label>\n        </div>\n      </div>\n    </div>\n    \n    <div class=\"settings-footer\">\n      <button class=\"apply-button\" (click)=\"refresh()\">Применить настройки</button>\n    </div>\n  </div>\n  \n  <!-- Индикатор загрузки -->\n  <div *ngIf=\"isLoading\" class=\"loading-indicator\">\n    <div class=\"spinner\"></div>\n  </div>\n  \n  <!-- Основное содержимое браузера (iframe) -->\n  <div class=\"browser-container\">\n    <iframe #browserFrame \n           sandbox=\"allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-top-navigation\" \n           allow=\"fullscreen\" \n           loading=\"eager\"\n           class=\"browser-frame\"></iframe>\n  </div>\n</div> "
+
+/***/ }),
+
+/***/ "./src/app/nirnet/nirnet.component.scss":
+/*!**********************************************!*\
+  !*** ./src/app/nirnet/nirnet.component.scss ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "@charset \"UTF-8\";\n/* Основной контейнер */\n.nirnet-container {\n  display: flex;\n  flex-direction: column;\n  height: 100%;\n  width: 100%;\n  overflow: hidden;\n  background-color: #f5f5f5; }\n/* Верхняя панель с навигацией */\n.nirnet-toolbar {\n  display: flex;\n  align-items: center;\n  padding: 8px 12px;\n  background-color: #ffffff;\n  border-bottom: 1px solid #e0e0e0;\n  height: 48px;\n  min-height: 48px;\n  z-index: 100;\n  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }\n.navigation-buttons {\n  display: flex;\n  margin-right: 10px; }\n.nav-button {\n  background: none;\n  border: none;\n  padding: 5px 8px;\n  cursor: pointer;\n  border-radius: 4px;\n  margin-right: 4px; }\n.nav-button:hover {\n  background-color: #f0f0f0; }\n.nav-button:disabled {\n  opacity: 0.5;\n  cursor: not-allowed; }\n.url-form {\n  flex: 1;\n  margin: 0 10px; }\n.url-bar {\n  display: flex;\n  align-items: center;\n  background-color: #f1f3f4;\n  border-radius: 24px;\n  padding: 0 8px;\n  height: 36px; }\n.security-indicator {\n  padding: 4px;\n  border-radius: 50%;\n  margin-right: 8px; }\n.security-indicator.high {\n  color: green; }\n.security-indicator.medium {\n  color: orange; }\n.security-indicator.low {\n  color: red; }\n.url-input {\n  flex: 1;\n  border: none;\n  background: transparent;\n  height: 100%;\n  outline: none;\n  font-size: 14px; }\n.go-button {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 5px;\n  color: #5f6368; }\n.toolbar-actions {\n  display: flex; }\n.action-button {\n  background: none;\n  border: none;\n  padding: 5px 8px;\n  cursor: pointer;\n  border-radius: 4px; }\n.action-button:hover {\n  background-color: #f0f0f0; }\n/* Вкладки */\n.tabs-container {\n  height: 40px;\n  min-height: 40px;\n  background-color: #f1f3f4;\n  border-bottom: 1px solid #e0e0e0; }\n.tabs-list {\n  display: flex;\n  height: 100%; }\n.tab {\n  display: flex;\n  align-items: center;\n  padding: 0 12px;\n  background-color: #e8eaed;\n  margin-right: 2px;\n  border-radius: 8px 8px 0 0;\n  cursor: pointer;\n  max-width: 200px;\n  height: 100%;\n  position: relative; }\n.tab.active {\n  background-color: #ffffff;\n  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1); }\n.tab-title {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  font-size: 14px; }\n.tab-close {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 2px;\n  margin-left: 8px;\n  border-radius: 50%; }\n.tab-close:hover {\n  background-color: rgba(0, 0, 0, 0.1); }\n.new-tab-button {\n  background: none;\n  border: none;\n  padding: 0 12px;\n  cursor: pointer;\n  display: flex;\n  align-items: center; }\n/* Панель настроек */\n.settings-panel {\n  position: absolute;\n  top: 48px;\n  right: 0;\n  width: 320px;\n  background-color: white;\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);\n  z-index: 1001;\n  border-radius: 8px;\n  margin: 10px;\n  overflow: hidden; }\n.settings-header {\n  display: flex;\n  justify-content: space-between;\n  padding: 12px 16px;\n  border-bottom: 1px solid #e0e0e0; }\n.settings-header h3 {\n  margin: 0;\n  font-size: 18px; }\n.close-settings {\n  background: none;\n  border: none;\n  cursor: pointer;\n  padding: 4px;\n  border-radius: 50%; }\n.close-settings:hover {\n  background-color: #f0f0f0; }\n.settings-content {\n  padding: 16px; }\n.security-levels h4,\n.privacy-options h4 {\n  font-size: 16px;\n  margin-top: 0;\n  margin-bottom: 12px; }\n.level-buttons {\n  display: flex;\n  margin-bottom: 16px;\n  gap: 8px; }\n.level-button {\n  flex: 1;\n  padding: 8px 12px;\n  border: 1px solid #ddd;\n  background-color: white;\n  cursor: pointer;\n  border-radius: 4px; }\n.level-button.active {\n  border-color: #4285f4;\n  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2); }\n.level-button.high {\n  color: green; }\n.level-button.medium {\n  color: orange; }\n.level-button.low {\n  color: red; }\n.security-details {\n  background-color: #f7f7f7;\n  padding: 12px;\n  border-radius: 4px;\n  font-size: 14px;\n  margin-bottom: 16px; }\n.checkbox-option {\n  margin-bottom: 12px;\n  display: flex;\n  align-items: center; }\n.checkbox-option label {\n  margin-left: 8px;\n  cursor: pointer; }\n.settings-footer {\n  padding: 12px 16px;\n  border-top: 1px solid #e0e0e0;\n  text-align: right; }\n.apply-button {\n  padding: 8px 16px;\n  background-color: #4285f4;\n  color: white;\n  border: none;\n  border-radius: 4px;\n  cursor: pointer; }\n.apply-button:hover {\n  background-color: #3367d6; }\n/* Индикатор загрузки */\n.loading-indicator {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: rgba(255, 255, 255, 0.8);\n  z-index: 1000; }\n.spinner {\n  border: 4px solid #f3f3f3;\n  border-top: 4px solid #3498db;\n  border-radius: 50%;\n  width: 40px;\n  height: 40px;\n  animation: spin 1s linear infinite; }\n@keyframes spin {\n  0% {\n    transform: rotate(0deg); }\n  100% {\n    transform: rotate(360deg); } }\n/* Контейнер браузера */\n.browser-container {\n  flex-grow: 1;\n  overflow: hidden;\n  background-color: #fff;\n  border-top: 1px solid #ddd;\n  position: relative;\n  width: 100%;\n  height: calc(100% - 88px);\n  /* 100% - (toolbar + tabs height) */\n  min-height: 100px; }\n.browser-frame {\n  width: 100%;\n  height: 100%;\n  border: none;\n  display: block;\n  background-color: white;\n  position: absolute;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlybmV0L25pcm5ldC5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbmlybmV0L0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxuaXJuZXRcXG5pcm5ldC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxnQkFBZ0I7QUNBaEIsdUJBQUE7QUFDQTtFQUNFLGFBQWE7RUFDYixzQkFBc0I7RUFDdEIsWUFBWTtFQUNaLFdBQVc7RUFDWCxnQkFBZ0I7RUFDaEIseUJBQXlCLEVBQUE7QUFHM0IsZ0NBQUE7QUFDQTtFQUNFLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixnQ0FBZ0M7RUFDaEMsWUFBWTtFQUNaLGdCQUFnQjtFQUNoQixZQUFZO0VBQ1osd0NBQXFDLEVBQUE7QUFHdkM7RUFDRSxhQUFhO0VBQ2Isa0JBQWtCLEVBQUE7QUFHcEI7RUFDRSxnQkFBZ0I7RUFDaEIsWUFBWTtFQUNaLGdCQUFnQjtFQUNoQixlQUFlO0VBQ2Ysa0JBQWtCO0VBQ2xCLGlCQUFpQixFQUFBO0FBR25CO0VBQ0UseUJBQXlCLEVBQUE7QUFHM0I7RUFDRSxZQUFZO0VBQ1osbUJBQW1CLEVBQUE7QUFHckI7RUFDRSxPQUFPO0VBQ1AsY0FBYyxFQUFBO0FBR2hCO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQix5QkFBeUI7RUFDekIsbUJBQW1CO0VBQ25CLGNBQWM7RUFDZCxZQUFZLEVBQUE7QUFHZDtFQUNFLFlBQVk7RUFDWixrQkFBa0I7RUFDbEIsaUJBQWlCLEVBQUE7QUFHbkI7RUFDRSxZQUFZLEVBQUE7QUFHZDtFQUNFLGFBQWEsRUFBQTtBQUdmO0VBQ0UsVUFBVSxFQUFBO0FBR1o7RUFDRSxPQUFPO0VBQ1AsWUFBWTtFQUNaLHVCQUF1QjtFQUN2QixZQUFZO0VBQ1osYUFBYTtFQUNiLGVBQWUsRUFBQTtBQUdqQjtFQUNFLGdCQUFnQjtFQUNoQixZQUFZO0VBQ1osZUFBZTtFQUNmLFlBQVk7RUFDWixjQUFjLEVBQUE7QUFHaEI7RUFDRSxhQUFhLEVBQUE7QUFHZjtFQUNFLGdCQUFnQjtFQUNoQixZQUFZO0VBQ1osZ0JBQWdCO0VBQ2hCLGVBQWU7RUFDZixrQkFBa0IsRUFBQTtBQUdwQjtFQUNFLHlCQUF5QixFQUFBO0FBRzNCLFlBQUE7QUFDQTtFQUNFLFlBQVk7RUFDWixnQkFBZ0I7RUFDaEIseUJBQXlCO0VBQ3pCLGdDQUFnQyxFQUFBO0FBR2xDO0VBQ0UsYUFBYTtFQUNiLFlBQVksRUFBQTtBQUdkO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQixlQUFlO0VBQ2YseUJBQXlCO0VBQ3pCLGlCQUFpQjtFQUNqQiwwQkFBMEI7RUFDMUIsZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixZQUFZO0VBQ1osa0JBQWtCLEVBQUE7QUFHcEI7RUFDRSx5QkFBeUI7RUFDekIsc0NBQW1DLEVBQUE7QUFHckM7RUFDRSxtQkFBbUI7RUFDbkIsZ0JBQWdCO0VBQ2hCLHVCQUF1QjtFQUN2QixlQUFlLEVBQUE7QUFHakI7RUFDRSxnQkFBZ0I7RUFDaEIsWUFBWTtFQUNaLGVBQWU7RUFDZixZQUFZO0VBQ1osZ0JBQWdCO0VBQ2hCLGtCQUFrQixFQUFBO0FBR3BCO0VBQ0Usb0NBQWlDLEVBQUE7QUFHbkM7RUFDRSxnQkFBZ0I7RUFDaEIsWUFBWTtFQUNaLGVBQWU7RUFDZixlQUFlO0VBQ2YsYUFBYTtFQUNiLG1CQUFtQixFQUFBO0FBR3JCLG9CQUFBO0FBQ0E7RUFDRSxrQkFBa0I7RUFDbEIsU0FBUztFQUNULFFBQVE7RUFDUixZQUFZO0VBQ1osdUJBQXVCO0VBQ3ZCLDBDQUF1QztFQUN2QyxhQUFhO0VBQ2Isa0JBQWtCO0VBQ2xCLFlBQVk7RUFDWixnQkFBZ0IsRUFBQTtBQUdsQjtFQUNFLGFBQWE7RUFDYiw4QkFBOEI7RUFDOUIsa0JBQWtCO0VBQ2xCLGdDQUFnQyxFQUFBO0FBR2xDO0VBQ0UsU0FBUztFQUNULGVBQWUsRUFBQTtBQUdqQjtFQUNFLGdCQUFnQjtFQUNoQixZQUFZO0VBQ1osZUFBZTtFQUNmLFlBQVk7RUFDWixrQkFBa0IsRUFBQTtBQUdwQjtFQUNFLHlCQUF5QixFQUFBO0FBRzNCO0VBQ0UsYUFBYSxFQUFBO0FBR2Y7O0VBRUUsZUFBZTtFQUNmLGFBQWE7RUFDYixtQkFBbUIsRUFBQTtBQUdyQjtFQUNFLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsUUFBUSxFQUFBO0FBR1Y7RUFDRSxPQUFPO0VBQ1AsaUJBQWlCO0VBQ2pCLHNCQUFzQjtFQUN0Qix1QkFBdUI7RUFDdkIsZUFBZTtFQUNmLGtCQUFrQixFQUFBO0FBR3BCO0VBQ0UscUJBQXFCO0VBQ3JCLDZDQUE2QyxFQUFBO0FBRy9DO0VBQ0UsWUFBWSxFQUFBO0FBR2Q7RUFDRSxhQUFhLEVBQUE7QUFHZjtFQUNFLFVBQVUsRUFBQTtBQUdaO0VBQ0UseUJBQXlCO0VBQ3pCLGFBQWE7RUFDYixrQkFBa0I7RUFDbEIsZUFBZTtFQUNmLG1CQUFtQixFQUFBO0FBR3JCO0VBQ0UsbUJBQW1CO0VBQ25CLGFBQWE7RUFDYixtQkFBbUIsRUFBQTtBQUdyQjtFQUNFLGdCQUFnQjtFQUNoQixlQUFlLEVBQUE7QUFHakI7RUFDRSxrQkFBa0I7RUFDbEIsNkJBQTZCO0VBQzdCLGlCQUFpQixFQUFBO0FBR25CO0VBQ0UsaUJBQWlCO0VBQ2pCLHlCQUF5QjtFQUN6QixZQUFZO0VBQ1osWUFBWTtFQUNaLGtCQUFrQjtFQUNsQixlQUFlLEVBQUE7QUFHakI7RUFDRSx5QkFBeUIsRUFBQTtBQUczQix1QkFBQTtBQUNBO0VBQ0Usa0JBQWtCO0VBQ2xCLE1BQU07RUFDTixPQUFPO0VBQ1AsV0FBVztFQUNYLFlBQVk7RUFDWixhQUFhO0VBQ2IsdUJBQXVCO0VBQ3ZCLG1CQUFtQjtFQUNuQiwwQ0FBMEM7RUFDMUMsYUFBYSxFQUFBO0FBR2Y7RUFDRSx5QkFBeUI7RUFDekIsNkJBQTZCO0VBQzdCLGtCQUFrQjtFQUNsQixXQUFXO0VBQ1gsWUFBWTtFQUNaLGtDQUFrQyxFQUFBO0FBR3BDO0VBQ0U7SUFBSyx1QkFBdUIsRUFBQTtFQUM1QjtJQUFPLHlCQUF5QixFQUFBLEVBQUE7QUFHbEMsdUJBQUE7QUFDQTtFQUNFLFlBQVk7RUFDWixnQkFBZ0I7RUFDaEIsc0JBQXNCO0VBQ3RCLDBCQUEwQjtFQUMxQixrQkFBa0I7RUFDbEIsV0FBVztFQUNYLHlCQUF5QjtFQUFFLG1DQUFBO0VBQzNCLGlCQUFpQixFQUFBO0FBR25CO0VBQ0UsV0FBVztFQUNYLFlBQVk7RUFDWixZQUFZO0VBQ1osY0FBYztFQUNkLHVCQUF1QjtFQUN2QixrQkFBa0I7RUFDbEIsTUFBTTtFQUNOLE9BQU87RUFDUCxRQUFRO0VBQ1IsU0FBUyxFQUFBIiwiZmlsZSI6InNyYy9hcHAvbmlybmV0L25pcm5ldC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiVVRGLThcIjtcbi8qINCe0YHQvdC+0LLQvdC+0Lkg0LrQvtC90YLQtdC50L3QtdGAICovXG4ubmlybmV0LWNvbnRhaW5lciB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGhlaWdodDogMTAwJTtcbiAgd2lkdGg6IDEwMCU7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGJhY2tncm91bmQtY29sb3I6ICNmNWY1ZjU7IH1cblxuLyog0JLQtdGA0YXQvdGP0Y8g0L/QsNC90LXQu9GMINGBINC90LDQstC40LPQsNGG0LjQtdC5ICovXG4ubmlybmV0LXRvb2xiYXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBwYWRkaW5nOiA4cHggMTJweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZmZmZjtcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNlMGUwZTA7XG4gIGhlaWdodDogNDhweDtcbiAgbWluLWhlaWdodDogNDhweDtcbiAgei1pbmRleDogMTAwO1xuICBib3gtc2hhZG93OiAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjEpOyB9XG5cbi5uYXZpZ2F0aW9uLWJ1dHRvbnMge1xuICBkaXNwbGF5OiBmbGV4O1xuICBtYXJnaW4tcmlnaHQ6IDEwcHg7IH1cblxuLm5hdi1idXR0b24ge1xuICBiYWNrZ3JvdW5kOiBub25lO1xuICBib3JkZXI6IG5vbmU7XG4gIHBhZGRpbmc6IDVweCA4cHg7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBtYXJnaW4tcmlnaHQ6IDRweDsgfVxuXG4ubmF2LWJ1dHRvbjpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmMGYwZjA7IH1cblxuLm5hdi1idXR0b246ZGlzYWJsZWQge1xuICBvcGFjaXR5OiAwLjU7XG4gIGN1cnNvcjogbm90LWFsbG93ZWQ7IH1cblxuLnVybC1mb3JtIHtcbiAgZmxleDogMTtcbiAgbWFyZ2luOiAwIDEwcHg7IH1cblxuLnVybC1iYXIge1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjFmM2Y0O1xuICBib3JkZXItcmFkaXVzOiAyNHB4O1xuICBwYWRkaW5nOiAwIDhweDtcbiAgaGVpZ2h0OiAzNnB4OyB9XG5cbi5zZWN1cml0eS1pbmRpY2F0b3Ige1xuICBwYWRkaW5nOiA0cHg7XG4gIGJvcmRlci1yYWRpdXM6IDUwJTtcbiAgbWFyZ2luLXJpZ2h0OiA4cHg7IH1cblxuLnNlY3VyaXR5LWluZGljYXRvci5oaWdoIHtcbiAgY29sb3I6IGdyZWVuOyB9XG5cbi5zZWN1cml0eS1pbmRpY2F0b3IubWVkaXVtIHtcbiAgY29sb3I6IG9yYW5nZTsgfVxuXG4uc2VjdXJpdHktaW5kaWNhdG9yLmxvdyB7XG4gIGNvbG9yOiByZWQ7IH1cblxuLnVybC1pbnB1dCB7XG4gIGZsZXg6IDE7XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG4gIGhlaWdodDogMTAwJTtcbiAgb3V0bGluZTogbm9uZTtcbiAgZm9udC1zaXplOiAxNHB4OyB9XG5cbi5nby1idXR0b24ge1xuICBiYWNrZ3JvdW5kOiBub25lO1xuICBib3JkZXI6IG5vbmU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZzogNXB4O1xuICBjb2xvcjogIzVmNjM2ODsgfVxuXG4udG9vbGJhci1hY3Rpb25zIHtcbiAgZGlzcGxheTogZmxleDsgfVxuXG4uYWN0aW9uLWJ1dHRvbiB7XG4gIGJhY2tncm91bmQ6IG5vbmU7XG4gIGJvcmRlcjogbm9uZTtcbiAgcGFkZGluZzogNXB4IDhweDtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICBib3JkZXItcmFkaXVzOiA0cHg7IH1cblxuLmFjdGlvbi1idXR0b246aG92ZXIge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjBmMGYwOyB9XG5cbi8qINCS0LrQu9Cw0LTQutC4ICovXG4udGFicy1jb250YWluZXIge1xuICBoZWlnaHQ6IDQwcHg7XG4gIG1pbi1oZWlnaHQ6IDQwcHg7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmMWYzZjQ7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZTBlMGUwOyB9XG5cbi50YWJzLWxpc3Qge1xuICBkaXNwbGF5OiBmbGV4O1xuICBoZWlnaHQ6IDEwMCU7IH1cblxuLnRhYiB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIHBhZGRpbmc6IDAgMTJweDtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2U4ZWFlZDtcbiAgbWFyZ2luLXJpZ2h0OiAycHg7XG4gIGJvcmRlci1yYWRpdXM6IDhweCA4cHggMCAwO1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIG1heC13aWR0aDogMjAwcHg7XG4gIGhlaWdodDogMTAwJTtcbiAgcG9zaXRpb246IHJlbGF0aXZlOyB9XG5cbi50YWIuYWN0aXZlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2ZmZmZmZjtcbiAgYm94LXNoYWRvdzogMCAwIDRweCByZ2JhKDAsIDAsIDAsIDAuMSk7IH1cblxuLnRhYi10aXRsZSB7XG4gIHdoaXRlLXNwYWNlOiBub3dyYXA7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xuICBmb250LXNpemU6IDE0cHg7IH1cblxuLnRhYi1jbG9zZSB7XG4gIGJhY2tncm91bmQ6IG5vbmU7XG4gIGJvcmRlcjogbm9uZTtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICBwYWRkaW5nOiAycHg7XG4gIG1hcmdpbi1sZWZ0OiA4cHg7XG4gIGJvcmRlci1yYWRpdXM6IDUwJTsgfVxuXG4udGFiLWNsb3NlOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgwLCAwLCAwLCAwLjEpOyB9XG5cbi5uZXctdGFiLWJ1dHRvbiB7XG4gIGJhY2tncm91bmQ6IG5vbmU7XG4gIGJvcmRlcjogbm9uZTtcbiAgcGFkZGluZzogMCAxMnB4O1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7IH1cblxuLyog0J/QsNC90LXQu9GMINC90LDRgdGC0YDQvtC10LogKi9cbi5zZXR0aW5ncy1wYW5lbCB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgdG9wOiA0OHB4O1xuICByaWdodDogMDtcbiAgd2lkdGg6IDMyMHB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbiAgYm94LXNoYWRvdzogMCA0cHggMTJweCByZ2JhKDAsIDAsIDAsIDAuMTUpO1xuICB6LWluZGV4OiAxMDAxO1xuICBib3JkZXItcmFkaXVzOiA4cHg7XG4gIG1hcmdpbjogMTBweDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjsgfVxuXG4uc2V0dGluZ3MtaGVhZGVyIHtcbiAgZGlzcGxheTogZmxleDtcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICBwYWRkaW5nOiAxMnB4IDE2cHg7XG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZTBlMGUwOyB9XG5cbi5zZXR0aW5ncy1oZWFkZXIgaDMge1xuICBtYXJnaW46IDA7XG4gIGZvbnQtc2l6ZTogMThweDsgfVxuXG4uY2xvc2Utc2V0dGluZ3Mge1xuICBiYWNrZ3JvdW5kOiBub25lO1xuICBib3JkZXI6IG5vbmU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZzogNHB4O1xuICBib3JkZXItcmFkaXVzOiA1MCU7IH1cblxuLmNsb3NlLXNldHRpbmdzOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YwZjBmMDsgfVxuXG4uc2V0dGluZ3MtY29udGVudCB7XG4gIHBhZGRpbmc6IDE2cHg7IH1cblxuLnNlY3VyaXR5LWxldmVscyBoNCxcbi5wcml2YWN5LW9wdGlvbnMgaDQge1xuICBmb250LXNpemU6IDE2cHg7XG4gIG1hcmdpbi10b3A6IDA7XG4gIG1hcmdpbi1ib3R0b206IDEycHg7IH1cblxuLmxldmVsLWJ1dHRvbnMge1xuICBkaXNwbGF5OiBmbGV4O1xuICBtYXJnaW4tYm90dG9tOiAxNnB4O1xuICBnYXA6IDhweDsgfVxuXG4ubGV2ZWwtYnV0dG9uIHtcbiAgZmxleDogMTtcbiAgcGFkZGluZzogOHB4IDEycHg7XG4gIGJvcmRlcjogMXB4IHNvbGlkICNkZGQ7XG4gIGJhY2tncm91bmQtY29sb3I6IHdoaXRlO1xuICBjdXJzb3I6IHBvaW50ZXI7XG4gIGJvcmRlci1yYWRpdXM6IDRweDsgfVxuXG4ubGV2ZWwtYnV0dG9uLmFjdGl2ZSB7XG4gIGJvcmRlci1jb2xvcjogIzQyODVmNDtcbiAgYm94LXNoYWRvdzogMCAwIDAgMnB4IHJnYmEoNjYsIDEzMywgMjQ0LCAwLjIpOyB9XG5cbi5sZXZlbC1idXR0b24uaGlnaCB7XG4gIGNvbG9yOiBncmVlbjsgfVxuXG4ubGV2ZWwtYnV0dG9uLm1lZGl1bSB7XG4gIGNvbG9yOiBvcmFuZ2U7IH1cblxuLmxldmVsLWJ1dHRvbi5sb3cge1xuICBjb2xvcjogcmVkOyB9XG5cbi5zZWN1cml0eS1kZXRhaWxzIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Y3ZjdmNztcbiAgcGFkZGluZzogMTJweDtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBmb250LXNpemU6IDE0cHg7XG4gIG1hcmdpbi1ib3R0b206IDE2cHg7IH1cblxuLmNoZWNrYm94LW9wdGlvbiB7XG4gIG1hcmdpbi1ib3R0b206IDEycHg7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7IH1cblxuLmNoZWNrYm94LW9wdGlvbiBsYWJlbCB7XG4gIG1hcmdpbi1sZWZ0OiA4cHg7XG4gIGN1cnNvcjogcG9pbnRlcjsgfVxuXG4uc2V0dGluZ3MtZm9vdGVyIHtcbiAgcGFkZGluZzogMTJweCAxNnB4O1xuICBib3JkZXItdG9wOiAxcHggc29saWQgI2UwZTBlMDtcbiAgdGV4dC1hbGlnbjogcmlnaHQ7IH1cblxuLmFwcGx5LWJ1dHRvbiB7XG4gIHBhZGRpbmc6IDhweCAxNnB4O1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDI4NWY0O1xuICBjb2xvcjogd2hpdGU7XG4gIGJvcmRlcjogbm9uZTtcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xuICBjdXJzb3I6IHBvaW50ZXI7IH1cblxuLmFwcGx5LWJ1dHRvbjpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICMzMzY3ZDY7IH1cblxuLyog0JjQvdC00LjQutCw0YLQvtGAINC30LDQs9GA0YPQt9C60LggKi9cbi5sb2FkaW5nLWluZGljYXRvciB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgdG9wOiAwO1xuICBsZWZ0OiAwO1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiAxMDAlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xuICB6LWluZGV4OiAxMDAwOyB9XG5cbi5zcGlubmVyIHtcbiAgYm9yZGVyOiA0cHggc29saWQgI2YzZjNmMztcbiAgYm9yZGVyLXRvcDogNHB4IHNvbGlkICMzNDk4ZGI7XG4gIGJvcmRlci1yYWRpdXM6IDUwJTtcbiAgd2lkdGg6IDQwcHg7XG4gIGhlaWdodDogNDBweDtcbiAgYW5pbWF0aW9uOiBzcGluIDFzIGxpbmVhciBpbmZpbml0ZTsgfVxuXG5Aa2V5ZnJhbWVzIHNwaW4ge1xuICAwJSB7XG4gICAgdHJhbnNmb3JtOiByb3RhdGUoMGRlZyk7IH1cbiAgMTAwJSB7XG4gICAgdHJhbnNmb3JtOiByb3RhdGUoMzYwZGVnKTsgfSB9XG5cbi8qINCa0L7QvdGC0LXQudC90LXRgCDQsdGA0LDRg9C30LXRgNCwICovXG4uYnJvd3Nlci1jb250YWluZXIge1xuICBmbGV4LWdyb3c6IDE7XG4gIG92ZXJmbG93OiBoaWRkZW47XG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XG4gIGJvcmRlci10b3A6IDFweCBzb2xpZCAjZGRkO1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIHdpZHRoOiAxMDAlO1xuICBoZWlnaHQ6IGNhbGMoMTAwJSAtIDg4cHgpO1xuICAvKiAxMDAlIC0gKHRvb2xiYXIgKyB0YWJzIGhlaWdodCkgKi9cbiAgbWluLWhlaWdodDogMTAwcHg7IH1cblxuLmJyb3dzZXItZnJhbWUge1xuICB3aWR0aDogMTAwJTtcbiAgaGVpZ2h0OiAxMDAlO1xuICBib3JkZXI6IG5vbmU7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDA7XG4gIGxlZnQ6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7IH1cbiIsIi8qINCe0YHQvdC+0LLQvdC+0Lkg0LrQvtC90YLQtdC50L3QtdGAICovXHJcbi5uaXJuZXQtY29udGFpbmVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2Y1ZjVmNTtcclxufVxyXG5cclxuLyog0JLQtdGA0YXQvdGP0Y8g0L/QsNC90LXQu9GMINGBINC90LDQstC40LPQsNGG0LjQtdC5ICovXHJcbi5uaXJuZXQtdG9vbGJhciB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIHBhZGRpbmc6IDhweCAxMnB4O1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmZmZmY7XHJcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNlMGUwZTA7XHJcbiAgaGVpZ2h0OiA0OHB4O1xyXG4gIG1pbi1oZWlnaHQ6IDQ4cHg7XHJcbiAgei1pbmRleDogMTAwO1xyXG4gIGJveC1zaGFkb3c6IDAgMnB4IDRweCByZ2JhKDAsMCwwLDAuMSk7XHJcbn1cclxuXHJcbi5uYXZpZ2F0aW9uLWJ1dHRvbnMge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgbWFyZ2luLXJpZ2h0OiAxMHB4O1xyXG59XHJcblxyXG4ubmF2LWJ1dHRvbiB7XHJcbiAgYmFja2dyb3VuZDogbm9uZTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgcGFkZGluZzogNXB4IDhweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gIG1hcmdpbi1yaWdodDogNHB4O1xyXG59XHJcblxyXG4ubmF2LWJ1dHRvbjpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YwZjBmMDtcclxufVxyXG5cclxuLm5hdi1idXR0b246ZGlzYWJsZWQge1xyXG4gIG9wYWNpdHk6IDAuNTtcclxuICBjdXJzb3I6IG5vdC1hbGxvd2VkO1xyXG59XHJcblxyXG4udXJsLWZvcm0ge1xyXG4gIGZsZXg6IDE7XHJcbiAgbWFyZ2luOiAwIDEwcHg7XHJcbn1cclxuXHJcbi51cmwtYmFyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YxZjNmNDtcclxuICBib3JkZXItcmFkaXVzOiAyNHB4O1xyXG4gIHBhZGRpbmc6IDAgOHB4O1xyXG4gIGhlaWdodDogMzZweDtcclxufVxyXG5cclxuLnNlY3VyaXR5LWluZGljYXRvciB7XHJcbiAgcGFkZGluZzogNHB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICBtYXJnaW4tcmlnaHQ6IDhweDtcclxufVxyXG5cclxuLnNlY3VyaXR5LWluZGljYXRvci5oaWdoIHtcclxuICBjb2xvcjogZ3JlZW47XHJcbn1cclxuXHJcbi5zZWN1cml0eS1pbmRpY2F0b3IubWVkaXVtIHtcclxuICBjb2xvcjogb3JhbmdlO1xyXG59XHJcblxyXG4uc2VjdXJpdHktaW5kaWNhdG9yLmxvdyB7XHJcbiAgY29sb3I6IHJlZDtcclxufVxyXG5cclxuLnVybC1pbnB1dCB7XHJcbiAgZmxleDogMTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIG91dGxpbmU6IG5vbmU7XHJcbiAgZm9udC1zaXplOiAxNHB4O1xyXG59XHJcblxyXG4uZ28tYnV0dG9uIHtcclxuICBiYWNrZ3JvdW5kOiBub25lO1xyXG4gIGJvcmRlcjogbm9uZTtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgcGFkZGluZzogNXB4O1xyXG4gIGNvbG9yOiAjNWY2MzY4O1xyXG59XHJcblxyXG4udG9vbGJhci1hY3Rpb25zIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG59XHJcblxyXG4uYWN0aW9uLWJ1dHRvbiB7XHJcbiAgYmFja2dyb3VuZDogbm9uZTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgcGFkZGluZzogNXB4IDhweDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG59XHJcblxyXG4uYWN0aW9uLWJ1dHRvbjpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YwZjBmMDtcclxufVxyXG5cclxuLyog0JLQutC70LDQtNC60LggKi9cclxuLnRhYnMtY29udGFpbmVyIHtcclxuICBoZWlnaHQ6IDQwcHg7XHJcbiAgbWluLWhlaWdodDogNDBweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjFmM2Y0O1xyXG4gIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjZTBlMGUwO1xyXG59XHJcblxyXG4udGFicy1saXN0IHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGhlaWdodDogMTAwJTtcclxufVxyXG5cclxuLnRhYiB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIHBhZGRpbmc6IDAgMTJweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZThlYWVkO1xyXG4gIG1hcmdpbi1yaWdodDogMnB4O1xyXG4gIGJvcmRlci1yYWRpdXM6IDhweCA4cHggMCAwO1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxuICBtYXgtd2lkdGg6IDIwMHB4O1xyXG4gIGhlaWdodDogMTAwJTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbn1cclxuXHJcbi50YWIuYWN0aXZlIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmZmZmO1xyXG4gIGJveC1zaGFkb3c6IDAgMCA0cHggcmdiYSgwLDAsMCwwLjEpO1xyXG59XHJcblxyXG4udGFiLXRpdGxlIHtcclxuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xyXG4gIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XHJcbiAgZm9udC1zaXplOiAxNHB4O1xyXG59XHJcblxyXG4udGFiLWNsb3NlIHtcclxuICBiYWNrZ3JvdW5kOiBub25lO1xyXG4gIGJvcmRlcjogbm9uZTtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgcGFkZGluZzogMnB4O1xyXG4gIG1hcmdpbi1sZWZ0OiA4cHg7XHJcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG59XHJcblxyXG4udGFiLWNsb3NlOmhvdmVyIHtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsMCwwLDAuMSk7XHJcbn1cclxuXHJcbi5uZXctdGFiLWJ1dHRvbiB7XHJcbiAgYmFja2dyb3VuZDogbm9uZTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgcGFkZGluZzogMCAxMnB4O1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbn1cclxuXHJcbi8qINCf0LDQvdC10LvRjCDQvdCw0YHRgtGA0L7QtdC6ICovXHJcbi5zZXR0aW5ncy1wYW5lbCB7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIHRvcDogNDhweDtcclxuICByaWdodDogMDtcclxuICB3aWR0aDogMzIwcHg7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgYm94LXNoYWRvdzogMCA0cHggMTJweCByZ2JhKDAsMCwwLDAuMTUpO1xyXG4gIHotaW5kZXg6IDEwMDE7XHJcbiAgYm9yZGVyLXJhZGl1czogOHB4O1xyXG4gIG1hcmdpbjogMTBweDtcclxuICBvdmVyZmxvdzogaGlkZGVuO1xyXG59XHJcblxyXG4uc2V0dGluZ3MtaGVhZGVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICBwYWRkaW5nOiAxMnB4IDE2cHg7XHJcbiAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICNlMGUwZTA7XHJcbn1cclxuXHJcbi5zZXR0aW5ncy1oZWFkZXIgaDMge1xyXG4gIG1hcmdpbjogMDtcclxuICBmb250LXNpemU6IDE4cHg7XHJcbn1cclxuXHJcbi5jbG9zZS1zZXR0aW5ncyB7XHJcbiAgYmFja2dyb3VuZDogbm9uZTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIHBhZGRpbmc6IDRweDtcclxuICBib3JkZXItcmFkaXVzOiA1MCU7XHJcbn1cclxuXHJcbi5jbG9zZS1zZXR0aW5nczpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YwZjBmMDtcclxufVxyXG5cclxuLnNldHRpbmdzLWNvbnRlbnQge1xyXG4gIHBhZGRpbmc6IDE2cHg7XHJcbn1cclxuXHJcbi5zZWN1cml0eS1sZXZlbHMgaDQsXHJcbi5wcml2YWN5LW9wdGlvbnMgaDQge1xyXG4gIGZvbnQtc2l6ZTogMTZweDtcclxuICBtYXJnaW4tdG9wOiAwO1xyXG4gIG1hcmdpbi1ib3R0b206IDEycHg7XHJcbn1cclxuXHJcbi5sZXZlbC1idXR0b25zIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIG1hcmdpbi1ib3R0b206IDE2cHg7XHJcbiAgZ2FwOiA4cHg7XHJcbn1cclxuXHJcbi5sZXZlbC1idXR0b24ge1xyXG4gIGZsZXg6IDE7XHJcbiAgcGFkZGluZzogOHB4IDEycHg7XHJcbiAgYm9yZGVyOiAxcHggc29saWQgI2RkZDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG59XHJcblxyXG4ubGV2ZWwtYnV0dG9uLmFjdGl2ZSB7XHJcbiAgYm9yZGVyLWNvbG9yOiAjNDI4NWY0O1xyXG4gIGJveC1zaGFkb3c6IDAgMCAwIDJweCByZ2JhKDY2LCAxMzMsIDI0NCwgMC4yKTtcclxufVxyXG5cclxuLmxldmVsLWJ1dHRvbi5oaWdoIHtcclxuICBjb2xvcjogZ3JlZW47XHJcbn1cclxuXHJcbi5sZXZlbC1idXR0b24ubWVkaXVtIHtcclxuICBjb2xvcjogb3JhbmdlO1xyXG59XHJcblxyXG4ubGV2ZWwtYnV0dG9uLmxvdyB7XHJcbiAgY29sb3I6IHJlZDtcclxufVxyXG5cclxuLnNlY3VyaXR5LWRldGFpbHMge1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmN2Y3Zjc7XHJcbiAgcGFkZGluZzogMTJweDtcclxuICBib3JkZXItcmFkaXVzOiA0cHg7XHJcbiAgZm9udC1zaXplOiAxNHB4O1xyXG4gIG1hcmdpbi1ib3R0b206IDE2cHg7XHJcbn1cclxuXHJcbi5jaGVja2JveC1vcHRpb24ge1xyXG4gIG1hcmdpbi1ib3R0b206IDEycHg7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG59XHJcblxyXG4uY2hlY2tib3gtb3B0aW9uIGxhYmVsIHtcclxuICBtYXJnaW4tbGVmdDogOHB4O1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxuLnNldHRpbmdzLWZvb3RlciB7XHJcbiAgcGFkZGluZzogMTJweCAxNnB4O1xyXG4gIGJvcmRlci10b3A6IDFweCBzb2xpZCAjZTBlMGUwO1xyXG4gIHRleHQtYWxpZ246IHJpZ2h0O1xyXG59XHJcblxyXG4uYXBwbHktYnV0dG9uIHtcclxuICBwYWRkaW5nOiA4cHggMTZweDtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjNDI4NWY0O1xyXG4gIGNvbG9yOiB3aGl0ZTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgYm9yZGVyLXJhZGl1czogNHB4O1xyXG4gIGN1cnNvcjogcG9pbnRlcjtcclxufVxyXG5cclxuLmFwcGx5LWJ1dHRvbjpob3ZlciB7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogIzMzNjdkNjtcclxufVxyXG5cclxuLyog0JjQvdC00LjQutCw0YLQvtGAINC30LDQs9GA0YPQt9C60LggKi9cclxuLmxvYWRpbmctaW5kaWNhdG9yIHtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiAwO1xyXG4gIGxlZnQ6IDA7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCk7XHJcbiAgei1pbmRleDogMTAwMDtcclxufVxyXG5cclxuLnNwaW5uZXIge1xyXG4gIGJvcmRlcjogNHB4IHNvbGlkICNmM2YzZjM7XHJcbiAgYm9yZGVyLXRvcDogNHB4IHNvbGlkICMzNDk4ZGI7XHJcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gIHdpZHRoOiA0MHB4O1xyXG4gIGhlaWdodDogNDBweDtcclxuICBhbmltYXRpb246IHNwaW4gMXMgbGluZWFyIGluZmluaXRlO1xyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIHNwaW4ge1xyXG4gIDAlIHsgdHJhbnNmb3JtOiByb3RhdGUoMGRlZyk7IH1cclxuICAxMDAlIHsgdHJhbnNmb3JtOiByb3RhdGUoMzYwZGVnKTsgfVxyXG59XHJcblxyXG4vKiDQmtC+0L3RgtC10LnQvdC10YAg0LHRgNCw0YPQt9C10YDQsCAqL1xyXG4uYnJvd3Nlci1jb250YWluZXIge1xyXG4gIGZsZXgtZ3JvdzogMTtcclxuICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gIGJhY2tncm91bmQtY29sb3I6ICNmZmY7XHJcbiAgYm9yZGVyLXRvcDogMXB4IHNvbGlkICNkZGQ7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogY2FsYygxMDAlIC0gODhweCk7IC8qIDEwMCUgLSAodG9vbGJhciArIHRhYnMgaGVpZ2h0KSAqL1xyXG4gIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG59XHJcblxyXG4uYnJvd3Nlci1mcmFtZSB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGJvcmRlcjogbm9uZTtcclxuICBkaXNwbGF5OiBibG9jaztcclxuICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiAwO1xyXG4gIGxlZnQ6IDA7XHJcbiAgcmlnaHQ6IDA7XHJcbiAgYm90dG9tOiAwO1xyXG59ICJdfQ== */"
+
+/***/ }),
+
+/***/ "./src/app/nirnet/nirnet.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/nirnet/nirnet.component.ts ***!
+  \********************************************/
+/*! exports provided: NiRNeTComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTComponent", function() { return NiRNeTComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _helpers_services_backend_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../_helpers/services/backend.service */ "./src/app/_helpers/services/backend.service.ts");
+/* harmony import */ var _helpers_services_variables_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../_helpers/services/variables.service */ "./src/app/_helpers/services/variables.service.ts");
+/* harmony import */ var _helpers_services_modal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../_helpers/services/modal.service */ "./src/app/_helpers/services/modal.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_nirnet_routing_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/nirnet-routing.service */ "./src/app/nirnet/services/nirnet-routing.service.ts");
+/* harmony import */ var _services_nirnet_encryption_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./services/nirnet-encryption.service */ "./src/app/nirnet/services/nirnet-encryption.service.ts");
+/* harmony import */ var _services_nirnet_request_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./services/nirnet-request.service */ "./src/app/nirnet/services/nirnet-request.service.ts");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+var NiRNeTComponent = /** @class */ (function () {
+    function NiRNeTComponent(formBuilder, backend, variables, modal, router, location, ngZone, routingService, encryptionService, requestService, nirnetService) {
+        this.formBuilder = formBuilder;
+        this.backend = backend;
+        this.variables = variables;
+        this.modal = modal;
+        this.router = router;
+        this.location = location;
+        this.ngZone = ngZone;
+        this.routingService = routingService;
+        this.encryptionService = encryptionService;
+        this.requestService = requestService;
+        this.nirnetService = nirnetService;
+        // Состояние компонента
+        this.currentUrl = '';
+        this.pageTitle = 'NiRNeT Browser';
+        this.isLoading = false;
+        this.securityLevel = 'high';
+        this.showSettings = false;
+        // Историю браузера
+        this.browserHistory = [];
+        this.historyIndex = -1;
+        // Вкладки
+        this.tabs = [];
+        this.activeTabId = 1;
+        this.tabCounter = 1;
+        // Настройки приватности
+        this.privacySettings = {
+            blockJavaScript: true,
+            blockCookies: true,
+            blockTrackers: true,
+            useRandomUserAgent: true
+        };
+        // Добавляем отсутствующие свойства
+        this.pageContent = '';
+        this.contentType = 'text/html';
+        this.destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_11__["Subject"]();
+        // Инициализация формы для URL
+        this.urlForm = this.formBuilder.group({
+            url: ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]]
+        });
+        // Создаем первую вкладку
+        this.tabs.push({
+            id: this.tabCounter,
+            title: 'Новая вкладка',
+            url: '',
+            active: true
+        });
+    }
+    NiRNeTComponent.prototype.ngOnInit = function () {
+        // Устанавливаем статус загрузки
+        this.isLoading = false;
+        /*
+        // Инициализируем сервисы NiRNeT
+        this.nirnetService.initialize()
+          .then(success => {
+                console.log('NiRNeT сервисы инициализированы');
+            const circuit = this.nirnetService.getActiveCircuit();
+            console.log('Активная цепочка:', circuit);
+            
+            // Загружаем URL из параметров, если он есть
+            const queryParams = this.router.parseUrl(this.router.url).queryParams;
+            if (queryParams && queryParams['url']) {
+              this.currentUrl = queryParams['url'];
+              this.urlForm.patchValue({ url: this.currentUrl });
+              // Небольшая задержка перед навигацией, чтобы убедиться, что цепь инициализирована
+              setTimeout(() => {
+                this.navigate();
+              }, 500);
+              } else {
+              // Если URL не указан, просто отключаем индикатор загрузки
+              this.isLoading = false;
+            }
+          })
+          .catch(error => {
+            console.error('Ошибка инициализации NiRNeT:', error);
+            this.isLoading = false;
+            // Показываем сообщение об ошибке
+            this.modal.prepareModal('error', `Не удалось инициализировать NiRNeT: ${error.message || error}`);
+          });*/
+    };
+    NiRNeTComponent.prototype.ngOnDestroy = function () {
+        this.destroy$.next();
+        this.destroy$.complete();
+    };
+    // Навигация по URL
+    NiRNeTComponent.prototype.navigate = function () {
+        if (this.urlForm.valid) {
+            var url = this.urlForm.get('url').value;
+            this.loadUrl(url);
+        }
+    };
+    /**
+     * Загружает указанный URL через цепочку анонимных нод
+     */
+    NiRNeTComponent.prototype.loadUrl = function (url, forceReload, retryCount) {
+        var _this = this;
+        if (forceReload === void 0) { forceReload = false; }
+        if (retryCount === void 0) { retryCount = 0; }
+        try {
+            // Проверяем и форматируем URL
+            var formattedUrl_1 = this.formatUrl(url);
+            if (!formattedUrl_1) {
+                this.handleLoadError(new Error('Некорректный URL'));
+                return;
+            }
+            // Проверяем, не загружается ли уже этот URL и не нужно ли принудительно перезагрузить
+            if (this.currentUrl === formattedUrl_1 && !forceReload) {
+                console.log('URL уже загружен:', formattedUrl_1);
+                return;
+            }
+            console.log('Загружаем URL через NiRNeT:', formattedUrl_1);
+            // Обновляем текущий URL и форму
+            this.currentUrl = formattedUrl_1;
+            this.urlForm.get('url').setValue(formattedUrl_1);
+            // Устанавливаем состояние загрузки
+            this.isLoading = true;
+            // Показываем индикатор загрузки в iframe
+            this.showLoadingInFrame();
+            // Добавляем URL в историю
+            if (this.browserHistory.length === 0 || this.browserHistory[this.historyIndex] !== formattedUrl_1) {
+                // Если мы находимся не в конце истории, удаляем все записи впереди
+                if (this.historyIndex < this.browserHistory.length - 1) {
+                    this.browserHistory = this.browserHistory.slice(0, this.historyIndex + 1);
+                }
+                this.browserHistory.push(formattedUrl_1);
+                this.historyIndex = this.browserHistory.length - 1;
+            }
+            // Максимальное количество попыток
+            var MAX_RETRIES_1 = 2;
+            // Отправляем запрос через анонимную сеть
+            this.nirnetService.sendToAnonymizedService(formattedUrl_1, 'GET').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["catchError"])(function (error) {
+                // Если сервис не инициализирован, пробуем его инициализировать
+                if (error && (error.message === 'Circuit not initialized' || error.message.includes('not initialized'))) {
+                    _this.ngZone.run(function () {
+                        console.log('Сервис не инициализирован, запускаем инициализацию');
+                        _this.nirnetService.initialize().then(function () {
+                            // После успешной инициализации повторяем запрос
+                            _this.ngZone.run(function () {
+                                _this.isLoading = false;
+                                if (retryCount < MAX_RETRIES_1) {
+                                    console.log("\u041F\u043E\u0432\u0442\u043E\u0440\u043D\u0430\u044F \u043F\u043E\u043F\u044B\u0442\u043A\u0430 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438 (" + (retryCount + 1) + "/" + MAX_RETRIES_1 + "):", formattedUrl_1);
+                                    _this.loadUrl(formattedUrl_1, true, retryCount + 1);
+                                }
+                                else {
+                                    _this.handleLoadError(new Error('Превышено максимальное количество попыток загрузки'));
+                                }
+                            });
+                        }, function (initError) {
+                            _this.ngZone.run(function () {
+                                _this.isLoading = false;
+                                _this.handleLoadError(initError);
+                            });
+                        });
+                    });
+                }
+                else {
+                    _this.ngZone.run(function () {
+                        // Проверяем, не превышено ли максимальное количество попыток
+                        if (retryCount < MAX_RETRIES_1) {
+                            console.log("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435, \u043F\u043E\u0432\u0442\u043E\u0440\u043D\u0430\u044F \u043F\u043E\u043F\u044B\u0442\u043A\u0430 (" + (retryCount + 1) + "/" + MAX_RETRIES_1 + "):", error);
+                            // Небольшая задержка перед повторной попыткой
+                            setTimeout(function () {
+                                _this.isLoading = false;
+                                _this.loadUrl(formattedUrl_1, true, retryCount + 1);
+                            }, 1000);
+                        }
+                        else {
+                            _this.handleLoadError(error);
+                        }
+                    });
+                }
+                return rxjs__WEBPACK_IMPORTED_MODULE_11__["EMPTY"];
+            }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_12__["finalize"])(function () {
+                _this.ngZone.run(function () {
+                    // Устанавливаем флаг загрузки только если это последняя попытка
+                    if (retryCount >= MAX_RETRIES_1) {
+                        _this.isLoading = false;
+                    }
+                });
+            })).subscribe(function (response) {
+                _this.ngZone.run(function () {
+                    console.log('Ответ получен успешно:', response);
+                    _this.isLoading = false;
+                    if (response && response.body) {
+                        _this.pageContent = response.body;
+                        _this.contentType = response.headers && response.headers['content-type'] || 'text/html';
+                        // Пытаемся извлечь заголовок страницы для обновления вкладки
+                        var title = _this.extractTitle(response.body) || new URL(formattedUrl_1).hostname;
+                        _this.pageTitle = title;
+                        // Обновляем заголовок текущей вкладки
+                        _this.saveBrowserTab(formattedUrl_1, title);
+                        // Отображаем содержимое в iframe
+                        _this.renderContentInFrame(response.body, _this.contentType);
+                    }
+                    else {
+                        _this.showErrorInFrame('Получен пустой ответ от сервера');
+                    }
+                });
+            });
+        }
+        catch (error) {
+            this.isLoading = false;
+            this.handleLoadError(error);
+        }
+    };
+    /**
+     * Форматирует и проверяет URL
+     */
+    NiRNeTComponent.prototype.formatUrl = function (url) {
+        if (!url)
+            return null;
+        url = url.trim();
+        // Проверяем, может ли это быть внутренним протоколом
+        if (url.startsWith('javascript:') || url.startsWith('file:') || url.startsWith('data:')) {
+            console.warn('Небезопасные протоколы блокируются:', url);
+            return null;
+        }
+        // Проверяем, является ли это поисковым запросом
+        if (!url.includes('.') || !url.match(/^(https?:\/\/|www\.)/i)) {
+            // Если строка содержит пробелы или спец. символы, считаем ее поисковым запросом
+            if (url.includes(' ') || /[^a-z0-9.-]/i.test(url)) {
+                // Формируем поисковый запрос через DuckDuckGo
+                return "https://duckduckgo.com/?q=" + encodeURIComponent(url);
+            }
+            else {
+                // Пробуем интерпретировать как домен и добавляем https://
+                return "https://" + url;
+            }
+        }
+        // Добавляем протокол, если его нет
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url;
+        }
+        // Проверяем, что URL валидный
+        try {
+            var parsedUrl = new URL(url);
+            // Дополнительная проверка протокола после парсинга
+            if (parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:') {
+                console.warn('Неподдерживаемый протокол:', parsedUrl.protocol);
+                return null;
+            }
+            return parsedUrl.toString();
+        }
+        catch (e) {
+            console.error('Некорректный URL:', url, e);
+            // Если URL не прошел валидацию, попробуем использовать его как поисковый запрос
+            return "https://duckduckgo.com/?q=" + encodeURIComponent(url);
+        }
+    };
+    /**
+     * Отображает полученное содержимое в iframe браузера
+     */
+    NiRNeTComponent.prototype.renderContentInFrame = function (content, contentType) {
+        if (!this.browserFrame) {
+            console.error('Ошибка: элемент iframe не найден');
+            return;
+        }
+        console.log('Рендеринг содержимого в iframe, тип:', contentType);
+        console.log('Длина содержимого:', content.length);
+        try {
+            var iframe = this.browserFrame.nativeElement;
+            // Создаем базовый HTML с CSP
+            var htmlContent = '<!DOCTYPE html><html><head>';
+            htmlContent += '<meta charset="UTF-8">';
+            htmlContent += '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+            htmlContent += '<meta http-equiv="Content-Security-Policy" content="default-src * data:; script-src * \'unsafe-inline\' \'unsafe-eval\'; style-src * \'unsafe-inline\'"></head><body>';
+            // Если содержимое - HTML, обрабатываем его
+            if (contentType.includes('text/html')) {
+                // Заменяем ссылки на абсолютные
+                var processedContent = this.processHtmlContent(content, this.currentUrl);
+                // Удаляем doctype и html, head, body теги, так как мы уже создали их выше
+                processedContent = processedContent.replace(/<!DOCTYPE[^>]*>/i, '');
+                processedContent = processedContent.replace(/<html[^>]*>|<\/html>/gi, '');
+                processedContent = processedContent.replace(/<head[^>]*>|<\/head>/gi, '');
+                processedContent = processedContent.replace(/<body[^>]*>/i, '');
+                processedContent = processedContent.replace(/<\/body>/i, '');
+                // Вставляем содержимое документа
+                htmlContent += processedContent;
+            }
+            else if (contentType.includes('text/plain')) {
+                // Отображаем текст в виде предварительно отформатированного содержимого
+                htmlContent += "\n          <div style=\"font-family: monospace; white-space: pre-wrap; padding: 20px;\">\n            " + content.replace(/</g, '&lt;').replace(/>/g, '&gt;') + "\n          </div>\n        ";
+            }
+            else if (contentType.includes('application/json')) {
+                // Форматируем и отображаем JSON
+                try {
+                    var jsonObj = JSON.parse(content);
+                    var formattedJson = JSON.stringify(jsonObj, null, 2);
+                    htmlContent += "\n            <div style=\"background-color: #f5f5f5; padding: 20px;\">\n              <pre style=\"background-color: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 15px; overflow: auto;\">\n                " + formattedJson.replace(/</g, '&lt;').replace(/>/g, '&gt;') + "\n              </pre>\n            </div>\n          ";
+                }
+                catch (e) {
+                    htmlContent += "\n            <div style=\"font-family: sans-serif; padding: 20px;\">\n              <div style=\"color: red; margin-bottom: 15px;\">\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043F\u0430\u0440\u0441\u0438\u043D\u0433\u0435 JSON: " + e.message + "</div>\n              <pre style=\"background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 4px; padding: 15px; white-space: pre-wrap;\">\n                " + content.replace(/</g, '&lt;').replace(/>/g, '&gt;') + "\n              </pre>\n            </div>\n          ";
+                }
+            }
+            else if (contentType.includes('image/')) {
+                // Отображаем изображение
+                var base64Data = void 0;
+                try {
+                    if (typeof content === 'string') {
+                        base64Data = btoa(content);
+                    }
+                    else {
+                        base64Data = this.arrayBufferToBase64(content);
+                    }
+                }
+                catch (error) {
+                    console.error('Ошибка конвертации изображения:', error);
+                    base64Data = '';
+                }
+                htmlContent += "\n          <div style=\"margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 90vh; background-color: #f5f5f5;\">\n            <img src=\"data:" + contentType + ";base64," + base64Data + "\" style=\"max-width: 100%; max-height: 90vh; border: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,0.1);\" alt=\"\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435\" />\n          </div>\n        ";
+            }
+            else {
+                // Для других типов контента отображаем информацию
+                htmlContent += "\n          <div style=\"font-family: sans-serif; padding: 40px; text-align: center; background-color: #f5f5f5;\">\n            <div style=\"max-width: 600px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);\">\n              <h1 style=\"margin-top: 0; color: #333; font-size: 24px;\">\u0421\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0435 \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u043E \u0432 \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0435</h1>\n              <p>\u0422\u0438\u043F \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0433\u043E:</p>\n              <div style=\"background-color: #f0f0f0; padding: 8px 12px; border-radius: 4px; margin: 20px 0; font-family: monospace;\">" + contentType + "</div>\n              <p>\u0420\u0430\u0437\u043C\u0435\u0440 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0433\u043E: " + content.length + " \u0431\u0430\u0439\u0442</p>\n              <p>\u0412\u044B \u043C\u043E\u0436\u0435\u0442\u0435 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C \u0441\u043F\u0435\u0446\u0438\u0430\u043B\u0438\u0437\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u043E\u0435 \u043F\u0440\u0438\u043B\u043E\u0436\u0435\u043D\u0438\u0435 \u0434\u043B\u044F \u043F\u0440\u043E\u0441\u043C\u043E\u0442\u0440\u0430 \u0434\u0430\u043D\u043D\u043E\u0433\u043E \u043A\u043E\u043D\u0442\u0435\u043D\u0442\u0430.</p>\n            </div>\n          </div>\n        ";
+            }
+            // Добавляем скрипты для обработки событий и безопасности
+            htmlContent += "\n        <script>\n          // \u0424\u0443\u043D\u043A\u0446\u0438\u044F \u0434\u043B\u044F \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0438 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0439 \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u043C\u0443 \u043E\u043A\u043D\u0443\n          window.sendMessageToParent = function(message) {\n            try {\n              window.parent.postMessage(message, '*');\n            } catch (e) {\n              console.warn('\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044E:', e);\n            }\n          };\n          \n          // \u0421\u043E\u043E\u0431\u0449\u0430\u0435\u043C \u043E \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043D\u0438\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0438\n          window.addEventListener('load', function() {\n            sendMessageToParent({\n              type: 'resize',\n              height: document.documentElement.scrollHeight,\n              width: document.documentElement.scrollWidth\n            });\n          });\n          \n          // \u041F\u0440\u0435\u0434\u043E\u0442\u0432\u0440\u0430\u0449\u0430\u0435\u043C \u0434\u043E\u0441\u0442\u0443\u043F \u043A \u0444\u0430\u0439\u043B\u043E\u0432\u043E\u0439 \u0441\u0438\u0441\u0442\u0435\u043C\u0435\n          (function() {\n            // \u0411\u043B\u043E\u043A\u0438\u0440\u0443\u0435\u043C \u0434\u043E\u0441\u0442\u0443\u043F \u043A File API \u0438 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u044F \u0444\u0430\u0439\u043B\u043E\u0432\u043E\u0439 \u0441\u0438\u0441\u0442\u0435\u043C\u044B\n            try {\n              if (window.showDirectoryPicker) {\n                window.showDirectoryPicker = null;\n              }\n              \n              if (window.webkitRequestFileSystem) {\n                window.webkitRequestFileSystem = null;\n              }\n            } catch (e) {\n              console.warn('\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0437\u0430\u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u0444\u0430\u0439\u043B\u043E\u0432\u044B\u0439 API:', e);\n            }\n            \n            // \u0411\u043B\u043E\u043A\u0438\u0440\u0443\u0435\u043C \u0434\u043E\u0441\u0442\u0443\u043F \u043A \u043B\u043E\u043A\u0430\u043B\u044C\u043D\u044B\u043C \u0444\u0430\u0439\u043B\u0430\u043C \u0447\u0435\u0440\u0435\u0437 input\n            document.addEventListener('DOMContentLoaded', function() {\n              try {\n                const inputs = document.querySelectorAll('input[type=\"file\"]');\n                inputs.forEach(input => {\n                  input.disabled = true;\n                  input.style.display = 'none';\n                });\n              } catch (e) {\n                console.warn('\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C file inputs:', e);\n              }\n            });\n          })();\n          \n          // \u041F\u0435\u0440\u0435\u0445\u0432\u0430\u0442\u044B\u0432\u0430\u0435\u043C \u043A\u043B\u0438\u043A\u0438 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0430\u043C \u0434\u043B\u044F \u043D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u0438\n          document.addEventListener('click', function(e) {\n            try {\n              if (e.target.tagName === 'A' || e.target.closest('a')) {\n                const link = e.target.tagName === 'A' ? e.target : e.target.closest('a');\n                const href = link.getAttribute('href');\n                \n                // \u0422\u043E\u043B\u044C\u043A\u043E \u0434\u043B\u044F http/https \u0441\u0441\u044B\u043B\u043E\u043A\n                if (href && (href.startsWith('http') || href.startsWith('//') || !href.includes(':'))) {\n                  e.preventDefault();\n                  sendMessageToParent({\n                    type: 'navigate',\n                    url: href\n                  });\n                }\n              }\n            } catch (e) {\n              console.warn('\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0435 \u043A\u043B\u0438\u043A\u0430 \u043F\u043E \u0441\u0441\u044B\u043B\u043A\u0435:', e);\n            }\n          });\n          \n          // \u0421\u043E\u043E\u0431\u0449\u0430\u0435\u043C \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u043C\u0443 \u043E\u043A\u043D\u0443 \u043E \u0433\u043E\u0442\u043E\u0432\u043D\u043E\u0441\u0442\u0438 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0433\u043E\n          sendMessageToParent({ \n            type: 'content-loaded', \n            url: document.location.href\n          });\n        </script>\n      ";
+            // Закрываем HTML
+            htmlContent += '</body></html>';
+            // Устанавливаем содержимое в iframe через srcdoc
+            iframe.srcdoc = htmlContent;
+            console.log('Содержимое успешно отображено в iframe');
+            console.log('Содержимое установлено успешно, размер:', content.length);
+        }
+        catch (error) {
+            console.error('Ошибка при рендеринге содержимого:', error);
+            this.showErrorInFrame("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0438 \u0441\u043E\u0434\u0435\u0440\u0436\u0438\u043C\u043E\u0433\u043E: " + (error.message || error));
+        }
+    };
+    /**
+     * Обрабатывает HTML-контент для правильного отображения в iframe
+     */
+    NiRNeTComponent.prototype.processHtmlContent = function (html, baseUrl) {
+        try {
+            // Создаем временный div для работы с HTML
+            var tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+            // Базовый URL для правильного преобразования относительных путей
+            var base_1 = new URL(baseUrl);
+            // Исправляем относительные ссылки
+            tempDiv.querySelectorAll('a').forEach(function (a) {
+                if (a.href && a.href.startsWith('file:')) {
+                    var href = a.getAttribute('href');
+                    if (href && !href.startsWith('http') && !href.startsWith('//')) {
+                        a.href = new URL(href, base_1).href;
+                    }
+                }
+            });
+            // Исправляем относительные пути в изображениях
+            tempDiv.querySelectorAll('img').forEach(function (img) {
+                var src = img.getAttribute('src');
+                if (src && !src.startsWith('http') && !src.startsWith('//') && !src.startsWith('data:')) {
+                    img.src = new URL(src, base_1).href;
+                }
+            });
+            // Исправляем относительные пути в таблицах стилей
+            tempDiv.querySelectorAll('link[rel="stylesheet"]').forEach(function (link) {
+                var href = link.getAttribute('href');
+                if (href && !href.startsWith('http') && !href.startsWith('//')) {
+                    link.setAttribute('href', new URL(href, base_1).href);
+                }
+            });
+            // Исправляем относительные пути в скриптах
+            tempDiv.querySelectorAll('script').forEach(function (script) {
+                var src = script.getAttribute('src');
+                if (src && !src.startsWith('http') && !src.startsWith('//')) {
+                    script.setAttribute('src', new URL(src, base_1).href);
+                }
+            });
+            return tempDiv.innerHTML;
+        }
+        catch (error) {
+            console.error('Ошибка при обработке HTML-контента:', error);
+            return html; // Возвращаем исходный HTML в случае ошибки
+        }
+    };
+    /**
+     * Преобразует массив байтов в строку Base64
+     */
+    NiRNeTComponent.prototype.arrayBufferToBase64 = function (buffer) {
+        try {
+            if (typeof buffer === 'string') {
+                return btoa(buffer);
+            }
+            // Для ArrayBuffer или аналогичных типов
+            var binary = '';
+            var bytes = new Uint8Array(buffer);
+            var len = bytes.byteLength;
+            for (var i = 0; i < len; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+        catch (error) {
+            console.error('Ошибка при конвертации в Base64:', error);
+            return '';
+        }
+    };
+    /**
+     * Обрабатывает ошибки загрузки
+     */
+    NiRNeTComponent.prototype.handleLoadError = function (error) {
+        // Останавливаем индикатор загрузки
+        this.isLoading = false;
+        var errorMessage = 'Произошла ошибка при загрузке страницы';
+        var errorDetails = '';
+        // Получаем информативное сообщение об ошибке
+        if (typeof error === 'string') {
+            errorMessage = error;
+        }
+        else if (error && error.message) {
+            errorMessage = error.message;
+            // Делаем сообщение более понятным для пользователя
+            if (error.message.includes('Circuit not initialized') ||
+                error.message.includes('not initialized') ||
+                error.message.includes('no active circuit')) {
+                errorMessage = 'Не удалось подключиться к анонимной сети. Пожалуйста, попробуйте позже.';
+                errorDetails = 'Ошибка инициализации цепочки';
+            }
+            else if (error.message.includes('timeout') || error.message.includes('timed out')) {
+                errorMessage = 'Превышено время ожидания при загрузке страницы. Пожалуйста, попробуйте позже.';
+                errorDetails = 'Таймаут соединения';
+            }
+            else if (error.message.includes('NetworkError') || error.message.includes('network')) {
+                errorMessage = 'Проблемы с сетевым подключением. Проверьте соединение с интернетом.';
+                errorDetails = 'Сетевая ошибка';
+            }
+            else if (error.message.includes('404') || error.message.includes('not found')) {
+                errorMessage = 'Страница не найдена. Проверьте правильность URL.';
+                errorDetails = 'Ошибка 404';
+            }
+            else if (error.message.includes('403') || error.message.includes('forbidden')) {
+                errorMessage = 'Доступ к странице запрещен.';
+                errorDetails = 'Ошибка 403';
+            }
+            else if (error.message.includes('500') || error.message.includes('server error')) {
+                errorMessage = 'Ошибка на сервере. Пожалуйста, попробуйте позже.';
+                errorDetails = 'Ошибка 500';
+            }
+        }
+        else if (error && error.error && error.error.error) {
+            errorMessage = error.error.error;
+        }
+        else if (error && error.status) {
+            // Обработка по HTTP статусу
+            switch (error.status) {
+                case 404:
+                    errorMessage = 'Страница не найдена. Проверьте правильность URL.';
+                    errorDetails = 'Ошибка 404';
+                    break;
+                case 403:
+                    errorMessage = 'Доступ к странице запрещен.';
+                    errorDetails = 'Ошибка 403';
+                    break;
+                case 500:
+                case 502:
+                case 503:
+                case 504:
+                    errorMessage = 'Ошибка на сервере. Пожалуйста, попробуйте позже.';
+                    errorDetails = "\u041E\u0448\u0438\u0431\u043A\u0430 " + error.status;
+                    break;
+                default:
+                    errorMessage = "\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B (" + error.status + ")";
+                    break;
+            }
+        }
+        console.error('Детали ошибки:', errorMessage, error);
+        // Показываем ошибку пользователю
+        var modalMessage = errorDetails
+            ? errorMessage + " (" + errorDetails + ")"
+            : errorMessage;
+        this.modal.prepareModal('error', modalMessage);
+        // Устанавливаем информацию об ошибке в iframe
+        this.showErrorInFrame(errorMessage);
+        // Если URL не был установлен или был сброшен, устанавливаем заголовок вкладки
+        var currentTab = this.tabs.find(function (tab) { return tab.active; });
+        if (currentTab && (!currentTab.title || currentTab.title === 'Новая вкладка')) {
+            currentTab.title = 'Ошибка загрузки';
+        }
+    };
+    // Навигация назад/вперед
+    NiRNeTComponent.prototype.goBack = function () {
+        if (this.historyIndex > 0) {
+            this.historyIndex--;
+            this.loadUrl(this.browserHistory[this.historyIndex]);
+        }
+    };
+    NiRNeTComponent.prototype.goForward = function () {
+        if (this.historyIndex < this.browserHistory.length - 1) {
+            this.historyIndex++;
+            this.loadUrl(this.browserHistory[this.historyIndex]);
+        }
+    };
+    // Управление вкладками
+    NiRNeTComponent.prototype.addTab = function () {
+        this.tabCounter++;
+        // Деактивируем все вкладки
+        this.tabs.forEach(function (tab) { return tab.active = false; });
+        // Добавляем новую активную вкладку
+        this.tabs.push({
+            id: this.tabCounter,
+            title: 'Новая вкладка',
+            url: '',
+            active: true
+        });
+        this.activeTabId = this.tabCounter;
+        this.currentUrl = '';
+        this.urlForm.get('url').setValue('');
+        // Очищаем содержимое фрейма
+        if (this.browserFrame) {
+            var doc = this.browserFrame.nativeElement.contentDocument ||
+                (this.browserFrame.nativeElement.contentWindow && this.browserFrame.nativeElement.contentWindow.document);
+            doc.open();
+            doc.write('<html><body></body></html>');
+            doc.close();
+        }
+    };
+    NiRNeTComponent.prototype.switchTab = function (tabId) {
+        // Находим вкладку и активируем ее
+        var tab = this.tabs.find(function (t) { return t.id === tabId; });
+        if (tab) {
+            this.tabs.forEach(function (t) { return t.active = (t.id === tabId); });
+            this.activeTabId = tabId;
+            // Обновляем URL в форме
+            this.urlForm.get('url').setValue(tab.url);
+            this.currentUrl = tab.url;
+            // Если URL не пустой, загружаем страницу
+            if (tab.url) {
+                this.loadUrl(tab.url);
+            }
+            else {
+                // Очищаем содержимое фрейма
+                if (this.browserFrame) {
+                    var doc = this.browserFrame.nativeElement.contentDocument ||
+                        (this.browserFrame.nativeElement.contentWindow && this.browserFrame.nativeElement.contentWindow.document);
+                    doc.open();
+                    doc.write('<html><body></body></html>');
+                    doc.close();
+                }
+            }
+        }
+    };
+    NiRNeTComponent.prototype.closeTab = function (tabId) {
+        var index = this.tabs.findIndex(function (t) { return t.id === tabId; });
+        if (index !== -1) {
+            var wasActive = this.tabs[index].active;
+            // Удаляем вкладку
+            this.tabs.splice(index, 1);
+            // Если была активной, переключаемся на другую
+            if (wasActive && this.tabs.length > 0) {
+                // Переключаемся на предыдущую или следующую
+                var newActiveIndex = Math.min(index, this.tabs.length - 1);
+                this.tabs[newActiveIndex].active = true;
+                this.activeTabId = this.tabs[newActiveIndex].id;
+                // Обновляем URL в форме
+                this.urlForm.get('url').setValue(this.tabs[newActiveIndex].url);
+                this.currentUrl = this.tabs[newActiveIndex].url;
+                // Если URL не пустой, загружаем страницу
+                if (this.tabs[newActiveIndex].url) {
+                    this.loadUrl(this.tabs[newActiveIndex].url);
+                }
+            }
+            // Если закрыли последнюю вкладку, создаем новую
+            if (this.tabs.length === 0) {
+                this.addTab();
+            }
+        }
+    };
+    // Обновление текущей страницы
+    NiRNeTComponent.prototype.refresh = function () {
+        if (this.currentUrl) {
+            this.loadUrl(this.currentUrl);
+        }
+    };
+    // Настройки безопасности
+    NiRNeTComponent.prototype.toggleSettings = function () {
+        this.showSettings = !this.showSettings;
+    };
+    NiRNeTComponent.prototype.setSecurityLevel = function (level) {
+        this.securityLevel = level;
+        // Обновляем настройки в зависимости от уровня
+        switch (level) {
+            case 'high':
+                this.privacySettings = {
+                    blockJavaScript: true,
+                    blockCookies: true,
+                    blockTrackers: true,
+                    useRandomUserAgent: true
+                };
+                break;
+            case 'medium':
+                this.privacySettings = {
+                    blockJavaScript: false,
+                    blockCookies: true,
+                    blockTrackers: true,
+                    useRandomUserAgent: true
+                };
+                break;
+            case 'low':
+                this.privacySettings = {
+                    blockJavaScript: false,
+                    blockCookies: false,
+                    blockTrackers: true,
+                    useRandomUserAgent: true
+                };
+                break;
+        }
+        // Если страница открыта, перезагружаем ее с новыми настройками
+        if (this.currentUrl) {
+            this.refresh();
+        }
+    };
+    // Вспомогательные методы
+    NiRNeTComponent.prototype.extractTitle = function (html) {
+        if (!html)
+            return '';
+        try {
+            var titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+            return titleMatch ? titleMatch[1] : '';
+        }
+        catch (error) {
+            console.error('Ошибка при извлечении заголовка:', error);
+            return '';
+        }
+    };
+    NiRNeTComponent.prototype.sanitizeHtml = function (html) {
+        // Создаем базовый CSP (Content Security Policy)
+        var csp = '';
+        // Если включена блокировка JavaScript, добавляем CSP для скриптов
+        if (this.privacySettings.blockJavaScript) {
+            csp += "<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none';\">";
+            // Также удаляем скрипты из HTML
+            html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+        }
+        // Если включена блокировка cookies
+        if (this.privacySettings.blockCookies) {
+            // Вместо мета-тега используем CSP для блокировки cookies
+            if (csp) {
+                // Дополняем существующий CSP
+                html = html.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>/, "<meta http-equiv=\"Content-Security-Policy\" content=\"script-src 'none'; cookie-store 'none';\">");
+            }
+            else {
+                // Создаем новый CSP
+                csp += "<meta http-equiv=\"Content-Security-Policy\" content=\"cookie-store 'none';\">";
+            }
+        }
+        // Если есть CSP, добавляем его в head
+        if (csp && !html.includes("<meta http-equiv=\"Content-Security-Policy\"")) {
+            html = html.replace(/<head[^>]*>/, "$&" + csp);
+        }
+        return html;
+    };
+    /**
+     * Отображает ошибку в iframe браузера
+     * @param message Текст ошибки для отображения
+     */
+    NiRNeTComponent.prototype.showErrorInFrame = function (message) {
+        if (this.browserFrame) {
+            try {
+                var iframe = this.browserFrame.nativeElement;
+                // Создаем HTML с сообщением об ошибке
+                var errorHtml = "\n          <!DOCTYPE html>\n          <html>\n            <head>\n              <meta charset=\"UTF-8\">\n              <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n              <title>\u041E\u0448\u0438\u0431\u043A\u0430</title>\n              <style>\n                body { \n                  font-family: Arial, sans-serif; \n                  padding: 20px; \n                  color: #333; \n                  background-color: #f7f7f7;\n                  margin: 0;\n                  height: 100vh;\n                  display: flex;\n                  justify-content: center;\n                  align-items: center;\n                }\n                .error-container { \n                  max-width: 600px; \n                  padding: 30px;\n                  border: 1px solid #e0e0e0;\n                  border-radius: 8px;\n                  background-color: white;\n                  box-shadow: 0 2px 10px rgba(0,0,0,0.05);\n                  text-align: center;\n                }\n                h1 { \n                  color: #d32f2f; \n                  margin-top: 0; \n                  font-size: 24px;\n                }\n                .icon { \n                  font-size: 48px; \n                  margin-bottom: 20px; \n                }\n                p {\n                  line-height: 1.5;\n                  color: #555;\n                }\n                .retry-button {\n                  margin-top: 20px;\n                  padding: 10px 20px;\n                  background-color: #2196F3;\n                  color: white;\n                  border: none;\n                  border-radius: 4px;\n                  cursor: pointer;\n                  font-size: 14px;\n                  transition: background-color 0.3s;\n                }\n                .retry-button:hover {\n                  background-color: #1976D2;\n                }\n              </style>\n            </head>\n            <body>\n              <div class=\"error-container\">\n                <div class=\"icon\">\u26A0\uFE0F</div>\n                <h1>\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B</h1>\n                <p>" + message + "</p>\n                <p>\u041F\u043E\u043F\u0440\u043E\u0431\u0443\u0439\u0442\u0435 \u043E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443 \u0438\u043B\u0438 \u0438\u0437\u043C\u0435\u043D\u0438\u0442\u044C URL.</p>\n                <button class=\"retry-button\" onclick=\"refreshPage()\">\u041E\u0431\u043D\u043E\u0432\u0438\u0442\u044C \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u0443</button>\n              </div>\n              <script>\n                function refreshPage() {\n                  try {\n                    // \u041F\u044B\u0442\u0430\u0435\u043C\u0441\u044F \u043E\u0431\u0440\u0430\u0442\u0438\u0442\u044C\u0441\u044F \u043A \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u043C\u0443 \u043E\u043A\u043D\u0443 \u0434\u043B\u044F \u043E\u0431\u043D\u043E\u0432\u043B\u0435\u043D\u0438\u044F\n                    window.parent.postMessage({ type: 'refresh' }, '*');\n                  } catch(e) {\n                    console.warn('\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044E:', e);\n                  }\n                }\n              </script>\n            </body>\n          </html>\n        ";
+                // Устанавливаем содержимое в iframe через srcdoc
+                iframe.srcdoc = errorHtml;
+            }
+            catch (error) {
+                console.error('Не удалось отобразить ошибку в iframe:', error);
+            }
+        }
+    };
+    /**
+     * Сохраняет вкладку в истории браузера
+     */
+    NiRNeTComponent.prototype.saveBrowserTab = function (url, title) {
+        try {
+            // Проверяем входные данные
+            if (!url) {
+                console.warn('Попытка сохранить вкладку с пустым URL');
+                return;
+            }
+            // Обрабатываем случай пустого заголовка
+            if (!title || title.trim() === '') {
+                // Если заголовок пустой, пытаемся использовать домен из URL
+                try {
+                    var urlObj = new URL(url);
+                    title = urlObj.hostname || 'Новая вкладка';
+                }
+                catch (e) {
+                    title = 'Новая вкладка';
+                }
+            }
+            // Ограничиваем длину заголовка
+            var formattedTitle = title.length > 20 ?
+                title.substring(0, 20) + '...' :
+                title;
+            // Обновляем текущую активную вкладку
+            var currentTab = this.tabs.find(function (tab) { return tab.active; });
+            if (currentTab) {
+                // Обновляем свойства вкладки
+                currentTab.url = url;
+                currentTab.title = formattedTitle;
+            }
+            else {
+                // Если активная вкладка не найдена, создаем новую
+                console.warn('Активная вкладка не найдена, создаем новую');
+                this.tabCounter++;
+                // Деактивируем все текущие вкладки
+                this.tabs.forEach(function (tab) { return tab.active = false; });
+                // Добавляем новую вкладку
+                this.tabs.push({
+                    id: this.tabCounter,
+                    title: formattedTitle,
+                    url: url,
+                    active: true
+                });
+                this.activeTabId = this.tabCounter;
+            }
+        }
+        catch (error) {
+            console.error('Ошибка при сохранении вкладки:', error);
+        }
+    };
+    NiRNeTComponent.prototype.ngAfterViewInit = function () {
+        // Инициализация iframe после отрисовки компонента
+        if (this.browserFrame && this.browserFrame.nativeElement) {
+            var iframe = this.browserFrame.nativeElement;
+            // Устанавливаем стили напрямую для полноэкранного отображения
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            iframe.style.display = 'block';
+            iframe.style.backgroundColor = 'white';
+            // Добавляем обработчик сообщений от iframe
+            window.addEventListener('message', this.handleIframeMessages.bind(this));
+            // Отображаем стартовую страницу с инструкциями
+            this.showStartPage();
+        }
+    };
+    /**
+     * Показывает стартовую страницу с инструкциями
+     */
+    NiRNeTComponent.prototype.showStartPage = function () {
+        if (!this.browserFrame) {
+            console.error('Ошибка: элемент iframe не найден');
+            return;
+        }
+        try {
+            var iframe = this.browserFrame.nativeElement;
+            // Создаем корректный URL для логотипа на основе относительного пути
+            // Используем инлайн-SVG вместо внешнего файла, чтобы избежать проблем с загрузкой
+            var nirnetLogoSvg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\" width=\"80\" height=\"80\">\n        <path fill=\"#4285f4\" d=\"M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm0 472c-119.3 0-216-96.7-216-216S136.7 40 256 40s216 96.7 216 216-96.7 216-216 216z\"/>\n        <path fill=\"#4285f4\" d=\"M256 128c-70.7 0-128 57.3-128 128s57.3 128 128 128 128-57.3 128-128-57.3-128-128-128zm0 216c-48.5 0-88-39.5-88-88s39.5-88 88-88 88 39.5 88 88-39.5 88-88 88z\"/>\n        <circle fill=\"#34a853\" cx=\"256\" cy=\"256\" r=\"56\"/>\n      </svg>";
+            // Создаем и записываем HTML-содержимое стартовой страницы
+            var startPageHtml = "\n        <!DOCTYPE html>\n        <html>\n          <head>\n            <meta charset=\"UTF-8\">\n            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n            <title>NiRNeT \u0411\u0440\u0430\u0443\u0437\u0435\u0440</title>\n            <style>\n              body {\n                font-family: Arial, sans-serif;\n                margin: 0;\n                padding: 0;\n                color: #333;\n                background-color: #f8f9fa;\n                display: flex;\n                flex-direction: column;\n                min-height: 100vh;\n              }\n              .welcome-container {\n                max-width: 800px;\n                margin: 0 auto;\n                padding: 40px 20px;\n                text-align: center;\n              }\n              .nirnet-logo {\n                margin-bottom: 30px;\n              }\n              h1 {\n                font-size: 28px;\n                margin-bottom: 16px;\n                color: #4285f4;\n              }\n              h2 {\n                font-size: 20px;\n                margin-top: 30px;\n                margin-bottom: 16px;\n                color: #5f6368;\n              }\n              p {\n                font-size: 16px;\n                line-height: 1.6;\n                margin-bottom: 16px;\n                color: #3c4043;\n              }\n              .highlight {\n                background-color: #e8f0fe;\n                padding: 20px;\n                border-radius: 8px;\n                margin: 30px 0;\n                text-align: left;\n              }\n              .search-examples {\n                display: flex;\n                flex-wrap: wrap;\n                justify-content: center;\n                gap: 10px;\n                margin: 20px 0;\n              }\n              .search-example {\n                display: block;\n                padding: 8px 16px;\n                background-color: #fff;\n                border: 1px solid #dadce0;\n                border-radius: 24px;\n                color: #1a73e8;\n                text-decoration: none;\n                font-size: 14px;\n                transition: all 0.2s;\n              }\n              .search-example:hover {\n                background-color: #f1f3f4;\n                box-shadow: 0 1px 3px rgba(0,0,0,0.1);\n              }\n              .features {\n                display: grid;\n                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));\n                gap: 20px;\n                margin: 30px 0;\n              }\n              .feature {\n                background-color: #fff;\n                padding: 20px;\n                border-radius: 8px;\n                box-shadow: 0 1px 3px rgba(0,0,0,0.1);\n              }\n              .feature-icon {\n                font-size: 24px;\n                margin-bottom: 10px;\n                color: #4285f4;\n              }\n              .feature-title {\n                font-weight: bold;\n                margin-bottom: 10px;\n              }\n              footer {\n                margin-top: auto;\n                padding: 20px;\n                font-size: 14px;\n                color: #5f6368;\n                text-align: center;\n                background-color: #fff;\n                border-top: 1px solid #dadce0;\n              }\n            </style>\n          </head>\n          <body>\n            <div class=\"welcome-container\">\n              <div class=\"nirnet-logo\">\n                " + nirnetLogoSvg + "\n              </div>\n              <h1>\u0414\u043E\u0431\u0440\u043E \u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C \u0432 NiRNeT \u0411\u0440\u0430\u0443\u0437\u0435\u0440</h1>\n              <p>\u0412\u0430\u0448 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u044B\u0439 \u0438 \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u043A \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442\u0443. NiRNeT \u0437\u0430\u0449\u0438\u0449\u0430\u0435\u0442 \u0432\u0430\u0448\u0443 \u043F\u0440\u0438\u0432\u0430\u0442\u043D\u043E\u0441\u0442\u044C, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044F \u043F\u0440\u0438\u043D\u0446\u0438\u043F \"\u043B\u0443\u043A\u043E\u0432\u043E\u0439\" \u043C\u0430\u0440\u0448\u0440\u0443\u0442\u0438\u0437\u0430\u0446\u0438\u0438.</p>\n              \n              <div class=\"highlight\">\n                <p>\u0414\u043B\u044F \u043D\u0430\u0447\u0430\u043B\u0430 \u0440\u0430\u0431\u043E\u0442\u044B \u0432\u0432\u0435\u0434\u0438\u0442\u0435 URL \u0432 \u0430\u0434\u0440\u0435\u0441\u043D\u0443\u044E \u0441\u0442\u0440\u043E\u043A\u0443 \u0432\u044B\u0448\u0435 \u0438\u043B\u0438 \u0432\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043E\u0434\u0438\u043D \u0438\u0437 \u043F\u0440\u0438\u043C\u0435\u0440\u043E\u0432 \u043D\u0438\u0436\u0435:</p>\n                <div class=\"search-examples\">\n                  <a href=\"https://duckduckgo.com\" class=\"search-example\">DuckDuckGo</a>\n                  <a href=\"https://wikipedia.org\" class=\"search-example\">Wikipedia</a>\n                  <a href=\"https://news.ycombinator.com\" class=\"search-example\">Hacker News</a>\n                  <a href=\"https://nirmata-network.com\" class=\"search-example\">Nirmata Network</a>\n                </div>\n              </div>\n              \n              <h2>\u041E\u0441\u043E\u0431\u0435\u043D\u043D\u043E\u0441\u0442\u0438 NiRNeT \u0431\u0440\u0430\u0443\u0437\u0435\u0440\u0430</h2>\n              <div class=\"features\">\n                <div class=\"feature\">\n                  <div class=\"feature-icon\">\uD83D\uDD12</div>\n                  <div class=\"feature-title\">\u041F\u043E\u0432\u044B\u0448\u0435\u043D\u043D\u0430\u044F \u043F\u0440\u0438\u0432\u0430\u0442\u043D\u043E\u0441\u0442\u044C</div>\n                  <p>\u041C\u043D\u043E\u0433\u043E\u0441\u043B\u043E\u0439\u043D\u043E\u0435 \u0448\u0438\u0444\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0437\u0430\u0449\u0438\u0449\u0430\u0435\u0442 \u0432\u0430\u0448\u0438 \u0434\u0430\u043D\u043D\u044B\u0435 \u0438 \u0441\u043A\u0440\u044B\u0432\u0430\u0435\u0442 \u0432\u0430\u0448 IP-\u0430\u0434\u0440\u0435\u0441</p>\n                </div>\n                <div class=\"feature\">\n                  <div class=\"feature-icon\">\uD83D\uDEE1\uFE0F</div>\n                  <div class=\"feature-title\">\u0417\u0430\u0449\u0438\u0442\u0430 \u043E\u0442 \u0442\u0440\u0435\u043A\u0438\u043D\u0433\u0430</div>\n                  <p>\u0411\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u043A\u0430 \u0442\u0440\u0435\u043A\u0435\u0440\u043E\u0432 \u0438 \u0440\u0435\u043A\u043B\u0430\u043C\u043D\u044B\u0445 \u0441\u043A\u0440\u0438\u043F\u0442\u043E\u0432, \u0441\u043B\u0435\u0434\u044F\u0449\u0438\u0445 \u0437\u0430 \u0432\u0430\u0448\u0435\u0439 \u0430\u043A\u0442\u0438\u0432\u043D\u043E\u0441\u0442\u044C\u044E</p>\n                </div>\n                <div class=\"feature\">\n                  <div class=\"feature-icon\">\u26A1</div>\n                  <div class=\"feature-title\">\u041D\u0430\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u043C\u0430\u044F \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u043E\u0441\u0442\u044C</div>\n                  <p>\u0413\u0438\u0431\u043A\u0438\u0435 \u043D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438 \u043F\u0440\u0438\u0432\u0430\u0442\u043D\u043E\u0441\u0442\u0438 \u0434\u043B\u044F \u0440\u0430\u0437\u043B\u0438\u0447\u043D\u044B\u0445 \u0443\u0440\u043E\u0432\u043D\u0435\u0439 \u0437\u0430\u0449\u0438\u0442\u044B</p>\n                </div>\n              </div>\n              \n              <p>NiRNeT \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442 \u0446\u0435\u043F\u043E\u0447\u043A\u0443 \u0438\u0437 3 \u043D\u043E\u0434 \u0434\u043B\u044F \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u044F \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u043E\u0441\u0442\u0438. \u041A\u0430\u0436\u0434\u044B\u0439 \u0437\u0430\u043F\u0440\u043E\u0441 \u043F\u0440\u043E\u0445\u043E\u0434\u0438\u0442 \u0447\u0435\u0440\u0435\u0437 \u044D\u0442\u0443 \u0446\u0435\u043F\u043E\u0447\u043A\u0443, \u0437\u0430\u0449\u0438\u0449\u0430\u044F \u0432\u0430\u0448\u0443 \u043F\u0440\u0438\u0432\u0430\u0442\u043D\u043E\u0441\u0442\u044C.</p>\n            </div>\n            <footer>\n              NiRNeT \u0411\u0440\u0430\u0443\u0437\u0435\u0440 \u2014 \u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D\u044B\u0439 \u0438 \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u044B\u0439 \u0434\u043E\u0441\u0442\u0443\u043F \u0432 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442 \u00A9 2023\n            </footer>\n            <script>\n              // \u0424\u0443\u043D\u043A\u0446\u0438\u044F \u0434\u043B\u044F \u043E\u0442\u043F\u0440\u0430\u0432\u043A\u0438 \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0439 \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044C\u0441\u043A\u043E\u043C\u0443 \u043E\u043A\u043D\u0443\n              function sendMessageToParent(message) {\n                try {\n                  window.parent.postMessage(message, '*');\n                } catch (e) {\n                  console.warn('\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435 \u0440\u043E\u0434\u0438\u0442\u0435\u043B\u044E:', e);\n                }\n              }\n              \n              // \u041E\u0431\u0440\u0430\u0431\u043E\u0442\u0447\u0438\u043A \u0434\u043B\u044F \u0441\u0441\u044B\u043B\u043E\u043A\n              document.addEventListener('click', function(e) {\n                if (e.target.tagName === 'A' || e.target.closest('a')) {\n                  const link = e.target.tagName === 'A' ? e.target : e.target.closest('a');\n                  const href = link.getAttribute('href');\n                  \n                  if (href && href.startsWith('http')) {\n                    e.preventDefault();\n                    sendMessageToParent({\n                      type: 'navigate',\n                      url: href\n                    });\n                  }\n                }\n              });\n              \n              // \u0421\u043E\u043E\u0431\u0449\u0430\u0435\u043C \u043E \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435 \u0438 \u0440\u0430\u0437\u043C\u0435\u0440\u0430\u0445\n              window.addEventListener('load', function() {\n                sendMessageToParent({\n                  type: 'resize',\n                  height: document.documentElement.scrollHeight,\n                  width: document.documentElement.scrollWidth\n                });\n              });\n            </script>\n          </body>\n        </html>\n      ";
+            // Устанавливаем содержимое в iframe через srcdoc
+            iframe.srcdoc = startPageHtml;
+            console.log('Стартовая страница успешно загружена в iframe');
+        }
+        catch (error) {
+            console.error('Ошибка при отображении стартовой страницы:', error);
+            this.showErrorInFrame("\u041E\u0448\u0438\u0431\u043A\u0430 \u043F\u0440\u0438 \u0437\u0430\u0433\u0440\u0443\u0437\u043A\u0435 \u0441\u0442\u0430\u0440\u0442\u043E\u0432\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u0438\u0446\u044B: " + (error.message || error));
+        }
+    };
+    /**
+     * Обрабатывает сообщения, полученные от iframe
+     */
+    NiRNeTComponent.prototype.handleIframeMessages = function (event) {
+        var _this = this;
+        try {
+            // Проверяем, что сообщение имеет нужную структуру
+            if (event.data && typeof event.data === 'object') {
+                if (event.data.type === 'resize') {
+                    // Обрабатываем изменение размеров содержимого
+                    console.log('Получено сообщение об изменении размеров:', event.data);
+                }
+                else if (event.data.type === 'navigate') {
+                    // Обрабатываем запрос на навигацию
+                    if (event.data.url) {
+                        // Выполняем навигацию
+                        this.ngZone.run(function () {
+                            _this.loadUrl(event.data.url);
+                        });
+                    }
+                }
+                else if (event.data.type === 'refresh') {
+                    // Обрабатываем запрос на обновление страницы
+                    this.ngZone.run(function () {
+                        _this.refresh();
+                    });
+                }
+                else if (event.data.type === 'content-loaded') {
+                    // Обрабатываем сообщение о загрузке содержимого
+                    console.log('Контент загружен для URL:', event.data.url);
+                }
+            }
+        }
+        catch (error) {
+            console.error('Ошибка при обработке сообщения от iframe:', error);
+        }
+    };
+    /**
+     * Показывает индикатор загрузки в iframe
+     */
+    NiRNeTComponent.prototype.showLoadingInFrame = function () {
+        if (!this.browserFrame) {
+            console.error('Элемент iframe не найден');
+            return;
+        }
+        try {
+            var iframe = this.browserFrame.nativeElement;
+            // Создаем HTML с индикатором загрузки
+            var loadingHtml = "\n        <!DOCTYPE html>\n        <html>\n          <head>\n            <meta charset=\"UTF-8\">\n            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n            <title>\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430...</title>\n            <style>\n              body {\n                font-family: Arial, sans-serif;\n                margin: 0;\n                padding: 0;\n                display: flex;\n                justify-content: center;\n                align-items: center;\n                height: 100vh;\n                background-color: #f9f9f9;\n              }\n              .loading-container {\n                text-align: center;\n              }\n              .spinner {\n                display: inline-block;\n                width: 50px;\n                height: 50px;\n                border: 4px solid rgba(0, 0, 0, 0.1);\n                border-radius: 50%;\n                border-top-color: #4285f4;\n                animation: spin 1s ease-in-out infinite;\n                margin-bottom: 20px;\n              }\n              @keyframes spin {\n                to { transform: rotate(360deg); }\n              }\n              .loading-text {\n                color: #333;\n                font-size: 16px;\n                animation: pulse 1.5s infinite;\n              }\n              @keyframes pulse {\n                0% { opacity: 0.6; }\n                50% { opacity: 1; }\n                100% { opacity: 0.6; }\n              }\n              .url-display {\n                margin-top: 15px;\n                font-size: 14px;\n                color: #666;\n                max-width: 80%;\n                overflow: hidden;\n                text-overflow: ellipsis;\n                white-space: nowrap;\n                margin-left: auto;\n                margin-right: auto;\n              }\n            </style>\n          </head>\n          <body>\n            <div class=\"loading-container\">\n              <div class=\"spinner\"></div>\n              <div class=\"loading-text\">\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u0441\u0430\u0439\u0442\u0430 \u0447\u0435\u0440\u0435\u0437 \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u0443\u044E \u0441\u0435\u0442\u044C...</div>\n              <div class=\"url-display\">" + (this.currentUrl || '') + "</div>\n            </div>\n          </body>\n        </html>\n      ";
+            // Устанавливаем содержимое в iframe через srcdoc
+            iframe.srcdoc = loadingHtml;
+        }
+        catch (error) {
+            console.error('Ошибка при отображении индикатора загрузки:', error);
+        }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('browserFrame'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], NiRNeTComponent.prototype, "browserFrame", void 0);
+    NiRNeTComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-nirnet',
+            template: __webpack_require__(/*! ./nirnet.component.html */ "./src/app/nirnet/nirnet.component.html"),
+            styles: [__webpack_require__(/*! ./nirnet.component.scss */ "./src/app/nirnet/nirnet.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"],
+            _helpers_services_backend_service__WEBPACK_IMPORTED_MODULE_2__["BackendService"],
+            _helpers_services_variables_service__WEBPACK_IMPORTED_MODULE_3__["VariablesService"],
+            _helpers_services_modal_service__WEBPACK_IMPORTED_MODULE_4__["ModalService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_5__["Location"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"],
+            _services_nirnet_routing_service__WEBPACK_IMPORTED_MODULE_7__["NiRNeTRoutingService"],
+            _services_nirnet_encryption_service__WEBPACK_IMPORTED_MODULE_8__["NiRNeTEncryptionService"],
+            _services_nirnet_request_service__WEBPACK_IMPORTED_MODULE_9__["NiRNeTRequestService"],
+            _services_nirnet_service__WEBPACK_IMPORTED_MODULE_10__["NiRNeTService"]])
+    ], NiRNeTComponent);
+    return NiRNeTComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/nirnet.module.ts":
+/*!*****************************************!*\
+  !*** ./src/app/nirnet/nirnet.module.ts ***!
+  \*****************************************/
+/*! exports provided: NiRNeTModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTModule", function() { return NiRNeTModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_material_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material/input */ "./node_modules/@angular/material/esm5/input.es5.js");
+/* harmony import */ var _angular_material_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material/button */ "./node_modules/@angular/material/esm5/button.es5.js");
+/* harmony import */ var _angular_material_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/material/select */ "./node_modules/@angular/material/esm5/select.es5.js");
+/* harmony import */ var _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/checkbox */ "./node_modules/@angular/material/esm5/checkbox.es5.js");
+/* harmony import */ var _angular_material_icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/material/icon */ "./node_modules/@angular/material/esm5/icon.es5.js");
+/* harmony import */ var _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/progress-spinner */ "./node_modules/@angular/material/esm5/progress-spinner.es5.js");
+/* harmony import */ var _angular_material_expansion__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material/expansion */ "./node_modules/@angular/material/esm5/expansion.es5.js");
+/* harmony import */ var _angular_material_tabs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material/tabs */ "./node_modules/@angular/material/esm5/tabs.es5.js");
+/* harmony import */ var _angular_material_slider__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/material/slider */ "./node_modules/@angular/material/esm5/slider.es5.js");
+/* harmony import */ var _angular_material_button_toggle__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/material/button-toggle */ "./node_modules/@angular/material/esm5/button-toggle.es5.js");
+/* harmony import */ var _nirnet_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./nirnet.component */ "./src/app/nirnet/nirnet.component.ts");
+/* harmony import */ var _components_nirnet_browser_nirnet_browser_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/nirnet-browser/nirnet-browser.component */ "./src/app/nirnet/components/nirnet-browser/nirnet-browser.component.ts");
+/* harmony import */ var _components_nirnet_circuit_nirnet_circuit_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/nirnet-circuit/nirnet-circuit.component */ "./src/app/nirnet/components/nirnet-circuit/nirnet-circuit.component.ts");
+/* harmony import */ var _components_nirnet_settings_nirnet_settings_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/nirnet-settings/nirnet-settings.component */ "./src/app/nirnet/components/nirnet-settings/nirnet-settings.component.ts");
+/* harmony import */ var _components_status_status_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/status/status.component */ "./src/app/nirnet/components/status/status.component.ts");
+/* harmony import */ var _components_ssl_status_ssl_status_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/ssl-status/ssl-status.component */ "./src/app/nirnet/components/ssl-status/ssl-status.component.ts");
+/* harmony import */ var _services_nirnet_service__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./services/nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+/* harmony import */ var _services_nirnet_routing_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./services/nirnet-routing.service */ "./src/app/nirnet/services/nirnet-routing.service.ts");
+/* harmony import */ var _services_nirnet_encryption_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./services/nirnet-encryption.service */ "./src/app/nirnet/services/nirnet-encryption.service.ts");
+/* harmony import */ var _services_nirnet_request_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./services/nirnet-request.service */ "./src/app/nirnet/services/nirnet-request.service.ts");
+/* harmony import */ var _services_ssl_bypass_interceptor__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./services/ssl-bypass.interceptor */ "./src/app/nirnet/services/ssl-bypass.interceptor.ts");
+/* harmony import */ var _services_certificate_manager_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./services/certificate-manager.service */ "./src/app/nirnet/services/certificate-manager.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+// Angular Material
+
+
+
+
+
+
+
+
+
+
+// Компоненты
+
+
+
+
+
+
+// Сервисы
+
+
+
+
+
+
+var NiRNeTModule = /** @class */ (function () {
+    function NiRNeTModule() {
+    }
+    NiRNeTModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            declarations: [
+                _nirnet_component__WEBPACK_IMPORTED_MODULE_14__["NiRNeTComponent"],
+                _components_nirnet_browser_nirnet_browser_component__WEBPACK_IMPORTED_MODULE_15__["NiRNeTBrowserComponent"],
+                _components_nirnet_circuit_nirnet_circuit_component__WEBPACK_IMPORTED_MODULE_16__["NiRNeTCircuitComponent"],
+                _components_nirnet_settings_nirnet_settings_component__WEBPACK_IMPORTED_MODULE_17__["NiRNeTSettingsComponent"],
+                _components_status_status_component__WEBPACK_IMPORTED_MODULE_18__["NiRNeTStatusComponent"],
+                _components_ssl_status_ssl_status_component__WEBPACK_IMPORTED_MODULE_19__["SSLStatusComponent"]
+            ],
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ReactiveFormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
+                // Angular Material
+                _angular_material_input__WEBPACK_IMPORTED_MODULE_4__["MatInputModule"],
+                _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"],
+                _angular_material_select__WEBPACK_IMPORTED_MODULE_6__["MatSelectModule"],
+                _angular_material_checkbox__WEBPACK_IMPORTED_MODULE_7__["MatCheckboxModule"],
+                _angular_material_icon__WEBPACK_IMPORTED_MODULE_8__["MatIconModule"],
+                _angular_material_progress_spinner__WEBPACK_IMPORTED_MODULE_9__["MatProgressSpinnerModule"],
+                _angular_material_expansion__WEBPACK_IMPORTED_MODULE_10__["MatExpansionModule"],
+                _angular_material_tabs__WEBPACK_IMPORTED_MODULE_11__["MatTabsModule"],
+                _angular_material_slider__WEBPACK_IMPORTED_MODULE_12__["MatSliderModule"],
+                _angular_material_button_toggle__WEBPACK_IMPORTED_MODULE_13__["MatButtonToggleModule"]
+            ],
+            exports: [
+                _nirnet_component__WEBPACK_IMPORTED_MODULE_14__["NiRNeTComponent"],
+                _components_nirnet_browser_nirnet_browser_component__WEBPACK_IMPORTED_MODULE_15__["NiRNeTBrowserComponent"],
+                _components_status_status_component__WEBPACK_IMPORTED_MODULE_18__["NiRNeTStatusComponent"]
+            ],
+            providers: [
+                _services_nirnet_service__WEBPACK_IMPORTED_MODULE_20__["NiRNeTService"],
+                _services_nirnet_routing_service__WEBPACK_IMPORTED_MODULE_21__["NiRNeTRoutingService"],
+                _services_nirnet_encryption_service__WEBPACK_IMPORTED_MODULE_22__["NiRNeTEncryptionService"],
+                _services_nirnet_request_service__WEBPACK_IMPORTED_MODULE_23__["NiRNeTRequestService"],
+                _services_certificate_manager_service__WEBPACK_IMPORTED_MODULE_25__["CertificateManagerService"],
+                {
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
+                    useClass: _services_ssl_bypass_interceptor__WEBPACK_IMPORTED_MODULE_24__["SSLBypassInterceptor"],
+                    multi: true
+                }
+            ]
+        })
+    ], NiRNeTModule);
+    return NiRNeTModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/services/certificate-manager.service.ts":
+/*!****************************************************************!*\
+  !*** ./src/app/nirnet/services/certificate-manager.service.ts ***!
+  \****************************************************************/
+/*! exports provided: CertificateManagerService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CertificateManagerService", function() { return CertificateManagerService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _models_certificate_model__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../models/certificate.model */ "./src/app/nirnet/models/certificate.model.ts");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Сервис для управления сертификатами в NiRNeT
+ */
+var CertificateManagerService = /** @class */ (function () {
+    function CertificateManagerService(http) {
+        this.http = http;
+        // Корневой сертификат NiRNeT CA
+        this.rootCACertificate = _models_certificate_model__WEBPACK_IMPORTED_MODULE_4__["NIRNET_ROOT_CA_BASE64"];
+        // Список доверенных сертификатов узлов
+        this.trustedNodes = [];
+        // Кеш статусов SSL-соединений для разных URL
+        this.sslStatusCache = new Map();
+        this.loadTrustedNodes();
+    }
+    /**
+     * Загружает список доверенных узлов из локального хранилища
+     */
+    CertificateManagerService.prototype.loadTrustedNodes = function () {
+        try {
+            var savedNodes = localStorage.getItem('nirnet_trusted_nodes');
+            if (savedNodes) {
+                var nodes = JSON.parse(savedNodes);
+                // Восстанавливаем объекты Date из строк
+                this.trustedNodes = nodes.map(function (node) { return (__assign({}, node, { trustedSince: new Date(node.trustedSince), validUntil: new Date(node.validUntil) })); });
+            }
+            else {
+                // Используем список по умолчанию, если сохраненного нет
+                this.trustedNodes = _models_certificate_model__WEBPACK_IMPORTED_MODULE_4__["DEFAULT_TRUSTED_NODES"].slice();
+                this.saveTrustedNodes();
+            }
+        }
+        catch (error) {
+            console.error('Ошибка при загрузке списка доверенных узлов:', error);
+            this.trustedNodes = _models_certificate_model__WEBPACK_IMPORTED_MODULE_4__["DEFAULT_TRUSTED_NODES"].slice();
+            this.saveTrustedNodes();
+        }
+    };
+    /**
+     * Сохраняет список доверенных узлов в локальное хранилище
+     */
+    CertificateManagerService.prototype.saveTrustedNodes = function () {
+        try {
+            localStorage.setItem('nirnet_trusted_nodes', JSON.stringify(this.trustedNodes));
+        }
+        catch (error) {
+            console.error('Ошибка при сохранении списка доверенных узлов:', error);
+        }
+    };
+    /**
+     * Загружает корневой сертификат с сервера
+     * @param serverUrl URL сервера NiRNeT
+     */
+    CertificateManagerService.prototype.loadRootCertificate = function (serverUrl) {
+        var _this = this;
+        var url = serverUrl + "/api/v1/cert/ca.b64";
+        console.log("\u0417\u0430\u0433\u0440\u0443\u0436\u0430\u0435\u043C \u043A\u043E\u0440\u043D\u0435\u0432\u043E\u0439 \u0441\u0435\u0440\u0442\u0438\u0444\u0438\u043A\u0430\u0442 \u0441 " + url);
+        return this.http.get(url, { responseType: 'text' }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["tap"])(function (cert) {
+            console.log('Корневой сертификат получен, сохраняем в хранилище');
+            _this.rootCACertificate = cert;
+            localStorage.setItem('nirnet_root_ca', cert);
+            // Автоматически добавляем сервер в доверенные
+            _this.addServerToTrusted(serverUrl);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            console.error('Ошибка при загрузке корневого сертификата:', error);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return 'Не удалось загрузить корневой сертификат'; });
+        }));
+    };
+    /**
+     * Добавляет сервер в список доверенных после загрузки сертификата
+     * @param serverUrl URL сервера для добавления в доверенные
+     */
+    CertificateManagerService.prototype.addServerToTrusted = function (serverUrl) {
+        var hostname = this.extractHostname(serverUrl);
+        // Проверяем, есть ли уже такой сервер в списке доверенных
+        if (this.isTrustedNode(serverUrl)) {
+            console.log("\u0421\u0435\u0440\u0432\u0435\u0440 " + hostname + " \u0443\u0436\u0435 \u0432 \u0441\u043F\u0438\u0441\u043A\u0435 \u0434\u043E\u0432\u0435\u0440\u0435\u043D\u043D\u044B\u0445");
+            return;
+        }
+        console.log("\u0414\u043E\u0431\u0430\u0432\u043B\u044F\u0435\u043C \u0441\u0435\u0440\u0432\u0435\u0440 " + hostname + " \u0432 \u0441\u043F\u0438\u0441\u043E\u043A \u0434\u043E\u0432\u0435\u0440\u0435\u043D\u043D\u044B\u0445");
+        // Создаем запись о доверенном сертификате
+        var trustedCert = {
+            nodeUrl: serverUrl,
+            fingerprint: this.calculateFingerprint(this.rootCACertificate),
+            trustedSince: new Date(),
+            validUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 2)),
+            description: 'Автоматически добавлен при загрузке корневого сертификата'
+        };
+        // Добавляем в список доверенных и сохраняем
+        this.trustedNodes.push(trustedCert);
+        this.saveTrustedNodes();
+        // Очищаем кеш статусов SSL
+        this.clearSSLStatusCache(serverUrl);
+        console.log("\u0421\u0435\u0440\u0432\u0435\u0440 " + hostname + " \u0443\u0441\u043F\u0435\u0448\u043D\u043E \u0434\u043E\u0431\u0430\u0432\u043B\u0435\u043D \u0432 \u0441\u043F\u0438\u0441\u043E\u043A \u0434\u043E\u0432\u0435\u0440\u0435\u043D\u043D\u044B\u0445");
+    };
+    /**
+     * Получает текущий корневой сертификат
+     */
+    CertificateManagerService.prototype.getRootCertificate = function () {
+        return this.rootCACertificate;
+    };
+    /**
+     * Проверяет, является ли URL доверенным узлом NiRNeT
+     * @param url URL для проверки
+     */
+    CertificateManagerService.prototype.isTrustedNode = function (url) {
+        var _this = this;
+        // Быстрая проверка по IP-адресам известных серверов NiRNeT
+        var nirnetServers = ['195.16.74.121', '45.14.247.211', '103.113.70.162'];
+        if (nirnetServers.some(function (ip) { return url.includes(ip); })) {
+            return true;
+        }
+        // Стандартная проверка по базе доверенных узлов
+        var hostname = this.extractHostname(url);
+        return this.trustedNodes.some(function (node) {
+            var nodeHostname = _this.extractHostname(node.nodeUrl);
+            return nodeHostname === hostname;
+        });
+    };
+    /**
+     * Извлекает имя хоста из URL
+     * @param url URL для обработки
+     */
+    CertificateManagerService.prototype.extractHostname = function (url) {
+        try {
+            // Проверяем, содержит ли URL протокол
+            if (url.startsWith('http://') || url.startsWith('https://')) {
+                return new URL(url).hostname;
+            }
+            // Обрабатываем ситуацию, когда передан только хост с портом
+            var parts = url.split(':');
+            return parts[0];
+        }
+        catch (error) {
+            console.error('Ошибка при извлечении хоста из URL:', error);
+            return url;
+        }
+    };
+    /**
+     * Добавляет узел в список доверенных
+     * @param nodeCertificate Информация о сертификате узла
+     */
+    CertificateManagerService.prototype.addTrustedNode = function (nodeCertificate) {
+        var _this = this;
+        // Проверяем, есть ли уже такой узел
+        var existingNodeIndex = this.trustedNodes.findIndex(function (node) { return _this.extractHostname(node.nodeUrl) === _this.extractHostname(nodeCertificate.nodeUrl); });
+        if (existingNodeIndex >= 0) {
+            // Обновляем существующий узел
+            this.trustedNodes[existingNodeIndex] = nodeCertificate;
+        }
+        else {
+            // Добавляем новый узел
+            this.trustedNodes.push(nodeCertificate);
+        }
+        // Сохраняем изменения
+        this.saveTrustedNodes();
+        // Очищаем кеш статусов SSL для этого узла
+        this.clearSSLStatusCache(nodeCertificate.nodeUrl);
+    };
+    /**
+     * Удаляет узел из списка доверенных
+     * @param nodeUrl URL узла для удаления
+     */
+    CertificateManagerService.prototype.removeTrustedNode = function (nodeUrl) {
+        var _this = this;
+        var hostname = this.extractHostname(nodeUrl);
+        this.trustedNodes = this.trustedNodes.filter(function (node) { return _this.extractHostname(node.nodeUrl) !== hostname; });
+        this.saveTrustedNodes();
+        this.clearSSLStatusCache(nodeUrl);
+    };
+    /**
+     * Получает список всех доверенных узлов
+     */
+    CertificateManagerService.prototype.getTrustedNodes = function () {
+        return this.trustedNodes.slice();
+    };
+    /**
+     * Проверяет статус SSL для указанного URL
+     * @param url URL для проверки
+     * @param forceCheck Принудительная проверка (без использования кеша)
+     */
+    CertificateManagerService.prototype.checkSSLStatus = function (url, forceCheck) {
+        if (forceCheck === void 0) { forceCheck = false; }
+        // Проверяем кеш, если не требуется принудительная проверка
+        if (!forceCheck && this.sslStatusCache.has(url)) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(this.sslStatusCache.get(url));
+        }
+        // Проверяем, является ли узел доверенным
+        var isTrustedNode = this.isTrustedNode(url);
+        // Базовый статус для начала
+        var sslStatus = {
+            isSecure: url.startsWith('https://'),
+            isTrusted: isTrustedNode,
+            encryptionLevel: 'high'
+        };
+        // Сохраняем в кеш и возвращаем
+        this.sslStatusCache.set(url, sslStatus);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(sslStatus);
+    };
+    /**
+     * Очищает кеш статуса SSL для указанного URL
+     * @param url URL для очистки из кеша
+     */
+    CertificateManagerService.prototype.clearSSLStatusCache = function (url) {
+        var _this = this;
+        var hostname = this.extractHostname(url);
+        // Удаляем все записи для этого хоста из кеша
+        this.sslStatusCache.forEach(function (value, key) {
+            if (_this.extractHostname(key) === hostname) {
+                _this.sslStatusCache.delete(key);
+            }
+        });
+    };
+    /**
+     * Вычисляет отпечаток сертификата (в реальном приложении)
+     * В браузерном окружении это сложно сделать, поэтому это имитация
+     * @param certificateData Данные сертификата
+     */
+    CertificateManagerService.prototype.calculateFingerprint = function (certificateData) {
+        // В реальном приложении здесь был бы код для вычисления SHA-256 хеша
+        // Для демонстрации возвращаем заглушку
+        return 'SHA256:' + Array.from({ length: 32 }, function () {
+            return Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+        }).join(':');
+    };
+    /**
+     * Проверяет, подписан ли сертификат корневым CA NiRNeT
+     * (В браузерном окружении это требует дополнительных инструментов)
+     * @param certificate Сертификат для проверки
+     */
+    CertificateManagerService.prototype.isSignedByNiRNeTCA = function (certificate) {
+        // Это упрощенная имитация для браузерного окружения
+        // В реальном приложении здесь нужно использовать Web Crypto API
+        // или стороннюю библиотеку для проверки цепочки сертификатов
+        // Пока всегда считаем узлы в списке доверенными
+        return this.trustedNodes.some(function (node) {
+            return node.fingerprint === certificate.fingerprint;
+        });
+    };
+    /**
+     * Экспортирует список доверенных узлов
+     */
+    CertificateManagerService.prototype.exportTrustedNodes = function () {
+        return JSON.stringify(this.trustedNodes, null, 2);
+    };
+    /**
+     * Импортирует список доверенных узлов
+     * @param jsonData JSON с данными узлов
+     */
+    CertificateManagerService.prototype.importTrustedNodes = function (jsonData) {
+        try {
+            var nodes = JSON.parse(jsonData);
+            if (!Array.isArray(nodes)) {
+                throw new Error('Данные должны быть массивом');
+            }
+            // Проверяем формат данных
+            for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
+                var node = nodes_1[_i];
+                if (!node.nodeUrl || !node.fingerprint || !node.trustedSince || !node.validUntil) {
+                    throw new Error('Неверный формат данных узла');
+                }
+            }
+            // Преобразуем строки дат в объекты Date
+            this.trustedNodes = nodes.map(function (node) { return (__assign({}, node, { trustedSince: new Date(node.trustedSince), validUntil: new Date(node.validUntil) })); });
+            this.saveTrustedNodes();
+            this.sslStatusCache.clear(); // Очищаем весь кеш статусов
+            return true;
+        }
+        catch (error) {
+            console.error('Ошибка при импорте списка доверенных узлов:', error);
+            return false;
+        }
+    };
+    CertificateManagerService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], CertificateManagerService);
+    return CertificateManagerService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/services/nirnet-encryption.service.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/nirnet/services/nirnet-encryption.service.ts ***!
+  \**************************************************************/
+/*! exports provided: NiRNeTEncryptionService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTEncryptionService", function() { return NiRNeTEncryptionService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto-js */ "./node_modules/crypto-js/index.js");
+/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(crypto_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var NiRNeTEncryptionService = /** @class */ (function () {
+    function NiRNeTEncryptionService() {
+    }
+    /**
+     * Шифрует данные запроса для передачи через цепочку нод
+     * @param data Данные для шифрования
+     * @param circuit Цепочка нод
+     * @returns Observable с зашифрованными данными
+     */
+    NiRNeTEncryptionService.prototype.encryptRequest = function (data, circuit) {
+        var _this = this;
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(Promise.resolve()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function () {
+            // Создаем слои шифрования для каждой ноды
+            var encryptedData = JSON.stringify(data);
+            // Шифруем в обратном порядке (от выходной ноды к входной)
+            for (var i = circuit.nodes.length - 1; i >= 0; i--) {
+                var node = circuit.nodes[i];
+                encryptedData = _this.encryptLayer(encryptedData, node.publicKey);
+            }
+            return encryptedData;
+        }));
+    };
+    /**
+     * Расшифровывает ответ от цепочки нод
+     * @param encryptedData Зашифрованный ответ
+     * @param circuit Цепочка нод
+     * @returns Observable с расшифрованными данными
+     */
+    NiRNeTEncryptionService.prototype.decryptResponse = function (encryptedData, circuit) {
+        var _this = this;
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["from"])(Promise.resolve()).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function () {
+            // Расшифровываем слои в прямом порядке (от входной ноды к выходной)
+            var decryptedData = encryptedData;
+            for (var i = 0; i < circuit.nodes.length; i++) {
+                var node = circuit.nodes[i];
+                decryptedData = _this.decryptLayer(decryptedData, circuit.sessionKey);
+            }
+            try {
+                return JSON.parse(decryptedData);
+            }
+            catch (e) {
+                throw new Error('Ошибка при разборе ответа');
+            }
+        }));
+    };
+    /**
+     * Шифрует один слой данных
+     * @param data Данные для шифрования
+     * @param key Ключ шифрования
+     * @returns Зашифрованные данные
+     */
+    NiRNeTEncryptionService.prototype.encryptLayer = function (data, key) {
+        return crypto_js__WEBPACK_IMPORTED_MODULE_1__["AES"].encrypt(data, key).toString();
+    };
+    /**
+     * Расшифровывает один слой данных
+     * @param data Зашифрованные данные
+     * @param key Ключ шифрования
+     * @returns Расшифрованные данные
+     */
+    NiRNeTEncryptionService.prototype.decryptLayer = function (data, key) {
+        var bytes = crypto_js__WEBPACK_IMPORTED_MODULE_1__["AES"].decrypt(data, key);
+        return bytes.toString(crypto_js__WEBPACK_IMPORTED_MODULE_1__["enc"].Utf8);
+    };
+    /**
+     * Генерирует случайный ключ сессии
+     */
+    NiRNeTEncryptionService.prototype.generateSessionKey = function () {
+        // Создаем случайную строку из 32 символов
+        var randomBytes = crypto_js__WEBPACK_IMPORTED_MODULE_1__["lib"].WordArray.random(32);
+        return crypto_js__WEBPACK_IMPORTED_MODULE_1__["enc"].Base64.stringify(randomBytes);
+    };
+    /**
+     * Подготавливает заголовки запроса с учетом настроек приватности
+     * @param headers Исходные заголовки
+     * @param privacySettings Настройки приватности
+     * @returns Подготовленные заголовки
+     */
+    NiRNeTEncryptionService.prototype.prepareHeaders = function (headers, privacySettings) {
+        if (headers === void 0) { headers = {}; }
+        if (privacySettings === void 0) { privacySettings = {}; }
+        var result = __assign({}, headers);
+        // Если включена опция случайного User-Agent
+        if (privacySettings.useRandomUserAgent) {
+            result['User-Agent'] = this.getRandomUserAgent();
+        }
+        // Если включена блокировка cookies
+        if (privacySettings.blockCookies) {
+            delete result['Cookie'];
+            result['Cookie-Policy'] = 'no-store';
+        }
+        // Добавляем заголовки для улучшения приватности
+        result['DNT'] = '1';
+        result['Sec-Fetch-Mode'] = 'navigate';
+        result['Sec-Fetch-Site'] = 'none';
+        return result;
+    };
+    /**
+     * Генерирует случайный User-Agent
+     * @returns Случайный User-Agent
+     */
+    NiRNeTEncryptionService.prototype.getRandomUserAgent = function () {
+        var userAgents = [
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Safari/605.1.15',
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.59'
+        ];
+        return userAgents[Math.floor(Math.random() * userAgents.length)];
+    };
+    NiRNeTEncryptionService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], NiRNeTEncryptionService);
+    return NiRNeTEncryptionService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/services/nirnet-request.service.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/nirnet/services/nirnet-request.service.ts ***!
+  \***********************************************************/
+/*! exports provided: NiRNeTRequestService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTRequestService", function() { return NiRNeTRequestService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _nirnet_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./nirnet.service */ "./src/app/nirnet/services/nirnet.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var NiRNeTRequestService = /** @class */ (function () {
+    function NiRNeTRequestService(http, nirnetService) {
+        this.http = http;
+        this.nirnetService = nirnetService;
+    }
+    /**
+     * Получает содержимое страницы по URL через анонимную сеть NiRNeT
+     *
+     * @param url URL страницы для загрузки
+     * @param securityLevel Уровень безопасности (high, medium, low)
+     * @param privacySettings Настройки приватности
+     * @returns Observable с ответом содержащим тело и заголовки
+     */
+    NiRNeTRequestService.prototype.fetchUrl = function (url, securityLevel, privacySettings) {
+        if (securityLevel === void 0) { securityLevel = 'high'; }
+        if (privacySettings === void 0) { privacySettings = {}; }
+        // Добавляем дополнительные заголовки в зависимости от настроек
+        var headers = {};
+        // Отключаем кеширование
+        headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+        headers['Pragma'] = 'no-cache';
+        headers['Expires'] = '0';
+        // Если включена блокировка cookies
+        if (privacySettings.blockCookies) {
+            headers['Cookie'] = '';
+        }
+        // Если используем случайный User-Agent
+        if (privacySettings.useRandomUserAgent) {
+            headers['User-Agent'] = this.getRandomUserAgent();
+        }
+        // Выполняем запрос через NiRNeT
+        return this.nirnetService.get(url, headers)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+    };
+    /**
+     * Отправляет POST запрос через анонимную сеть
+     *
+     * @param url URL для запроса
+     * @param data Данные для отправки
+     * @param securityLevel Уровень безопасности
+     * @param privacySettings Настройки приватности
+     * @returns Observable с ответом
+     */
+    NiRNeTRequestService.prototype.postData = function (url, data, securityLevel, privacySettings) {
+        if (securityLevel === void 0) { securityLevel = 'high'; }
+        if (privacySettings === void 0) { privacySettings = {}; }
+        // Добавляем дополнительные заголовки в зависимости от настроек
+        var headers = {
+            'Content-Type': 'application/json'
+        };
+        // Отключаем кеширование
+        headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+        headers['Pragma'] = 'no-cache';
+        headers['Expires'] = '0';
+        // Если включена блокировка cookies
+        if (privacySettings.blockCookies) {
+            headers['Cookie'] = '';
+        }
+        // Если используем случайный User-Agent
+        if (privacySettings.useRandomUserAgent) {
+            headers['User-Agent'] = this.getRandomUserAgent();
+        }
+        // Выполняем запрос через NiRNeT
+        return this.nirnetService.post(url, data, headers)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
+    };
+    /**
+     * Обработчик ошибок для запросов
+     */
+    NiRNeTRequestService.prototype.handleError = function (error) {
+        console.error('Ошибка в NiRNeT-запросе:', error);
+        // Если это объект ошибки с сообщением
+        if (error && error.message) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return error.message; });
+        }
+        // Если это строка
+        if (typeof error === 'string') {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return error; });
+        }
+        // Если это функция (часто возвращается из throwError)
+        if (typeof error === 'function') {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
+        }
+        // По умолчанию
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return 'Ошибка при выполнении запроса через NiRNeT'; });
+    };
+    /**
+     * Генерирует случайный User-Agent
+     */
+    NiRNeTRequestService.prototype.getRandomUserAgent = function () {
+        var userAgents = [
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:97.0) Gecko/20100101 Firefox/97.0',
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 12_2_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.2 Safari/605.1.15',
+            'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 Edg/98.0.1108.56'
+        ];
+        return userAgents[Math.floor(Math.random() * userAgents.length)];
+    };
+    NiRNeTRequestService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _nirnet_service__WEBPACK_IMPORTED_MODULE_4__["NiRNeTService"]])
+    ], NiRNeTRequestService);
+    return NiRNeTRequestService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/services/nirnet-routing.service.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/nirnet/services/nirnet-routing.service.ts ***!
+  \***********************************************************/
+/*! exports provided: NiRNeTRoutingService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTRoutingService", function() { return NiRNeTRoutingService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+var NiRNeTRoutingService = /** @class */ (function () {
+    function NiRNeTRoutingService(http) {
+        this.http = http;
+        this.nodes = [];
+        this.circuits = [];
+        // Статический список нод для демонстрации
+        this.NODE_LIST = [
+            {
+                ip: '195.16.74.121',
+                port: 8443,
+                status: 'active',
+                publicKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCZ5YSOtQp8',
+                lastUpdate: Date.now(),
+                load: 30,
+                connections: 5
+            },
+            {
+                ip: '45.14.247.211',
+                port: 8443,
+                status: 'active',
+                publicKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJ5YRPtQp4',
+                lastUpdate: Date.now(),
+                load: 20,
+                connections: 3
+            },
+            {
+                ip: '103.113.70.162',
+                port: 8443,
+                status: 'active',
+                publicKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCL5YSKtRp7',
+                lastUpdate: Date.now(),
+                load: 10,
+                connections: 2
+            }
+        ];
+    }
+    /**
+     * Инициализирует сервис маршрутизации
+     * @returns Promise<boolean> результат инициализации
+     */
+    NiRNeTRoutingService.prototype.initialize = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        // В реальном приложении здесь был бы запрос к API для получения списка доступных нод
+                        // Например: const availableNodes = await firstValueFrom(this.http.get<Node[]>('https://api.nirnet.org/nodes'));
+                        // Для демонстрации используем статический список
+                        this.nodes = this.NODE_LIST.slice();
+                        // Проверяем состояние нод
+                        return [4 /*yield*/, this.checkNodesAvailability()];
+                    case 1:
+                        // Проверяем состояние нод
+                        _a.sent();
+                        console.log('Инициализация маршрутизации NiRNeT успешна:', this.nodes);
+                        return [2 /*return*/, true];
+                    case 2:
+                        error_1 = _a.sent();
+                        console.error('Ошибка при инициализации маршрутизации:', error_1);
+                        return [2 /*return*/, false];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Получает доступные ноды
+     * @returns Promise<NiRNeTNode[]> доступные ноды
+     */
+    NiRNeTRoutingService.prototype.getAvailableNodes = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(this.nodes.length === 0)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.initialize()];
+                    case 1:
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/, this.nodes.filter(function (node) { return node.status === 'active'; })];
+                }
+            });
+        });
+    };
+    /**
+     * Выбирает случайные ноды для цепочки
+     * @param count Количество нод для выбора
+     * @returns Promise<NiRNeTNode[]> выбранные ноды
+     */
+    NiRNeTRoutingService.prototype.selectRandomNodes = function (count) {
+        return __awaiter(this, void 0, void 0, function () {
+            var availableNodes, selectedNodes, nodesCopy, i, randomIndex;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getAvailableNodes()];
+                    case 1:
+                        availableNodes = _a.sent();
+                        // Если доступных нод меньше, чем запрошено, используем все доступные
+                        if (availableNodes.length <= count) {
+                            return [2 /*return*/, availableNodes.slice()];
+                        }
+                        selectedNodes = [];
+                        nodesCopy = availableNodes.slice();
+                        // Перемешиваем ноды случайным образом и выбираем нужное количество
+                        for (i = 0; i < count && nodesCopy.length > 0; i++) {
+                            randomIndex = Math.floor(Math.random() * nodesCopy.length);
+                            selectedNodes.push(nodesCopy[randomIndex]);
+                            nodesCopy.splice(randomIndex, 1);
+                        }
+                        // Проверяем, что выбрали нужное количество нод
+                        if (selectedNodes.length < count) {
+                            console.warn("\u0417\u0430\u043F\u0440\u043E\u0448\u0435\u043D\u043E " + count + " \u043D\u043E\u0434, \u043D\u043E \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u043E \u0442\u043E\u043B\u044C\u043A\u043E " + selectedNodes.length);
+                        }
+                        return [2 /*return*/, selectedNodes];
+                }
+            });
+        });
+    };
+    /**
+     * Создает новую цепочку
+     * @param length Длина цепочки
+     * @returns Promise<Circuit> созданная цепочка
+     */
+    NiRNeTRoutingService.prototype.createCircuit = function (length) {
+        if (length === void 0) { length = 3; }
+        return __awaiter(this, void 0, void 0, function () {
+            var nodes, circuit;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        // Чистим старые цепочки
+                        this.cleanExpiredCircuits();
+                        return [4 /*yield*/, this.selectRandomNodes(length)];
+                    case 1:
+                        nodes = _a.sent();
+                        circuit = {
+                            nodes: nodes,
+                            createdAt: Date.now(),
+                            expiresAt: Date.now() + 30 * 60 * 1000,
+                            sessionKey: this.generateSessionKey()
+                        };
+                        // Добавляем цепочку в список активных
+                        this.circuits.push(circuit);
+                        return [2 /*return*/, circuit];
+                }
+            });
+        });
+    };
+    /**
+     * Проверяет доступность нод
+     * @returns Promise<void>
+     */
+    NiRNeTRoutingService.prototype.checkNodesAvailability = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                // В реальном приложении здесь был бы код проверки доступности нод
+                // Например, отправка ping запросов или проверка через API
+                // Для демонстрации просто обновляем статус случайным образом
+                this.nodes.forEach(function (node) {
+                    // 90% вероятность, что нода активна
+                    node.status = Math.random() < 0.9 ? 'active' : 'inactive';
+                    node.lastUpdate = Date.now();
+                    // Обновляем нагрузку и количество соединений
+                    node.load = Math.floor(Math.random() * 100);
+                    node.connections = Math.floor(Math.random() * 20);
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    /**
+     * Очищает истекшие цепочки
+     */
+    NiRNeTRoutingService.prototype.cleanExpiredCircuits = function () {
+        var now = Date.now();
+        this.circuits = this.circuits.filter(function (circuit) { return circuit.expiresAt && circuit.expiresAt > now; });
+    };
+    /**
+     * Генерирует случайный ключ сессии
+     * @returns строка с ключом сессии
+     */
+    NiRNeTRoutingService.prototype.generateSessionKey = function () {
+        var random = new Uint8Array(32);
+        window.crypto.getRandomValues(random);
+        return Array.from(random).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+    };
+    /**
+     * Строит цепочку для маршрутизации запроса
+     * @param targetHost Целевой хост
+     * @param relayNodes Список релейных нод
+     * @returns Структура маршрутизации
+     */
+    NiRNeTRoutingService.prototype.buildRoutingChain = function (targetUrl, relayNodes) {
+        // Проверяем наличие нод для цепочки
+        if (!relayNodes || relayNodes.length === 0) {
+            console.error('Не указаны ноды для построения маршрута');
+            return null;
+        }
+        // Создаем структуру для запроса с новым форматом
+        var routingData = {
+            encrypted_key: this.generateEncryptedKey(),
+            target_url: targetUrl,
+            method: 'GET',
+            data: null,
+            circuit_id: this.generateCircuitId()
+        };
+        console.log('Построена цепочка маршрутизации:', routingData);
+        return routingData;
+    };
+    /**
+     * Генерирует зашифрованный ключ для запроса
+     */
+    NiRNeTRoutingService.prototype.generateEncryptedKey = function () {
+        // Создаем случайный ключ
+        var key = Math.random().toString(36).substring(2, 15) +
+            Math.random().toString(36).substring(2, 15);
+        // В реальном сценарии здесь должно быть шифрование ключа
+        // с использованием открытых ключей нод
+        return btoa(JSON.stringify({
+            key: key,
+            timestamp: Date.now()
+        }));
+    };
+    /**
+     * Генерирует уникальный идентификатор цепочки
+     */
+    NiRNeTRoutingService.prototype.generateCircuitId = function () {
+        return "circuit-" + Date.now() + "-" + Math.floor(Math.random() * 1000000);
+    };
+    /**
+     * Форматирует запрос для отправки через прокси
+     * @param targetUrl URL назначения
+     * @param method HTTP метод
+     * @param body Тело запроса
+     * @returns Отформатированные данные для запроса
+     */
+    NiRNeTRoutingService.prototype.formatProxyRequest = function (targetUrl, method, body) {
+        if (body === void 0) { body = null; }
+        return {
+            path: '/api/v1/relay',
+            data: {
+                encrypted_key: this.generateEncryptedKey(),
+                target_url: targetUrl,
+                method: method,
+                data: body,
+                circuit_id: this.generateCircuitId()
+            }
+        };
+    };
+    NiRNeTRoutingService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], NiRNeTRoutingService);
+    return NiRNeTRoutingService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/services/nirnet.service.ts":
+/*!***************************************************!*\
+  !*** ./src/app/nirnet/services/nirnet.service.ts ***!
+  \***************************************************/
+/*! exports provided: NiRNeTService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NiRNeTService", function() { return NiRNeTService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+var NiRNeTService = /** @class */ (function () {
+    function NiRNeTService(http) {
+        this.http = http;
+        this.DEFAULT_PRIVACY_SETTINGS = {
+            blockCookies: true,
+            privacyLevel: 'high',
+            rotateCircuitTime: 30 // минуты
+        };
+        // Бэкэнды NiRNeT
+        this.baseUrls = [
+            'https://195.16.74.121:8443/api/v1' // Основной сервер
+        ];
+        // Прокси серверы для доступа к API
+        this.proxyUrls = [
+            'http://195.16.74.121:8080/proxy-api/relay' // Основной прокси
+        ];
+        // Текущий индекс сервера
+        this.currentServerIndex = 0;
+        // Статус серверов и цепочки
+        this.statusSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        this.circuitSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["BehaviorSubject"](null);
+        this.status$ = this.statusSubject.asObservable();
+        this.circuit$ = this.circuitSubject.asObservable();
+        // Активная цепочка
+        this.activeCircuit = null;
+        // Настройки приватности
+        this.privacySettings = this.DEFAULT_PRIVACY_SETTINGS;
+        // Режим отладки
+        this.debugMode = true;
+        console.log('NiRNeTService инициализирован!');
+        // Запускаем периодическую проверку статуса
+        this.startStatusCheck();
+    }
+    /**
+     * Выводит отладочную информацию, если включен режим отладки
+     * @param message Сообщение для вывода
+     * @param data Дополнительные данные
+     */
+    NiRNeTService.prototype.debug = function (message, data) {
+        if (this.debugMode) {
+            if (data) {
+                console.log("[NiRNeT Debug] " + message, data);
+            }
+            else {
+                console.log("[NiRNeT Debug] " + message);
+            }
+        }
+    };
+    /**
+     * Тестирует соединение с прокси-сервером
+     * @returns Observable с результатом диагностики
+     */
+    NiRNeTService.prototype.testProxyConnection = function () {
+        var _this = this;
+        // Используем прокси для доступа к диагностическому API
+        var proxyUrl = this.proxyUrls[this.currentServerIndex].replace('/relay', '/diagnose');
+        this.debug("\u0422\u0435\u0441\u0442\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u0441\u043E\u0435\u0434\u0438\u043D\u0435\u043D\u0438\u044F \u0441 \u043F\u0440\u043E\u043A\u0441\u0438: " + proxyUrl);
+        // Создаем простой запрос для диагностики
+        return this.http.post(proxyUrl, {}, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json'
+            })
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["timeout"])(5000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            _this.debug('Ошибка при тестировании прокси', error);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error("Proxy connection test failed: " + (error.message || error)); });
+        }));
+    };
+    /**
+     * Инициализирует сервис NiRNeT
+     * @returns Promise, который разрешается, когда сервис успешно инициализирован
+     */
+    NiRNeTService.prototype.initialize = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var status_1, statusError_1, circuitError_1, error_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.debug('Начинаем инициализацию NiRNeT сервиса');
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 10, , 11]);
+                        // Генерируем тестовую цепочку для запросов, даже если не сможем получить статус
+                        // Это позволит работать в автономном режиме при отсутствии связи с сервером
+                        this.debug('Создаем базовую цепочку нод');
+                        this.activeCircuit = {
+                            nodes: this.createFallbackNodes(),
+                            createdAt: Date.now(),
+                            sessionKey: this.generateSessionKey()
+                        };
+                        // Обновляем статус цепочки
+                        this.circuitSubject.next(this.activeCircuit);
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 5, , 6]);
+                        // Проверяем соединение с прокси
+                        this.debug('Тестируем соединение с прокси-сервером');
+                        return [4 /*yield*/, this.testProxyConnection().toPromise()];
+                    case 3:
+                        _a.sent();
+                        this.debug('Соединение с прокси-сервером успешно установлено');
+                        // Получаем статус сервера
+                        this.debug('Запрашиваем статус сервера');
+                        return [4 /*yield*/, this.getServerStatus().toPromise()];
+                    case 4:
+                        status_1 = _a.sent();
+                        if (status_1) {
+                            this.debug('Статус сервера получен успешно', status_1);
+                            this.statusSubject.next(status_1);
+                        }
+                        else {
+                            this.debug('Статус сервера не получен, используем автономный режим');
+                        }
+                        return [3 /*break*/, 6];
+                    case 5:
+                        statusError_1 = _a.sent();
+                        this.debug('Ошибка при получении статуса сервера, продолжаем в автономном режиме', statusError_1);
+                        return [3 /*break*/, 6];
+                    case 6:
+                        _a.trys.push([6, 8, , 9]);
+                        // Создаем цепочку нод с реальными данными
+                        this.debug('Пытаемся создать цепочку нод с реальными данными');
+                        return [4 /*yield*/, this.createCircuit()];
+                    case 7:
+                        _a.sent();
+                        return [3 /*break*/, 9];
+                    case 8:
+                        circuitError_1 = _a.sent();
+                        this.debug('Ошибка при создании цепочки нод, используем резервную цепочку', circuitError_1);
+                        return [3 /*break*/, 9];
+                    case 9:
+                        // Запускаем ротацию цепочки
+                        this.startCircuitRotation();
+                        this.debug('NiRNeT сервис успешно инициализирован');
+                        return [2 /*return*/, true];
+                    case 10:
+                        error_1 = _a.sent();
+                        this.debug('Критическая ошибка при инициализации NiRNeT', error_1);
+                        return [2 /*return*/, false];
+                    case 11: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Создает резервные ноды для автономного режима
+     * @returns Массив заглушек нод
+     */
+    NiRNeTService.prototype.createFallbackNodes = function () {
+        // Создаем минимальный набор нод для работы без сервера
+        return [
+            {
+                ip: '195.16.74.121',
+                port: 8443,
+                publicKey: 'fallback-key-1',
+                status: 'active',
+                lastUpdate: Date.now(),
+                load: 0,
+                connections: 0
+            },
+            {
+                ip: '45.14.247.211',
+                port: 8443,
+                publicKey: 'fallback-key-2',
+                status: 'active',
+                lastUpdate: Date.now(),
+                load: 0,
+                connections: 0
+            },
+            {
+                ip: '103.113.70.162',
+                port: 8443,
+                publicKey: 'fallback-key-3',
+                status: 'active',
+                lastUpdate: Date.now(),
+                load: 0,
+                connections: 0
+            }
+        ];
+    };
+    // Получение статуса сервера
+    NiRNeTService.prototype.getServerStatus = function () {
+        var _this = this;
+        // Используем прокси для доступа к API
+        var proxyUrl = this.proxyUrls[this.currentServerIndex];
+        var targetHost = new URL(this.baseUrls[this.currentServerIndex]).hostname;
+        this.debug("\u0417\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u043C \u0441\u0442\u0430\u0442\u0443\u0441 \u0441\u0435\u0440\u0432\u0435\u0440\u0430 \u0447\u0435\u0440\u0435\u0437 \u043F\u0440\u043E\u043A\u0441\u0438: " + proxyUrl);
+        this.debug("\u0426\u0435\u043B\u0435\u0432\u043E\u0439 \u0445\u043E\u0441\u0442: " + targetHost);
+        // Создаем запрос через прокси в правильном формате
+        var requestData = {
+            path: '/api/v1/status',
+            data: {
+                encrypted_key: this.getEncryptedKey(),
+                timestamp: Date.now().toString(),
+                action: 'status',
+                client_version: '1.0.0'
+            }
+        };
+        this.debug('Запрос на получение статуса:', requestData);
+        // Создаем запрос через прокси
+        return this.http.post(proxyUrl, requestData, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'X-Target-Host': targetHost,
+                'X-Target-Port': '8443'
+            })
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["timeout"])(10000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            _this.debug('Ошибка при получении статуса сервера', error);
+            // Проверяем тип ошибки
+            if (error.name === 'TimeoutError') {
+                _this.debug('Произошла ошибка таймаута, переключаемся на следующий сервер');
+            }
+            else if (error.status) {
+                _this.debug("\u041E\u0448\u0438\u0431\u043A\u0430 HTTP " + error.status + ": " + error.statusText);
+            }
+            else {
+                _this.debug("\u041D\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043D\u0430\u044F \u043E\u0448\u0438\u0431\u043A\u0430: " + (error.message || error));
+            }
+            // Переключаемся на следующий сервер
+            _this.currentServerIndex = (_this.currentServerIndex + 1) % _this.baseUrls.length;
+            _this.debug("\u041F\u0435\u0440\u0435\u043A\u043B\u044E\u0447\u0438\u043B\u0438\u0441\u044C \u043D\u0430 \u0441\u0435\u0440\u0432\u0435\u0440 " + _this.baseUrls[_this.currentServerIndex]);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return "\u041D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0441\u0442\u0430\u0442\u0443\u0441 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: " + (error.message || 'неизвестная ошибка'); });
+        }));
+    };
+    /**
+     * Создает новую цепочку нод для анонимного соединения
+     * @returns Promise, который разрешается, когда цепочка успешно создана
+     */
+    NiRNeTService.prototype.createCircuit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var availableNodes, response, nodeError_1, circuitLength, circuitNodes, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log('Начинаем создание цепочки нод...');
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 6, , 7]);
+                        // Запрашиваем доступные ноды
+                        this.debug("\u0417\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u043C \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0435 \u0443\u0437\u043B\u044B \u0447\u0435\u0440\u0435\u0437 \u043F\u0440\u043E\u043A\u0441\u0438: " + this.proxyUrls[this.currentServerIndex]);
+                        this.debug("\u0426\u0435\u043B\u0435\u0432\u043E\u0439 \u0445\u043E\u0441\u0442: " + new URL(this.baseUrls[this.currentServerIndex]).hostname);
+                        availableNodes = [];
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, this.getAvailableNodes().toPromise()];
+                    case 3:
+                        response = _a.sent();
+                        if (response && Array.isArray(response.nodes)) {
+                            availableNodes = this.createNodesFromResponse(response);
+                            this.debug("\u041F\u043E\u043B\u0443\u0447\u0435\u043D\u043E " + availableNodes.length + " \u043D\u043E\u0434 \u043E\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430");
+                        }
+                        else {
+                            this.debug('Некорректный ответ от сервера при запросе нод');
+                            availableNodes = this.createFallbackNodes();
+                        }
+                        return [3 /*break*/, 5];
+                    case 4:
+                        nodeError_1 = _a.sent();
+                        this.debug('Ошибка при получении списка нод от сервера, используем запасные ноды', nodeError_1);
+                        availableNodes = this.createFallbackNodes();
+                        return [3 /*break*/, 5];
+                    case 5:
+                        circuitLength = this.privacySettings.circuitLength || 3;
+                        console.log("\u0412\u044B\u0431\u0438\u0440\u0430\u0435\u043C " + circuitLength + " \u043D\u043E\u0434 \u0434\u043B\u044F \u0446\u0435\u043F\u043E\u0447\u043A\u0438 \u0438\u0437 " + availableNodes.length + " \u0434\u043E\u0441\u0442\u0443\u043F\u043D\u044B\u0445");
+                        circuitNodes = this.selectRandomNodes(availableNodes, circuitLength);
+                        if (circuitNodes.length < circuitLength) {
+                            this.debug("\u041F\u0440\u0435\u0434\u0443\u043F\u0440\u0435\u0436\u0434\u0435\u043D\u0438\u0435: \u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0432\u044B\u0431\u0440\u0430\u0442\u044C " + circuitLength + " \u043D\u043E\u0434, \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u043C " + circuitNodes.length);
+                        }
+                        // Создаем новую цепочку
+                        this.activeCircuit = {
+                            id: this.generateCircuitId(),
+                            nodes: circuitNodes,
+                            createdAt: Date.now(),
+                            sessionKey: this.generateSessionKey(),
+                            expiresAt: Date.now() + (this.privacySettings.rotateCircuitTime * 60 * 1000)
+                        };
+                        // Обновляем информацию о цепочке
+                        this.circuitSubject.next(this.activeCircuit);
+                        console.log('Цепочка успешно создана', this.activeCircuit);
+                        return [2 /*return*/];
+                    case 6:
+                        error_2 = _a.sent();
+                        console.error('Ошибка при создании цепочки:', error_2);
+                        // В случае ошибки используем резервные ноды
+                        if (!this.activeCircuit) {
+                            this.activeCircuit = {
+                                id: this.generateCircuitId(),
+                                nodes: this.createFallbackNodes(),
+                                createdAt: Date.now(),
+                                sessionKey: this.generateSessionKey(),
+                                expiresAt: Date.now() + (this.privacySettings.rotateCircuitTime * 60 * 1000)
+                            };
+                            this.circuitSubject.next(this.activeCircuit);
+                            this.debug('Создана запасная цепочка вместо основной');
+                        }
+                        throw error_2;
+                    case 7: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    /**
+     * Создает ноды из ответа сервера
+     * @param response Ответ от сервера
+     * @returns Массив нод
+     */
+    NiRNeTService.prototype.createNodesFromResponse = function (response) {
+        try {
+            // Проверяем, что ответ содержит данные о нодах
+            if (!response || !response.nodes) {
+                this.debug('Ответ не содержит данных о нодах');
+                return this.createFallbackNodes();
+            }
+            // Проверяем, что response.nodes является массивом
+            if (!Array.isArray(response.nodes)) {
+                this.debug('response.nodes не является массивом');
+                return this.createFallbackNodes();
+            }
+            // Преобразуем данные сервера в формат NiRNeTNode
+            return response.nodes.map(function (node) { return ({
+                ip: node.ip || '',
+                port: node.port || 8443,
+                publicKey: node.publicKey || '',
+                status: node.status || 'active',
+                lastUpdate: node.lastUpdate || Date.now(),
+                load: node.load || 0,
+                connections: node.connections || 0
+            }); });
+        }
+        catch (error) {
+            this.debug('Ошибка при создании нод из ответа', error);
+            return this.createFallbackNodes();
+        }
+    };
+    // Выбор случайных нод
+    NiRNeTService.prototype.selectRandomNodes = function (nodes, count) {
+        // Проверяем, что nodes является массивом
+        if (!Array.isArray(nodes)) {
+            this.debug('nodes не является массивом в selectRandomNodes');
+            return this.createFallbackNodes().slice(0, count);
+        }
+        // Проверяем, что массив не пустой
+        if (nodes.length === 0) {
+            this.debug('Массив nodes пустой в selectRandomNodes');
+            return this.createFallbackNodes().slice(0, count);
+        }
+        // Проверяем, что в массиве достаточно элементов
+        if (nodes.length < count) {
+            this.debug("\u041D\u0435\u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u043D\u043E\u0434 (" + nodes.length + ") \u0434\u043B\u044F \u0432\u044B\u0431\u043E\u0440\u0430 " + count);
+            // Если нод меньше чем требуется, используем все что есть и дополняем запасными
+            var fallbackNodes_1 = this.createFallbackNodes();
+            var resultNodes = nodes.slice();
+            var _loop_1 = function (i) {
+                if (!resultNodes.some(function (node) { return node.ip === fallbackNodes_1[i].ip; })) {
+                    resultNodes.push(fallbackNodes_1[i]);
+                }
+            };
+            // Добавляем запасные ноды, которых нет в исходном массиве
+            for (var i = 0; resultNodes.length < count && i < fallbackNodes_1.length; i++) {
+                _loop_1(i);
+            }
+            return resultNodes;
+        }
+        try {
+            var shuffled = nodes.slice().sort(function () { return 0.5 - Math.random(); });
+            return shuffled.slice(0, count);
+        }
+        catch (error) {
+            this.debug('Ошибка при выборе случайных нод', error);
+            return nodes.slice(0, count);
+        }
+    };
+    /**
+     * Запускает периодическую ротацию цепочки
+     */
+    NiRNeTService.prototype.startCircuitRotation = function () {
+        var _this = this;
+        var rotationInterval = this.privacySettings.rotateCircuitTime * 60 * 1000;
+        this.debug("\u0417\u0430\u043F\u0443\u0441\u043A\u0430\u0435\u043C \u0440\u043E\u0442\u0430\u0446\u0438\u044E \u0446\u0435\u043F\u043E\u0447\u043A\u0438 \u043A\u0430\u0436\u0434\u044B\u0435 " + this.privacySettings.rotateCircuitTime + " \u043C\u0438\u043D\u0443\u0442");
+        this.statusCheckInterval = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(rotationInterval).subscribe(function () {
+            _this.debug('Начинаем плановую ротацию цепочки');
+            _this.createCircuit().catch(function (error) {
+                _this.debug('Ошибка при ротации цепочки', error);
+            });
+        });
+    };
+    /**
+     * Запускает периодическое обновление статуса
+     */
+    NiRNeTService.prototype.startStatusCheck = function () {
+        var _this = this;
+        this.debug('Запускаем периодическую проверку статуса каждые 30 секунд');
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["interval"])(30000).subscribe(function () {
+            _this.debug('Выполняем периодическую проверку статуса');
+            _this.getServerStatus().subscribe(function (status) {
+                _this.debug('Статус сервера обновлен', status);
+                _this.statusSubject.next(status);
+            }, function (error) { return _this.debug('Ошибка при обновлении статуса', error); });
+        });
+    };
+    /**
+     * Метод для выполнения запросов через NiRNeT
+     * @param url URL для запроса
+     * @param method HTTP-метод
+     * @param headers HTTP-заголовки
+     * @param body Тело запроса
+     * @returns Observable с результатом запроса
+     */
+    NiRNeTService.prototype.request = function (url, method, headers, body) {
+        if (method === void 0) { method = 'GET'; }
+        if (headers === void 0) { headers = {}; }
+        if (body === void 0) { body = null; }
+        if (!this.activeCircuit || this.activeCircuit.nodes.length === 0) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return 'Цепочка NiRNeT не инициализирована'; });
+        }
+        // Используем sendToAnonymizedService для отправки запроса
+        return this.sendToAnonymizedService(url, method, body);
+    };
+    // Получение текущих настроек приватности
+    NiRNeTService.prototype.getPrivacySettings = function () {
+        return __assign({}, this.privacySettings);
+    };
+    // Обновление настроек приватности
+    NiRNeTService.prototype.updatePrivacySettings = function (settings) {
+        this.privacySettings = __assign({}, this.privacySettings, settings);
+        // Перезапускаем ротацию цепочки с новыми настройками
+        if (this.statusCheckInterval) {
+            this.statusCheckInterval.unsubscribe();
+        }
+        this.startCircuitRotation();
+    };
+    // Получение активной цепочки
+    NiRNeTService.prototype.getActiveCircuit = function () {
+        return this.activeCircuit;
+    };
+    // Ручное переключение цепочки
+    NiRNeTService.prototype.rotateCircuit = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.createCircuit()];
+                    case 1:
+                        _a.sent();
+                        console.log('Цепочка успешно изменена');
+                        return [3 /*break*/, 3];
+                    case 2:
+                        error_3 = _a.sent();
+                        console.error('Ошибка при изменении цепочки:', error_3);
+                        throw error_3;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    // Выполнение GET запроса через NiRNeT
+    NiRNeTService.prototype.get = function (url, headers) {
+        if (headers === void 0) { headers = {}; }
+        return this.request(url, 'GET', headers);
+    };
+    // Выполнение POST запроса через NiRNeT
+    NiRNeTService.prototype.post = function (url, body, headers) {
+        if (headers === void 0) { headers = {}; }
+        return this.request(url, 'POST', headers, body);
+    };
+    // Получение статуса SSL/TLS
+    NiRNeTService.prototype.getSSLStatus = function () {
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])({
+            isSecure: true,
+            isTrusted: true,
+            encryptionLevel: 'high',
+            protocol: 'TLSv1.3',
+            cipher: 'TLS_AES_256_GCM_SHA384',
+            serverCertificate: {
+                pemContent: '',
+                fingerprint: 'SHA256:XXXX',
+                issuer: 'NiRNeT Root CA',
+                subject: 'NiRNeT Node',
+                validFrom: new Date(),
+                validTo: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
+                serialNumber: '0123456789'
+            }
+        });
+    };
+    // Очистка ресурсов при уничтожении сервиса
+    NiRNeTService.prototype.cleanup = function () {
+        if (this.statusCheckInterval) {
+            this.statusCheckInterval.unsubscribe();
+        }
+        this.statusSubject.complete();
+    };
+    /**
+     * Отправляет запрос через анонимную сеть NiRNeT
+     * Метод формирует запрос через цепочку узлов
+     *
+     * @param targetUrl URL для запроса
+     * @param method Метод запроса (GET, POST)
+     * @param body Тело запроса (для POST)
+     * @returns Observable с ответом
+     */
+    NiRNeTService.prototype.sendToAnonymizedService = function (targetUrl, method, body) {
+        var _this = this;
+        if (method === void 0) { method = 'GET'; }
+        if (body === void 0) { body = null; }
+        // Проверяем, что у нас есть активная цепочка
+        if (!this.activeCircuit) {
+            this.debug('Попытка отправки запроса без активной цепочки');
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Circuit not initialized'); });
+        }
+        this.debug("\u041E\u0442\u043F\u0440\u0430\u0432\u043A\u0430 \u0437\u0430\u043F\u0440\u043E\u0441\u0430 \u0447\u0435\u0440\u0435\u0437 \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u0443\u044E \u0441\u0435\u0442\u044C: " + method + " " + targetUrl);
+        // Получаем URL прокси-сервера
+        var proxyUrl = this.proxyUrls[this.currentServerIndex];
+        var targetHost = new URL(this.baseUrls[this.currentServerIndex]).hostname;
+        var targetPort = '8443';
+        this.debug("\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E \u043F\u0440\u043E\u043A\u0441\u0438: " + proxyUrl);
+        this.debug("\u0426\u0435\u043B\u0435\u0432\u043E\u0439 \u0445\u043E\u0441\u0442: " + targetHost + ":" + targetPort);
+        // Валидация URL
+        if (!targetUrl || typeof targetUrl !== 'string') {
+            this.debug('Неверный URL для запроса');
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Invalid target URL'); });
+        }
+        // Проверка и нормализация метода
+        var normalizedMethod = method.toUpperCase();
+        if (!['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS'].includes(normalizedMethod)) {
+            this.debug("\u041D\u0435\u043F\u043E\u0434\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0435\u043C\u044B\u0439 \u043C\u0435\u0442\u043E\u0434 HTTP: " + method);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error("Unsupported HTTP method: " + method); });
+        }
+        // Формируем данные для отправки с учетом требований формата бэкэнда
+        var requestData = {
+            path: '/api/v1/relay',
+            data: {
+                encrypted_key: this.getEncryptedKey(),
+                target_url: targetUrl,
+                method: normalizedMethod,
+                data: body,
+                circuit_id: this.activeCircuit.id || this.generateCircuitId(),
+                timestamp: Date.now().toString()
+            }
+        };
+        this.debug('Подготовленные данные запроса', requestData);
+        // Устанавливаем заголовки для прокси
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+            'Content-Type': 'application/json',
+            'X-Target-Host': targetHost,
+            'X-Target-Port': targetPort
+        });
+        // Отправляем запрос через прокси с явным указанием метода POST
+        return this.http.post(proxyUrl, requestData, { headers: headers })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["timeout"])(30000), // Устанавливаем таймаут 30 секунд
+        Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            // Подробная обработка ошибок
+            _this.debug('Ошибка при отправке запроса через прокси', error);
+            // Проверяем тип ошибки
+            if (error.name === 'TimeoutError' || (error.status === 0 && error.message && error.message.includes('timeout'))) {
+                _this.debug('Произошла ошибка таймаута при запросе через прокси');
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Request timeout'); });
+            }
+            else if (error.status === 0) {
+                _this.debug('Не удалось соединиться с прокси-сервером');
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Proxy server connection failed'); });
+            }
+            else if (error.status) {
+                // Ошибка HTTP
+                _this.debug("\u041E\u0448\u0438\u0431\u043A\u0430 HTTP " + error.status + ": " + error.statusText);
+                // Если сервер вернул ошибку с JSON-телом
+                if (error.error && typeof error.error === 'object') {
+                    _this.debug('Детали ошибки от сервера:', error.error);
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error(error.error.error || error.statusText); });
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error("HTTP Error " + error.status + ": " + error.statusText); });
+            }
+            else {
+                // Другие ошибки
+                _this.debug("\u041D\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043D\u0430\u044F \u043E\u0448\u0438\u0431\u043A\u0430: " + (error.message || error));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return error; });
+            }
+        }));
+    };
+    /**
+     * Получает зашифрованный ключ для relay API
+     */
+    NiRNeTService.prototype.getEncryptedKey = function () {
+        // Если есть активная цепочка, используем её ключ сессии
+        if (this.activeCircuit && this.activeCircuit.sessionKey) {
+            // В соответствии с требуемым форматом бэкенда, возвращаем только ключ сессии
+            return this.activeCircuit.sessionKey;
+        }
+        // Если нет активной цепочки, создаем временный ключ
+        var fallbackKey = 'nirnet-client-' + new Date().getTime();
+        this.debug("\u0418\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u0435\u0442\u0441\u044F \u0432\u0440\u0435\u043C\u0435\u043D\u043D\u044B\u0439 \u043A\u043B\u044E\u0447: " + fallbackKey);
+        return fallbackKey;
+    };
+    /**
+     * Создает анонимный запрос через цепочку нод
+     * @param url Целевой URL
+     * @param method Метод запроса
+     * @param body Тело запроса
+     * @returns Observable с результатом запроса
+     */
+    NiRNeTService.prototype.createNodeRequest = function (url, method, body) {
+        if (method === void 0) { method = 'GET'; }
+        if (body === void 0) { body = null; }
+        if (!this.activeCircuit || this.activeCircuit.nodes.length === 0) {
+            console.error('Цепочка не инициализирована!');
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return 'Цепочка NiRNeT не создана'; });
+        }
+        // Логируем информацию о запросе
+        console.log("\u0421\u043E\u0437\u0434\u0430\u0435\u043C \u0437\u0430\u043F\u0440\u043E\u0441 \u0447\u0435\u0440\u0435\u0437 " + this.activeCircuit.nodes.length + " \u043D\u043E\u0434 \u0432 \u0446\u0435\u043F\u043E\u0447\u043A\u0435 \u0434\u043B\u044F " + url);
+        // Создаем данные запроса
+        var requestData = {
+            url: url,
+            method: method,
+            body: body
+        };
+        // Используем сервис для отправки запроса через анонимную сеть
+        return this.sendToAnonymizedService(url, method, body);
+    };
+    /**
+     * Генерирует случайный ключ сессии
+     * @returns Строка с ключом сессии
+     */
+    NiRNeTService.prototype.generateSessionKey = function () {
+        // Генерируем случайный ключ длиной 32 символа
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var result = '';
+        for (var i = 0; i < 32; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    };
+    /**
+     * Выполняет запрос через анонимную сеть
+     * @param url URL для запроса
+     * @param method HTTP-метод
+     * @param body Тело запроса
+     * @returns Observable с результатом запроса
+     */
+    NiRNeTService.prototype.makeAnonymizedRequest = function (url, method, body) {
+        if (method === void 0) { method = 'GET'; }
+        if (body === void 0) { body = null; }
+        if (!this.activeCircuit) {
+            console.error('Цепочка не инициализирована!');
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return 'Цепочка не создана'; });
+        }
+        console.log("\u0412\u044B\u043F\u043E\u043B\u043D\u044F\u0435\u043C \u0430\u043D\u043E\u043D\u0438\u043C\u043D\u044B\u0439 \u0437\u0430\u043F\u0440\u043E\u0441 \u043A " + url);
+        // Используем новый метод для отправки запроса
+        return this.sendToAnonymizedService(url, method, body);
+    };
+    /**
+     * Генерирует уникальный идентификатор цепочки
+     */
+    NiRNeTService.prototype.generateCircuitId = function () {
+        // Создаем идентификатор на основе времени и случайного числа
+        return "circuit-" + Date.now() + "-" + Math.floor(Math.random() * 1000000);
+    };
+    /**
+     * Получает список доступных нод от сервера
+     * @returns Observable с списком нод
+     */
+    NiRNeTService.prototype.getAvailableNodes = function () {
+        var _this = this;
+        // Используем прокси для доступа к API
+        var proxyUrl = this.proxyUrls[this.currentServerIndex];
+        var targetHost = new URL(this.baseUrls[this.currentServerIndex]).hostname;
+        this.debug("\u0417\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u043C \u0441\u043F\u0438\u0441\u043E\u043A \u043D\u043E\u0434 \u0447\u0435\u0440\u0435\u0437 \u043F\u0440\u043E\u043A\u0441\u0438: " + proxyUrl);
+        // Создаем запрос через прокси
+        var requestData = {
+            path: '/api/v1/nodes',
+            data: {
+                encrypted_key: this.getEncryptedKey(),
+                timestamp: Date.now().toString(),
+                action: 'get_nodes',
+                client_version: '1.0.0'
+            }
+        };
+        this.debug('Запрос на получение списка нод:', requestData);
+        return this.http.post(proxyUrl, requestData, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'X-Target-Host': targetHost,
+                'X-Target-Port': '8443'
+            })
+        }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["timeout"])(10000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+            _this.debug('Ошибка при получении списка нод', error);
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return error; });
+        }));
+    };
+    NiRNeTService.prototype.ngOnDestroy = function () {
+        this.cleanup();
+    };
+    NiRNeTService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], NiRNeTService);
+    return NiRNeTService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/nirnet/services/ssl-bypass.interceptor.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/nirnet/services/ssl-bypass.interceptor.ts ***!
+  \***********************************************************/
+/*! exports provided: SSLBypassInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SSLBypassInterceptor", function() { return SSLBypassInterceptor; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _certificate_manager_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./certificate-manager.service */ "./src/app/nirnet/services/certificate-manager.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var SSLBypassInterceptor = /** @class */ (function () {
+    function SSLBypassInterceptor(http, certificateManager) {
+        this.http = http;
+        this.certificateManager = certificateManager;
+        // Список доверенных IP-адресов узлов NiRNeT
+        this.trustedNodes = [
+            '195.16.74.121',
+            '45.14.247.211',
+            '103.113.70.162'
+        ];
+        // Прокси-серверы для обхода SSL
+        this.proxyServers = [
+            'http://195.16.74.121:8080/proxy-api/relay'
+        ];
+    }
+    /**
+     * Проверяет, является ли узел доверенным по URL
+     */
+    SSLBypassInterceptor.prototype.isTrustedNode = function (url) {
+        return this.trustedNodes.some(function (node) { return url.includes(node); });
+    };
+    /**
+     * Проверяет, идет ли запрос через прокси
+     */
+    SSLBypassInterceptor.prototype.isProxyRequest = function (request) {
+        return request.url.includes('/proxy-api/relay') ||
+            request.headers.has('X-NiRNeT-Relay') ||
+            request.url.includes('/proxy-api/diagnose');
+    };
+    /**
+     * Получает доступный прокси сервер
+     */
+    SSLBypassInterceptor.prototype.getProxyServer = function () {
+        // В будущем здесь может быть логика выбора оптимального прокси
+        return this.proxyServers[0];
+    };
+    SSLBypassInterceptor.prototype.intercept = function (request, next) {
+        // Если запрос уже идет через прокси, не перехватываем его
+        if (this.isProxyRequest(request)) {
+            console.log('SSL-интерцептор: Пропускаем запрос через прокси', request.url);
+            return next.handle(request);
+        }
+        // Проверяем, что запрос идет к сервису NiRNeT по HTTPS
+        // ТОЛЬКО к доверенным узлам NiRNeT, НЕ к внешним API
+        var isNiRNeTHttpsRequest = request.url.startsWith('https://') &&
+            this.isTrustedNode(request.url);
+        // Если это прямой HTTPS запрос к узлу NiRNeT
+        if (isNiRNeTHttpsRequest) {
+            console.log('SSL-интерцептор: Обрабатываем прямой HTTPS запрос к NiRNeT', request.url);
+            // Получаем параметры запроса
+            var url = new URL(request.url);
+            var host = url.hostname;
+            var port = url.port || '8443';
+            var path = url.pathname + url.search;
+            // Выбираем прокси
+            var proxyUrl = this.getProxyServer();
+            console.log("\u041F\u0435\u0440\u0435\u043D\u0430\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u043C \u0437\u0430\u043F\u0440\u043E\u0441 \u0447\u0435\u0440\u0435\u0437 \u043F\u0440\u043E\u043A\u0441\u0438: " + proxyUrl);
+            // Формируем тело для запроса через прокси в правильном формате
+            // Основная часть запроса помещается в поле data
+            var proxyBody = {
+                path: path,
+                data: {
+                    encrypted_key: btoa("nirnet-bypass-" + Date.now()),
+                    target_url: request.url,
+                    method: request.method,
+                    data: request.body || null,
+                    circuit_id: "direct-" + Date.now()
+                }
+            };
+            console.log('Подготовлены данные для прокси:', JSON.stringify(proxyBody));
+            // ВСЕГДА используем POST для проксирования через relay API
+            var proxyRequest = request.clone({
+                url: proxyUrl,
+                method: 'POST',
+                body: proxyBody,
+                setHeaders: {
+                    'Content-Type': 'application/json',
+                    'X-Target-Host': host,
+                    'X-Target-Port': port,
+                    'X-NiRNeT-Relay': 'true'
+                }
+            });
+            // Отправляем запрос через прокси с обработкой ошибок
+            return next.handle(proxyRequest).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["timeout"])(30000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["retry"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (error) {
+                console.error('Ошибка при запросе через прокси:', error);
+                // Проверяем тип ошибки для подробной диагностики
+                if (error.status === 0 && error.message && error.message.includes('timeout')) {
+                    console.error('Таймаут при обращении к прокси-серверу');
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Proxy server timeout'); });
+                }
+                else if (error.status === 0) {
+                    console.error('Не удалось соединиться с прокси-сервером');
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Proxy server connection failed'); });
+                }
+                else if (error.status === 404) {
+                    console.error('Эндпоинт прокси не найден');
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error('Proxy endpoint not found'); });
+                }
+                else if (error.status === 500) {
+                    console.error('Внутренняя ошибка прокси-сервера:', error.error);
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return new Error("Proxy server error: " + (error.error && error.error.error ? error.error.error : 'unknown')); });
+                }
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(function () { return error; });
+            }));
+        }
+        // Для всех остальных запросов - стандартная обработка
+        return next.handle(request);
+    };
+    SSLBypassInterceptor = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _certificate_manager_service__WEBPACK_IMPORTED_MODULE_4__["CertificateManagerService"]])
+    ], SSLBypassInterceptor);
+    return SSLBypassInterceptor;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/nirvail/app-send-message-modal/app-send-message-modal.component.html":
 /*!**************************************************************************************!*\
   !*** ./src/app/nirvail/app-send-message-modal/app-send-message-modal.component.html ***!
@@ -16289,7 +20150,7 @@ var NirvailMessageComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!hasAlias\" class=\"alert alert-warning\">\n  <h1>{{ 'SWAP.NOT_ALIAS' | translate}}</h1>\n</div>\n<div *ngIf=\"hasAlias\" class=\"message-contact\">\n  <div class=\"content scrolled-content\">\n    <div>\n      <div  class=\"wraps-table\" style=\"display: flex; flex-direction: column;\">\n        <ng-container>\n          <table *ngIf=\"this.variablesService.contacts.length !== 0; else emptyList\">\n            <thead>\n              <tr #head (window:resize)=\"calculateWidthContact()\">\n                <th>{{ 'CONTACTS.TABLE.NAME' | translate }}</th>\n                <th>{{ 'CONTACTS.TABLE.ALIAS' | translate }}</th>\n                <th></th>\n              </tr>\n            </thead>\n            <tbody>\n              <ng-container *ngFor=\"\n                  let contact of this.variablesService.contacts;\n                  let i = index\n                \">\n                <tr>\n                  <td>\n                    {{ contact.name }}\n                  </td>\n                  <td>\n                    <ng-container *ngIf=\"contact.alias\">\n                      <span>{{ contact.alias }}</span>\n                    </ng-container>\n                  </td>\n                  <td>\n                    <div class=\"button-wrapper\">\n                      <button class=\"icon select\" (click)=\"selectContact(contact.alias)\">\n                        <i class=\"icon select\"></i>\n                      </button>\n                      <button [routerLink]=\"['/edit-contacts/' + i]\" [queryParams]=\"{ id: i }\">\n                        <i class=\"icon edit\"></i>\n                      </button>\n                      <button (click)=\"delete(i)\">\n                        <i class=\"icon delete\"></i>\n                      </button>\n                    </div>\n                  </td>\n                </tr>\n                <div class=\"row-divider\"></div>\n              </ng-container>\n            </tbody>\n          </table>\n        </ng-container>\n      <button [routerLink]=\"['/add-contacts']\" class=\"message-contact-add-button\">\n        {{ 'CONTACTS.BUTTON.ADD' | translate }}\n      </button>\n    </div>\n  </div>\n</div>\n</div>\n\n<div *ngIf=\"hasAlias\" class=\"message-column\">\n  <div class=\"message-form\">\n    <form *ngIf=\"!isLoading\" class=\"form-send\" [formGroup]=\"sendForm\" (ngSubmit)=\"showDialog()\">\n\n      <div class=\"input-block input-block-alias\" style=\"flex-direction: row;\">\n        <div class=\"input-block\" style=\"margin: 2rem;width: 30%;\">\n          <label for=\"send-address\">{{ 'SEND.USER' | translate }}</label>\n          <div class=\"adress-input-row\">\n            <input type=\"text\" \n              id=\"send-address\" \n              formControlName=\"address\"\n              [class.required-error]=\"sendForm.controls['address'].dirty || sendForm.controls['address'].touched\"\n              [placeholder]=\"sendForm.controls['address'].dirty || sendForm.controls['address'].touched ? ('SEND.FORM_ERRORS.ADDRESS_REQUIRED' | translate ) : ('PLACEHOLDERS.ALIAS_PLACEHOLDER' | translate)\"\n              (mousedown)=\"addressMouseDown($event)\" \n              (input)=\"onAddressInput($event)\"\n              (contextmenu)=\"variablesService.onContextMenu($event)\">\n          </div>\n          <div class=\"alias-dropdown scrolled-content\" *ngIf=\"isOpen\">\n            <div *ngFor=\"let item of localAliases\" (click)=\"setAlias(item.name)\">{{item.name}}</div>\n          </div>\n          <div class=\"error-block\"\n            *ngIf=\"sendForm.controls['address'].invalid && (sendForm.controls['address'].dirty || sendForm.controls['address'].touched)\">\n            <div *ngIf=\"sendForm.controls['address'].errors['address_not_valid']\">\n              {{ 'SEND.FORM_ERRORS.ADDRESS_NOT_VALID' | translate }}\n            </div>\n            <div *ngIf=\"sendForm.controls['address'].errors['alias_not_valid']\">\n              {{ 'SEND.FORM_ERRORS.ALIAS_NOT_VALID' | translate }}\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"input-blocks-row\">\n        <div class=\"input-send-message\">\n          <div class=\"input-block\">\n            <label for=\"send-comment\">{{ 'SEND.MESSAGE' | translate }}</label>\n            <textarea  class=\"input-message\" type=\"text\" id=\"send-comment\" formControlName=\"comment\"\n              placeholder=\"{{ 'PLACEHOLDERS.MESSAGE_PLACEHOLDER' | translate }}\"\n              [maxLength]=\"variablesService.maxCommentLength\" (contextmenu)=\"variablesService.onContextMenu($event)\"></textarea>\n            <div class=\"error-block\"\n              *ngIf=\"sendForm.get('comment').value && sendForm.get('comment').value.length >= variablesService.maxCommentLength\">\n              {{ 'SEND.FORM_ERRORS.MAX_LENGTH' | translate }}\n            </div>\n          </div>\n        </div>\n        <div class=\"button-send-message\">\n          <button type=\"submit\" \n            class=\"message-contact-add-button\" \n            [disabled]=\"!sendForm.valid\">\n            {{'SEND.BUTTON' | translate }}\n          </button>\n        </div>\n        <div class=\"modal-overlay\" *ngIf=\"isModalDialogVisible\">\n          <app-app-send-message-modal \n            *ngIf=\"isModalDialogVisible\" \n            [form]=\"sendForm\" \n            (confirmed)=\"confirmed($event)\"\n          ></app-app-send-message-modal>\n        </div>\n      </div>  \n    </form>\n  </div>\n\n  <div *ngIf=\"hasAlias\" class=\"message-history\">\n    <div class=\"history-wrap\">\n      <div class=\"wrap-table scrolled-content\">\n        <table class=\"history-table\">\n          <thead style=\"text-align: center;\">\n            <tr #head (window:resize)=\"calculateWidth()\"> \n              <th>{{ 'HISTORY.STATUS' | translate }}</th> \n              <th>{{ 'HISTORY.DATE' | translate }}</th>\n              <!--<th>{{ 'SEND.USER' | translate }}</th>-->\n            </tr>\n          </thead>\n          <tbody>\n            <ng-container *ngFor=\"let group of groupedHistory\">\n              <!-- Заголовок группы -->\n              <tr class=\"recipient-row\" (click)=\"group.isExpanded = !group.isExpanded\" [class.expanded]=\"group.isExpanded\">\n                <td colspan=\"3\">\n                  <div class=\"recipient-header\">\n                    <div class=\"recipient-info\">\n                      <span class=\"recipient-name\">{{group.alias}}</span>\n                      <span class=\"message-count\">({{group.messages.length}})</span>\n                    </div>\n                    <div class=\"expand-icon\" [class.expanded]=\"group.isExpanded\"></div>\n                  </div>\n                </td>\n              </tr>\n  \n              <!-- Сообщения группы -->\n              <ng-container *ngIf=\"group.isExpanded\">\n                <ng-container *ngFor=\"let item of group.messages\">\n                  <tr (click)=\"openDetails(item.tx_hash)\" [class.locked-transaction]=\"!item.is_mining && item.unlock_time > 0\">\n                    <td>\n                      <div class=\"status\" [ngClass]=\"item.is_income ? 'received' : 'send'\">\n                        <ng-container *ngIf=\"getHeight(item) < 10\">\n                          <svg class=\"confirmation\" style=\"transform: rotateZ(-90deg)\"\n                            tooltip=\"{{ 'HISTORY.STATUS_TOOLTIP' | translate : {'current': getHeight(item), 'total': 10} }}\"\n                            placement=\"bottom-left\" tooltipClass=\"table-tooltip\" [delay]=\"500\">\n                            <circle stroke-dasharray=\"100\" fill=\"transparent\" stroke-dashoffset=\"0\" cx=\"50%\" cy=\"50%\"\n                              stroke=\"rgba(178, 0, 255, 0.33)\" r=\"0.7rem\" stroke-width=\"0.3rem\">\n                            </circle>\n                            <circle class=\"progress-circle\" cx=\"50%\" cy=\"50%\"\n                              [style.stroke]=\"item.is_income ? '#E111D6' : '#AC8FEB'\" r=\"0.7rem\" fill=\"transparent\"\n                              stroke-width=\"0.3rem\" stroke-dasharray=\"4.5rem\" stroke-dashoffset=\"4.5rem\" stroke-linecap=\"round\"\n                              [style.stroke-dashoffset]=\"strokeSize(item)\"></circle>\n                          </svg>\n                        </ng-container>\n                        <ng-container *ngIf=\"getHeight(item) === 10\">\n                          <img *ngIf=\"!item.is_income\" class=\"status-transaction\" src=\"./assets/icons/send-tab.svg\" alt=\"\">\n                          <img *ngIf=\"item.is_income\" class=\"status-transaction\" src=\"./assets/icons/receive.svg\" alt=\"\">\n                        </ng-container>\n                        <span class=\"status-transaction-text\">{{ (item.is_income ? 'HISTORY.RECEIVED' : 'HISTORY.SEND') |\n                          translate }}</span>\n                        <ng-container *ngIf=\"item.unlock_time !== 0 && item.tx_type !== 6\">\n                          <ng-container *ngIf=\"isLocked(item); else unlock\">\n                            <ng-container *ngIf=\"item.unlock_time < 500000000\">\n                              <i class=\"icon lock-transaction\"\n                                tooltip=\"{{ 'HISTORY.LOCK_TOOLTIP' | translate : {'date': time(item) | date : 'MM.dd.yy'} }}\"\n                                placement=\"bottom-left\" tooltipClass=\"table-tooltip\" [delay]=\"500\"\n                                [class.position]=\"variablesService.height_app - item.height < 10 || item.height === 0 && item.timestamp > 0\"></i>\n                            </ng-container>\n                            <ng-container *ngIf=\"item.unlock_time > 500000000\">\n                              <i class=\"icon lock-transaction\"\n                                tooltip=\"{{ 'HISTORY.LOCK_TOOLTIP' | translate : {'date': item.unlock_time * 1000 | date : 'MM.dd.yy'} }}\"\n                                placement=\"bottom-left\" tooltipClass=\"table-tooltip\" [delay]=\"500\"\n                                [class.position]=\"variablesService.height_app - item.height < 10 || item.height === 0 && item.timestamp > 0\"></i>\n                            </ng-container>\n                          </ng-container>\n                          <ng-template #unlock>\n                            <i class=\"icon unlock-transaction\" placement=\"bottom-left\"\n                              [class.position]=\"variablesService.height_app - item.height < 10 || item.height === 0 && item.timestamp > 0\"></i>\n                          </ng-template>\n                        </ng-container>\n                      </div>\n                    </td>\n                    <td>{{item.timestamp * 1000 | date : 'dd-MM-yyyy HH:mm'}}</td>\n                    <td class=\"message-content\">{{item.comment.replace('NIRVAIL:', '')}}</td>\n                    <!--<td>{{item.alias}}</td>-->\n                  </tr>\n                  <!-- Детали сообщения -->\n                  <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\">\n                    <td colspan=\"3\">\n                      <ng-container *ngIf=\"item.tx_hash === openedDetails\">\n                        <app-nirvail-message [transaction]=\"item\" [sizes]=\"calculatedWidth\"></app-nirvail-message>\n                      </ng-container>\n                    </td>\n                  </tr>\n                  <div class=\"row-divider\"></div>\n                </ng-container>\n              </ng-container>\n            </ng-container>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n  \n</div>"
+module.exports = "<div *ngIf=\"!hasAlias\" class=\"no-alias-container\">\n  <div class=\"no-alias-card\">\n    <div class=\"no-alias-icon\">\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\" fill=\"currentColor\"/>\n      </svg>\n    </div>\n    <h2 class=\"no-alias-title\">{{ 'SWAP.NOT_ALIAS' | translate }}</h2>\n    <p class=\"no-alias-description\">{{ 'NIRVAIL.ALIAS_DESCRIPTION' | translate }}</p>\n    <button class=\"no-alias-button\" routerLink=\"/wallet/register-alias\">\n      <span>{{ 'WALLET.REGISTER_ALIAS' | translate }}</span>\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path d=\"M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z\" fill=\"currentColor\"/>\n      </svg>\n    </button>\n  </div>\n</div>\n<div *ngIf=\"hasAlias\" class=\"message-contact\">\n  <div class=\"content scrolled-content\">\n    <div>\n      <div  class=\"wraps-table\" style=\"display: flex; flex-direction: column;\">\n        <ng-container>\n          <table *ngIf=\"this.variablesService.contacts.length !== 0; else emptyList\">\n            <thead>\n              <tr #head (window:resize)=\"calculateWidthContact()\">\n                <th>{{ 'CONTACTS.TABLE.NAME' | translate }}</th>\n                <th>{{ 'CONTACTS.TABLE.ALIAS' | translate }}</th>\n                <th></th>\n              </tr>\n            </thead>\n            <tbody>\n              <ng-container *ngFor=\"\n                  let contact of this.variablesService.contacts;\n                  let i = index\n                \">\n                <tr>\n                  <td>\n                    {{ contact.name }}\n                  </td>\n                  <td>\n                    <ng-container *ngIf=\"contact.alias\">\n                      <span>{{ contact.alias }}</span>\n                    </ng-container>\n                  </td>\n                  <td>\n                    <div class=\"button-wrapper\">\n                      <button class=\"icon select\" (click)=\"selectContact(contact.alias)\">\n                        <i class=\"icon select\"></i>\n                      </button>\n                      <button [routerLink]=\"['/edit-contacts/' + i]\" [queryParams]=\"{ id: i }\">\n                        <i class=\"icon edit\"></i>\n                      </button>\n                      <button (click)=\"delete(i)\">\n                        <i class=\"icon delete\"></i>\n                      </button>\n                    </div>\n                  </td>\n                </tr>\n                <div class=\"row-divider\"></div>\n              </ng-container>\n            </tbody>\n          </table>\n        </ng-container>\n      <button [routerLink]=\"['/add-contacts']\" class=\"message-contact-add-button\">\n        {{ 'CONTACTS.BUTTON.ADD' | translate }}\n      </button>\n    </div>\n  </div>\n</div>\n</div>\n\n<div *ngIf=\"hasAlias\" class=\"message-column\">\n  <div class=\"message-form\">\n    <form *ngIf=\"!isLoading\" class=\"form-send\" [formGroup]=\"sendForm\" (ngSubmit)=\"showDialog()\">\n\n      <div class=\"input-block input-block-alias\" style=\"flex-direction: row;\">\n        <div class=\"input-block\" style=\"margin: 2rem;width: 30%;\">\n          <label for=\"send-address\">{{ 'SEND.USER' | translate }}</label>\n          <div class=\"adress-input-row\">\n            <input type=\"text\" \n              id=\"send-address\" \n              formControlName=\"address\"\n              [class.required-error]=\"sendForm.controls['address'].dirty || sendForm.controls['address'].touched\"\n              [placeholder]=\"sendForm.controls['address'].dirty || sendForm.controls['address'].touched ? ('SEND.FORM_ERRORS.ADDRESS_REQUIRED' | translate ) : ('PLACEHOLDERS.ALIAS_PLACEHOLDER' | translate)\"\n              (mousedown)=\"addressMouseDown($event)\" \n              (input)=\"onAddressInput($event)\"\n              (contextmenu)=\"variablesService.onContextMenu($event)\">\n          </div>\n          <div class=\"alias-dropdown scrolled-content\" *ngIf=\"isOpen\">\n            <div *ngFor=\"let item of localAliases\" (click)=\"setAlias(item.name)\">{{item.name}}</div>\n          </div>\n          <div class=\"error-block\"\n            *ngIf=\"sendForm.controls['address'].invalid && (sendForm.controls['address'].dirty || sendForm.controls['address'].touched)\">\n            <div *ngIf=\"sendForm.controls['address'].errors['address_not_valid']\">\n              {{ 'SEND.FORM_ERRORS.ADDRESS_NOT_VALID' | translate }}\n            </div>\n            <div *ngIf=\"sendForm.controls['address'].errors['alias_not_valid']\">\n              {{ 'SEND.FORM_ERRORS.ALIAS_NOT_VALID' | translate }}\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"input-blocks-row\">\n        <div class=\"input-send-message\">\n          <div class=\"input-block\">\n            <label for=\"send-comment\">{{ 'SEND.MESSAGE' | translate }}</label>\n            <textarea  class=\"input-message\" type=\"text\" id=\"send-comment\" formControlName=\"comment\"\n              placeholder=\"{{ 'PLACEHOLDERS.MESSAGE_PLACEHOLDER' | translate }}\"\n              [maxLength]=\"variablesService.maxCommentLength\" (contextmenu)=\"variablesService.onContextMenu($event)\"></textarea>\n            <div class=\"error-block\"\n              *ngIf=\"sendForm.get('comment').value && sendForm.get('comment').value.length >= variablesService.maxCommentLength\">\n              {{ 'SEND.FORM_ERRORS.MAX_LENGTH' | translate }}\n            </div>\n          </div>\n        </div>\n        <div class=\"button-send-message\">\n          <button type=\"submit\" \n            class=\"message-contact-add-button\" \n            [disabled]=\"!sendForm.valid\">\n            {{'SEND.BUTTON' | translate }}\n          </button>\n        </div>\n        <div class=\"modal-overlay\" *ngIf=\"isModalDialogVisible\">\n          <app-app-send-message-modal \n            *ngIf=\"isModalDialogVisible\" \n            [form]=\"sendForm\" \n            (confirmed)=\"confirmed($event)\"\n          ></app-app-send-message-modal>\n        </div>\n      </div>  \n    </form>\n  </div>\n\n  <div *ngIf=\"hasAlias\" class=\"message-history\">\n    <div class=\"history-wrap\">\n      <div class=\"wrap-table scrolled-content\">\n        <table class=\"history-table\">\n          <thead style=\"text-align: center;\">\n            <tr #head (window:resize)=\"calculateWidth()\"> \n              <th>{{ 'HISTORY.STATUS' | translate }}</th> \n              <th>{{ 'HISTORY.DATE' | translate }}</th>\n              <!--<th>{{ 'SEND.USER' | translate }}</th>-->\n            </tr>\n          </thead>\n          <tbody>\n            <ng-container *ngFor=\"let group of groupedHistory\">\n              <!-- Заголовок группы -->\n              <tr class=\"recipient-row\" (click)=\"group.isExpanded = !group.isExpanded\" [class.expanded]=\"group.isExpanded\">\n                <td colspan=\"3\">\n                  <div class=\"recipient-header\">\n                    <div class=\"recipient-info\">\n                      <span class=\"recipient-name\">{{group.alias}}</span>\n                      <span class=\"message-count\">({{group.messages.length}})</span>\n                    </div>\n                    <div class=\"expand-icon\" [class.expanded]=\"group.isExpanded\"></div>\n                  </div>\n                </td>\n              </tr>\n  \n              <!-- Сообщения группы -->\n              <ng-container *ngIf=\"group.isExpanded\">\n                <ng-container *ngFor=\"let item of group.messages\">\n                  <tr (click)=\"openDetails(item.tx_hash)\" [class.locked-transaction]=\"!item.is_mining && item.unlock_time > 0\">\n                    <td>\n                      <div class=\"status\" [ngClass]=\"item.is_income ? 'received' : 'send'\">\n                        <ng-container *ngIf=\"getHeight(item) < 10\">\n                          <svg class=\"confirmation\" style=\"transform: rotateZ(-90deg)\"\n                            tooltip=\"{{ 'HISTORY.STATUS_TOOLTIP' | translate : {'current': getHeight(item), 'total': 10} }}\"\n                            placement=\"bottom-left\" tooltipClass=\"table-tooltip\" [delay]=\"500\">\n                            <circle stroke-dasharray=\"100\" fill=\"transparent\" stroke-dashoffset=\"0\" cx=\"50%\" cy=\"50%\"\n                              stroke=\"rgba(178, 0, 255, 0.33)\" r=\"0.7rem\" stroke-width=\"0.3rem\">\n                            </circle>\n                            <circle class=\"progress-circle\" cx=\"50%\" cy=\"50%\"\n                              [style.stroke]=\"item.is_income ? '#E111D6' : '#AC8FEB'\" r=\"0.7rem\" fill=\"transparent\"\n                              stroke-width=\"0.3rem\" stroke-dasharray=\"4.5rem\" stroke-dashoffset=\"4.5rem\" stroke-linecap=\"round\"\n                              [style.stroke-dashoffset]=\"strokeSize(item)\"></circle>\n                          </svg>\n                        </ng-container>\n                        <ng-container *ngIf=\"getHeight(item) === 10\">\n                          <img *ngIf=\"!item.is_income\" class=\"status-transaction\" src=\"./assets/icons/send-tab.svg\" alt=\"\">\n                          <img *ngIf=\"item.is_income\" class=\"status-transaction\" src=\"./assets/icons/receive.svg\" alt=\"\">\n                        </ng-container>\n                        <span class=\"status-transaction-text\">{{ (item.is_income ? 'HISTORY.RECEIVED' : 'HISTORY.SEND') |\n                          translate }}</span>\n                        <ng-container *ngIf=\"item.unlock_time !== 0 && item.tx_type !== 6\">\n                          <ng-container *ngIf=\"isLocked(item); else unlock\">\n                            <ng-container *ngIf=\"item.unlock_time < 500000000\">\n                              <i class=\"icon lock-transaction\"\n                                tooltip=\"{{ 'HISTORY.LOCK_TOOLTIP' | translate : {'date': time(item) | date : 'MM.dd.yy'} }}\"\n                                placement=\"bottom-left\" tooltipClass=\"table-tooltip\" [delay]=\"500\"\n                                [class.position]=\"variablesService.height_app - item.height < 10 || item.height === 0 && item.timestamp > 0\"></i>\n                            </ng-container>\n                            <ng-container *ngIf=\"item.unlock_time > 500000000\">\n                              <i class=\"icon lock-transaction\"\n                                tooltip=\"{{ 'HISTORY.LOCK_TOOLTIP' | translate : {'date': item.unlock_time * 1000 | date : 'MM.dd.yy'} }}\"\n                                placement=\"bottom-left\" tooltipClass=\"table-tooltip\" [delay]=\"500\"\n                                [class.position]=\"variablesService.height_app - item.height < 10 || item.height === 0 && item.timestamp > 0\"></i>\n                            </ng-container>\n                          </ng-container>\n                          <ng-template #unlock>\n                            <i class=\"icon unlock-transaction\" placement=\"bottom-left\"\n                              [class.position]=\"variablesService.height_app - item.height < 10 || item.height === 0 && item.timestamp > 0\"></i>\n                          </ng-template>\n                        </ng-container>\n                      </div>\n                    </td>\n                    <td>{{item.timestamp * 1000 | date : 'dd-MM-yyyy HH:mm'}}</td>\n                    <td class=\"message-content\">{{item.comment.replace('NIRVAIL:', '')}}</td>\n                    <!--<td>{{item.alias}}</td>-->\n                  </tr>\n                  <!-- Детали сообщения -->\n                  <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\">\n                    <td colspan=\"3\">\n                      <ng-container *ngIf=\"item.tx_hash === openedDetails\">\n                        <app-nirvail-message [transaction]=\"item\" [sizes]=\"calculatedWidth\"></app-nirvail-message>\n                      </ng-container>\n                    </td>\n                  </tr>\n                  <div class=\"row-divider\"></div>\n                </ng-container>\n              </ng-container>\n            </ng-container>\n          </tbody>\n        </table>\n      </div>\n    </div>\n  </div>\n  \n</div>"
 
 /***/ }),
 
@@ -16300,7 +20161,7 @@ module.exports = "<div *ngIf=\"!hasAlias\" class=\"alert alert-warning\">\n  <h1
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "@charset \"UTF-8\";\n:host {\n  width: 100%;\n  display: flex;\n  background: #1A1A1A; }\n:host .message-contact {\n    width: 25%;\n    border-right: 2px solid #32DC59;\n    padding: 2rem;\n    background: #242424; }\n:host .message-contact .content {\n      height: calc(100vh - 4rem);\n      overflow: auto; }\n:host .message-contact .content .wraps-table {\n        background: rgba(50, 220, 89, 0.05);\n        border-radius: 12px;\n        overflow: hidden; }\n:host .message-contact .content .wraps-table table {\n          width: 100%;\n          border-collapse: collapse; }\n:host .message-contact .content .wraps-table table thead tr {\n            background: rgba(50, 220, 89, 0.1); }\n:host .message-contact .content .wraps-table table thead tr th {\n              padding: 1.5rem;\n              color: #32DC59;\n              font-weight: 600;\n              text-align: left; }\n:host .message-contact .content .wraps-table table tbody tr {\n            transition: all 0.3s ease; }\n:host .message-contact .content .wraps-table table tbody tr td {\n              padding: 1.2rem;\n              color: #fff; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper {\n                display: flex;\n                gap: 0.5rem; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button {\n                  background: rgba(50, 220, 89, 0.1);\n                  border: none;\n                  border-radius: 8px;\n                  padding: 0.5rem;\n                  cursor: pointer;\n                  display: flex;\n                  align-items: center;\n                  justify-content: center;\n                  transition: all 0.2s; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button:hover {\n                    background: rgba(50, 220, 89, 0.2); }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon {\n                    width: 1.5rem;\n                    height: 1.5rem;\n                    display: inline-block;\n                    background-size: contain;\n                    background-repeat: no-repeat;\n                    background-position: center; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon.select {\n                      background-image: url('copy.svg'); }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon.edit {\n                      background-image: url('edit.svg'); }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon.delete {\n                      background-image: url('delete.svg'); }\n:host .message-contact .content .wraps-table table tbody tr:hover {\n              background: rgba(50, 220, 89, 0.08); }\n:host .message-contact .message-contact-add-button {\n      width: 100%;\n      padding: 1.2rem;\n      margin-top: 2rem;\n      background: #32DC59;\n      border: none;\n      border-radius: 8px;\n      color: #fff;\n      font-weight: 600;\n      cursor: pointer;\n      transition: all 0.3s; }\n:host .message-contact .message-contact-add-button:hover {\n        background: #20bb44;\n        transform: translateY(-2px); }\n:host .message-column {\n    flex: 1;\n    padding: 2rem;\n    display: flex;\n    flex-direction: column;\n    height: 100vh;\n    overflow: hidden; }\n:host .message-column .message-form {\n      background: linear-gradient(145deg, #242424, #2a2a2a);\n      border-radius: 16px;\n      padding: 2rem;\n      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);\n      border: 1px solid rgba(50, 220, 89, 0.1);\n      -webkit-backdrop-filter: blur(4px);\n              backdrop-filter: blur(4px); }\n:host .message-column .message-form .form-send .input-blocks-row {\n        display: flex;\n        gap: 1.5rem;\n        align-items: flex-end;\n        position: relative; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message {\n          flex: 1;\n          position: relative; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message::before {\n            content: '';\n            position: absolute;\n            top: -10px;\n            left: -10px;\n            right: -10px;\n            bottom: -10px;\n            background: linear-gradient(145deg, rgba(50, 220, 89, 0.1), rgba(50, 220, 89, 0.05));\n            border-radius: 12px;\n            z-index: 0;\n            opacity: 0;\n            transition: opacity 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message:focus-within::before {\n            opacity: 1; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message {\n            width: 100%;\n            min-height: 100px;\n            background: #1A1A1A;\n            border: 1px solid rgba(50, 220, 89, 0.2);\n            border-radius: 12px;\n            padding: 1.2rem;\n            color: white;\n            resize: vertical;\n            font-size: 2rem;\n            line-height: 1.5;\n            position: relative;\n            z-index: 1;\n            transition: all 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message::-moz-placeholder {\n              color: rgba(255, 255, 255, 0.3); }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message::placeholder {\n              color: rgba(255, 255, 255, 0.3); }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message:focus {\n              border-color: #32DC59;\n              outline: none;\n              box-shadow: 0 0 0 3px rgba(50, 220, 89, 0.1);\n              transform: translateY(-2px); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message {\n          position: relative;\n          z-index: 1; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button {\n            background: linear-gradient(145deg, #32DC59, #28B94A);\n            border: none;\n            border-radius: 12px;\n            padding: 1.2rem 2.5rem;\n            color: #fff;\n            font-weight: 600;\n            cursor: pointer;\n            transition: all 0.3s ease;\n            display: flex;\n            align-items: center;\n            gap: 0.8rem;\n            position: relative;\n            overflow: hidden; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button::before {\n              content: '';\n              position: absolute;\n              top: 0;\n              left: 0;\n              width: 100%;\n              height: 100%;\n              background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent);\n              opacity: 0;\n              transition: opacity 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button::after {\n              content: '→';\n              font-size: 1.2rem;\n              transition: transform 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:hover:not(:disabled) {\n              transform: translateY(-2px);\n              box-shadow: 0 8px 16px rgba(50, 220, 89, 0.2); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:hover:not(:disabled)::before {\n                opacity: 1; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:hover:not(:disabled)::after {\n                transform: translateX(3px); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:active:not(:disabled) {\n              transform: translateY(0); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:disabled {\n              background: linear-gradient(145deg, #666, #555);\n              opacity: 0.7;\n              cursor: not-allowed; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:disabled::after {\n                opacity: 0.5; }\n:host .message-history {\n    display: flex;\n    flex-direction: column;\n    margin-top: 2rem;\n    height: calc(100% - 650px); }\n:host .history-wrap {\n    display: flex;\n    height: 100%;\n    overflow-x: hidden;\n    overflow-y: hidden;\n    flex-direction: column;\n    background: #242424;\n    border-radius: 12px;\n    padding: 1rem; }\n:host .wrap-table {\n    overflow-x: hidden;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    height: 100%; }\n:host .wrap-table table {\n      width: 100%; }\n:host .wrap-table table tbody tr td {\n        min-width: 10rem;\n        padding: 1.2rem;\n        color: #fff; }\n:host .wrap-table table tbody tr td .status {\n          position: relative;\n          display: flex;\n          align-items: center; }\n:host .wrap-table table tbody tr td .status .confirmation {\n            position: absolute;\n            top: 50%;\n            left: -2rem;\n            transform: translateY(-50%);\n            display: flex;\n            align-items: flex-end;\n            width: 0.7rem;\n            height: 1.5rem; }\n:host .wrap-table table tbody tr td .status .confirmation .fill {\n              width: 100%; }\n:host .wrap-table table tbody tr td .status .lock-transaction {\n            position: absolute;\n            left: -2rem;\n            width: 1.2rem;\n            height: 1.2rem;\n            margin-right: 1.1rem; }\n:host .wrap-table table tbody tr td .status .unlock-transaction {\n            position: absolute;\n            left: -2rem;\n            width: 1.2rem;\n            height: 1.2rem;\n            margin-right: 1.1rem; }\n:host .wrap-table table tbody tr td .status .position {\n            position: static; }\n:host .wrap-table table tbody tr td .status .status-transaction {\n            margin-right: 1rem;\n            width: 1.7rem;\n            height: 1.7rem; }\n:host .wrap-table table tbody tr td .status.send .status-transaction {\n            background-color: transparent; }\n:host .wrap-table table tbody tr td .status.send .status-transaction::after {\n              display: block;\n              content: \"\";\n              width: 13px;\n              height: 13px; }\n:host .wrap-table table tbody tr td .status.received .status-transaction {\n            background-color: transparent; }\n:host .wrap-table table tbody tr td .status.received .status-transaction::after {\n              display: block;\n              content: \"\";\n              width: 13px;\n              height: 13px; }\n:host .wrap-table table tbody tr .remote-address {\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 25vw; }\n:host .wrap-table table tbody tr:not(.transaction-details) {\n        cursor: pointer;\n        transition: background 0.3s ease;\n        border-bottom: 1px solid #32DC59; }\n:host .wrap-table table tbody tr:not(.transaction-details):hover {\n          background: rgba(50, 220, 89, 0.08); }\n:host .wrap-table table tbody tr.transaction-details {\n        transition: 0.5s height linear, 0s font-size;\n        transition-delay: 0s, 0.5s;\n        height: 0;\n        background: #1A1A1A; }\n:host .wrap-table table tbody tr.transaction-details.open {\n          height: 16.2rem; }\n:host .wrap-table table tbody tr.transaction-details td {\n          position: relative;\n          overflow: hidden;\n          line-height: inherit;\n          padding-top: 0;\n          padding-bottom: 0; }\n:host .wrap-table table thead tr {\n        background: rgba(50, 220, 89, 0.1);\n        position: sticky;\n        top: 0;\n        z-index: 1; }\n:host .wrap-table table thead tr th {\n          padding: 1.5rem;\n          color: #32DC59;\n          font-weight: 600;\n          text-align: left; }\n:host .row-divider {\n    height: 10px;\n    background: rgba(50, 220, 89, 0.5);\n    margin: 0.5rem 0; }\n.modal-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.7);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 1000; }\n.alias-dropdown {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  right: 0;\n  background: #242424;\n  border: 1px solid rgba(50, 220, 89, 0.3);\n  border-radius: 8px;\n  margin-top: 0.5rem;\n  max-height: 200px;\n  overflow-y: auto;\n  z-index: 1000; }\n.alias-dropdown div {\n    padding: 0.8rem 1rem;\n    color: #fff;\n    cursor: pointer; }\n.alias-dropdown div:hover {\n      background: rgba(50, 220, 89, 0.1); }\n.scrolled-content::-webkit-scrollbar {\n  width: 6px; }\n.scrolled-content::-webkit-scrollbar-track {\n  background: rgba(255, 255, 255, 0.1);\n  border-radius: 3px; }\n.scrolled-content::-webkit-scrollbar-thumb {\n  background: rgba(50, 220, 89, 0.3);\n  border-radius: 3px; }\n.scrolled-content::-webkit-scrollbar-thumb:hover {\n    background: rgba(50, 220, 89, 0.5); }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlydmFpbC9uaXJ2YWlsLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9uaXJ2YWlsL0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxuaXJ2YWlsXFxuaXJ2YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGdCQUFnQjtBQ0FoQjtFQUNFLFdBQVc7RUFBRyxhQUFhO0VBQzVCLG1CQUFtQixFQUFBO0FBRnBCO0lBS0MsVUFBVTtJQUNWLCtCQUErQjtJQUMvQixhQUFhO0lBQ2IsbUJBQW1CLEVBQUE7QUFScEI7TUFVRywwQkFBMEI7TUFDMUIsY0FBYyxFQUFBO0FBWGpCO1FBY0ssbUNBQW1DO1FBQ25DLG1CQUFtQjtRQUNuQixnQkFBZ0IsRUFBQTtBQWhCckI7VUFrQk8sV0FBVztVQUNYLHlCQUF5QixFQUFBO0FBbkJoQztZQXNCUyxrQ0FBa0MsRUFBQTtBQXRCM0M7Y0F3QlcsZUFBZTtjQUNmLGNBQWM7Y0FDZCxnQkFBZ0I7Y0FDaEIsZ0JBQWdCLEVBQUE7QUEzQjNCO1lBK0JTLHlCQUF5QixFQUFBO0FBL0JsQztjQWtDVyxlQUFlO2NBQ2YsV0FBVyxFQUFBO0FBbkN0QjtnQkFzQ2EsYUFBYTtnQkFDYixXQUFXLEVBQUE7QUF2Q3hCO2tCQXlDZSxrQ0FBa0M7a0JBQ2xDLFlBQVk7a0JBQ1osa0JBQWtCO2tCQUNsQixlQUFlO2tCQUNmLGVBQWU7a0JBQ2YsYUFBYTtrQkFDYixtQkFBbUI7a0JBQ25CLHVCQUF1QjtrQkFDdkIsb0JBQW9CLEVBQUE7QUFqRG5DO29CQW1EaUIsa0NBQWtDLEVBQUE7QUFuRG5EO29CQXNEaUIsYUFBYTtvQkFDYixjQUFjO29CQUNkLHFCQUFxQjtvQkFDckIsd0JBQXdCO29CQUN4Qiw0QkFBNEI7b0JBQzVCLDJCQUEyQixFQUFBO0FBM0Q1QztzQkE2RG1CLGlDQUFvRCxFQUFBO0FBN0R2RTtzQkFnRW1CLGlDQUFvRCxFQUFBO0FBaEV2RTtzQkFtRW1CLG1DQUFzRCxFQUFBO0FBbkV6RTtjQTBFVyxtQ0FBbUMsRUFBQTtBQTFFOUM7TUFpRkcsV0FBVztNQUNYLGVBQWU7TUFDZixnQkFBZ0I7TUFDaEIsbUJBQW1CO01BQ25CLFlBQVk7TUFDWixrQkFBa0I7TUFDbEIsV0FBVztNQUNYLGdCQUFnQjtNQUNoQixlQUFlO01BQ2Ysb0JBQW9CLEVBQUE7QUExRnZCO1FBNEZLLG1CQUFnQztRQUNoQywyQkFBMkIsRUFBQTtBQTdGaEM7SUFtR0UsT0FBTztJQUNQLGFBQWE7SUFDYixhQUFhO0lBQ2Isc0JBQXNCO0lBQ3RCLGFBQWE7SUFDYixnQkFBZ0IsRUFBQTtBQXhHbEI7TUEwR0kscURBQXFEO01BQ3JELG1CQUFtQjtNQUNuQixhQUFhO01BQ2IseUNBQXlDO01BQ3pDLHdDQUF3QztNQUN4QyxrQ0FBMEI7Y0FBMUIsMEJBQTBCLEVBQUE7QUEvRzlCO1FBa0hRLGFBQWE7UUFDYixXQUFXO1FBQ1gscUJBQXFCO1FBQ3JCLGtCQUFrQixFQUFBO0FBckgxQjtVQXVIVSxPQUFPO1VBQ1Asa0JBQWtCLEVBQUE7QUF4SDVCO1lBMEhZLFdBQVc7WUFDWCxrQkFBa0I7WUFDbEIsVUFBVTtZQUNWLFdBQVc7WUFDWCxZQUFZO1lBQ1osYUFBYTtZQUNiLG9GQUFvRjtZQUNwRixtQkFBbUI7WUFDbkIsVUFBVTtZQUNWLFVBQVU7WUFDViw2QkFBNkIsRUFBQTtBQXBJekM7WUF1SVksVUFBVSxFQUFBO0FBdkl0QjtZQTBJWSxXQUFXO1lBQ1gsaUJBQWlCO1lBQ2pCLG1CQUFtQjtZQUNuQix3Q0FBd0M7WUFDeEMsbUJBQW1CO1lBQ25CLGVBQWU7WUFDZixZQUFZO1lBQ1osZ0JBQWdCO1lBQ2hCLGVBQWU7WUFDZixnQkFBZ0I7WUFDaEIsa0JBQWtCO1lBQ2xCLFVBQVU7WUFDVix5QkFBeUIsRUFBQTtBQXRKckM7Y0F5SmMsK0JBQStCLEVBQUE7QUF6SjdDO2NBeUpjLCtCQUErQixFQUFBO0FBeko3QztjQTZKYyxxQkFBcUI7Y0FDckIsYUFBYTtjQUNiLDRDQUE0QztjQUM1QywyQkFBMkIsRUFBQTtBQWhLekM7VUFxS1Usa0JBQWtCO1VBQ2xCLFVBQVUsRUFBQTtBQXRLcEI7WUF3S1kscURBQXFEO1lBQ3JELFlBQVk7WUFDWixtQkFBbUI7WUFDbkIsc0JBQXNCO1lBQ3RCLFdBQVc7WUFDWCxnQkFBZ0I7WUFDaEIsZUFBZTtZQUNmLHlCQUF5QjtZQUN6QixhQUFhO1lBQ2IsbUJBQW1CO1lBQ25CLFdBQVc7WUFDWCxrQkFBa0I7WUFDbEIsZ0JBQWdCLEVBQUE7QUFwTDVCO2NBdUxjLFdBQVc7Y0FDWCxrQkFBa0I7Y0FDbEIsTUFBTTtjQUNOLE9BQU87Y0FDUCxXQUFXO2NBQ1gsWUFBWTtjQUNaLDBFQUEwRTtjQUMxRSxVQUFVO2NBQ1YsNkJBQTZCLEVBQUE7QUEvTDNDO2NBa01jLFlBQVM7Y0FDVCxpQkFBaUI7Y0FDakIsK0JBQStCLEVBQUE7QUFwTTdDO2NBdU1jLDJCQUEyQjtjQUMzQiw2Q0FBNkMsRUFBQTtBQXhNM0Q7Z0JBME1nQixVQUFVLEVBQUE7QUExTTFCO2dCQTZNZ0IsMEJBQTBCLEVBQUE7QUE3TTFDO2NBaU5jLHdCQUF3QixFQUFBO0FBak50QztjQW9OYywrQ0FBK0M7Y0FDL0MsWUFBWTtjQUNaLG1CQUFtQixFQUFBO0FBdE5qQztnQkF3TmdCLFlBQVksRUFBQTtBQXhONUI7SUFrT0UsYUFBYTtJQUNiLHNCQUFzQjtJQUN0QixnQkFBZ0I7SUFDaEIsMEJBQTBCLEVBQUE7QUFyTzVCO0lBd09FLGFBQWE7SUFDYixZQUFZO0lBQ1osa0JBQWtCO0lBQ2xCLGtCQUFrQjtJQUNsQixzQkFBc0I7SUFDdEIsbUJBQW1CO0lBQ25CLG1CQUFtQjtJQUNuQixhQUFhLEVBQUE7QUEvT2Y7SUFrUEUsa0JBQWtCO0lBQ2xCLGdCQUFnQjtJQUNoQixhQUFhO0lBQ2Isc0JBQXNCO0lBQ3RCLFlBQVksRUFBQTtBQXRQZDtNQXdQSSxXQUFXLEVBQUE7QUF4UGY7UUE0UFUsZ0JBQWdCO1FBQ2hCLGVBQWU7UUFDZixXQUFXLEVBQUE7QUE5UHJCO1VBZ1FZLGtCQUFrQjtVQUNsQixhQUFhO1VBQ2IsbUJBQW1CLEVBQUE7QUFsUS9CO1lBb1FjLGtCQUFrQjtZQUNsQixRQUFRO1lBQ1IsV0FBVztZQUNYLDJCQUEyQjtZQUMzQixhQUFhO1lBQ2IscUJBQXFCO1lBQ3JCLGFBQWE7WUFDYixjQUFjLEVBQUE7QUEzUTVCO2NBNlFnQixXQUFXLEVBQUE7QUE3UTNCO1lBaVJjLGtCQUFrQjtZQUNsQixXQUFXO1lBQ1gsYUFBYTtZQUNiLGNBQWM7WUFDZCxvQkFBb0IsRUFBQTtBQXJSbEM7WUF3UmMsa0JBQWtCO1lBQ2xCLFdBQVc7WUFDWCxhQUFhO1lBQ2IsY0FBYztZQUNkLG9CQUFvQixFQUFBO0FBNVJsQztZQStSYyxnQkFBZ0IsRUFBQTtBQS9SOUI7WUFrU2Msa0JBQWtCO1lBQ2xCLGFBQWE7WUFDYixjQUFjLEVBQUE7QUFwUzVCO1lBd1NnQiw2QkFBNkIsRUFBQTtBQXhTN0M7Y0EwU2tCLGNBQWM7Y0FDZCxXQUFXO2NBQ1gsV0FBVztjQUNYLFlBQVksRUFBQTtBQTdTOUI7WUFtVGdCLDZCQUE2QixFQUFBO0FBblQ3QztjQXFUa0IsY0FBYztjQUNkLFdBQVc7Y0FDWCxXQUFXO2NBQ1gsWUFBWSxFQUFBO0FBeFQ5QjtRQStUVSxnQkFBZ0I7UUFDaEIsdUJBQXVCO1FBQ3ZCLGVBQWUsRUFBQTtBQWpVekI7UUFvVVUsZUFBZTtRQUNmLGdDQUFnQztRQUNoQyxnQ0FBZ0MsRUFBQTtBQXRVMUM7VUF3VVksbUNBQW1DLEVBQUE7QUF4VS9DO1FBNlVVLDRDQUE0QztRQUM1QywwQkFBMEI7UUFDMUIsU0FBUztRQUNULG1CQUFtQixFQUFBO0FBaFY3QjtVQWtWWSxlQUFlLEVBQUE7QUFsVjNCO1VBcVZZLGtCQUFrQjtVQUNsQixnQkFBZ0I7VUFDaEIsb0JBQW9CO1VBQ3BCLGNBQWM7VUFDZCxpQkFBaUIsRUFBQTtBQXpWN0I7UUFnV1Esa0NBQWtDO1FBQ2xDLGdCQUFnQjtRQUNoQixNQUFNO1FBQ04sVUFBVSxFQUFBO0FBbldsQjtVQXFXVSxlQUFlO1VBQ2YsY0FBYztVQUNkLGdCQUFnQjtVQUNoQixnQkFBZ0IsRUFBQTtBQXhXMUI7SUErV0UsWUFBWTtJQUNaLGtDQUFrQztJQUNsQyxnQkFBZ0IsRUFBQTtBQUlsQjtFQUNDLGVBQWU7RUFDZixNQUFNO0VBQ04sT0FBTztFQUNQLFFBQVE7RUFDUixTQUFTO0VBQ1QsOEJBQThCO0VBQzlCLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsdUJBQXVCO0VBQ3ZCLGFBQWEsRUFBQTtBQUdkO0VBQ0Msa0JBQWtCO0VBQ2xCLFNBQVM7RUFDVCxPQUFPO0VBQ1AsUUFBUTtFQUNSLG1CQUFtQjtFQUNuQix3Q0FBd0M7RUFDeEMsa0JBQWtCO0VBQ2xCLGtCQUFrQjtFQUNsQixpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLGFBQWEsRUFBQTtBQVhkO0lBYUcsb0JBQW9CO0lBQ3BCLFdBQVc7SUFDWCxlQUFlLEVBQUE7QUFmbEI7TUFpQkssa0NBQWtDLEVBQUE7QUFLdkM7RUFFRyxVQUFVLEVBQUE7QUFGYjtFQUtHLG9DQUFvQztFQUNwQyxrQkFBa0IsRUFBQTtBQU5yQjtFQVNHLGtDQUFrQztFQUNsQyxrQkFBa0IsRUFBQTtBQVZyQjtJQVlLLGtDQUFrQyxFQUFBIiwiZmlsZSI6InNyYy9hcHAvbmlydmFpbC9uaXJ2YWlsLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiQGNoYXJzZXQgXCJVVEYtOFwiO1xuOmhvc3Qge1xuICB3aWR0aDogMTAwJTtcbiAgZGlzcGxheTogZmxleDtcbiAgYmFja2dyb3VuZDogIzFBMUExQTsgfVxuICA6aG9zdCAubWVzc2FnZS1jb250YWN0IHtcbiAgICB3aWR0aDogMjUlO1xuICAgIGJvcmRlci1yaWdodDogMnB4IHNvbGlkICMzMkRDNTk7XG4gICAgcGFkZGluZzogMnJlbTtcbiAgICBiYWNrZ3JvdW5kOiAjMjQyNDI0OyB9XG4gICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCB7XG4gICAgICBoZWlnaHQ6IGNhbGMoMTAwdmggLSA0cmVtKTtcbiAgICAgIG92ZXJmbG93OiBhdXRvOyB9XG4gICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB7XG4gICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMDUpO1xuICAgICAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xuICAgICAgICBvdmVyZmxvdzogaGlkZGVuOyB9XG4gICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHtcbiAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlOyB9XG4gICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGhlYWQgdHIge1xuICAgICAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGhlYWQgdHIgdGgge1xuICAgICAgICAgICAgICBwYWRkaW5nOiAxLjVyZW07XG4gICAgICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xuICAgICAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgICAgICAgICB0ZXh0LWFsaWduOiBsZWZ0OyB9XG4gICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGJvZHkgdHIge1xuICAgICAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQge1xuICAgICAgICAgICAgICBwYWRkaW5nOiAxLjJyZW07XG4gICAgICAgICAgICAgIGNvbG9yOiAjZmZmOyB9XG4gICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5idXR0b24td3JhcHBlciB7XG4gICAgICAgICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICAgICAgICBnYXA6IDAuNXJlbTsgfVxuICAgICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5idXR0b24td3JhcHBlciBidXR0b24ge1xuICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTtcbiAgICAgICAgICAgICAgICAgIGJvcmRlcjogbm9uZTtcbiAgICAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDhweDtcbiAgICAgICAgICAgICAgICAgIHBhZGRpbmc6IDAuNXJlbTtcbiAgICAgICAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICAgICAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgICAgICAgICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4yczsgfVxuICAgICAgICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLmJ1dHRvbi13cmFwcGVyIGJ1dHRvbjpob3ZlciB7XG4gICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMik7IH1cbiAgICAgICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5idXR0b24td3JhcHBlciBidXR0b24gLmljb24ge1xuICAgICAgICAgICAgICAgICAgICB3aWR0aDogMS41cmVtO1xuICAgICAgICAgICAgICAgICAgICBoZWlnaHQ6IDEuNXJlbTtcbiAgICAgICAgICAgICAgICAgICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLXNpemU6IGNvbnRhaW47XG4gICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtcmVwZWF0OiBuby1yZXBlYXQ7XG4gICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjsgfVxuICAgICAgICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuYnV0dG9uLXdyYXBwZXIgYnV0dG9uIC5pY29uLnNlbGVjdCB7XG4gICAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4vLi4vYXNzZXRzL2ljb25zL2NvcHkuc3ZnXCIpOyB9XG4gICAgICAgICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5idXR0b24td3JhcHBlciBidXR0b24gLmljb24uZWRpdCB7XG4gICAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4vLi4vYXNzZXRzL2ljb25zL2VkaXQuc3ZnXCIpOyB9XG4gICAgICAgICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5idXR0b24td3JhcHBlciBidXR0b24gLmljb24uZGVsZXRlIHtcbiAgICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoXCIuLi8uLi9hc3NldHMvaWNvbnMvZGVsZXRlLnN2Z1wiKTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGJvZHkgdHI6aG92ZXIge1xuICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjA4KTsgfVxuICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLm1lc3NhZ2UtY29udGFjdC1hZGQtYnV0dG9uIHtcbiAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgcGFkZGluZzogMS4ycmVtO1xuICAgICAgbWFyZ2luLXRvcDogMnJlbTtcbiAgICAgIGJhY2tncm91bmQ6ICMzMkRDNTk7XG4gICAgICBib3JkZXI6IG5vbmU7XG4gICAgICBib3JkZXItcmFkaXVzOiA4cHg7XG4gICAgICBjb2xvcjogI2ZmZjtcbiAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zczsgfVxuICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAubWVzc2FnZS1jb250YWN0LWFkZC1idXR0b246aG92ZXIge1xuICAgICAgICBiYWNrZ3JvdW5kOiAjMjBiYjQ0O1xuICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7IH1cbiAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIHtcbiAgICBmbGV4OiAxO1xuICAgIHBhZGRpbmc6IDJyZW07XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgIGhlaWdodDogMTAwdmg7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjsgfVxuICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIHtcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsICMyNDI0MjQsICMyYTJhMmEpO1xuICAgICAgYm9yZGVyLXJhZGl1czogMTZweDtcbiAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICBib3gtc2hhZG93OiAwIDhweCAzMnB4IHJnYmEoMCwgMCwgMCwgMC4xKTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XG4gICAgICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoNHB4KTsgfVxuICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGdhcDogMS41cmVtO1xuICAgICAgICBhbGlnbi1pdGVtczogZmxleC1lbmQ7XG4gICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsgfVxuICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5pbnB1dC1zZW5kLW1lc3NhZ2Uge1xuICAgICAgICAgIGZsZXg6IDE7XG4gICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlOyB9XG4gICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuaW5wdXQtc2VuZC1tZXNzYWdlOjpiZWZvcmUge1xuICAgICAgICAgICAgY29udGVudDogJyc7XG4gICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICAgICAgICB0b3A6IC0xMHB4O1xuICAgICAgICAgICAgbGVmdDogLTEwcHg7XG4gICAgICAgICAgICByaWdodDogLTEwcHg7XG4gICAgICAgICAgICBib3R0b206IC0xMHB4O1xuICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4xKSwgcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSkpO1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICAgICAgICAgIHotaW5kZXg6IDA7XG4gICAgICAgICAgICBvcGFjaXR5OiAwO1xuICAgICAgICAgICAgdHJhbnNpdGlvbjogb3BhY2l0eSAwLjNzIGVhc2U7IH1cbiAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5pbnB1dC1zZW5kLW1lc3NhZ2U6Zm9jdXMtd2l0aGluOjpiZWZvcmUge1xuICAgICAgICAgICAgb3BhY2l0eTogMTsgfVxuICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmlucHV0LXNlbmQtbWVzc2FnZSAuaW5wdXQtbWVzc2FnZSB7XG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xuICAgICAgICAgICAgYmFja2dyb3VuZDogIzFBMUExQTtcbiAgICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMik7XG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xuICAgICAgICAgICAgcGFkZGluZzogMS4ycmVtO1xuICAgICAgICAgICAgY29sb3I6IHdoaXRlO1xuICAgICAgICAgICAgcmVzaXplOiB2ZXJ0aWNhbDtcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMnJlbTtcbiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxLjU7XG4gICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICAgICAgICB6LWluZGV4OiAxO1xuICAgICAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuaW5wdXQtc2VuZC1tZXNzYWdlIC5pbnB1dC1tZXNzYWdlOjpwbGFjZWhvbGRlciB7XG4gICAgICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMyk7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmlucHV0LXNlbmQtbWVzc2FnZSAuaW5wdXQtbWVzc2FnZTpmb2N1cyB7XG4gICAgICAgICAgICAgIGJvcmRlci1jb2xvcjogIzMyREM1OTtcbiAgICAgICAgICAgICAgb3V0bGluZTogbm9uZTtcbiAgICAgICAgICAgICAgYm94LXNoYWRvdzogMCAwIDAgM3B4IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XG4gICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTsgfVxuICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5idXR0b24tc2VuZC1tZXNzYWdlIHtcbiAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICAgICAgei1pbmRleDogMTsgfVxuICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uIHtcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsICMzMkRDNTksICMyOEI5NEEpO1xuICAgICAgICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICAgICAgICAgIHBhZGRpbmc6IDEuMnJlbSAyLjVyZW07XG4gICAgICAgICAgICBjb2xvcjogI2ZmZjtcbiAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBlYXNlO1xuICAgICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICAgICAgICBnYXA6IDAuOHJlbTtcbiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uOjpiZWZvcmUge1xuICAgICAgICAgICAgICBjb250ZW50OiAnJztcbiAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICAgICAgICB0b3A6IDA7XG4gICAgICAgICAgICAgIGxlZnQ6IDA7XG4gICAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICAgICAgICBoZWlnaHQ6IDEwMCU7XG4gICAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKSwgdHJhbnNwYXJlbnQpO1xuICAgICAgICAgICAgICBvcGFjaXR5OiAwO1xuICAgICAgICAgICAgICB0cmFuc2l0aW9uOiBvcGFjaXR5IDAuM3MgZWFzZTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSBidXR0b246OmFmdGVyIHtcbiAgICAgICAgICAgICAgY29udGVudDogJ+KGkic7XG4gICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS4ycmVtO1xuICAgICAgICAgICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4zcyBlYXNlOyB9XG4gICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5idXR0b24tc2VuZC1tZXNzYWdlIGJ1dHRvbjpob3Zlcjpub3QoOmRpc2FibGVkKSB7XG4gICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTtcbiAgICAgICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMTZweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpOyB9XG4gICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uOmhvdmVyOm5vdCg6ZGlzYWJsZWQpOjpiZWZvcmUge1xuICAgICAgICAgICAgICAgIG9wYWNpdHk6IDE7IH1cbiAgICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSBidXR0b246aG92ZXI6bm90KDpkaXNhYmxlZCk6OmFmdGVyIHtcbiAgICAgICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoM3B4KTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSBidXR0b246YWN0aXZlOm5vdCg6ZGlzYWJsZWQpIHtcbiAgICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApOyB9XG4gICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5idXR0b24tc2VuZC1tZXNzYWdlIGJ1dHRvbjpkaXNhYmxlZCB7XG4gICAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsICM2NjYsICM1NTUpO1xuICAgICAgICAgICAgICBvcGFjaXR5OiAwLjc7XG4gICAgICAgICAgICAgIGN1cnNvcjogbm90LWFsbG93ZWQ7IH1cbiAgICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSBidXR0b246ZGlzYWJsZWQ6OmFmdGVyIHtcbiAgICAgICAgICAgICAgICBvcGFjaXR5OiAwLjU7IH1cbiAgOmhvc3QgLm1lc3NhZ2UtaGlzdG9yeSB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgIG1hcmdpbi10b3A6IDJyZW07XG4gICAgaGVpZ2h0OiBjYWxjKDEwMCUgLSA2NTBweCk7IH1cbiAgOmhvc3QgLmhpc3Rvcnktd3JhcCB7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgb3ZlcmZsb3cteDogaGlkZGVuO1xuICAgIG92ZXJmbG93LXk6IGhpZGRlbjtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgIGJhY2tncm91bmQ6ICMyNDI0MjQ7XG4gICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICBwYWRkaW5nOiAxcmVtOyB9XG4gIDpob3N0IC53cmFwLXRhYmxlIHtcbiAgICBvdmVyZmxvdy14OiBoaWRkZW47XG4gICAgb3ZlcmZsb3cteTogYXV0bztcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gICAgaGVpZ2h0OiAxMDAlOyB9XG4gICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUge1xuICAgICAgd2lkdGg6IDEwMCU7IH1cbiAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIHtcbiAgICAgICAgbWluLXdpZHRoOiAxMHJlbTtcbiAgICAgICAgcGFkZGluZzogMS4ycmVtO1xuICAgICAgICBjb2xvcjogI2ZmZjsgfVxuICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzIHtcbiAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyOyB9XG4gICAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cyAuY29uZmlybWF0aW9uIHtcbiAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICAgIHRvcDogNTAlO1xuICAgICAgICAgICAgbGVmdDogLTJyZW07XG4gICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7XG4gICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICAgICAgYWxpZ24taXRlbXM6IGZsZXgtZW5kO1xuICAgICAgICAgICAgd2lkdGg6IDAuN3JlbTtcbiAgICAgICAgICAgIGhlaWdodDogMS41cmVtOyB9XG4gICAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzIC5jb25maXJtYXRpb24gLmZpbGwge1xuICAgICAgICAgICAgICB3aWR0aDogMTAwJTsgfVxuICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMgLmxvY2stdHJhbnNhY3Rpb24ge1xuICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICAgICAgbGVmdDogLTJyZW07XG4gICAgICAgICAgICB3aWR0aDogMS4ycmVtO1xuICAgICAgICAgICAgaGVpZ2h0OiAxLjJyZW07XG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDEuMXJlbTsgfVxuICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMgLnVubG9jay10cmFuc2FjdGlvbiB7XG4gICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICAgICAgICBsZWZ0OiAtMnJlbTtcbiAgICAgICAgICAgIHdpZHRoOiAxLjJyZW07XG4gICAgICAgICAgICBoZWlnaHQ6IDEuMnJlbTtcbiAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMS4xcmVtOyB9XG4gICAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cyAucG9zaXRpb24ge1xuICAgICAgICAgICAgcG9zaXRpb246IHN0YXRpYzsgfVxuICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMgLnN0YXR1cy10cmFuc2FjdGlvbiB7XG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDFyZW07XG4gICAgICAgICAgICB3aWR0aDogMS43cmVtO1xuICAgICAgICAgICAgaGVpZ2h0OiAxLjdyZW07IH1cbiAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzLnNlbmQgLnN0YXR1cy10cmFuc2FjdGlvbiB7XG4gICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsgfVxuICAgICAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cy5zZW5kIC5zdGF0dXMtdHJhbnNhY3Rpb246OmFmdGVyIHtcbiAgICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgICAgICAgIGNvbnRlbnQ6IFwiXCI7XG4gICAgICAgICAgICAgIHdpZHRoOiAxM3B4O1xuICAgICAgICAgICAgICBoZWlnaHQ6IDEzcHg7IH1cbiAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzLnJlY2VpdmVkIC5zdGF0dXMtdHJhbnNhY3Rpb24ge1xuICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7IH1cbiAgICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMucmVjZWl2ZWQgLnN0YXR1cy10cmFuc2FjdGlvbjo6YWZ0ZXIge1xuICAgICAgICAgICAgICBkaXNwbGF5OiBibG9jaztcbiAgICAgICAgICAgICAgY29udGVudDogXCJcIjtcbiAgICAgICAgICAgICAgd2lkdGg6IDEzcHg7XG4gICAgICAgICAgICAgIGhlaWdodDogMTNweDsgfVxuICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgLnJlbW90ZS1hZGRyZXNzIHtcbiAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XG4gICAgICAgIG1heC13aWR0aDogMjV2dzsgfVxuICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHI6bm90KC50cmFuc2FjdGlvbi1kZXRhaWxzKSB7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgdHJhbnNpdGlvbjogYmFja2dyb3VuZCAwLjNzIGVhc2U7XG4gICAgICAgIGJvcmRlci1ib3R0b206IDFweCBzb2xpZCAjMzJEQzU5OyB9XG4gICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyOm5vdCgudHJhbnNhY3Rpb24tZGV0YWlscyk6aG92ZXIge1xuICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMDgpOyB9XG4gICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ci50cmFuc2FjdGlvbi1kZXRhaWxzIHtcbiAgICAgICAgLXdlYmtpdC10cmFuc2l0aW9uOiAwLjVzIGhlaWdodCBsaW5lYXIsIDBzIGZvbnQtc2l6ZTtcbiAgICAgICAgdHJhbnNpdGlvbjogMC41cyBoZWlnaHQgbGluZWFyLCAwcyBmb250LXNpemU7XG4gICAgICAgIHRyYW5zaXRpb24tZGVsYXk6IDBzLCAwLjVzO1xuICAgICAgICBoZWlnaHQ6IDA7XG4gICAgICAgIGJhY2tncm91bmQ6ICMxQTFBMUE7IH1cbiAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIudHJhbnNhY3Rpb24tZGV0YWlscy5vcGVuIHtcbiAgICAgICAgICBoZWlnaHQ6IDE2LjJyZW07IH1cbiAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIudHJhbnNhY3Rpb24tZGV0YWlscyB0ZCB7XG4gICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgICAgICAgbGluZS1oZWlnaHQ6IGluaGVyaXQ7XG4gICAgICAgICAgcGFkZGluZy10b3A6IDA7XG4gICAgICAgICAgcGFkZGluZy1ib3R0b206IDA7IH1cbiAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRoZWFkIHRyIHtcbiAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTtcbiAgICAgICAgcG9zaXRpb246IHN0aWNreTtcbiAgICAgICAgdG9wOiAwO1xuICAgICAgICB6LWluZGV4OiAxOyB9XG4gICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRoZWFkIHRyIHRoIHtcbiAgICAgICAgICBwYWRkaW5nOiAxLjVyZW07XG4gICAgICAgICAgY29sb3I6ICMzMkRDNTk7XG4gICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgICAgICAgICB0ZXh0LWFsaWduOiBsZWZ0OyB9XG4gIDpob3N0IC5yb3ctZGl2aWRlciB7XG4gICAgaGVpZ2h0OiAxMHB4O1xuICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuNSk7XG4gICAgbWFyZ2luOiAwLjVyZW0gMDsgfVxuXG4ubW9kYWwtb3ZlcmxheSB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgdG9wOiAwO1xuICBsZWZ0OiAwO1xuICByaWdodDogMDtcbiAgYm90dG9tOiAwO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNyk7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICB6LWluZGV4OiAxMDAwOyB9XG5cbi5hbGlhcy1kcm9wZG93biB7XG4gIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgdG9wOiAxMDAlO1xuICBsZWZ0OiAwO1xuICByaWdodDogMDtcbiAgYmFja2dyb3VuZDogIzI0MjQyNDtcbiAgYm9yZGVyOiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTtcbiAgYm9yZGVyLXJhZGl1czogOHB4O1xuICBtYXJnaW4tdG9wOiAwLjVyZW07XG4gIG1heC1oZWlnaHQ6IDIwMHB4O1xuICBvdmVyZmxvdy15OiBhdXRvO1xuICB6LWluZGV4OiAxMDAwOyB9XG4gIC5hbGlhcy1kcm9wZG93biBkaXYge1xuICAgIHBhZGRpbmc6IDAuOHJlbSAxcmVtO1xuICAgIGNvbG9yOiAjZmZmO1xuICAgIGN1cnNvcjogcG9pbnRlcjsgfVxuICAgIC5hbGlhcy1kcm9wZG93biBkaXY6aG92ZXIge1xuICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTsgfVxuXG4uc2Nyb2xsZWQtY29udGVudDo6LXdlYmtpdC1zY3JvbGxiYXIge1xuICB3aWR0aDogNnB4OyB9XG5cbi5zY3JvbGxlZC1jb250ZW50Ojotd2Via2l0LXNjcm9sbGJhci10cmFjayB7XG4gIGJhY2tncm91bmQ6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcbiAgYm9yZGVyLXJhZGl1czogM3B4OyB9XG5cbi5zY3JvbGxlZC1jb250ZW50Ojotd2Via2l0LXNjcm9sbGJhci10aHVtYiB7XG4gIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XG4gIGJvcmRlci1yYWRpdXM6IDNweDsgfVxuICAuc2Nyb2xsZWQtY29udGVudDo6LXdlYmtpdC1zY3JvbGxiYXItdGh1bWI6aG92ZXIge1xuICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuNSk7IH1cbiIsIjpob3N0IHtcclxuICB3aWR0aDogMTAwJTsgIGRpc3BsYXk6IGZsZXg7XHJcbiBiYWNrZ3JvdW5kOiAjMUExQTFBO1xyXG5cclxuLm1lc3NhZ2UtY29udGFjdCB7XHJcbiB3aWR0aDogMjUlO1xyXG4gYm9yZGVyLXJpZ2h0OiAycHggc29saWQgIzMyREM1OTtcclxuIHBhZGRpbmc6IDJyZW07XHJcbiBiYWNrZ3JvdW5kOiAjMjQyNDI0O1xyXG4gIC5jb250ZW50IHtcclxuICAgaGVpZ2h0OiBjYWxjKDEwMHZoIC0gNHJlbSk7XHJcbiAgIG92ZXJmbG93OiBhdXRvO1xyXG4gICBcclxuICAgLndyYXBzLXRhYmxlIHtcclxuICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjA1KTtcclxuICAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICAgIHRhYmxlIHtcclxuICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTtcclxuICAgICAgIFxyXG4gICAgICAgdGhlYWQgdHIge1xyXG4gICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xyXG4gICAgICAgICB0aCB7XHJcbiAgICAgICAgICAgcGFkZGluZzogMS41cmVtO1xyXG4gICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDtcclxuICAgICAgICAgfVxyXG4gICAgICAgfVxyXG4gICAgICAgIHRib2R5IHRyIHtcclxuICAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTtcclxuICAgICAgICAgXHJcbiAgICAgICAgIHRkIHtcclxuICAgICAgICAgICBwYWRkaW5nOiAxLjJyZW07XHJcbiAgICAgICAgICAgY29sb3I6ICNmZmY7XHJcbiAgICAgICAgICAgXHJcbiAgICAgICAgICAgLmJ1dHRvbi13cmFwcGVyIHtcclxuICAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgICBnYXA6IDAuNXJlbTtcclxuICAgICAgICAgICAgICBidXR0b24ge1xyXG4gICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xyXG4gICAgICAgICAgICAgICBib3JkZXI6IG5vbmU7XHJcbiAgICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDhweDtcclxuICAgICAgICAgICAgICAgcGFkZGluZzogMC41cmVtO1xyXG4gICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgICAgICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4ycztcclxuICAgICAgICAgICAgICAgICY6aG92ZXIge1xyXG4gICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMik7XHJcbiAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgIC5pY29uIHtcclxuICAgICAgICAgICAgICAgICB3aWR0aDogMS41cmVtO1xyXG4gICAgICAgICAgICAgICAgIGhlaWdodDogMS41cmVtO1xyXG4gICAgICAgICAgICAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcclxuICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLXNpemU6IGNvbnRhaW47XHJcbiAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1yZXBlYXQ6IG5vLXJlcGVhdDtcclxuICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XHJcbiAgICAgICAgICAgICAgICAgICYuc2VsZWN0IHtcclxuICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnLi4vLi4vYXNzZXRzL2ljb25zL2NvcHkuc3ZnJyk7XHJcbiAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgICAmLmVkaXQge1xyXG4gICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuLi8uLi9hc3NldHMvaWNvbnMvZWRpdC5zdmcnKTtcclxuICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICYuZGVsZXRlIHtcclxuICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybCgnLi4vLi4vYXNzZXRzL2ljb25zL2RlbGV0ZS5zdmcnKTtcclxuICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgIH1cclxuICAgICAgICAgICB9XHJcbiAgICAgICAgIH1cclxuICAgICAgICAgICY6aG92ZXIge1xyXG4gICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMDgpO1xyXG4gICAgICAgICB9XHJcbiAgICAgICB9XHJcbiAgICAgfVxyXG4gICB9XHJcbiB9XHJcbiAgLm1lc3NhZ2UtY29udGFjdC1hZGQtYnV0dG9uIHtcclxuICAgd2lkdGg6IDEwMCU7XHJcbiAgIHBhZGRpbmc6IDEuMnJlbTtcclxuICAgbWFyZ2luLXRvcDogMnJlbTtcclxuICAgYmFja2dyb3VuZDogIzMyREM1OTtcclxuICAgYm9yZGVyOiBub25lO1xyXG4gICBib3JkZXItcmFkaXVzOiA4cHg7XHJcbiAgIGNvbG9yOiAjZmZmO1xyXG4gICBmb250LXdlaWdodDogNjAwO1xyXG4gICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgIHRyYW5zaXRpb246IGFsbCAwLjNzO1xyXG4gICAgJjpob3ZlciB7XHJcbiAgICAgYmFja2dyb3VuZDogZGFya2VuKCMzMkRDNTksIDEwJSk7XHJcbiAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0ycHgpO1xyXG4gICB9XHJcbiB9XHJcbn1cclxuXHJcbi5tZXNzYWdlLWNvbHVtbiB7XHJcbiAgZmxleDogMTtcclxuICBwYWRkaW5nOiAycmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBoZWlnaHQ6IDEwMHZoO1xyXG4gIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgIC5tZXNzYWdlLWZvcm0ge1xyXG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgIzI0MjQyNCwgIzJhMmEyYSk7XHJcbiAgICBib3JkZXItcmFkaXVzOiAxNnB4O1xyXG4gICAgcGFkZGluZzogMnJlbTtcclxuICAgIGJveC1zaGFkb3c6IDAgOHB4IDMycHggcmdiYSgwLCAwLCAwLCAwLjEpO1xyXG4gICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTtcclxuICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xyXG4gICAgIC5mb3JtLXNlbmQge1xyXG4gICAgICAuaW5wdXQtYmxvY2tzLXJvdyB7XHJcbiAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICBnYXA6IDEuNXJlbTtcclxuICAgICAgICBhbGlnbi1pdGVtczogZmxleC1lbmQ7XHJcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAuaW5wdXQtc2VuZC1tZXNzYWdlIHtcclxuICAgICAgICAgIGZsZXg6IDE7XHJcbiAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgJjo6YmVmb3JlIHtcclxuICAgICAgICAgICAgY29udGVudDogJyc7XHJcbiAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICAgICAgdG9wOiAtMTBweDtcclxuICAgICAgICAgICAgbGVmdDogLTEwcHg7XHJcbiAgICAgICAgICAgIHJpZ2h0OiAtMTBweDtcclxuICAgICAgICAgICAgYm90dG9tOiAtMTBweDtcclxuICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4xKSwgcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSkpO1xyXG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gICAgICAgICAgICB6LWluZGV4OiAwO1xyXG4gICAgICAgICAgICBvcGFjaXR5OiAwO1xyXG4gICAgICAgICAgICB0cmFuc2l0aW9uOiBvcGFjaXR5IDAuM3MgZWFzZTtcclxuICAgICAgICAgIH1cclxuICAgICAgICAgICAmOmZvY3VzLXdpdGhpbjo6YmVmb3JlIHtcclxuICAgICAgICAgICAgb3BhY2l0eTogMTtcclxuICAgICAgICAgIH1cclxuICAgICAgICAgICAuaW5wdXQtbWVzc2FnZSB7XHJcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgICBtaW4taGVpZ2h0OiAxMDBweDtcclxuICAgICAgICAgICAgYmFja2dyb3VuZDogIzFBMUExQTtcclxuICAgICAgICAgICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcclxuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTJweDtcclxuICAgICAgICAgICAgcGFkZGluZzogMS4ycmVtO1xyXG4gICAgICAgICAgICBjb2xvcjogd2hpdGU7XHJcbiAgICAgICAgICAgIHJlc2l6ZTogdmVydGljYWw7XHJcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMnJlbTtcclxuICAgICAgICAgICAgbGluZS1oZWlnaHQ6IDEuNTtcclxuICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgICB6LWluZGV4OiAxO1xyXG4gICAgICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBlYXNlO1xyXG4gICAgICAgICAgICBcclxuICAgICAgICAgICAgJjo6cGxhY2Vob2xkZXIge1xyXG4gICAgICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMyk7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgXHJcbiAgICAgICAgICAgICY6Zm9jdXMge1xyXG4gICAgICAgICAgICAgIGJvcmRlci1jb2xvcjogIzMyREM1OTtcclxuICAgICAgICAgICAgICBvdXRsaW5lOiBub25lO1xyXG4gICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCAwIDNweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xyXG4gICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgICAgLmJ1dHRvbi1zZW5kLW1lc3NhZ2Uge1xyXG4gICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgei1pbmRleDogMTtcclxuICAgICAgICAgICBidXR0b24ge1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjMzJEQzU5LCAjMjhCOTRBKTtcclxuICAgICAgICAgICAgYm9yZGVyOiBub25lO1xyXG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gICAgICAgICAgICBwYWRkaW5nOiAxLjJyZW0gMi41cmVtO1xyXG4gICAgICAgICAgICBjb2xvcjogI2ZmZjtcclxuICAgICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBlYXNlO1xyXG4gICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgICAgICAgICBnYXA6IDAuOHJlbTtcclxuICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgICBcclxuICAgICAgICAgICAgJjo6YmVmb3JlIHtcclxuICAgICAgICAgICAgICBjb250ZW50OiAnJztcclxuICAgICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgICAgICAgICAgdG9wOiAwO1xyXG4gICAgICAgICAgICAgIGxlZnQ6IDA7XHJcbiAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKSwgdHJhbnNwYXJlbnQpO1xyXG4gICAgICAgICAgICAgIG9wYWNpdHk6IDA7XHJcbiAgICAgICAgICAgICAgdHJhbnNpdGlvbjogb3BhY2l0eSAwLjNzIGVhc2U7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICY6OmFmdGVyIHtcclxuICAgICAgICAgICAgICBjb250ZW50OiAn4oaSJztcclxuICAgICAgICAgICAgICBmb250LXNpemU6IDEuMnJlbTtcclxuICAgICAgICAgICAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4zcyBlYXNlO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAmOmhvdmVyOm5vdCg6ZGlzYWJsZWQpIHtcclxuICAgICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7XHJcbiAgICAgICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMTZweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gICAgICAgICAgICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgICAgICAgICAgb3BhY2l0eTogMTtcclxuICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICY6OmFmdGVyIHtcclxuICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgzcHgpO1xyXG4gICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgJjphY3RpdmU6bm90KDpkaXNhYmxlZCkge1xyXG4gICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgJjpkaXNhYmxlZCB7XHJcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgIzY2NiwgIzU1NSk7XHJcbiAgICAgICAgICAgICAgb3BhY2l0eTogMC43O1xyXG4gICAgICAgICAgICAgIGN1cnNvcjogbm90LWFsbG93ZWQ7XHJcbiAgICAgICAgICAgICAgICY6OmFmdGVyIHtcclxuICAgICAgICAgICAgICAgIG9wYWNpdHk6IDAuNTtcclxuICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbn1cclxuIC5tZXNzYWdlLWhpc3Rvcnkge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBtYXJnaW4tdG9wOiAycmVtO1xyXG4gIGhlaWdodDogY2FsYygxMDAlIC0gNjUwcHgpO1xyXG4gfVxyXG4gLmhpc3Rvcnktd3JhcCB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgb3ZlcmZsb3cteDogaGlkZGVuO1xyXG4gIG92ZXJmbG93LXk6IGhpZGRlbjtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGJhY2tncm91bmQ6ICMyNDI0MjQ7XHJcbiAgYm9yZGVyLXJhZGl1czogMTJweDtcclxuICBwYWRkaW5nOiAxcmVtO1xyXG4gfVxyXG4gLndyYXAtdGFibGUge1xyXG4gIG92ZXJmbG93LXg6IGhpZGRlbjtcclxuICBvdmVyZmxvdy15OiBhdXRvO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgIHRhYmxlIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgdGJvZHkge1xyXG4gICAgICB0ciB7XHJcbiAgICAgICAgdGQge1xyXG4gICAgICAgICAgbWluLXdpZHRoOiAxMHJlbTtcclxuICAgICAgICAgIHBhZGRpbmc6IDEuMnJlbTtcclxuICAgICAgICAgIGNvbG9yOiAjZmZmO1xyXG4gICAgICAgICAgIC5zdGF0dXMge1xyXG4gICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAgICAgICAuY29uZmlybWF0aW9uIHtcclxuICAgICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgICAgICAgICAgdG9wOiA1MCU7XHJcbiAgICAgICAgICAgICAgbGVmdDogLTJyZW07XHJcbiAgICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xyXG4gICAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgICAgYWxpZ24taXRlbXM6IGZsZXgtZW5kO1xyXG4gICAgICAgICAgICAgIHdpZHRoOiAwLjdyZW07XHJcbiAgICAgICAgICAgICAgaGVpZ2h0OiAxLjVyZW07XHJcbiAgICAgICAgICAgICAgIC5maWxsIHtcclxuICAgICAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgLmxvY2stdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICAgICAgICBsZWZ0OiAtMnJlbTtcclxuICAgICAgICAgICAgICB3aWR0aDogMS4ycmVtO1xyXG4gICAgICAgICAgICAgIGhlaWdodDogMS4ycmVtO1xyXG4gICAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMS4xcmVtO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAudW5sb2NrLXRyYW5zYWN0aW9uIHtcclxuICAgICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgICAgICAgICAgbGVmdDogLTJyZW07XHJcbiAgICAgICAgICAgICAgd2lkdGg6IDEuMnJlbTtcclxuICAgICAgICAgICAgICBoZWlnaHQ6IDEuMnJlbTtcclxuICAgICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDEuMXJlbTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgLnBvc2l0aW9uIHtcclxuICAgICAgICAgICAgICBwb3NpdGlvbjogc3RhdGljO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAuc3RhdHVzLXRyYW5zYWN0aW9uIHtcclxuICAgICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDFyZW07XHJcbiAgICAgICAgICAgICAgd2lkdGg6IDEuN3JlbTtcclxuICAgICAgICAgICAgICBoZWlnaHQ6IDEuN3JlbTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgJi5zZW5kIHtcclxuICAgICAgICAgICAgICAuc3RhdHVzLXRyYW5zYWN0aW9uIHtcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xyXG4gICAgICAgICAgICAgICAgICY6OmFmdGVyIHtcclxuICAgICAgICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICAgICAgICAgICAgICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICAgICAgICAgICAgICAgIHdpZHRoOiAxM3B4O1xyXG4gICAgICAgICAgICAgICAgICBoZWlnaHQ6IDEzcHg7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAmLnJlY2VpdmVkIHtcclxuICAgICAgICAgICAgICAuc3RhdHVzLXRyYW5zYWN0aW9uIHtcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xyXG4gICAgICAgICAgICAgICAgICY6OmFmdGVyIHtcclxuICAgICAgICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICAgICAgICAgICAgICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICAgICAgICAgICAgICAgIHdpZHRoOiAxM3B4O1xyXG4gICAgICAgICAgICAgICAgICBoZWlnaHQ6IDEzcHg7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgICAucmVtb3RlLWFkZHJlc3Mge1xyXG4gICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xyXG4gICAgICAgICAgbWF4LXdpZHRoOiAyNXZ3O1xyXG4gICAgICAgIH1cclxuICAgICAgICAgJjpub3QoLnRyYW5zYWN0aW9uLWRldGFpbHMpIHtcclxuICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICAgIHRyYW5zaXRpb246IGJhY2tncm91bmQgMC4zcyBlYXNlO1xyXG4gICAgICAgICAgYm9yZGVyLWJvdHRvbTogMXB4IHNvbGlkICMzMkRDNTk7XHJcbiAgICAgICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMDgpO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgICAgJi50cmFuc2FjdGlvbi1kZXRhaWxzIHtcclxuICAgICAgICAgIC13ZWJraXQtdHJhbnNpdGlvbjogMC41cyBoZWlnaHQgbGluZWFyLCAwcyBmb250LXNpemU7XHJcbiAgICAgICAgICB0cmFuc2l0aW9uOiAwLjVzIGhlaWdodCBsaW5lYXIsIDBzIGZvbnQtc2l6ZTtcclxuICAgICAgICAgIHRyYW5zaXRpb24tZGVsYXk6IDBzLCAwLjVzO1xyXG4gICAgICAgICAgaGVpZ2h0OiAwO1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogIzFBMUExQTtcclxuICAgICAgICAgICAmLm9wZW4ge1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDE2LjJyZW07XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICAgdGQge1xyXG4gICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICAgICAgICAgIGxpbmUtaGVpZ2h0OiBpbmhlcml0O1xyXG4gICAgICAgICAgICBwYWRkaW5nLXRvcDogMDtcclxuICAgICAgICAgICAgcGFkZGluZy1ib3R0b206IDA7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAgdGhlYWQge1xyXG4gICAgICB0ciB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTtcclxuICAgICAgICBwb3NpdGlvbjogc3RpY2t5O1xyXG4gICAgICAgIHRvcDogMDtcclxuICAgICAgICB6LWluZGV4OiAxO1xyXG4gICAgICAgICB0aCB7XHJcbiAgICAgICAgICBwYWRkaW5nOiAxLjVyZW07XHJcbiAgICAgICAgICBjb2xvcjogIzMyREM1OTtcclxuICAgICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgICAgICAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxufVxyXG4gLnJvdy1kaXZpZGVyIHtcclxuICBoZWlnaHQ6IDEwcHg7XHJcbiAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC41KTtcclxuICBtYXJnaW46IDAuNXJlbSAwO1xyXG4gfVxyXG59XHJcblxyXG4ubW9kYWwtb3ZlcmxheSB7XHJcbiBwb3NpdGlvbjogZml4ZWQ7XHJcbiB0b3A6IDA7XHJcbiBsZWZ0OiAwO1xyXG4gcmlnaHQ6IDA7XHJcbiBib3R0b206IDA7XHJcbiBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuNyk7XHJcbiBkaXNwbGF5OiBmbGV4O1xyXG4gYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gei1pbmRleDogMTAwMDtcclxufVxyXG5cclxuLmFsaWFzLWRyb3Bkb3duIHtcclxuIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuIHRvcDogMTAwJTtcclxuIGxlZnQ6IDA7XHJcbiByaWdodDogMDtcclxuIGJhY2tncm91bmQ6ICMyNDI0MjQ7XHJcbiBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gYm9yZGVyLXJhZGl1czogOHB4O1xyXG4gbWFyZ2luLXRvcDogMC41cmVtO1xyXG4gbWF4LWhlaWdodDogMjAwcHg7XHJcbiBvdmVyZmxvdy15OiBhdXRvO1xyXG4gei1pbmRleDogMTAwMDtcclxuICBkaXYge1xyXG4gICBwYWRkaW5nOiAwLjhyZW0gMXJlbTtcclxuICAgY29sb3I6ICNmZmY7XHJcbiAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICY6aG92ZXIge1xyXG4gICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XHJcbiAgIH1cclxuIH1cclxufVxyXG5cclxuLnNjcm9sbGVkLWNvbnRlbnQge1xyXG4gJjo6LXdlYmtpdC1zY3JvbGxiYXIge1xyXG4gICB3aWR0aDogNnB4O1xyXG4gfVxyXG4gICY6Oi13ZWJraXQtc2Nyb2xsYmFyLXRyYWNrIHtcclxuICAgYmFja2dyb3VuZDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xyXG4gICBib3JkZXItcmFkaXVzOiAzcHg7XHJcbiB9XHJcbiAgJjo6LXdlYmtpdC1zY3JvbGxiYXItdGh1bWIge1xyXG4gICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gICBib3JkZXItcmFkaXVzOiAzcHg7XHJcbiAgICAmOmhvdmVyIHtcclxuICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpO1xyXG4gICB9XHJcbiB9XHJcbn1cclxuIl19 */"
+module.exports = "@charset \"UTF-8\";\n:host {\n  width: 100%;\n  display: flex; }\n:host .no-alias-container {\n    width: 100%;\n    height: calc(100vh - 200px);\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    padding: 2rem; }\n:host .no-alias-card {\n    background: transparent;\n    border: 1px solid rgba(50, 220, 89, 0.2);\n    border-radius: 24px;\n    padding: 4rem;\n    text-align: center;\n    max-width: 500px;\n    box-shadow: 0 0 40px rgba(50, 220, 89, 0.05);\n    animation: fadeIn 0.5s ease-out; }\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n    transform: translateY(20px); }\n  to {\n    opacity: 1;\n    transform: translateY(0); } }\n:host .no-alias-icon {\n    width: 80px;\n    height: 80px;\n    margin: 0 auto 2rem;\n    background: linear-gradient(145deg, rgba(50, 220, 89, 0.2), rgba(50, 220, 89, 0.1));\n    border-radius: 50%;\n    display: flex;\n    align-items: center;\n    justify-content: center; }\n:host .no-alias-icon svg {\n      width: 40px;\n      height: 40px;\n      color: #32DC59; }\n:host .no-alias-title {\n    color: #fff;\n    font-size: 1.8rem;\n    font-weight: 600;\n    margin-bottom: 1rem;\n    line-height: 1.4; }\n:host .no-alias-description {\n    color: rgba(255, 255, 255, 0.6);\n    font-size: 1.4rem;\n    line-height: 1.6;\n    margin-bottom: 2.5rem; }\n:host .no-alias-button {\n    display: inline-flex;\n    align-items: center;\n    gap: 0.8rem;\n    background: linear-gradient(145deg, #32DC59, #28B94A);\n    border: none;\n    border-radius: 12px;\n    padding: 1.2rem 2.5rem;\n    color: #fff;\n    font-size: 1.4rem;\n    font-weight: 600;\n    cursor: pointer;\n    transition: all 0.3s ease; }\n:host .no-alias-button svg {\n      width: 20px;\n      height: 20px;\n      transition: transform 0.3s ease; }\n:host .no-alias-button:hover {\n      transform: translateY(-3px);\n      box-shadow: 0 10px 30px rgba(50, 220, 89, 0.3); }\n:host .no-alias-button:hover svg {\n        transform: translateX(4px); }\n:host .no-alias-button:active {\n      transform: translateY(-1px); }\n:host .message-contact {\n    width: 25%;\n    border-right: 2px solid #32DC59;\n    padding: 2rem;\n    background: #242424; }\n:host .message-contact .content {\n      height: calc(100vh - 4rem);\n      overflow: auto; }\n:host .message-contact .content .wraps-table {\n        background: rgba(50, 220, 89, 0.05);\n        border-radius: 12px;\n        overflow: hidden; }\n:host .message-contact .content .wraps-table table {\n          width: 100%;\n          border-collapse: collapse; }\n:host .message-contact .content .wraps-table table thead tr {\n            background: rgba(50, 220, 89, 0.1); }\n:host .message-contact .content .wraps-table table thead tr th {\n              padding: 1.5rem;\n              color: #32DC59;\n              font-weight: 600;\n              text-align: left; }\n:host .message-contact .content .wraps-table table tbody tr {\n            transition: all 0.3s ease; }\n:host .message-contact .content .wraps-table table tbody tr td {\n              padding: 1.2rem;\n              color: #fff; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper {\n                display: flex;\n                gap: 0.5rem; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button {\n                  background: rgba(50, 220, 89, 0.1);\n                  border: none;\n                  border-radius: 8px;\n                  padding: 0.5rem;\n                  cursor: pointer;\n                  display: flex;\n                  align-items: center;\n                  justify-content: center;\n                  transition: all 0.2s; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button:hover {\n                    background: rgba(50, 220, 89, 0.2); }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon {\n                    width: 1.5rem;\n                    height: 1.5rem;\n                    display: inline-block;\n                    background-size: contain;\n                    background-repeat: no-repeat;\n                    background-position: center; }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon.select {\n                      background-image: url('copy.svg'); }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon.edit {\n                      background-image: url('edit.svg'); }\n:host .message-contact .content .wraps-table table tbody tr td .button-wrapper button .icon.delete {\n                      background-image: url('delete.svg'); }\n:host .message-contact .content .wraps-table table tbody tr:hover {\n              background: rgba(50, 220, 89, 0.08); }\n:host .message-contact .message-contact-add-button {\n      width: 100%;\n      padding: 1.2rem;\n      margin-top: 2rem;\n      background: #32DC59;\n      border: none;\n      border-radius: 8px;\n      color: #fff;\n      font-weight: 600;\n      cursor: pointer;\n      transition: all 0.3s; }\n:host .message-contact .message-contact-add-button:hover {\n        background: #20bb44;\n        transform: translateY(-2px); }\n:host .message-column {\n    flex: 1;\n    padding: 2rem;\n    display: flex;\n    flex-direction: column;\n    height: 100vh;\n    overflow: hidden; }\n:host .message-column .message-form {\n      background: linear-gradient(145deg, #242424, #2a2a2a);\n      border-radius: 16px;\n      padding: 2rem;\n      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);\n      border: 1px solid rgba(50, 220, 89, 0.1);\n      -webkit-backdrop-filter: blur(4px);\n              backdrop-filter: blur(4px); }\n:host .message-column .message-form .form-send .input-blocks-row {\n        display: flex;\n        gap: 1.5rem;\n        align-items: flex-end;\n        position: relative; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message {\n          flex: 1;\n          position: relative; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message::before {\n            content: '';\n            position: absolute;\n            top: -10px;\n            left: -10px;\n            right: -10px;\n            bottom: -10px;\n            background: linear-gradient(145deg, rgba(50, 220, 89, 0.1), rgba(50, 220, 89, 0.05));\n            border-radius: 12px;\n            z-index: 0;\n            opacity: 0;\n            transition: opacity 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message:focus-within::before {\n            opacity: 1; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message {\n            width: 100%;\n            min-height: 100px;\n            background: #1A1A1A;\n            border: 1px solid rgba(50, 220, 89, 0.2);\n            border-radius: 12px;\n            padding: 1.2rem;\n            color: white;\n            resize: vertical;\n            font-size: 2rem;\n            line-height: 1.5;\n            position: relative;\n            z-index: 1;\n            transition: all 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message::-moz-placeholder {\n              color: rgba(255, 255, 255, 0.3); }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message::placeholder {\n              color: rgba(255, 255, 255, 0.3); }\n:host .message-column .message-form .form-send .input-blocks-row .input-send-message .input-message:focus {\n              border-color: #32DC59;\n              outline: none;\n              box-shadow: 0 0 0 3px rgba(50, 220, 89, 0.1);\n              transform: translateY(-2px); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message {\n          position: relative;\n          z-index: 1; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button {\n            background: linear-gradient(145deg, #32DC59, #28B94A);\n            border: none;\n            border-radius: 12px;\n            padding: 1.2rem 2.5rem;\n            color: #fff;\n            font-weight: 600;\n            cursor: pointer;\n            transition: all 0.3s ease;\n            display: flex;\n            align-items: center;\n            gap: 0.8rem;\n            position: relative;\n            overflow: hidden; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button::before {\n              content: '';\n              position: absolute;\n              top: 0;\n              left: 0;\n              width: 100%;\n              height: 100%;\n              background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent);\n              opacity: 0;\n              transition: opacity 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button::after {\n              content: '→';\n              font-size: 1.2rem;\n              transition: transform 0.3s ease; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:hover:not(:disabled) {\n              transform: translateY(-2px);\n              box-shadow: 0 8px 16px rgba(50, 220, 89, 0.2); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:hover:not(:disabled)::before {\n                opacity: 1; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:hover:not(:disabled)::after {\n                transform: translateX(3px); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:active:not(:disabled) {\n              transform: translateY(0); }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:disabled {\n              background: linear-gradient(145deg, #666, #555);\n              opacity: 0.7;\n              cursor: not-allowed; }\n:host .message-column .message-form .form-send .input-blocks-row .button-send-message button:disabled::after {\n                opacity: 0.5; }\n:host .message-history {\n    display: flex;\n    flex-direction: column;\n    margin-top: 2rem;\n    height: calc(100% - 650px); }\n:host .history-wrap {\n    display: flex;\n    height: 100%;\n    overflow-x: hidden;\n    overflow-y: hidden;\n    flex-direction: column;\n    background: #242424;\n    border-radius: 12px;\n    padding: 1rem; }\n:host .wrap-table {\n    overflow-x: hidden;\n    overflow-y: auto;\n    display: flex;\n    flex-direction: column;\n    height: 100%; }\n:host .wrap-table table {\n      width: 100%; }\n:host .wrap-table table tbody tr td {\n        min-width: 10rem;\n        padding: 1.2rem;\n        color: #fff; }\n:host .wrap-table table tbody tr td .status {\n          position: relative;\n          display: flex;\n          align-items: center; }\n:host .wrap-table table tbody tr td .status .confirmation {\n            position: absolute;\n            top: 50%;\n            left: -2rem;\n            transform: translateY(-50%);\n            display: flex;\n            align-items: flex-end;\n            width: 0.7rem;\n            height: 1.5rem; }\n:host .wrap-table table tbody tr td .status .confirmation .fill {\n              width: 100%; }\n:host .wrap-table table tbody tr td .status .lock-transaction {\n            position: absolute;\n            left: -2rem;\n            width: 1.2rem;\n            height: 1.2rem;\n            margin-right: 1.1rem; }\n:host .wrap-table table tbody tr td .status .unlock-transaction {\n            position: absolute;\n            left: -2rem;\n            width: 1.2rem;\n            height: 1.2rem;\n            margin-right: 1.1rem; }\n:host .wrap-table table tbody tr td .status .position {\n            position: static; }\n:host .wrap-table table tbody tr td .status .status-transaction {\n            margin-right: 1rem;\n            width: 1.7rem;\n            height: 1.7rem; }\n:host .wrap-table table tbody tr td .status.send .status-transaction {\n            background-color: transparent; }\n:host .wrap-table table tbody tr td .status.send .status-transaction::after {\n              display: block;\n              content: \"\";\n              width: 13px;\n              height: 13px; }\n:host .wrap-table table tbody tr td .status.received .status-transaction {\n            background-color: transparent; }\n:host .wrap-table table tbody tr td .status.received .status-transaction::after {\n              display: block;\n              content: \"\";\n              width: 13px;\n              height: 13px; }\n:host .wrap-table table tbody tr .remote-address {\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 25vw; }\n:host .wrap-table table tbody tr:not(.transaction-details) {\n        cursor: pointer;\n        transition: background 0.3s ease;\n        border-bottom: 1px solid #32DC59; }\n:host .wrap-table table tbody tr:not(.transaction-details):hover {\n          background: rgba(50, 220, 89, 0.08); }\n:host .wrap-table table tbody tr.transaction-details {\n        transition: 0.5s height linear, 0s font-size;\n        transition-delay: 0s, 0.5s;\n        height: 0;\n        background: #1A1A1A; }\n:host .wrap-table table tbody tr.transaction-details.open {\n          height: 16.2rem; }\n:host .wrap-table table tbody tr.transaction-details td {\n          position: relative;\n          overflow: hidden;\n          line-height: inherit;\n          padding-top: 0;\n          padding-bottom: 0; }\n:host .wrap-table table thead tr {\n        background: rgba(50, 220, 89, 0.1);\n        position: sticky;\n        top: 0;\n        z-index: 1; }\n:host .wrap-table table thead tr th {\n          padding: 1.5rem;\n          color: #32DC59;\n          font-weight: 600;\n          text-align: left; }\n:host .row-divider {\n    height: 10px;\n    background: rgba(50, 220, 89, 0.5);\n    margin: 0.5rem 0; }\n.modal-overlay {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  background: rgba(0, 0, 0, 0.7);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  z-index: 1000; }\n.alias-dropdown {\n  position: absolute;\n  top: 100%;\n  left: 0;\n  right: 0;\n  background: #242424;\n  border: 1px solid rgba(50, 220, 89, 0.3);\n  border-radius: 8px;\n  margin-top: 0.5rem;\n  max-height: 200px;\n  overflow-y: auto;\n  z-index: 1000; }\n.alias-dropdown div {\n    padding: 0.8rem 1rem;\n    color: #fff;\n    cursor: pointer; }\n.alias-dropdown div:hover {\n      background: rgba(50, 220, 89, 0.1); }\n.scrolled-content::-webkit-scrollbar {\n  width: 6px; }\n.scrolled-content::-webkit-scrollbar-track {\n  background: rgba(255, 255, 255, 0.1);\n  border-radius: 3px; }\n.scrolled-content::-webkit-scrollbar-thumb {\n  background: rgba(50, 220, 89, 0.3);\n  border-radius: 3px; }\n.scrolled-content::-webkit-scrollbar-thumb:hover {\n    background: rgba(50, 220, 89, 0.5); }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbmlydmFpbC9uaXJ2YWlsLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9uaXJ2YWlsL0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxuaXJ2YWlsXFxuaXJ2YWlsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGdCQUFnQjtBQ0FoQjtFQUNFLFdBQVc7RUFBRyxhQUFhLEVBQUE7QUFEN0I7SUFJRSxXQUFXO0lBQ1gsMkJBQTJCO0lBQzNCLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsdUJBQXVCO0lBQ3ZCLGFBQWEsRUFBQTtBQVRmO0lBYUUsdUJBQXVCO0lBQ3ZCLHdDQUF3QztJQUN4QyxtQkFBbUI7SUFDbkIsYUFBYTtJQUNiLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsNENBQTRDO0lBQzVDLCtCQUErQixFQUFBO0FBR2pDO0VBQ0U7SUFDRSxVQUFVO0lBQ1YsMkJBQTJCLEVBQUE7RUFFN0I7SUFDRSxVQUFVO0lBQ1Ysd0JBQXdCLEVBQUEsRUFBQTtBQTlCNUI7SUFtQ0UsV0FBVztJQUNYLFlBQVk7SUFDWixtQkFBbUI7SUFDbkIsbUZBQW1GO0lBQ25GLGtCQUFrQjtJQUNsQixhQUFhO0lBQ2IsbUJBQW1CO0lBQ25CLHVCQUF1QixFQUFBO0FBMUN6QjtNQTZDSSxXQUFXO01BQ1gsWUFBWTtNQUNaLGNBQWMsRUFBQTtBQS9DbEI7SUFvREUsV0FBVztJQUNYLGlCQUFpQjtJQUNqQixnQkFBZ0I7SUFDaEIsbUJBQW1CO0lBQ25CLGdCQUFnQixFQUFBO0FBeERsQjtJQTRERSwrQkFBK0I7SUFDL0IsaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixxQkFBcUIsRUFBQTtBQS9EdkI7SUFtRUUsb0JBQW9CO0lBQ3BCLG1CQUFtQjtJQUNuQixXQUFXO0lBQ1gscURBQXFEO0lBQ3JELFlBQVk7SUFDWixtQkFBbUI7SUFDbkIsc0JBQXNCO0lBQ3RCLFdBQVc7SUFDWCxpQkFBaUI7SUFDakIsZ0JBQWdCO0lBQ2hCLGVBQWU7SUFDZix5QkFBeUIsRUFBQTtBQTlFM0I7TUFpRkksV0FBVztNQUNYLFlBQVk7TUFDWiwrQkFBK0IsRUFBQTtBQW5GbkM7TUF1RkksMkJBQTJCO01BQzNCLDhDQUE4QyxFQUFBO0FBeEZsRDtRQTJGTSwwQkFBMEIsRUFBQTtBQTNGaEM7TUFnR0ksMkJBQTJCLEVBQUE7QUFoRy9CO0lBcUdDLFVBQVU7SUFDViwrQkFBK0I7SUFDL0IsYUFBYTtJQUNiLG1CQUFtQixFQUFBO0FBeEdwQjtNQTBHRywwQkFBMEI7TUFDMUIsY0FBYyxFQUFBO0FBM0dqQjtRQThHSyxtQ0FBbUM7UUFDbkMsbUJBQW1CO1FBQ25CLGdCQUFnQixFQUFBO0FBaEhyQjtVQWtITyxXQUFXO1VBQ1gseUJBQXlCLEVBQUE7QUFuSGhDO1lBc0hTLGtDQUFrQyxFQUFBO0FBdEgzQztjQXdIVyxlQUFlO2NBQ2YsY0FBYztjQUNkLGdCQUFnQjtjQUNoQixnQkFBZ0IsRUFBQTtBQTNIM0I7WUErSFMseUJBQXlCLEVBQUE7QUEvSGxDO2NBa0lXLGVBQWU7Y0FDZixXQUFXLEVBQUE7QUFuSXRCO2dCQXNJYSxhQUFhO2dCQUNiLFdBQVcsRUFBQTtBQXZJeEI7a0JBeUllLGtDQUFrQztrQkFDbEMsWUFBWTtrQkFDWixrQkFBa0I7a0JBQ2xCLGVBQWU7a0JBQ2YsZUFBZTtrQkFDZixhQUFhO2tCQUNiLG1CQUFtQjtrQkFDbkIsdUJBQXVCO2tCQUN2QixvQkFBb0IsRUFBQTtBQWpKbkM7b0JBbUppQixrQ0FBa0MsRUFBQTtBQW5KbkQ7b0JBc0ppQixhQUFhO29CQUNiLGNBQWM7b0JBQ2QscUJBQXFCO29CQUNyQix3QkFBd0I7b0JBQ3hCLDRCQUE0QjtvQkFDNUIsMkJBQTJCLEVBQUE7QUEzSjVDO3NCQTZKbUIsaUNBQW9ELEVBQUE7QUE3SnZFO3NCQWdLbUIsaUNBQW9ELEVBQUE7QUFoS3ZFO3NCQW1LbUIsbUNBQXNELEVBQUE7QUFuS3pFO2NBMEtXLG1DQUFtQyxFQUFBO0FBMUs5QztNQWlMRyxXQUFXO01BQ1gsZUFBZTtNQUNmLGdCQUFnQjtNQUNoQixtQkFBbUI7TUFDbkIsWUFBWTtNQUNaLGtCQUFrQjtNQUNsQixXQUFXO01BQ1gsZ0JBQWdCO01BQ2hCLGVBQWU7TUFDZixvQkFBb0IsRUFBQTtBQTFMdkI7UUE0TEssbUJBQWdDO1FBQ2hDLDJCQUEyQixFQUFBO0FBN0xoQztJQW1NRSxPQUFPO0lBQ1AsYUFBYTtJQUNiLGFBQWE7SUFDYixzQkFBc0I7SUFDdEIsYUFBYTtJQUNiLGdCQUFnQixFQUFBO0FBeE1sQjtNQTBNSSxxREFBcUQ7TUFDckQsbUJBQW1CO01BQ25CLGFBQWE7TUFDYix5Q0FBeUM7TUFDekMsd0NBQXdDO01BQ3hDLGtDQUEwQjtjQUExQiwwQkFBMEIsRUFBQTtBQS9NOUI7UUFrTlEsYUFBYTtRQUNiLFdBQVc7UUFDWCxxQkFBcUI7UUFDckIsa0JBQWtCLEVBQUE7QUFyTjFCO1VBdU5VLE9BQU87VUFDUCxrQkFBa0IsRUFBQTtBQXhONUI7WUEwTlksV0FBVztZQUNYLGtCQUFrQjtZQUNsQixVQUFVO1lBQ1YsV0FBVztZQUNYLFlBQVk7WUFDWixhQUFhO1lBQ2Isb0ZBQW9GO1lBQ3BGLG1CQUFtQjtZQUNuQixVQUFVO1lBQ1YsVUFBVTtZQUNWLDZCQUE2QixFQUFBO0FBcE96QztZQXVPWSxVQUFVLEVBQUE7QUF2T3RCO1lBME9ZLFdBQVc7WUFDWCxpQkFBaUI7WUFDakIsbUJBQW1CO1lBQ25CLHdDQUF3QztZQUN4QyxtQkFBbUI7WUFDbkIsZUFBZTtZQUNmLFlBQVk7WUFDWixnQkFBZ0I7WUFDaEIsZUFBZTtZQUNmLGdCQUFnQjtZQUNoQixrQkFBa0I7WUFDbEIsVUFBVTtZQUNWLHlCQUF5QixFQUFBO0FBdFByQztjQXlQYywrQkFBK0IsRUFBQTtBQXpQN0M7Y0F5UGMsK0JBQStCLEVBQUE7QUF6UDdDO2NBNlBjLHFCQUFxQjtjQUNyQixhQUFhO2NBQ2IsNENBQTRDO2NBQzVDLDJCQUEyQixFQUFBO0FBaFF6QztVQXFRVSxrQkFBa0I7VUFDbEIsVUFBVSxFQUFBO0FBdFFwQjtZQXdRWSxxREFBcUQ7WUFDckQsWUFBWTtZQUNaLG1CQUFtQjtZQUNuQixzQkFBc0I7WUFDdEIsV0FBVztZQUNYLGdCQUFnQjtZQUNoQixlQUFlO1lBQ2YseUJBQXlCO1lBQ3pCLGFBQWE7WUFDYixtQkFBbUI7WUFDbkIsV0FBVztZQUNYLGtCQUFrQjtZQUNsQixnQkFBZ0IsRUFBQTtBQXBSNUI7Y0F1UmMsV0FBVztjQUNYLGtCQUFrQjtjQUNsQixNQUFNO2NBQ04sT0FBTztjQUNQLFdBQVc7Y0FDWCxZQUFZO2NBQ1osMEVBQTBFO2NBQzFFLFVBQVU7Y0FDViw2QkFBNkIsRUFBQTtBQS9SM0M7Y0FrU2MsWUFBUztjQUNULGlCQUFpQjtjQUNqQiwrQkFBK0IsRUFBQTtBQXBTN0M7Y0F1U2MsMkJBQTJCO2NBQzNCLDZDQUE2QyxFQUFBO0FBeFMzRDtnQkEwU2dCLFVBQVUsRUFBQTtBQTFTMUI7Z0JBNlNnQiwwQkFBMEIsRUFBQTtBQTdTMUM7Y0FpVGMsd0JBQXdCLEVBQUE7QUFqVHRDO2NBb1RjLCtDQUErQztjQUMvQyxZQUFZO2NBQ1osbUJBQW1CLEVBQUE7QUF0VGpDO2dCQXdUZ0IsWUFBWSxFQUFBO0FBeFQ1QjtJQWtVRSxhQUFhO0lBQ2Isc0JBQXNCO0lBQ3RCLGdCQUFnQjtJQUNoQiwwQkFBMEIsRUFBQTtBQXJVNUI7SUF3VUUsYUFBYTtJQUNiLFlBQVk7SUFDWixrQkFBa0I7SUFDbEIsa0JBQWtCO0lBQ2xCLHNCQUFzQjtJQUN0QixtQkFBbUI7SUFDbkIsbUJBQW1CO0lBQ25CLGFBQWEsRUFBQTtBQS9VZjtJQWtWRSxrQkFBa0I7SUFDbEIsZ0JBQWdCO0lBQ2hCLGFBQWE7SUFDYixzQkFBc0I7SUFDdEIsWUFBWSxFQUFBO0FBdFZkO01Bd1ZJLFdBQVcsRUFBQTtBQXhWZjtRQTRWVSxnQkFBZ0I7UUFDaEIsZUFBZTtRQUNmLFdBQVcsRUFBQTtBQTlWckI7VUFnV1ksa0JBQWtCO1VBQ2xCLGFBQWE7VUFDYixtQkFBbUIsRUFBQTtBQWxXL0I7WUFvV2Msa0JBQWtCO1lBQ2xCLFFBQVE7WUFDUixXQUFXO1lBQ1gsMkJBQTJCO1lBQzNCLGFBQWE7WUFDYixxQkFBcUI7WUFDckIsYUFBYTtZQUNiLGNBQWMsRUFBQTtBQTNXNUI7Y0E2V2dCLFdBQVcsRUFBQTtBQTdXM0I7WUFpWGMsa0JBQWtCO1lBQ2xCLFdBQVc7WUFDWCxhQUFhO1lBQ2IsY0FBYztZQUNkLG9CQUFvQixFQUFBO0FBclhsQztZQXdYYyxrQkFBa0I7WUFDbEIsV0FBVztZQUNYLGFBQWE7WUFDYixjQUFjO1lBQ2Qsb0JBQW9CLEVBQUE7QUE1WGxDO1lBK1hjLGdCQUFnQixFQUFBO0FBL1g5QjtZQWtZYyxrQkFBa0I7WUFDbEIsYUFBYTtZQUNiLGNBQWMsRUFBQTtBQXBZNUI7WUF3WWdCLDZCQUE2QixFQUFBO0FBeFk3QztjQTBZa0IsY0FBYztjQUNkLFdBQVc7Y0FDWCxXQUFXO2NBQ1gsWUFBWSxFQUFBO0FBN1k5QjtZQW1aZ0IsNkJBQTZCLEVBQUE7QUFuWjdDO2NBcVprQixjQUFjO2NBQ2QsV0FBVztjQUNYLFdBQVc7Y0FDWCxZQUFZLEVBQUE7QUF4WjlCO1FBK1pVLGdCQUFnQjtRQUNoQix1QkFBdUI7UUFDdkIsZUFBZSxFQUFBO0FBamF6QjtRQW9hVSxlQUFlO1FBQ2YsZ0NBQWdDO1FBQ2hDLGdDQUFnQyxFQUFBO0FBdGExQztVQXdhWSxtQ0FBbUMsRUFBQTtBQXhhL0M7UUE2YVUsNENBQTRDO1FBQzVDLDBCQUEwQjtRQUMxQixTQUFTO1FBQ1QsbUJBQW1CLEVBQUE7QUFoYjdCO1VBa2JZLGVBQWUsRUFBQTtBQWxiM0I7VUFxYlksa0JBQWtCO1VBQ2xCLGdCQUFnQjtVQUNoQixvQkFBb0I7VUFDcEIsY0FBYztVQUNkLGlCQUFpQixFQUFBO0FBemI3QjtRQWdjUSxrQ0FBa0M7UUFDbEMsZ0JBQWdCO1FBQ2hCLE1BQU07UUFDTixVQUFVLEVBQUE7QUFuY2xCO1VBcWNVLGVBQWU7VUFDZixjQUFjO1VBQ2QsZ0JBQWdCO1VBQ2hCLGdCQUFnQixFQUFBO0FBeGMxQjtJQStjRSxZQUFZO0lBQ1osa0NBQWtDO0lBQ2xDLGdCQUFnQixFQUFBO0FBSWxCO0VBQ0MsZUFBZTtFQUNmLE1BQU07RUFDTixPQUFPO0VBQ1AsUUFBUTtFQUNSLFNBQVM7RUFDVCw4QkFBOEI7RUFDOUIsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsYUFBYSxFQUFBO0FBR2Q7RUFDQyxrQkFBa0I7RUFDbEIsU0FBUztFQUNULE9BQU87RUFDUCxRQUFRO0VBQ1IsbUJBQW1CO0VBQ25CLHdDQUF3QztFQUN4QyxrQkFBa0I7RUFDbEIsa0JBQWtCO0VBQ2xCLGlCQUFpQjtFQUNqQixnQkFBZ0I7RUFDaEIsYUFBYSxFQUFBO0FBWGQ7SUFhRyxvQkFBb0I7SUFDcEIsV0FBVztJQUNYLGVBQWUsRUFBQTtBQWZsQjtNQWlCSyxrQ0FBa0MsRUFBQTtBQUt2QztFQUVHLFVBQVUsRUFBQTtBQUZiO0VBS0csb0NBQW9DO0VBQ3BDLGtCQUFrQixFQUFBO0FBTnJCO0VBU0csa0NBQWtDO0VBQ2xDLGtCQUFrQixFQUFBO0FBVnJCO0lBWUssa0NBQWtDLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9uaXJ2YWlsL25pcnZhaWwuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAY2hhcnNldCBcIlVURi04XCI7XG46aG9zdCB7XG4gIHdpZHRoOiAxMDAlO1xuICBkaXNwbGF5OiBmbGV4OyB9XG4gIDpob3N0IC5uby1hbGlhcy1jb250YWluZXIge1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIGhlaWdodDogY2FsYygxMDB2aCAtIDIwMHB4KTtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgcGFkZGluZzogMnJlbTsgfVxuICA6aG9zdCAubm8tYWxpYXMtY2FyZCB7XG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XG4gICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcbiAgICBib3JkZXItcmFkaXVzOiAyNHB4O1xuICAgIHBhZGRpbmc6IDRyZW07XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIG1heC13aWR0aDogNTAwcHg7XG4gICAgYm94LXNoYWRvdzogMCAwIDQwcHggcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSk7XG4gICAgYW5pbWF0aW9uOiBmYWRlSW4gMC41cyBlYXNlLW91dDsgfVxuXG5Aa2V5ZnJhbWVzIGZhZGVJbiB7XG4gIGZyb20ge1xuICAgIG9wYWNpdHk6IDA7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDIwcHgpOyB9XG4gIHRvIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfSB9XG4gIDpob3N0IC5uby1hbGlhcy1pY29uIHtcbiAgICB3aWR0aDogODBweDtcbiAgICBoZWlnaHQ6IDgwcHg7XG4gICAgbWFyZ2luOiAwIGF1dG8gMnJlbTtcbiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpKTtcbiAgICBib3JkZXItcmFkaXVzOiA1MCU7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgIGp1c3RpZnktY29udGVudDogY2VudGVyOyB9XG4gICAgOmhvc3QgLm5vLWFsaWFzLWljb24gc3ZnIHtcbiAgICAgIHdpZHRoOiA0MHB4O1xuICAgICAgaGVpZ2h0OiA0MHB4O1xuICAgICAgY29sb3I6ICMzMkRDNTk7IH1cbiAgOmhvc3QgLm5vLWFsaWFzLXRpdGxlIHtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBmb250LXNpemU6IDEuOHJlbTtcbiAgICBmb250LXdlaWdodDogNjAwO1xuICAgIG1hcmdpbi1ib3R0b206IDFyZW07XG4gICAgbGluZS1oZWlnaHQ6IDEuNDsgfVxuICA6aG9zdCAubm8tYWxpYXMtZGVzY3JpcHRpb24ge1xuICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNik7XG4gICAgZm9udC1zaXplOiAxLjRyZW07XG4gICAgbGluZS1oZWlnaHQ6IDEuNjtcbiAgICBtYXJnaW4tYm90dG9tOiAyLjVyZW07IH1cbiAgOmhvc3QgLm5vLWFsaWFzLWJ1dHRvbiB7XG4gICAgZGlzcGxheTogaW5saW5lLWZsZXg7XG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICBnYXA6IDAuOHJlbTtcbiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjMzJEQzU5LCAjMjhCOTRBKTtcbiAgICBib3JkZXI6IG5vbmU7XG4gICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICBwYWRkaW5nOiAxLjJyZW0gMi41cmVtO1xuICAgIGNvbG9yOiAjZmZmO1xuICAgIGZvbnQtc2l6ZTogMS40cmVtO1xuICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7IH1cbiAgICA6aG9zdCAubm8tYWxpYXMtYnV0dG9uIHN2ZyB7XG4gICAgICB3aWR0aDogMjBweDtcbiAgICAgIGhlaWdodDogMjBweDtcbiAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjNzIGVhc2U7IH1cbiAgICA6aG9zdCAubm8tYWxpYXMtYnV0dG9uOmhvdmVyIHtcbiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtM3B4KTtcbiAgICAgIGJveC1zaGFkb3c6IDAgMTBweCAzMHB4IHJnYmEoNTAsIDIyMCwgODksIDAuMyk7IH1cbiAgICAgIDpob3N0IC5uby1hbGlhcy1idXR0b246aG92ZXIgc3ZnIHtcbiAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDRweCk7IH1cbiAgICA6aG9zdCAubm8tYWxpYXMtYnV0dG9uOmFjdGl2ZSB7XG4gICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7IH1cbiAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCB7XG4gICAgd2lkdGg6IDI1JTtcbiAgICBib3JkZXItcmlnaHQ6IDJweCBzb2xpZCAjMzJEQzU5O1xuICAgIHBhZGRpbmc6IDJyZW07XG4gICAgYmFja2dyb3VuZDogIzI0MjQyNDsgfVxuICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQge1xuICAgICAgaGVpZ2h0OiBjYWxjKDEwMHZoIC0gNHJlbSk7XG4gICAgICBvdmVyZmxvdzogYXV0bzsgfVxuICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUge1xuICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjA1KTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjsgfVxuICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB7XG4gICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTsgfVxuICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRoZWFkIHRyIHtcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRoZWFkIHRyIHRoIHtcbiAgICAgICAgICAgICAgcGFkZGluZzogMS41cmVtO1xuICAgICAgICAgICAgICBjb2xvcjogIzMyREM1OTtcbiAgICAgICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgICAgICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDsgfVxuICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHtcbiAgICAgICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIHtcbiAgICAgICAgICAgICAgcGFkZGluZzogMS4ycmVtO1xuICAgICAgICAgICAgICBjb2xvcjogI2ZmZjsgfVxuICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuYnV0dG9uLXdyYXBwZXIge1xuICAgICAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgICAgICAgICAgZ2FwOiAwLjVyZW07IH1cbiAgICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuYnV0dG9uLXdyYXBwZXIgYnV0dG9uIHtcbiAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XG4gICAgICAgICAgICAgICAgICBib3JkZXI6IG5vbmU7XG4gICAgICAgICAgICAgICAgICBib3JkZXItcmFkaXVzOiA4cHg7XG4gICAgICAgICAgICAgICAgICBwYWRkaW5nOiAwLjVyZW07XG4gICAgICAgICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgICAgICAgICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnM7IH1cbiAgICAgICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5idXR0b24td3JhcHBlciBidXR0b246aG92ZXIge1xuICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpOyB9XG4gICAgICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuYnV0dG9uLXdyYXBwZXIgYnV0dG9uIC5pY29uIHtcbiAgICAgICAgICAgICAgICAgICAgd2lkdGg6IDEuNXJlbTtcbiAgICAgICAgICAgICAgICAgICAgaGVpZ2h0OiAxLjVyZW07XG4gICAgICAgICAgICAgICAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1zaXplOiBjb250YWluO1xuICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0O1xuICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7IH1cbiAgICAgICAgICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29udGFjdCAuY29udGVudCAud3JhcHMtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLmJ1dHRvbi13cmFwcGVyIGJ1dHRvbiAuaWNvbi5zZWxlY3Qge1xuICAgICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChcIi4uLy4uL2Fzc2V0cy9pY29ucy9jb3B5LnN2Z1wiKTsgfVxuICAgICAgICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuYnV0dG9uLXdyYXBwZXIgYnV0dG9uIC5pY29uLmVkaXQge1xuICAgICAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybChcIi4uLy4uL2Fzc2V0cy9pY29ucy9lZGl0LnN2Z1wiKTsgfVxuICAgICAgICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5jb250ZW50IC53cmFwcy10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuYnV0dG9uLXdyYXBwZXIgYnV0dG9uIC5pY29uLmRlbGV0ZSB7XG4gICAgICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKFwiLi4vLi4vYXNzZXRzL2ljb25zL2RlbGV0ZS5zdmdcIik7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLmNvbnRlbnQgLndyYXBzLXRhYmxlIHRhYmxlIHRib2R5IHRyOmhvdmVyIHtcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4wOCk7IH1cbiAgICA6aG9zdCAubWVzc2FnZS1jb250YWN0IC5tZXNzYWdlLWNvbnRhY3QtYWRkLWJ1dHRvbiB7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIHBhZGRpbmc6IDEuMnJlbTtcbiAgICAgIG1hcmdpbi10b3A6IDJyZW07XG4gICAgICBiYWNrZ3JvdW5kOiAjMzJEQzU5O1xuICAgICAgYm9yZGVyOiBub25lO1xuICAgICAgYm9yZGVyLXJhZGl1czogOHB4O1xuICAgICAgY29sb3I6ICNmZmY7XG4gICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3M7IH1cbiAgICAgIDpob3N0IC5tZXNzYWdlLWNvbnRhY3QgLm1lc3NhZ2UtY29udGFjdC1hZGQtYnV0dG9uOmhvdmVyIHtcbiAgICAgICAgYmFja2dyb3VuZDogIzIwYmI0NDtcbiAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0ycHgpOyB9XG4gIDpob3N0IC5tZXNzYWdlLWNvbHVtbiB7XG4gICAgZmxleDogMTtcbiAgICBwYWRkaW5nOiAycmVtO1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICBoZWlnaHQ6IDEwMHZoO1xuICAgIG92ZXJmbG93OiBoaWRkZW47IH1cbiAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSB7XG4gICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjMjQyNDI0LCAjMmEyYTJhKTtcbiAgICAgIGJvcmRlci1yYWRpdXM6IDE2cHg7XG4gICAgICBwYWRkaW5nOiAycmVtO1xuICAgICAgYm94LXNoYWRvdzogMCA4cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMSk7XG4gICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xuICAgICAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7IH1cbiAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cge1xuICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICBnYXA6IDEuNXJlbTtcbiAgICAgICAgYWxpZ24taXRlbXM6IGZsZXgtZW5kO1xuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7IH1cbiAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuaW5wdXQtc2VuZC1tZXNzYWdlIHtcbiAgICAgICAgICBmbGV4OiAxO1xuICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsgfVxuICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmlucHV0LXNlbmQtbWVzc2FnZTo6YmVmb3JlIHtcbiAgICAgICAgICAgIGNvbnRlbnQ6ICcnO1xuICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICAgICAgdG9wOiAtMTBweDtcbiAgICAgICAgICAgIGxlZnQ6IC0xMHB4O1xuICAgICAgICAgICAgcmlnaHQ6IC0xMHB4O1xuICAgICAgICAgICAgYm90dG9tOiAtMTBweDtcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsIHJnYmEoNTAsIDIyMCwgODksIDAuMSksIHJnYmEoNTAsIDIyMCwgODksIDAuMDUpKTtcbiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XG4gICAgICAgICAgICB6LWluZGV4OiAwO1xuICAgICAgICAgICAgb3BhY2l0eTogMDtcbiAgICAgICAgICAgIHRyYW5zaXRpb246IG9wYWNpdHkgMC4zcyBlYXNlOyB9XG4gICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuaW5wdXQtc2VuZC1tZXNzYWdlOmZvY3VzLXdpdGhpbjo6YmVmb3JlIHtcbiAgICAgICAgICAgIG9wYWNpdHk6IDE7IH1cbiAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5pbnB1dC1zZW5kLW1lc3NhZ2UgLmlucHV0LW1lc3NhZ2Uge1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICBtaW4taGVpZ2h0OiAxMDBweDtcbiAgICAgICAgICAgIGJhY2tncm91bmQ6ICMxQTFBMUE7XG4gICAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMTJweDtcbiAgICAgICAgICAgIHBhZGRpbmc6IDEuMnJlbTtcbiAgICAgICAgICAgIGNvbG9yOiB3aGl0ZTtcbiAgICAgICAgICAgIHJlc2l6ZTogdmVydGljYWw7XG4gICAgICAgICAgICBmb250LXNpemU6IDJyZW07XG4gICAgICAgICAgICBsaW5lLWhlaWdodDogMS41O1xuICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICAgICAgei1pbmRleDogMTtcbiAgICAgICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmlucHV0LXNlbmQtbWVzc2FnZSAuaW5wdXQtbWVzc2FnZTo6cGxhY2Vob2xkZXIge1xuICAgICAgICAgICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjMpOyB9XG4gICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5pbnB1dC1zZW5kLW1lc3NhZ2UgLmlucHV0LW1lc3NhZ2U6Zm9jdXMge1xuICAgICAgICAgICAgICBib3JkZXItY29sb3I6ICMzMkRDNTk7XG4gICAgICAgICAgICAgIG91dGxpbmU6IG5vbmU7XG4gICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCAwIDNweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xuICAgICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7IH1cbiAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSB7XG4gICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICAgIHotaW5kZXg6IDE7IH1cbiAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5idXR0b24tc2VuZC1tZXNzYWdlIGJ1dHRvbiB7XG4gICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjMzJEQzU5LCAjMjhCOTRBKTtcbiAgICAgICAgICAgIGJvcmRlcjogbm9uZTtcbiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XG4gICAgICAgICAgICBwYWRkaW5nOiAxLjJyZW0gMi41cmVtO1xuICAgICAgICAgICAgY29sb3I6ICNmZmY7XG4gICAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xuICAgICAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTtcbiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICAgICAgZ2FwOiAwLjhyZW07XG4gICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuOyB9XG4gICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5idXR0b24tc2VuZC1tZXNzYWdlIGJ1dHRvbjo6YmVmb3JlIHtcbiAgICAgICAgICAgICAgY29udGVudDogJyc7XG4gICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICAgICAgdG9wOiAwO1xuICAgICAgICAgICAgICBsZWZ0OiAwO1xuICAgICAgICAgICAgICB3aWR0aDogMTAwJTtcbiAgICAgICAgICAgICAgaGVpZ2h0OiAxMDAlO1xuICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSksIHRyYW5zcGFyZW50KTtcbiAgICAgICAgICAgICAgb3BhY2l0eTogMDtcbiAgICAgICAgICAgICAgdHJhbnNpdGlvbjogb3BhY2l0eSAwLjNzIGVhc2U7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uOjphZnRlciB7XG4gICAgICAgICAgICAgIGNvbnRlbnQ6ICfihpInO1xuICAgICAgICAgICAgICBmb250LXNpemU6IDEuMnJlbTtcbiAgICAgICAgICAgICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuM3MgZWFzZTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSBidXR0b246aG92ZXI6bm90KDpkaXNhYmxlZCkge1xuICAgICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7XG4gICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgOHB4IDE2cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTsgfVxuICAgICAgICAgICAgICA6aG9zdCAubWVzc2FnZS1jb2x1bW4gLm1lc3NhZ2UtZm9ybSAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IC5idXR0b24tc2VuZC1tZXNzYWdlIGJ1dHRvbjpob3Zlcjpub3QoOmRpc2FibGVkKTo6YmVmb3JlIHtcbiAgICAgICAgICAgICAgICBvcGFjaXR5OiAxOyB9XG4gICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uOmhvdmVyOm5vdCg6ZGlzYWJsZWQpOjphZnRlciB7XG4gICAgICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDNweCk7IH1cbiAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uOmFjdGl2ZTpub3QoOmRpc2FibGVkKSB7XG4gICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfVxuICAgICAgICAgICAgOmhvc3QgLm1lc3NhZ2UtY29sdW1uIC5tZXNzYWdlLWZvcm0gLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyAuYnV0dG9uLXNlbmQtbWVzc2FnZSBidXR0b246ZGlzYWJsZWQge1xuICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjNjY2LCAjNTU1KTtcbiAgICAgICAgICAgICAgb3BhY2l0eTogMC43O1xuICAgICAgICAgICAgICBjdXJzb3I6IG5vdC1hbGxvd2VkOyB9XG4gICAgICAgICAgICAgIDpob3N0IC5tZXNzYWdlLWNvbHVtbiAubWVzc2FnZS1mb3JtIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgLmJ1dHRvbi1zZW5kLW1lc3NhZ2UgYnV0dG9uOmRpc2FibGVkOjphZnRlciB7XG4gICAgICAgICAgICAgICAgb3BhY2l0eTogMC41OyB9XG4gIDpob3N0IC5tZXNzYWdlLWhpc3Rvcnkge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICBtYXJnaW4tdG9wOiAycmVtO1xuICAgIGhlaWdodDogY2FsYygxMDAlIC0gNjUwcHgpOyB9XG4gIDpob3N0IC5oaXN0b3J5LXdyYXAge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgaGVpZ2h0OiAxMDAlO1xuICAgIG92ZXJmbG93LXg6IGhpZGRlbjtcbiAgICBvdmVyZmxvdy15OiBoaWRkZW47XG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICBiYWNrZ3JvdW5kOiAjMjQyNDI0O1xuICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XG4gICAgcGFkZGluZzogMXJlbTsgfVxuICA6aG9zdCAud3JhcC10YWJsZSB7XG4gICAgb3ZlcmZsb3cteDogaGlkZGVuO1xuICAgIG92ZXJmbG93LXk6IGF1dG87XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgIGhlaWdodDogMTAwJTsgfVxuICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHtcbiAgICAgIHdpZHRoOiAxMDAlOyB9XG4gICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCB7XG4gICAgICAgIG1pbi13aWR0aDogMTByZW07XG4gICAgICAgIHBhZGRpbmc6IDEuMnJlbTtcbiAgICAgICAgY29sb3I6ICNmZmY7IH1cbiAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cyB7XG4gICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjsgfVxuICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMgLmNvbmZpcm1hdGlvbiB7XG4gICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICAgICAgICB0b3A6IDUwJTtcbiAgICAgICAgICAgIGxlZnQ6IC0ycmVtO1xuICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICAgICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBmbGV4LWVuZDtcbiAgICAgICAgICAgIHdpZHRoOiAwLjdyZW07XG4gICAgICAgICAgICBoZWlnaHQ6IDEuNXJlbTsgfVxuICAgICAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cyAuY29uZmlybWF0aW9uIC5maWxsIHtcbiAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7IH1cbiAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzIC5sb2NrLXRyYW5zYWN0aW9uIHtcbiAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICAgIGxlZnQ6IC0ycmVtO1xuICAgICAgICAgICAgd2lkdGg6IDEuMnJlbTtcbiAgICAgICAgICAgIGhlaWdodDogMS4ycmVtO1xuICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAxLjFyZW07IH1cbiAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzIC51bmxvY2stdHJhbnNhY3Rpb24ge1xuICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICAgICAgbGVmdDogLTJyZW07XG4gICAgICAgICAgICB3aWR0aDogMS4ycmVtO1xuICAgICAgICAgICAgaGVpZ2h0OiAxLjJyZW07XG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDEuMXJlbTsgfVxuICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMgLnBvc2l0aW9uIHtcbiAgICAgICAgICAgIHBvc2l0aW9uOiBzdGF0aWM7IH1cbiAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzIC5zdGF0dXMtdHJhbnNhY3Rpb24ge1xuICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAxcmVtO1xuICAgICAgICAgICAgd2lkdGg6IDEuN3JlbTtcbiAgICAgICAgICAgIGhlaWdodDogMS43cmVtOyB9XG4gICAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cy5zZW5kIC5zdGF0dXMtdHJhbnNhY3Rpb24ge1xuICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7IH1cbiAgICAgICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIHRkIC5zdGF0dXMuc2VuZCAuc3RhdHVzLXRyYW5zYWN0aW9uOjphZnRlciB7XG4gICAgICAgICAgICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgICAgICAgICAgICBjb250ZW50OiBcIlwiO1xuICAgICAgICAgICAgICB3aWR0aDogMTNweDtcbiAgICAgICAgICAgICAgaGVpZ2h0OiAxM3B4OyB9XG4gICAgICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIgdGQgLnN0YXR1cy5yZWNlaXZlZCAuc3RhdHVzLXRyYW5zYWN0aW9uIHtcbiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50OyB9XG4gICAgICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0ciB0ZCAuc3RhdHVzLnJlY2VpdmVkIC5zdGF0dXMtdHJhbnNhY3Rpb246OmFmdGVyIHtcbiAgICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgICAgICAgIGNvbnRlbnQ6IFwiXCI7XG4gICAgICAgICAgICAgIHdpZHRoOiAxM3B4O1xuICAgICAgICAgICAgICBoZWlnaHQ6IDEzcHg7IH1cbiAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyIC5yZW1vdGUtYWRkcmVzcyB7XG4gICAgICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xuICAgICAgICBtYXgtd2lkdGg6IDI1dnc7IH1cbiAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyOm5vdCgudHJhbnNhY3Rpb24tZGV0YWlscykge1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgIHRyYW5zaXRpb246IGJhY2tncm91bmQgMC4zcyBlYXNlO1xuICAgICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgIzMyREM1OTsgfVxuICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0Ym9keSB0cjpub3QoLnRyYW5zYWN0aW9uLWRldGFpbHMpOmhvdmVyIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjA4KTsgfVxuICAgICAgOmhvc3QgLndyYXAtdGFibGUgdGFibGUgdGJvZHkgdHIudHJhbnNhY3Rpb24tZGV0YWlscyB7XG4gICAgICAgIC13ZWJraXQtdHJhbnNpdGlvbjogMC41cyBoZWlnaHQgbGluZWFyLCAwcyBmb250LXNpemU7XG4gICAgICAgIHRyYW5zaXRpb246IDAuNXMgaGVpZ2h0IGxpbmVhciwgMHMgZm9udC1zaXplO1xuICAgICAgICB0cmFuc2l0aW9uLWRlbGF5OiAwcywgMC41cztcbiAgICAgICAgaGVpZ2h0OiAwO1xuICAgICAgICBiYWNrZ3JvdW5kOiAjMUExQTFBOyB9XG4gICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyLnRyYW5zYWN0aW9uLWRldGFpbHMub3BlbiB7XG4gICAgICAgICAgaGVpZ2h0OiAxNi4ycmVtOyB9XG4gICAgICAgIDpob3N0IC53cmFwLXRhYmxlIHRhYmxlIHRib2R5IHRyLnRyYW5zYWN0aW9uLWRldGFpbHMgdGQge1xuICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xuICAgICAgICAgIGxpbmUtaGVpZ2h0OiBpbmhlcml0O1xuICAgICAgICAgIHBhZGRpbmctdG9wOiAwO1xuICAgICAgICAgIHBhZGRpbmctYm90dG9tOiAwOyB9XG4gICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0aGVhZCB0ciB7XG4gICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XG4gICAgICAgIHBvc2l0aW9uOiBzdGlja3k7XG4gICAgICAgIHRvcDogMDtcbiAgICAgICAgei1pbmRleDogMTsgfVxuICAgICAgICA6aG9zdCAud3JhcC10YWJsZSB0YWJsZSB0aGVhZCB0ciB0aCB7XG4gICAgICAgICAgcGFkZGluZzogMS41cmVtO1xuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xuICAgICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDsgfVxuICA6aG9zdCAucm93LWRpdmlkZXIge1xuICAgIGhlaWdodDogMTBweDtcbiAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpO1xuICAgIG1hcmdpbjogMC41cmVtIDA7IH1cblxuLm1vZGFsLW92ZXJsYXkge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgcmlnaHQ6IDA7XG4gIGJvdHRvbTogMDtcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjcpO1xuICBkaXNwbGF5OiBmbGV4O1xuICBhbGlnbi1pdGVtczogY2VudGVyO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcbiAgei1pbmRleDogMTAwMDsgfVxuXG4uYWxpYXMtZHJvcGRvd24ge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHRvcDogMTAwJTtcbiAgbGVmdDogMDtcbiAgcmlnaHQ6IDA7XG4gIGJhY2tncm91bmQ6ICMyNDI0MjQ7XG4gIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XG4gIGJvcmRlci1yYWRpdXM6IDhweDtcbiAgbWFyZ2luLXRvcDogMC41cmVtO1xuICBtYXgtaGVpZ2h0OiAyMDBweDtcbiAgb3ZlcmZsb3cteTogYXV0bztcbiAgei1pbmRleDogMTAwMDsgfVxuICAuYWxpYXMtZHJvcGRvd24gZGl2IHtcbiAgICBwYWRkaW5nOiAwLjhyZW0gMXJlbTtcbiAgICBjb2xvcjogI2ZmZjtcbiAgICBjdXJzb3I6IHBvaW50ZXI7IH1cbiAgICAuYWxpYXMtZHJvcGRvd24gZGl2OmhvdmVyIHtcbiAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7IH1cblxuLnNjcm9sbGVkLWNvbnRlbnQ6Oi13ZWJraXQtc2Nyb2xsYmFyIHtcbiAgd2lkdGg6IDZweDsgfVxuXG4uc2Nyb2xsZWQtY29udGVudDo6LXdlYmtpdC1zY3JvbGxiYXItdHJhY2sge1xuICBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7XG4gIGJvcmRlci1yYWRpdXM6IDNweDsgfVxuXG4uc2Nyb2xsZWQtY29udGVudDo6LXdlYmtpdC1zY3JvbGxiYXItdGh1bWIge1xuICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xuICBib3JkZXItcmFkaXVzOiAzcHg7IH1cbiAgLnNjcm9sbGVkLWNvbnRlbnQ6Oi13ZWJraXQtc2Nyb2xsYmFyLXRodW1iOmhvdmVyIHtcbiAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpOyB9XG4iLCI6aG9zdCB7XHJcbiAgd2lkdGg6IDEwMCU7ICBkaXNwbGF5OiBmbGV4O1xyXG5cclxuLm5vLWFsaWFzLWNvbnRhaW5lciB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbiAgaGVpZ2h0OiBjYWxjKDEwMHZoIC0gMjAwcHgpO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBwYWRkaW5nOiAycmVtO1xyXG59XHJcblxyXG4ubm8tYWxpYXMtY2FyZCB7XHJcbiAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgYm9yZGVyOiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcclxuICBib3JkZXItcmFkaXVzOiAyNHB4O1xyXG4gIHBhZGRpbmc6IDRyZW07XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gIG1heC13aWR0aDogNTAwcHg7XHJcbiAgYm94LXNoYWRvdzogMCAwIDQwcHggcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSk7XHJcbiAgYW5pbWF0aW9uOiBmYWRlSW4gMC41cyBlYXNlLW91dDtcclxufVxyXG5cclxuQGtleWZyYW1lcyBmYWRlSW4ge1xyXG4gIGZyb20ge1xyXG4gICAgb3BhY2l0eTogMDtcclxuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgyMHB4KTtcclxuICB9XHJcbiAgdG8ge1xyXG4gICAgb3BhY2l0eTogMTtcclxuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTtcclxuICB9XHJcbn1cclxuXHJcbi5uby1hbGlhcy1pY29uIHtcclxuICB3aWR0aDogODBweDtcclxuICBoZWlnaHQ6IDgwcHg7XHJcbiAgbWFyZ2luOiAwIGF1dG8gMnJlbTtcclxuICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpKTtcclxuICBib3JkZXItcmFkaXVzOiA1MCU7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIFxyXG4gIHN2ZyB7XHJcbiAgICB3aWR0aDogNDBweDtcclxuICAgIGhlaWdodDogNDBweDtcclxuICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gIH1cclxufVxyXG5cclxuLm5vLWFsaWFzLXRpdGxlIHtcclxuICBjb2xvcjogI2ZmZjtcclxuICBmb250LXNpemU6IDEuOHJlbTtcclxuICBmb250LXdlaWdodDogNjAwO1xyXG4gIG1hcmdpbi1ib3R0b206IDFyZW07XHJcbiAgbGluZS1oZWlnaHQ6IDEuNDtcclxufVxyXG5cclxuLm5vLWFsaWFzLWRlc2NyaXB0aW9uIHtcclxuICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjYpO1xyXG4gIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxLjY7XHJcbiAgbWFyZ2luLWJvdHRvbTogMi41cmVtO1xyXG59XHJcblxyXG4ubm8tYWxpYXMtYnV0dG9uIHtcclxuICBkaXNwbGF5OiBpbmxpbmUtZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGdhcDogMC44cmVtO1xyXG4gIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsICMzMkRDNTksICMyOEI5NEEpO1xyXG4gIGJvcmRlcjogbm9uZTtcclxuICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gIHBhZGRpbmc6IDEuMnJlbSAyLjVyZW07XHJcbiAgY29sb3I6ICNmZmY7XHJcbiAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTtcclxuICBcclxuICBzdmcge1xyXG4gICAgd2lkdGg6IDIwcHg7XHJcbiAgICBoZWlnaHQ6IDIwcHg7XHJcbiAgICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMC4zcyBlYXNlO1xyXG4gIH1cclxuICBcclxuICAmOmhvdmVyIHtcclxuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtM3B4KTtcclxuICAgIGJveC1zaGFkb3c6IDAgMTBweCAzMHB4IHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XHJcbiAgICBcclxuICAgIHN2ZyB7XHJcbiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCg0cHgpO1xyXG4gICAgfVxyXG4gIH1cclxuICBcclxuICAmOmFjdGl2ZSB7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7XHJcbiAgfVxyXG59XHJcblxyXG4ubWVzc2FnZS1jb250YWN0IHtcclxuIHdpZHRoOiAyNSU7XHJcbiBib3JkZXItcmlnaHQ6IDJweCBzb2xpZCAjMzJEQzU5O1xyXG4gcGFkZGluZzogMnJlbTtcclxuIGJhY2tncm91bmQ6ICMyNDI0MjQ7XHJcbiAgLmNvbnRlbnQge1xyXG4gICBoZWlnaHQ6IGNhbGMoMTAwdmggLSA0cmVtKTtcclxuICAgb3ZlcmZsb3c6IGF1dG87XHJcbiAgIFxyXG4gICAud3JhcHMtdGFibGUge1xyXG4gICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMDUpO1xyXG4gICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XHJcbiAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgdGFibGUge1xyXG4gICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlO1xyXG4gICAgICAgXHJcbiAgICAgICB0aGVhZCB0ciB7XHJcbiAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XHJcbiAgICAgICAgIHRoIHtcclxuICAgICAgICAgICBwYWRkaW5nOiAxLjVyZW07XHJcbiAgICAgICAgICAgY29sb3I6ICMzMkRDNTk7XHJcbiAgICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICAgICAgICAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG4gICAgICAgICB9XHJcbiAgICAgICB9XHJcbiAgICAgICAgdGJvZHkgdHIge1xyXG4gICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBlYXNlO1xyXG4gICAgICAgICBcclxuICAgICAgICAgdGQge1xyXG4gICAgICAgICAgIHBhZGRpbmc6IDEuMnJlbTtcclxuICAgICAgICAgICBjb2xvcjogI2ZmZjtcclxuICAgICAgICAgICBcclxuICAgICAgICAgICAuYnV0dG9uLXdyYXBwZXIge1xyXG4gICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAgIGdhcDogMC41cmVtO1xyXG4gICAgICAgICAgICAgIGJ1dHRvbiB7XHJcbiAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XHJcbiAgICAgICAgICAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogOHB4O1xyXG4gICAgICAgICAgICAgICBwYWRkaW5nOiAwLjVyZW07XHJcbiAgICAgICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgICAgICAgICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzO1xyXG4gICAgICAgICAgICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgICAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcclxuICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgLmljb24ge1xyXG4gICAgICAgICAgICAgICAgIHdpZHRoOiAxLjVyZW07XHJcbiAgICAgICAgICAgICAgICAgaGVpZ2h0OiAxLjVyZW07XHJcbiAgICAgICAgICAgICAgICAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xyXG4gICAgICAgICAgICAgICAgIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjtcclxuICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLXJlcGVhdDogbm8tcmVwZWF0O1xyXG4gICAgICAgICAgICAgICAgIGJhY2tncm91bmQtcG9zaXRpb246IGNlbnRlcjtcclxuICAgICAgICAgICAgICAgICAgJi5zZWxlY3Qge1xyXG4gICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuLi8uLi9hc3NldHMvaWNvbnMvY29weS5zdmcnKTtcclxuICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICYuZWRpdCB7XHJcbiAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoJy4uLy4uL2Fzc2V0cy9pY29ucy9lZGl0LnN2ZycpO1xyXG4gICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgICAgJi5kZWxldGUge1xyXG4gICAgICAgICAgICAgICAgICAgYmFja2dyb3VuZC1pbWFnZTogdXJsKCcuLi8uLi9hc3NldHMvaWNvbnMvZGVsZXRlLnN2ZycpO1xyXG4gICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgfVxyXG4gICAgICAgICAgIH1cclxuICAgICAgICAgfVxyXG4gICAgICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4wOCk7XHJcbiAgICAgICAgIH1cclxuICAgICAgIH1cclxuICAgICB9XHJcbiAgIH1cclxuIH1cclxuICAubWVzc2FnZS1jb250YWN0LWFkZC1idXR0b24ge1xyXG4gICB3aWR0aDogMTAwJTtcclxuICAgcGFkZGluZzogMS4ycmVtO1xyXG4gICBtYXJnaW4tdG9wOiAycmVtO1xyXG4gICBiYWNrZ3JvdW5kOiAjMzJEQzU5O1xyXG4gICBib3JkZXI6IG5vbmU7XHJcbiAgIGJvcmRlci1yYWRpdXM6IDhweDtcclxuICAgY29sb3I6ICNmZmY7XHJcbiAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgdHJhbnNpdGlvbjogYWxsIDAuM3M7XHJcbiAgICAmOmhvdmVyIHtcclxuICAgICBiYWNrZ3JvdW5kOiBkYXJrZW4oIzMyREM1OSwgMTAlKTtcclxuICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7XHJcbiAgIH1cclxuIH1cclxufVxyXG5cclxuLm1lc3NhZ2UtY29sdW1uIHtcclxuICBmbGV4OiAxO1xyXG4gIHBhZGRpbmc6IDJyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGhlaWdodDogMTAwdmg7XHJcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgLm1lc3NhZ2UtZm9ybSB7XHJcbiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjMjQyNDI0LCAjMmEyYTJhKTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDE2cHg7XHJcbiAgICBwYWRkaW5nOiAycmVtO1xyXG4gICAgYm94LXNoYWRvdzogMCA4cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMSk7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xyXG4gICAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDRweCk7XHJcbiAgICAgLmZvcm0tc2VuZCB7XHJcbiAgICAgIC5pbnB1dC1ibG9ja3Mtcm93IHtcclxuICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgIGdhcDogMS41cmVtO1xyXG4gICAgICAgIGFsaWduLWl0ZW1zOiBmbGV4LWVuZDtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgIC5pbnB1dC1zZW5kLW1lc3NhZ2Uge1xyXG4gICAgICAgICAgZmxleDogMTtcclxuICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgICAgICBjb250ZW50OiAnJztcclxuICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgICAgICB0b3A6IC0xMHB4O1xyXG4gICAgICAgICAgICBsZWZ0OiAtMTBweDtcclxuICAgICAgICAgICAgcmlnaHQ6IC0xMHB4O1xyXG4gICAgICAgICAgICBib3R0b206IC0xMHB4O1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjA1KSk7XHJcbiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XHJcbiAgICAgICAgICAgIHotaW5kZXg6IDA7XHJcbiAgICAgICAgICAgIG9wYWNpdHk6IDA7XHJcbiAgICAgICAgICAgIHRyYW5zaXRpb246IG9wYWNpdHkgMC4zcyBlYXNlO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgICY6Zm9jdXMtd2l0aGluOjpiZWZvcmUge1xyXG4gICAgICAgICAgICBvcGFjaXR5OiAxO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgIC5pbnB1dC1tZXNzYWdlIHtcclxuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgIG1pbi1oZWlnaHQ6IDEwMHB4O1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kOiAjMUExQTFBO1xyXG4gICAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gICAgICAgICAgICBwYWRkaW5nOiAxLjJyZW07XHJcbiAgICAgICAgICAgIGNvbG9yOiB3aGl0ZTtcclxuICAgICAgICAgICAgcmVzaXplOiB2ZXJ0aWNhbDtcclxuICAgICAgICAgICAgZm9udC1zaXplOiAycmVtO1xyXG4gICAgICAgICAgICBsaW5lLWhlaWdodDogMS41O1xyXG4gICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgIHotaW5kZXg6IDE7XHJcbiAgICAgICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgICAgICAgICAgIFxyXG4gICAgICAgICAgICAmOjpwbGFjZWhvbGRlciB7XHJcbiAgICAgICAgICAgICAgY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4zKTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICBcclxuICAgICAgICAgICAgJjpmb2N1cyB7XHJcbiAgICAgICAgICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgICAgICAgIG91dGxpbmU6IG5vbmU7XHJcbiAgICAgICAgICAgICAgYm94LXNoYWRvdzogMCAwIDAgM3B4IHJnYmEoNTAsIDIyMCwgODksIDAuMSk7XHJcbiAgICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0ycHgpO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgICAuYnV0dG9uLXNlbmQtbWVzc2FnZSB7XHJcbiAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICB6LWluZGV4OiAxO1xyXG4gICAgICAgICAgIGJ1dHRvbiB7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxNDVkZWcsICMzMkRDNTksICMyOEI5NEEpO1xyXG4gICAgICAgICAgICBib3JkZXI6IG5vbmU7XHJcbiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEycHg7XHJcbiAgICAgICAgICAgIHBhZGRpbmc6IDEuMnJlbSAyLjVyZW07XHJcbiAgICAgICAgICAgIGNvbG9yOiAjZmZmO1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAgICAgIGdhcDogMC44cmVtO1xyXG4gICAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICAgICAgICAgIFxyXG4gICAgICAgICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgICAgICAgIGNvbnRlbnQ6ICcnO1xyXG4gICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICAgICAgICB0b3A6IDA7XHJcbiAgICAgICAgICAgICAgbGVmdDogMDtcclxuICAgICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpLCB0cmFuc3BhcmVudCk7XHJcbiAgICAgICAgICAgICAgb3BhY2l0eTogMDtcclxuICAgICAgICAgICAgICB0cmFuc2l0aW9uOiBvcGFjaXR5IDAuM3MgZWFzZTtcclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgJjo6YWZ0ZXIge1xyXG4gICAgICAgICAgICAgIGNvbnRlbnQ6ICfihpInO1xyXG4gICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS4ycmVtO1xyXG4gICAgICAgICAgICAgIHRyYW5zaXRpb246IHRyYW5zZm9ybSAwLjNzIGVhc2U7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICY6aG92ZXI6bm90KDpkaXNhYmxlZCkge1xyXG4gICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTtcclxuICAgICAgICAgICAgICBib3gtc2hhZG93OiAwIDhweCAxNnB4IHJnYmEoNTAsIDIyMCwgODksIDAuMik7XHJcbiAgICAgICAgICAgICAgICY6OmJlZm9yZSB7XHJcbiAgICAgICAgICAgICAgICBvcGFjaXR5OiAxO1xyXG4gICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICAgJjo6YWZ0ZXIge1xyXG4gICAgICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDNweCk7XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAmOmFjdGl2ZTpub3QoOmRpc2FibGVkKSB7XHJcbiAgICAgICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAmOmRpc2FibGVkIHtcclxuICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjNjY2LCAjNTU1KTtcclxuICAgICAgICAgICAgICBvcGFjaXR5OiAwLjc7XHJcbiAgICAgICAgICAgICAgY3Vyc29yOiBub3QtYWxsb3dlZDtcclxuICAgICAgICAgICAgICAgJjo6YWZ0ZXIge1xyXG4gICAgICAgICAgICAgICAgb3BhY2l0eTogMC41O1xyXG4gICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxufVxyXG4gLm1lc3NhZ2UtaGlzdG9yeSB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIG1hcmdpbi10b3A6IDJyZW07XHJcbiAgaGVpZ2h0OiBjYWxjKDEwMCUgLSA2NTBweCk7XHJcbiB9XHJcbiAuaGlzdG9yeS13cmFwIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGhlaWdodDogMTAwJTtcclxuICBvdmVyZmxvdy14OiBoaWRkZW47XHJcbiAgb3ZlcmZsb3cteTogaGlkZGVuO1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgYmFja2dyb3VuZDogIzI0MjQyNDtcclxuICBib3JkZXItcmFkaXVzOiAxMnB4O1xyXG4gIHBhZGRpbmc6IDFyZW07XHJcbiB9XHJcbiAud3JhcC10YWJsZSB7XHJcbiAgb3ZlcmZsb3cteDogaGlkZGVuO1xyXG4gIG92ZXJmbG93LXk6IGF1dG87XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gIGhlaWdodDogMTAwJTtcclxuICAgdGFibGUge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICB0Ym9keSB7XHJcbiAgICAgIHRyIHtcclxuICAgICAgICB0ZCB7XHJcbiAgICAgICAgICBtaW4td2lkdGg6IDEwcmVtO1xyXG4gICAgICAgICAgcGFkZGluZzogMS4ycmVtO1xyXG4gICAgICAgICAgY29sb3I6ICNmZmY7XHJcbiAgICAgICAgICAgLnN0YXR1cyB7XHJcbiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICAgICAgIC5jb25maXJtYXRpb24ge1xyXG4gICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICAgICAgICB0b3A6IDUwJTtcclxuICAgICAgICAgICAgICBsZWZ0OiAtMnJlbTtcclxuICAgICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7XHJcbiAgICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAgICBhbGlnbi1pdGVtczogZmxleC1lbmQ7XHJcbiAgICAgICAgICAgICAgd2lkdGg6IDAuN3JlbTtcclxuICAgICAgICAgICAgICBoZWlnaHQ6IDEuNXJlbTtcclxuICAgICAgICAgICAgICAgLmZpbGwge1xyXG4gICAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAubG9jay10cmFuc2FjdGlvbiB7XHJcbiAgICAgICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgICAgICAgIGxlZnQ6IC0ycmVtO1xyXG4gICAgICAgICAgICAgIHdpZHRoOiAxLjJyZW07XHJcbiAgICAgICAgICAgICAgaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAxLjFyZW07XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgIC51bmxvY2stdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICAgICAgICBsZWZ0OiAtMnJlbTtcclxuICAgICAgICAgICAgICB3aWR0aDogMS4ycmVtO1xyXG4gICAgICAgICAgICAgIGhlaWdodDogMS4ycmVtO1xyXG4gICAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMS4xcmVtO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAucG9zaXRpb24ge1xyXG4gICAgICAgICAgICAgIHBvc2l0aW9uOiBzdGF0aWM7XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgIC5zdGF0dXMtdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMXJlbTtcclxuICAgICAgICAgICAgICB3aWR0aDogMS43cmVtO1xyXG4gICAgICAgICAgICAgIGhlaWdodDogMS43cmVtO1xyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAmLnNlbmQge1xyXG4gICAgICAgICAgICAgIC5zdGF0dXMtdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgICAgICAgICAgICAgICAgJjo6YWZ0ZXIge1xyXG4gICAgICAgICAgICAgICAgICBkaXNwbGF5OiBibG9jaztcclxuICAgICAgICAgICAgICAgICAgY29udGVudDogXCJcIjtcclxuICAgICAgICAgICAgICAgICAgd2lkdGg6IDEzcHg7XHJcbiAgICAgICAgICAgICAgICAgIGhlaWdodDogMTNweDtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICYucmVjZWl2ZWQge1xyXG4gICAgICAgICAgICAgIC5zdGF0dXMtdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgICAgICAgICAgICAgICAgJjo6YWZ0ZXIge1xyXG4gICAgICAgICAgICAgICAgICBkaXNwbGF5OiBibG9jaztcclxuICAgICAgICAgICAgICAgICAgY29udGVudDogXCJcIjtcclxuICAgICAgICAgICAgICAgICAgd2lkdGg6IDEzcHg7XHJcbiAgICAgICAgICAgICAgICAgIGhlaWdodDogMTNweDtcclxuICAgICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgIH1cclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgIC5yZW1vdGUtYWRkcmVzcyB7XHJcbiAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XHJcbiAgICAgICAgICBtYXgtd2lkdGg6IDI1dnc7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICAmOm5vdCgudHJhbnNhY3Rpb24tZGV0YWlscykge1xyXG4gICAgICAgICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgICAgICAgdHJhbnNpdGlvbjogYmFja2dyb3VuZCAwLjNzIGVhc2U7XHJcbiAgICAgICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgIzMyREM1OTtcclxuICAgICAgICAgICAmOmhvdmVyIHtcclxuICAgICAgICAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4wOCk7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgICAmLnRyYW5zYWN0aW9uLWRldGFpbHMge1xyXG4gICAgICAgICAgLXdlYmtpdC10cmFuc2l0aW9uOiAwLjVzIGhlaWdodCBsaW5lYXIsIDBzIGZvbnQtc2l6ZTtcclxuICAgICAgICAgIHRyYW5zaXRpb246IDAuNXMgaGVpZ2h0IGxpbmVhciwgMHMgZm9udC1zaXplO1xyXG4gICAgICAgICAgdHJhbnNpdGlvbi1kZWxheTogMHMsIDAuNXM7XHJcbiAgICAgICAgICBoZWlnaHQ6IDA7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiAjMUExQTFBO1xyXG4gICAgICAgICAgICYub3BlbiB7XHJcbiAgICAgICAgICAgIGhlaWdodDogMTYuMnJlbTtcclxuICAgICAgICAgIH1cclxuICAgICAgICAgICB0ZCB7XHJcbiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgICAgbGluZS1oZWlnaHQ6IGluaGVyaXQ7XHJcbiAgICAgICAgICAgIHBhZGRpbmctdG9wOiAwO1xyXG4gICAgICAgICAgICBwYWRkaW5nLWJvdHRvbTogMDtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICAgICB0aGVhZCB7XHJcbiAgICAgIHRyIHtcclxuICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xyXG4gICAgICAgIHBvc2l0aW9uOiBzdGlja3k7XHJcbiAgICAgICAgdG9wOiAwO1xyXG4gICAgICAgIHotaW5kZXg6IDE7XHJcbiAgICAgICAgIHRoIHtcclxuICAgICAgICAgIHBhZGRpbmc6IDEuNXJlbTtcclxuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICAgICAgICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiAucm93LWRpdmlkZXIge1xyXG4gIGhlaWdodDogMTBweDtcclxuICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpO1xyXG4gIG1hcmdpbjogMC41cmVtIDA7XHJcbiB9XHJcbn1cclxuXHJcbi5tb2RhbC1vdmVybGF5IHtcclxuIHBvc2l0aW9uOiBmaXhlZDtcclxuIHRvcDogMDtcclxuIGxlZnQ6IDA7XHJcbiByaWdodDogMDtcclxuIGJvdHRvbTogMDtcclxuIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC43KTtcclxuIGRpc3BsYXk6IGZsZXg7XHJcbiBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4ganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiB6LWluZGV4OiAxMDAwO1xyXG59XHJcblxyXG4uYWxpYXMtZHJvcGRvd24ge1xyXG4gcG9zaXRpb246IGFic29sdXRlO1xyXG4gdG9wOiAxMDAlO1xyXG4gbGVmdDogMDtcclxuIHJpZ2h0OiAwO1xyXG4gYmFja2dyb3VuZDogIzI0MjQyNDtcclxuIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XHJcbiBib3JkZXItcmFkaXVzOiA4cHg7XHJcbiBtYXJnaW4tdG9wOiAwLjVyZW07XHJcbiBtYXgtaGVpZ2h0OiAyMDBweDtcclxuIG92ZXJmbG93LXk6IGF1dG87XHJcbiB6LWluZGV4OiAxMDAwO1xyXG4gIGRpdiB7XHJcbiAgIHBhZGRpbmc6IDAuOHJlbSAxcmVtO1xyXG4gICBjb2xvcjogI2ZmZjtcclxuICAgY3Vyc29yOiBwb2ludGVyO1xyXG4gICAgJjpob3ZlciB7XHJcbiAgICAgYmFja2dyb3VuZDogcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTtcclxuICAgfVxyXG4gfVxyXG59XHJcblxyXG4uc2Nyb2xsZWQtY29udGVudCB7XHJcbiAmOjotd2Via2l0LXNjcm9sbGJhciB7XHJcbiAgIHdpZHRoOiA2cHg7XHJcbiB9XHJcbiAgJjo6LXdlYmtpdC1zY3JvbGxiYXItdHJhY2sge1xyXG4gICBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7XHJcbiAgIGJvcmRlci1yYWRpdXM6IDNweDtcclxuIH1cclxuICAmOjotd2Via2l0LXNjcm9sbGJhci10aHVtYiB7XHJcbiAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XHJcbiAgIGJvcmRlci1yYWRpdXM6IDNweDtcclxuICAgICY6aG92ZXIge1xyXG4gICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuNSk7XHJcbiAgIH1cclxuIH1cclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -16649,14 +20510,14 @@ var NirvailComponent = /** @class */ (function () {
         }
     };
     NirvailComponent.prototype.getWrapInfo = function () {
-        var _this = this;
-        this.http.get('#')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["finalize"])(function () {
-            _this.isLoading = false;
-        }))
-            .subscribe(function (info) {
-            _this.wrapInfo = info;
-        });
+        this.isLoading = false;
+        /*this.http.get<WrapInfo>('#')
+          .pipe(finalize(() => {
+            this.isLoading = false;
+          }))
+          .subscribe(info => {
+            this.wrapInfo = info;
+          });*/
     };
     NirvailComponent.prototype.time = function (item) {
         var now = new Date().getTime();
@@ -16819,7 +20680,7 @@ var NirvailComponent = /** @class */ (function () {
         });
     };
     NirvailComponent.prototype.calculateWidth = function () {
-        if (!this.head.nativeElement)
+        if (!this.head || !this.head.nativeElement)
             return;
         this.calculatedWidth = [
             this.head.nativeElement.childNodes[0].clientWidth,
@@ -18493,7 +22354,7 @@ module.exports = "<div class=\"modal\">\r\n  <div class=\"title\">\r\n    <span>
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ":host {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.7); }\n\n.modal {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  background-position: center;\n  background-size: 200%;\n  padding: 0.3rem 3rem 3rem 3rem;\n  width: 64rem; }\n\n.modal .title {\n    padding: 1.4rem 0;\n    font-size: 1.8rem;\n    line-height: 3rem; }\n\n.modal .content {\n    display: flex; }\n\n.modal .content .message-container {\n      display: flex;\n      flex-direction: column;\n      align-items: flex-start;\n      justify-content: center;\n      margin: 1.4rem 3rem 6.2rem 0; }\n\n.modal .content .message-container .message-block {\n        display: flex;\n        margin-bottom: 2rem; }\n\n.modal .content .message-container .message-block:last-child {\n          margin-bottom: 0; }\n\n.modal .content .message-container .message-block .message-label {\n          min-width: 6.7rem;\n          line-height: 2rem; }\n\n.modal .content .message-container .message-block .message-text {\n          overflow-wrap: break-word;\n          margin-left: 4.8rem;\n          width: 43.4rem;\n          line-height: 2rem; }\n\n.modal .content .message-container .message-block.confirm-master-pass {\n          width: 100%;\n          margin: 2rem 0; }\n\n.modal .content .message-container .message-block.confirm-master-pass .input-block {\n            width: 100%; }\n\n.modal .wrapper-buttons {\n    display: flex;\n    align-items: center;\n    justify-content: space-between; }\n\n.modal .wrapper-buttons button {\n      width: 100%; }\n\n.modal .wrapper-buttons button:first-child {\n        margin-right: 3rem; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2VuZC1tb2RhbC9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcc2VuZC1tb2RhbFxcc2VuZC1tb2RhbC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLGVBQWU7RUFDZixNQUFNO0VBQ04sU0FBUztFQUNULE9BQU87RUFDUCxRQUFRO0VBQ1IsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsOEJBQThCLEVBQUE7O0FBRWhDO0VBQ0Usa0JBQWtCO0VBQ2xCLGFBQWE7RUFDYixzQkFBc0I7RUFDdEIsMkJBQTJCO0VBQzNCLHFCQUFxQjtFQUNyQiw4QkFBOEI7RUFDOUIsWUFBWSxFQUFBOztBQVBkO0lBVUksaUJBQWlCO0lBQ2pCLGlCQUFpQjtJQUNqQixpQkFBaUIsRUFBQTs7QUFackI7SUFnQkksYUFBYSxFQUFBOztBQWhCakI7TUFtQk0sYUFBYTtNQUNiLHNCQUFzQjtNQUN0Qix1QkFBdUI7TUFDdkIsdUJBQXVCO01BQ3ZCLDRCQUE0QixFQUFBOztBQXZCbEM7UUEwQlEsYUFBYTtRQUNiLG1CQUFtQixFQUFBOztBQTNCM0I7VUE4QlUsZ0JBQWdCLEVBQUE7O0FBOUIxQjtVQWtDVSxpQkFBaUI7VUFDakIsaUJBQWlCLEVBQUE7O0FBbkMzQjtVQXVDVSx5QkFBeUI7VUFDekIsbUJBQW1CO1VBQ25CLGNBQWM7VUFDZCxpQkFBaUIsRUFBQTs7QUExQzNCO1VBOENVLFdBQVc7VUFDWCxjQUFjLEVBQUE7O0FBL0N4QjtZQWlEWSxXQUFXLEVBQUE7O0FBakR2QjtJQXlESSxhQUFhO0lBQ2IsbUJBQW1CO0lBQ25CLDhCQUE4QixFQUFBOztBQTNEbEM7TUFpRU0sV0FBVyxFQUFBOztBQWpFakI7UUErRFEsa0JBQWtCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9zZW5kLW1vZGFsL3NlbmQtbW9kYWwuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XHJcbiAgcG9zaXRpb246IGZpeGVkO1xyXG4gIHRvcDogMDtcclxuICBib3R0b206IDA7XHJcbiAgbGVmdDogMDtcclxuICByaWdodDogMDtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjcpO1xyXG59XHJcbi5tb2RhbCB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBiYWNrZ3JvdW5kLXBvc2l0aW9uOiBjZW50ZXI7XHJcbiAgYmFja2dyb3VuZC1zaXplOiAyMDAlO1xyXG4gIHBhZGRpbmc6IDAuM3JlbSAzcmVtIDNyZW0gM3JlbTtcclxuICB3aWR0aDogNjRyZW07XHJcblxyXG4gIC50aXRsZSB7XHJcbiAgICBwYWRkaW5nOiAxLjRyZW0gMDtcclxuICAgIGZvbnQtc2l6ZTogMS44cmVtO1xyXG4gICAgbGluZS1oZWlnaHQ6IDNyZW07XHJcbiAgfVxyXG5cclxuICAuY29udGVudCB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG5cclxuICAgIC5tZXNzYWdlLWNvbnRhaW5lciB7XHJcbiAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICAgIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0O1xyXG4gICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgICAgbWFyZ2luOiAxLjRyZW0gM3JlbSA2LjJyZW0gMDtcclxuXHJcbiAgICAgIC5tZXNzYWdlLWJsb2NrIHtcclxuICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgIG1hcmdpbi1ib3R0b206IDJyZW07XHJcblxyXG4gICAgICAgICY6bGFzdC1jaGlsZCB7XHJcbiAgICAgICAgICBtYXJnaW4tYm90dG9tOiAwO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgLm1lc3NhZ2UtbGFiZWwge1xyXG4gICAgICAgICAgbWluLXdpZHRoOiA2LjdyZW07XHJcbiAgICAgICAgICBsaW5lLWhlaWdodDogMnJlbTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIC5tZXNzYWdlLXRleHQge1xyXG4gICAgICAgICAgb3ZlcmZsb3ctd3JhcDogYnJlYWstd29yZDtcclxuICAgICAgICAgIG1hcmdpbi1sZWZ0OiA0LjhyZW07XHJcbiAgICAgICAgICB3aWR0aDogNDMuNHJlbTtcclxuICAgICAgICAgIGxpbmUtaGVpZ2h0OiAycmVtO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgJi5jb25maXJtLW1hc3Rlci1wYXNzIHtcclxuICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgbWFyZ2luOiAycmVtIDA7XHJcbiAgICAgICAgICAuaW5wdXQtYmxvY2sge1xyXG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcblxyXG4gIC53cmFwcGVyLWJ1dHRvbnMge1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcblxyXG4gICAgYnV0dG9uIHtcclxuICAgICAgJjpmaXJzdC1jaGlsZCB7XHJcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAzcmVtO1xyXG4gICAgICB9XHJcbiAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgfVxyXG4gIH1cclxufVxyXG4iXX0= */"
+module.exports = "@charset \"UTF-8\";\n:host {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  right: 0;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.95);\n  -webkit-backdrop-filter: blur(10px);\n          backdrop-filter: blur(10px);\n  z-index: 1000;\n  animation: fadeIn 0.3s ease-out; }\n:host * {\n    scrollbar-width: none;\n    /* Firefox */\n    -ms-overflow-style: none;\n    /* Internet Explorer 10+ */ }\n:host *::-webkit-scrollbar {\n      /* WebKit */\n      display: none; }\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n    -webkit-backdrop-filter: blur(0px);\n            backdrop-filter: blur(0px); }\n  to {\n    opacity: 1;\n    -webkit-backdrop-filter: blur(10px);\n            backdrop-filter: blur(10px); } }\n.modal {\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  background: linear-gradient(135deg, rgba(32, 111, 90, 0.15) 0%, rgba(22, 110, 70, 0.1) 50%, rgba(0, 25, 19, 0.95) 100%);\n  border: 2px solid rgba(50, 220, 89, 0.3);\n  border-radius: 2rem;\n  padding: 3rem;\n  width: 70rem;\n  max-width: 90vw;\n  max-height: 90vh;\n  overflow: hidden;\n  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);\n  animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }\n@keyframes modalSlideIn {\n  from {\n    opacity: 0;\n    transform: scale(0.8) translateY(-50px); }\n  to {\n    opacity: 1;\n    transform: scale(1) translateY(0); } }\n.modal::before {\n    content: '';\n    position: absolute;\n    top: -2px;\n    left: -2px;\n    right: -2px;\n    bottom: -2px;\n    background: linear-gradient(45deg, transparent, rgba(50, 220, 89, 0.3), transparent, rgba(50, 220, 89, 0.3), transparent);\n    background-size: 400% 400%;\n    border-radius: 2rem;\n    z-index: -1;\n    animation: borderGlow 3s ease-in-out infinite; }\n@keyframes borderGlow {\n  0%, 100% {\n    background-position: 0% 50%; }\n  50% {\n    background-position: 100% 50%; } }\n.modal .title {\n    padding: 0 0 2.5rem 0;\n    font-size: 2.4rem;\n    font-weight: 700;\n    line-height: 3rem;\n    color: #32DC59;\n    text-align: center;\n    letter-spacing: 1px;\n    text-transform: uppercase;\n    position: relative; }\n.modal .title::before {\n      content: \"✉️\";\n      display: block;\n      font-size: 3rem;\n      margin-bottom: 1rem;\n      animation: bounce 2s infinite; }\n@keyframes bounce {\n  0%, 20%, 50%, 80%, 100% {\n    transform: translateY(0); }\n  40% {\n    transform: translateY(-10px); }\n  60% {\n    transform: translateY(-5px); } }\n.modal .title::after {\n      content: '';\n      position: absolute;\n      bottom: 1rem;\n      left: 50%;\n      transform: translateX(-50%);\n      width: 8rem;\n      height: 2px;\n      background: linear-gradient(90deg, transparent, #32DC59, transparent); }\n.modal .content {\n    display: flex;\n    margin-bottom: 3rem; }\n.modal .content .message-container {\n      display: flex;\n      flex-direction: column;\n      align-items: flex-start;\n      justify-content: center;\n      width: 100%;\n      gap: 1.5rem; }\n.modal .content .message-container .message-block {\n        display: flex;\n        width: 100%;\n        background: linear-gradient(135deg, rgba(50, 220, 89, 0.05) 0%, rgba(0, 0, 0, 0.1) 100%);\n        border: 1px solid rgba(50, 220, 89, 0.2);\n        border-radius: 1.2rem;\n        padding: 2rem;\n        transition: all 0.3s ease;\n        position: relative;\n        overflow: hidden; }\n.modal .content .message-container .message-block::before {\n          content: '';\n          position: absolute;\n          top: 0;\n          left: -100%;\n          width: 100%;\n          height: 100%;\n          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);\n          transition: left 0.5s ease; }\n.modal .content .message-container .message-block:hover {\n          border-color: rgba(50, 220, 89, 0.4);\n          box-shadow: 0 8px 25px rgba(50, 220, 89, 0.1);\n          transform: translateY(-2px); }\n.modal .content .message-container .message-block:hover::before {\n            left: 100%; }\n.modal .content .message-container .message-block .message-label {\n          min-width: 10rem;\n          line-height: 2.2rem;\n          font-size: 1.4rem;\n          font-weight: 600;\n          color: rgba(255, 255, 255, 0.8);\n          display: flex;\n          align-items: center;\n          position: relative; }\n.modal .content .message-container .message-block .message-label::before {\n            margin-right: 1rem;\n            font-size: 1.8rem; }\n.modal .content .message-container .message-block .message-text {\n          overflow-wrap: break-word;\n          margin-left: 3rem;\n          flex: 1;\n          line-height: 2.2rem;\n          font-size: 1.5rem;\n          color: #32DC59;\n          font-weight: 500;\n          font-family: 'Courier New', monospace;\n          background: rgba(0, 0, 0, 0.2);\n          padding: 1rem 1.5rem;\n          border-radius: 0.8rem;\n          border: 1px solid rgba(50, 220, 89, 0.2);\n          word-break: break-all; }\n.modal .content .message-container .message-block:nth-child(1) .message-label::before {\n          content: \"💰\"; }\n.modal .content .message-container .message-block:nth-child(2) .message-label::before {\n          content: \"📤\"; }\n.modal .content .message-container .message-block:nth-child(3) .message-label::before {\n          content: \"📥\"; }\n.modal .content .message-container .message-block:nth-child(4) .message-label::before {\n          content: \"💬\"; }\n.modal .content .message-container .message-block.confirm-master-pass {\n          width: 100%;\n          flex-direction: column;\n          background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 69, 0, 0.05) 100%);\n          border-color: rgba(255, 165, 0, 0.3);\n          animation: pulseWarning 2s infinite; }\n@keyframes pulseWarning {\n  0%, 100% {\n    box-shadow: 0 0 0 rgba(255, 165, 0, 0.4); }\n  50% {\n    box-shadow: 0 0 20px rgba(255, 165, 0, 0.2); } }\n.modal .content .message-container .message-block.confirm-master-pass .message-label::before {\n            content: \"🔐\";\n            color: #ff6f00; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block {\n            width: 100%;\n            margin-top: 1.5rem; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block label {\n              color: #ff6f00;\n              font-weight: 600;\n              font-size: 1.6rem;\n              letter-spacing: 0.5px;\n              margin-bottom: 1.2rem;\n              display: flex;\n              align-items: center; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block label::before {\n                content: \"🔑\";\n                margin-right: 0.8rem;\n                font-size: 1.8rem; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"] {\n              background: linear-gradient(135deg, rgba(88, 88, 88, 0.8) 0%, rgba(64, 64, 64, 0.9) 100%);\n              border: 2px solid rgba(255, 165, 0, 0.4);\n              border-radius: 1.2rem;\n              padding: 1.5rem 2rem;\n              font-size: 1.6rem;\n              color: #ffffff;\n              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n              box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);\n              width: 100%; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"]:focus {\n                outline: none;\n                border-color: #ff6f00;\n                background: linear-gradient(135deg, rgba(88, 88, 88, 0.9) 0%, #404040 100%);\n                box-shadow: 0 0 0 4px rgba(255, 165, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);\n                transform: translateY(-1px); }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"]::-moz-placeholder {\n                color: rgba(255, 255, 255, 0.5);\n                text-align: left; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"]::placeholder {\n                color: rgba(255, 255, 255, 0.5);\n                text-align: left; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"].required-error {\n                border-color: #ff5252;\n                background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(88, 88, 88, 0.8) 100%);\n                animation: shake 0.3s ease-in-out; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"].required-error::-moz-placeholder {\n                  color: #ff5252; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block input[type=\"password\"].required-error::placeholder {\n                  color: #ff5252; }\n@keyframes shake {\n  0%, 100% {\n    transform: translateX(0); }\n  25% {\n    transform: translateX(-5px); }\n  75% {\n    transform: translateX(5px); } }\n.modal .content .message-container .message-block.confirm-master-pass .input-block .error-block {\n              margin-top: 1rem;\n              padding: 1rem 1.5rem;\n              background: linear-gradient(135deg, rgba(255, 82, 82, 0.15) 0%, rgba(255, 82, 82, 0.05) 100%);\n              border: 1px solid rgba(255, 82, 82, 0.4);\n              border-radius: 0.8rem;\n              color: #ff5252;\n              font-size: 1.3rem;\n              font-weight: 500;\n              display: flex;\n              align-items: center; }\n.modal .content .message-container .message-block.confirm-master-pass .input-block .error-block::before {\n                content: \"⚠️\";\n                margin-right: 0.8rem;\n                font-size: 1.6rem; }\n.modal .wrapper-buttons {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    gap: 2rem;\n    margin-top: 2rem; }\n.modal .wrapper-buttons button {\n      flex: 1;\n      max-width: 20rem;\n      height: 6rem;\n      font-size: 1.6rem;\n      font-weight: 700;\n      letter-spacing: 0.5px;\n      text-transform: uppercase;\n      border-radius: 1.5rem;\n      position: relative;\n      overflow: hidden;\n      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }\n.modal .wrapper-buttons button::before {\n        content: '';\n        position: absolute;\n        top: 0;\n        left: -100%;\n        width: 100%;\n        height: 100%;\n        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);\n        transition: left 0.5s ease; }\n.modal .wrapper-buttons button:first-child {\n        background: linear-gradient(135deg, rgba(255, 82, 82, 0.8) 0%, rgba(139, 69, 19, 0.8) 100%);\n        border: 2px solid rgba(255, 82, 82, 0.6);\n        color: #ffffff; }\n.modal .wrapper-buttons button:first-child::after {\n          content: \"❌\";\n          position: absolute;\n          left: 1.5rem;\n          top: 50%;\n          transform: translateY(-50%);\n          font-size: 1.4rem; }\n.modal .wrapper-buttons button:first-child:hover {\n          background: linear-gradient(135deg, #ff5252 0%, saddlebrown 100%);\n          border-color: rgba(255, 82, 82, 0.8);\n          box-shadow: 0 8px 25px rgba(255, 82, 82, 0.4);\n          transform: translateY(-2px); }\n.modal .wrapper-buttons button:first-child:hover::before {\n            left: 100%; }\n.modal .wrapper-buttons button:first-child:active {\n          transform: translateY(0); }\n.modal .wrapper-buttons button:last-child {\n        background: linear-gradient(135deg, #162c47 0%, #0B1D33 50%, #162c47 100%);\n        border: 2px solid #32DC59;\n        color: #ffffff; }\n.modal .wrapper-buttons button:last-child::after {\n          content: \"✅\";\n          position: absolute;\n          left: 1.5rem;\n          top: 50%;\n          transform: translateY(-50%);\n          font-size: 1.4rem; }\n.modal .wrapper-buttons button:last-child:hover {\n          border-color: #32DC59;\n          box-shadow: 0 12px 48px rgba(50, 220, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);\n          transform: translateY(-3px); }\n.modal .wrapper-buttons button:last-child:hover::before {\n            left: 100%; }\n.modal .wrapper-buttons button:last-child:active {\n          transform: translateY(-1px);\n          box-shadow: 0 4px 16px rgba(50, 220, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }\n.modal .wrapper-buttons button:last-child:disabled {\n          opacity: 0.5;\n          cursor: not-allowed;\n          transform: none; }\n.modal .wrapper-buttons button:last-child:disabled:hover {\n            transform: none;\n            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }\n@media (max-width: 768px) {\n    .modal {\n      width: 95vw;\n      padding: 2rem; }\n      .modal .title {\n        font-size: 2rem; }\n        .modal .title::before {\n          font-size: 2.5rem; }\n      .modal .content .message-container .message-block {\n        flex-direction: column;\n        gap: 1rem; }\n        .modal .content .message-container .message-block .message-label {\n          min-width: auto; }\n        .modal .content .message-container .message-block .message-text {\n          margin-left: 0; }\n      .modal .wrapper-buttons {\n        flex-direction: column;\n        gap: 1.5rem; }\n        .modal .wrapper-buttons button {\n          max-width: 100%; } }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2VuZC1tb2RhbC9zZW5kLW1vZGFsLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9zZW5kLW1vZGFsL0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxzZW5kLW1vZGFsXFxzZW5kLW1vZGFsLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGdCQUFnQjtBQ0FoQjtFQUNFLGVBQWU7RUFDZixNQUFNO0VBQ04sU0FBUztFQUNULE9BQU87RUFDUCxRQUFRO0VBQ1IsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsK0JBQStCO0VBQy9CLG1DQUEyQjtVQUEzQiwyQkFBMkI7RUFDM0IsYUFBYTtFQUNiLCtCQUErQixFQUFBO0FBWmpDO0lBZ0JJLHFCQUFxQjtJQUFFLFlBQUE7SUFDdkIsd0JBQXdCO0lBQUUsMEJBQUEsRUFBMkI7QUFqQnpEO01BbUIyQixXQUFBO01BQ3JCLGFBQWEsRUFBQTtBQUlqQjtFQUNFO0lBQ0UsVUFBVTtJQUNWLGtDQUEwQjtZQUExQiwwQkFBMEIsRUFBQTtFQUU1QjtJQUNFLFVBQVU7SUFDVixtQ0FBMkI7WUFBM0IsMkJBQTJCLEVBQUEsRUFBQTtBQUtqQztFQUNFLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLHVIQUF1SDtFQUN2SCx3Q0FBd0M7RUFDeEMsbUJBQW1CO0VBQ25CLGFBQWE7RUFDYixZQUFZO0VBQ1osZUFBZTtFQUNmLGdCQUFnQjtFQUNoQixnQkFBZ0I7RUFDaEIsc0hBRWtEO0VBQ2xELDhEQUE4RCxFQUFBO0FBRTlEO0VBQ0U7SUFDRSxVQUFVO0lBQ1YsdUNBQXVDLEVBQUE7RUFFekM7SUFDRSxVQUFVO0lBQ1YsaUNBQWlDLEVBQUEsRUFBQTtBQXhCdkM7SUE4QkksV0FBVztJQUNYLGtCQUFrQjtJQUNsQixTQUFTO0lBQ1QsVUFBVTtJQUNWLFdBQVc7SUFDWCxZQUFZO0lBQ1oseUhBQXlIO0lBQ3pILDBCQUEwQjtJQUMxQixtQkFBbUI7SUFDbkIsV0FBVztJQUNYLDZDQUE2QyxFQUFBO0FBRy9DO0VBQ0U7SUFBVywyQkFBMkIsRUFBQTtFQUN0QztJQUFNLDZCQUE2QixFQUFBLEVBQUE7QUE3Q3ZDO0lBaURJLHFCQUFxQjtJQUNyQixpQkFBaUI7SUFDakIsZ0JBQWdCO0lBQ2hCLGlCQUFpQjtJQUNqQixjQUFjO0lBQ2Qsa0JBQWtCO0lBQ2xCLG1CQUFtQjtJQUNuQix5QkFBeUI7SUFDekIsa0JBQWtCLEVBQUE7QUF6RHRCO01BNERNLGFBQVM7TUFDVCxjQUFjO01BQ2QsZUFBZTtNQUNmLG1CQUFtQjtNQUNuQiw2QkFBNkIsRUFBQTtBQUcvQjtFQUNFO0lBQTBCLHdCQUF3QixFQUFBO0VBQ2xEO0lBQU0sNEJBQTRCLEVBQUE7RUFDbEM7SUFBTSwyQkFBMkIsRUFBQSxFQUFBO0FBdEV2QztNQTBFTSxXQUFXO01BQ1gsa0JBQWtCO01BQ2xCLFlBQVk7TUFDWixTQUFTO01BQ1QsMkJBQTJCO01BQzNCLFdBQVc7TUFDWCxXQUFXO01BQ1gscUVBQXFFLEVBQUE7QUFqRjNFO0lBc0ZJLGFBQWE7SUFDYixtQkFBbUIsRUFBQTtBQXZGdkI7TUEwRk0sYUFBYTtNQUNiLHNCQUFzQjtNQUN0Qix1QkFBdUI7TUFDdkIsdUJBQXVCO01BQ3ZCLFdBQVc7TUFDWCxXQUFXLEVBQUE7QUEvRmpCO1FBa0dRLGFBQWE7UUFDYixXQUFXO1FBQ1gsd0ZBQXdGO1FBQ3hGLHdDQUF3QztRQUN4QyxxQkFBcUI7UUFDckIsYUFBYTtRQUNiLHlCQUF5QjtRQUN6QixrQkFBa0I7UUFDbEIsZ0JBQWdCLEVBQUE7QUExR3hCO1VBNkdVLFdBQVc7VUFDWCxrQkFBa0I7VUFDbEIsTUFBTTtVQUNOLFdBQVc7VUFDWCxXQUFXO1VBQ1gsWUFBWTtVQUNaLHVGQUF1RjtVQUN2RiwwQkFBMEIsRUFBQTtBQXBIcEM7VUF3SFUsb0NBQW9DO1VBQ3BDLDZDQUE2QztVQUM3QywyQkFBMkIsRUFBQTtBQTFIckM7WUE2SFksVUFBVSxFQUFBO0FBN0h0QjtVQWtJVSxnQkFBZ0I7VUFDaEIsbUJBQW1CO1VBQ25CLGlCQUFpQjtVQUNqQixnQkFBZ0I7VUFDaEIsK0JBQStCO1VBQy9CLGFBQWE7VUFDYixtQkFBbUI7VUFDbkIsa0JBQWtCLEVBQUE7QUF6STVCO1lBNklZLGtCQUFrQjtZQUNsQixpQkFBaUIsRUFBQTtBQTlJN0I7VUFtSlUseUJBQXlCO1VBQ3pCLGlCQUFpQjtVQUNqQixPQUFPO1VBQ1AsbUJBQW1CO1VBQ25CLGlCQUFpQjtVQUNqQixjQUFjO1VBQ2QsZ0JBQWdCO1VBQ2hCLHFDQUFxQztVQUNyQyw4QkFBOEI7VUFDOUIsb0JBQW9CO1VBQ3BCLHFCQUFxQjtVQUNyQix3Q0FBd0M7VUFDeEMscUJBQXFCLEVBQUE7QUEvSi9CO1VBbUtnRCxhQUFTLEVBQUs7QUFuSzlEO1VBb0tnRCxhQUFTLEVBQUs7QUFwSzlEO1VBcUtnRCxhQUFTLEVBQUs7QUFySzlEO1VBc0tnRCxhQUFTLEVBQUs7QUF0SzlEO1VBeUtVLFdBQVc7VUFDWCxzQkFBc0I7VUFDdEIsMkZBQTJGO1VBQzNGLG9DQUFvQztVQUNwQyxtQ0FBbUMsRUFBQTtBQUVuQztFQUNFO0lBQVcsd0NBQXdDLEVBQUE7RUFDbkQ7SUFBTSwyQ0FBMkMsRUFBQSxFQUFBO0FBakw3RDtZQXFMWSxhQUFTO1lBQ1QsY0FBYyxFQUFBO0FBdEwxQjtZQTBMWSxXQUFXO1lBQ1gsa0JBQWtCLEVBQUE7QUEzTDlCO2NBOExjLGNBQWM7Y0FDZCxnQkFBZ0I7Y0FDaEIsaUJBQWlCO2NBQ2pCLHFCQUFxQjtjQUNyQixxQkFBcUI7Y0FDckIsYUFBYTtjQUNiLG1CQUFtQixFQUFBO0FBcE1qQztnQkF1TWdCLGFBQVM7Z0JBQ1Qsb0JBQW9CO2dCQUNwQixpQkFBaUIsRUFBQTtBQXpNakM7Y0E4TWMseUZBQXlGO2NBQ3pGLHdDQUF3QztjQUN4QyxxQkFBcUI7Y0FDckIsb0JBQW9CO2NBQ3BCLGlCQUFpQjtjQUNqQixjQUFjO2NBQ2QsaURBQWlEO2NBQ2pELDhDQUE4QztjQUM5QyxXQUFXLEVBQUE7QUF0TnpCO2dCQXlOZ0IsYUFBYTtnQkFDYixxQkFBcUI7Z0JBQ3JCLDJFQUF1RjtnQkFDdkYsZ0ZBQzhDO2dCQUM5QywyQkFBMkIsRUFBQTtBQTlOM0M7Z0JBa09nQiwrQkFBK0I7Z0JBQy9CLGdCQUFnQixFQUFBO0FBbk9oQztnQkFrT2dCLCtCQUErQjtnQkFDL0IsZ0JBQWdCLEVBQUE7QUFuT2hDO2dCQXVPZ0IscUJBQXFCO2dCQUNyQiwwRkFBMEY7Z0JBQzFGLGlDQUFpQyxFQUFBO0FBek9qRDtrQkE0T2tCLGNBQWMsRUFBQTtBQTVPaEM7a0JBNE9rQixjQUFjLEVBQUE7QUFJbEI7RUFDRTtJQUFXLHdCQUF3QixFQUFBO0VBQ25DO0lBQU0sMkJBQTJCLEVBQUE7RUFDakM7SUFBTSwwQkFBMEIsRUFBQSxFQUFBO0FBblBoRDtjQXdQYyxnQkFBZ0I7Y0FDaEIsb0JBQW9CO2NBQ3BCLDZGQUE2RjtjQUM3Rix3Q0FBd0M7Y0FDeEMscUJBQXFCO2NBQ3JCLGNBQWM7Y0FDZCxpQkFBaUI7Y0FDakIsZ0JBQWdCO2NBQ2hCLGFBQWE7Y0FDYixtQkFBbUIsRUFBQTtBQWpRakM7Z0JBb1FnQixhQUFTO2dCQUNULG9CQUFvQjtnQkFDcEIsaUJBQWlCLEVBQUE7QUF0UWpDO0lBZ1JJLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsdUJBQXVCO0lBQ3ZCLFNBQVM7SUFDVCxnQkFBZ0IsRUFBQTtBQXBScEI7TUF1Uk0sT0FBTztNQUNQLGdCQUFnQjtNQUNoQixZQUFZO01BQ1osaUJBQWlCO01BQ2pCLGdCQUFnQjtNQUNoQixxQkFBcUI7TUFDckIseUJBQXlCO01BQ3pCLHFCQUFxQjtNQUNyQixrQkFBa0I7TUFDbEIsZ0JBQWdCO01BQ2hCLGlEQUFpRCxFQUFBO0FBalN2RDtRQW9TUSxXQUFXO1FBQ1gsa0JBQWtCO1FBQ2xCLE1BQU07UUFDTixXQUFXO1FBQ1gsV0FBVztRQUNYLFlBQVk7UUFDWixzRkFBc0Y7UUFDdEYsMEJBQTBCLEVBQUE7QUEzU2xDO1FBZ1RRLDJGQUEyRjtRQUMzRix3Q0FBd0M7UUFDeEMsY0FBYyxFQUFBO0FBbFR0QjtVQXFUVSxZQUFTO1VBQ1Qsa0JBQWtCO1VBQ2xCLFlBQVk7VUFDWixRQUFRO1VBQ1IsMkJBQTJCO1VBQzNCLGlCQUFpQixFQUFBO0FBMVQzQjtVQThUVSxpRUFBdUY7VUFDdkYsb0NBQW9DO1VBQ3BDLDZDQUE2QztVQUM3QywyQkFBMkIsRUFBQTtBQWpVckM7WUFvVVksVUFBVSxFQUFBO0FBcFV0QjtVQXlVVSx3QkFBd0IsRUFBQTtBQXpVbEM7UUErVVEsMEVBQTBFO1FBQzFFLHlCQUF5QjtRQUN6QixjQUFjLEVBQUE7QUFqVnRCO1VBb1ZVLFlBQVM7VUFDVCxrQkFBa0I7VUFDbEIsWUFBWTtVQUNaLFFBQVE7VUFDUiwyQkFBMkI7VUFDM0IsaUJBQWlCLEVBQUE7QUF6VjNCO1VBNlZVLHFCQUFxQjtVQUNyQixzRkFDa0Q7VUFDbEQsMkJBQTJCLEVBQUE7QUFoV3JDO1lBbVdZLFVBQVUsRUFBQTtBQW5XdEI7VUF3V1UsMkJBQTJCO1VBQzNCLHFGQUNrRCxFQUFBO0FBMVc1RDtVQThXVSxZQUFZO1VBQ1osbUJBQW1CO1VBQ25CLGVBQWUsRUFBQTtBQWhYekI7WUFtWFksZUFBZTtZQUNmLGlGQUNrRCxFQUFBO0FBUTVEO0lBN1hGO01BOFhJLFdBQVc7TUFDWCxhQUFhLEVBQUE7TUEvWGpCO1FBa1lNLGVBQWUsRUFBQTtRQWxZckI7VUFxWVEsaUJBQWlCLEVBQUE7TUFyWXpCO1FBMFlNLHNCQUFzQjtRQUN0QixTQUFTLEVBQUE7UUEzWWY7VUE4WVEsZUFBZSxFQUFBO1FBOVl2QjtVQWtaUSxjQUFjLEVBQUE7TUFsWnRCO1FBdVpNLHNCQUFzQjtRQUN0QixXQUFXLEVBQUE7UUF4WmpCO1VBMlpRLGVBQWUsRUFBQSxFQUNoQiIsImZpbGUiOiJzcmMvYXBwL3NlbmQtbW9kYWwvc2VuZC1tb2RhbC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiVVRGLThcIjtcbjpob3N0IHtcbiAgcG9zaXRpb246IGZpeGVkO1xuICB0b3A6IDA7XG4gIGJvdHRvbTogMDtcbiAgbGVmdDogMDtcbiAgcmlnaHQ6IDA7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuOTUpO1xuICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoMTBweCk7XG4gIHotaW5kZXg6IDEwMDA7XG4gIGFuaW1hdGlvbjogZmFkZUluIDAuM3MgZWFzZS1vdXQ7IH1cbiAgOmhvc3QgKiB7XG4gICAgc2Nyb2xsYmFyLXdpZHRoOiBub25lO1xuICAgIC8qIEZpcmVmb3ggKi9cbiAgICAtbXMtb3ZlcmZsb3ctc3R5bGU6IG5vbmU7XG4gICAgLyogSW50ZXJuZXQgRXhwbG9yZXIgMTArICovIH1cbiAgICA6aG9zdCAqOjotd2Via2l0LXNjcm9sbGJhciB7XG4gICAgICAvKiBXZWJLaXQgKi9cbiAgICAgIGRpc3BsYXk6IG5vbmU7IH1cblxuQGtleWZyYW1lcyBmYWRlSW4ge1xuICBmcm9tIHtcbiAgICBvcGFjaXR5OiAwO1xuICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cigwcHgpOyB9XG4gIHRvIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cigxMHB4KTsgfSB9XG5cbi5tb2RhbCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgzMiwgMTExLCA5MCwgMC4xNSkgMCUsIHJnYmEoMjIsIDExMCwgNzAsIDAuMSkgNTAlLCByZ2JhKDAsIDI1LCAxOSwgMC45NSkgMTAwJSk7XG4gIGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XG4gIGJvcmRlci1yYWRpdXM6IDJyZW07XG4gIHBhZGRpbmc6IDNyZW07XG4gIHdpZHRoOiA3MHJlbTtcbiAgbWF4LXdpZHRoOiA5MHZ3O1xuICBtYXgtaGVpZ2h0OiA5MHZoO1xuICBvdmVyZmxvdzogaGlkZGVuO1xuICBib3gtc2hhZG93OiAwIDI1cHggODBweCByZ2JhKDAsIDAsIDAsIDAuNSksIDAgMCAwIDFweCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSksIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xuICBhbmltYXRpb246IG1vZGFsU2xpZGVJbiAwLjRzIGN1YmljLWJlemllcigwLjM0LCAxLjU2LCAwLjY0LCAxKTsgfVxuXG5Aa2V5ZnJhbWVzIG1vZGFsU2xpZGVJbiB7XG4gIGZyb20ge1xuICAgIG9wYWNpdHk6IDA7XG4gICAgdHJhbnNmb3JtOiBzY2FsZSgwLjgpIHRyYW5zbGF0ZVkoLTUwcHgpOyB9XG4gIHRvIHtcbiAgICBvcGFjaXR5OiAxO1xuICAgIHRyYW5zZm9ybTogc2NhbGUoMSkgdHJhbnNsYXRlWSgwKTsgfSB9XG4gIC5tb2RhbDo6YmVmb3JlIHtcbiAgICBjb250ZW50OiAnJztcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiAtMnB4O1xuICAgIGxlZnQ6IC0ycHg7XG4gICAgcmlnaHQ6IC0ycHg7XG4gICAgYm90dG9tOiAtMnB4O1xuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg0NWRlZywgdHJhbnNwYXJlbnQsIHJnYmEoNTAsIDIyMCwgODksIDAuMyksIHRyYW5zcGFyZW50LCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpLCB0cmFuc3BhcmVudCk7XG4gICAgYmFja2dyb3VuZC1zaXplOiA0MDAlIDQwMCU7XG4gICAgYm9yZGVyLXJhZGl1czogMnJlbTtcbiAgICB6LWluZGV4OiAtMTtcbiAgICBhbmltYXRpb246IGJvcmRlckdsb3cgM3MgZWFzZS1pbi1vdXQgaW5maW5pdGU7IH1cblxuQGtleWZyYW1lcyBib3JkZXJHbG93IHtcbiAgMCUsIDEwMCUge1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IDAlIDUwJTsgfVxuICA1MCUge1xuICAgIGJhY2tncm91bmQtcG9zaXRpb246IDEwMCUgNTAlOyB9IH1cbiAgLm1vZGFsIC50aXRsZSB7XG4gICAgcGFkZGluZzogMCAwIDIuNXJlbSAwO1xuICAgIGZvbnQtc2l6ZTogMi40cmVtO1xuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgbGluZS1oZWlnaHQ6IDNyZW07XG4gICAgY29sb3I6ICMzMkRDNTk7XG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XG4gICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7IH1cbiAgICAubW9kYWwgLnRpdGxlOjpiZWZvcmUge1xuICAgICAgY29udGVudDogXCLinInvuI9cIjtcbiAgICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgICAgZm9udC1zaXplOiAzcmVtO1xuICAgICAgbWFyZ2luLWJvdHRvbTogMXJlbTtcbiAgICAgIGFuaW1hdGlvbjogYm91bmNlIDJzIGluZmluaXRlOyB9XG5cbkBrZXlmcmFtZXMgYm91bmNlIHtcbiAgMCUsIDIwJSwgNTAlLCA4MCUsIDEwMCUge1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfVxuICA0MCUge1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMTBweCk7IH1cbiAgNjAlIHtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTVweCk7IH0gfVxuICAgIC5tb2RhbCAudGl0bGU6OmFmdGVyIHtcbiAgICAgIGNvbnRlbnQ6ICcnO1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgYm90dG9tOiAxcmVtO1xuICAgICAgbGVmdDogNTAlO1xuICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC01MCUpO1xuICAgICAgd2lkdGg6IDhyZW07XG4gICAgICBoZWlnaHQ6IDJweDtcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsICMzMkRDNTksIHRyYW5zcGFyZW50KTsgfVxuICAubW9kYWwgLmNvbnRlbnQge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgbWFyZ2luLWJvdHRvbTogM3JlbTsgfVxuICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIge1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gICAgICBhbGlnbi1pdGVtczogZmxleC1zdGFydDtcbiAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICBnYXA6IDEuNXJlbTsgfVxuICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jayB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjA1KSAwJSwgcmdiYSgwLCAwLCAwLCAwLjEpIDEwMCUpO1xuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xuICAgICAgICBib3JkZXItcmFkaXVzOiAxLjJyZW07XG4gICAgICAgIHBhZGRpbmc6IDJyZW07XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XG4gICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjsgfVxuICAgICAgICAubW9kYWwgLmNvbnRlbnQgLm1lc3NhZ2UtY29udGFpbmVyIC5tZXNzYWdlLWJsb2NrOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6ICcnO1xuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICB0b3A6IDA7XG4gICAgICAgICAgbGVmdDogLTEwMCU7XG4gICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgaGVpZ2h0OiAxMDAlO1xuICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSksIHRyYW5zcGFyZW50KTtcbiAgICAgICAgICB0cmFuc2l0aW9uOiBsZWZ0IDAuNXMgZWFzZTsgfVxuICAgICAgICAubW9kYWwgLmNvbnRlbnQgLm1lc3NhZ2UtY29udGFpbmVyIC5tZXNzYWdlLWJsb2NrOmhvdmVyIHtcbiAgICAgICAgICBib3JkZXItY29sb3I6IHJnYmEoNTAsIDIyMCwgODksIDAuNCk7XG4gICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMjVweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMnB4KTsgfVxuICAgICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2s6aG92ZXI6OmJlZm9yZSB7XG4gICAgICAgICAgICBsZWZ0OiAxMDAlOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2sgLm1lc3NhZ2UtbGFiZWwge1xuICAgICAgICAgIG1pbi13aWR0aDogMTByZW07XG4gICAgICAgICAgbGluZS1oZWlnaHQ6IDIuMnJlbTtcbiAgICAgICAgICBmb250LXNpemU6IDEuNHJlbTtcbiAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xuICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCk7XG4gICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xuICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTsgfVxuICAgICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2sgLm1lc3NhZ2UtbGFiZWw6OmJlZm9yZSB7XG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDFyZW07XG4gICAgICAgICAgICBmb250LXNpemU6IDEuOHJlbTsgfVxuICAgICAgICAubW9kYWwgLmNvbnRlbnQgLm1lc3NhZ2UtY29udGFpbmVyIC5tZXNzYWdlLWJsb2NrIC5tZXNzYWdlLXRleHQge1xuICAgICAgICAgIG92ZXJmbG93LXdyYXA6IGJyZWFrLXdvcmQ7XG4gICAgICAgICAgbWFyZ2luLWxlZnQ6IDNyZW07XG4gICAgICAgICAgZmxleDogMTtcbiAgICAgICAgICBsaW5lLWhlaWdodDogMi4ycmVtO1xuICAgICAgICAgIGZvbnQtc2l6ZTogMS41cmVtO1xuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xuICAgICAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XG4gICAgICAgICAgZm9udC1mYW1pbHk6ICdDb3VyaWVyIE5ldycsIG1vbm9zcGFjZTtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuMik7XG4gICAgICAgICAgcGFkZGluZzogMXJlbSAxLjVyZW07XG4gICAgICAgICAgYm9yZGVyLXJhZGl1czogMC44cmVtO1xuICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMik7XG4gICAgICAgICAgd29yZC1icmVhazogYnJlYWstYWxsOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2s6bnRoLWNoaWxkKDEpIC5tZXNzYWdlLWxhYmVsOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+SsFwiOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2s6bnRoLWNoaWxkKDIpIC5tZXNzYWdlLWxhYmVsOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+TpFwiOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2s6bnRoLWNoaWxkKDMpIC5tZXNzYWdlLWxhYmVsOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+TpVwiOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2s6bnRoLWNoaWxkKDQpIC5tZXNzYWdlLWxhYmVsOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+SrFwiOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2suY29uZmlybS1tYXN0ZXItcGFzcyB7XG4gICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgMTY1LCAwLCAwLjEpIDAlLCByZ2JhKDI1NSwgNjksIDAsIDAuMDUpIDEwMCUpO1xuICAgICAgICAgIGJvcmRlci1jb2xvcjogcmdiYSgyNTUsIDE2NSwgMCwgMC4zKTtcbiAgICAgICAgICBhbmltYXRpb246IHB1bHNlV2FybmluZyAycyBpbmZpbml0ZTsgfVxuXG5Aa2V5ZnJhbWVzIHB1bHNlV2FybmluZyB7XG4gIDAlLCAxMDAlIHtcbiAgICBib3gtc2hhZG93OiAwIDAgMCByZ2JhKDI1NSwgMTY1LCAwLCAwLjQpOyB9XG4gIDUwJSB7XG4gICAgYm94LXNoYWRvdzogMCAwIDIwcHggcmdiYSgyNTUsIDE2NSwgMCwgMC4yKTsgfSB9XG4gICAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jay5jb25maXJtLW1hc3Rlci1wYXNzIC5tZXNzYWdlLWxhYmVsOjpiZWZvcmUge1xuICAgICAgICAgICAgY29udGVudDogXCLwn5SQXCI7XG4gICAgICAgICAgICBjb2xvcjogI2ZmNmYwMDsgfVxuICAgICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2suY29uZmlybS1tYXN0ZXItcGFzcyAuaW5wdXQtYmxvY2sge1xuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgICAgICBtYXJnaW4tdG9wOiAxLjVyZW07IH1cbiAgICAgICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2suY29uZmlybS1tYXN0ZXItcGFzcyAuaW5wdXQtYmxvY2sgbGFiZWwge1xuICAgICAgICAgICAgICBjb2xvcjogI2ZmNmYwMDtcbiAgICAgICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgICAgICAgICAgICAgZm9udC1zaXplOiAxLjZyZW07XG4gICAgICAgICAgICAgIGxldHRlci1zcGFjaW5nOiAwLjVweDtcbiAgICAgICAgICAgICAgbWFyZ2luLWJvdHRvbTogMS4ycmVtO1xuICAgICAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyOyB9XG4gICAgICAgICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2suY29uZmlybS1tYXN0ZXItcGFzcyAuaW5wdXQtYmxvY2sgbGFiZWw6OmJlZm9yZSB7XG4gICAgICAgICAgICAgICAgY29udGVudDogXCLwn5SRXCI7XG4gICAgICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAwLjhyZW07XG4gICAgICAgICAgICAgICAgZm9udC1zaXplOiAxLjhyZW07IH1cbiAgICAgICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2suY29uZmlybS1tYXN0ZXItcGFzcyAuaW5wdXQtYmxvY2sgaW5wdXRbdHlwZT1cInBhc3N3b3JkXCJdIHtcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg4OCwgODgsIDg4LCAwLjgpIDAlLCByZ2JhKDY0LCA2NCwgNjQsIDAuOSkgMTAwJSk7XG4gICAgICAgICAgICAgIGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoMjU1LCAxNjUsIDAsIDAuNCk7XG4gICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEuMnJlbTtcbiAgICAgICAgICAgICAgcGFkZGluZzogMS41cmVtIDJyZW07XG4gICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xuICAgICAgICAgICAgICBjb2xvcjogI2ZmZmZmZjtcbiAgICAgICAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgY3ViaWMtYmV6aWVyKDAuNCwgMCwgMC4yLCAxKTtcbiAgICAgICAgICAgICAgYm94LXNoYWRvdzogaW5zZXQgMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yKTtcbiAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7IH1cbiAgICAgICAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jay5jb25maXJtLW1hc3Rlci1wYXNzIC5pbnB1dC1ibG9jayBpbnB1dFt0eXBlPVwicGFzc3dvcmRcIl06Zm9jdXMge1xuICAgICAgICAgICAgICAgIG91dGxpbmU6IG5vbmU7XG4gICAgICAgICAgICAgICAgYm9yZGVyLWNvbG9yOiAjZmY2ZjAwO1xuICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC45KSAwJSwgIzQwNDA0MCAxMDAlKTtcbiAgICAgICAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMCA0cHggcmdiYSgyNTUsIDE2NSwgMCwgMC4zKSwgaW5zZXQgMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yKTtcbiAgICAgICAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7IH1cbiAgICAgICAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jay5jb25maXJtLW1hc3Rlci1wYXNzIC5pbnB1dC1ibG9jayBpbnB1dFt0eXBlPVwicGFzc3dvcmRcIl06OnBsYWNlaG9sZGVyIHtcbiAgICAgICAgICAgICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjUpO1xuICAgICAgICAgICAgICAgIHRleHQtYWxpZ246IGxlZnQ7IH1cbiAgICAgICAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jay5jb25maXJtLW1hc3Rlci1wYXNzIC5pbnB1dC1ibG9jayBpbnB1dFt0eXBlPVwicGFzc3dvcmRcIl0ucmVxdWlyZWQtZXJyb3Ige1xuICAgICAgICAgICAgICAgIGJvcmRlci1jb2xvcjogI2ZmNTI1MjtcbiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDg4LCA4OCwgODgsIDAuOCkgMTAwJSk7XG4gICAgICAgICAgICAgICAgYW5pbWF0aW9uOiBzaGFrZSAwLjNzIGVhc2UtaW4tb3V0OyB9XG4gICAgICAgICAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jay5jb25maXJtLW1hc3Rlci1wYXNzIC5pbnB1dC1ibG9jayBpbnB1dFt0eXBlPVwicGFzc3dvcmRcIl0ucmVxdWlyZWQtZXJyb3I6OnBsYWNlaG9sZGVyIHtcbiAgICAgICAgICAgICAgICAgIGNvbG9yOiAjZmY1MjUyOyB9XG5cbkBrZXlmcmFtZXMgc2hha2Uge1xuICAwJSwgMTAwJSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDApOyB9XG4gIDI1JSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC01cHgpOyB9XG4gIDc1JSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDVweCk7IH0gfVxuICAgICAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jay5jb25maXJtLW1hc3Rlci1wYXNzIC5pbnB1dC1ibG9jayAuZXJyb3ItYmxvY2sge1xuICAgICAgICAgICAgICBtYXJnaW4tdG9wOiAxcmVtO1xuICAgICAgICAgICAgICBwYWRkaW5nOiAxcmVtIDEuNXJlbTtcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDgyLCA4MiwgMC4xNSkgMCUsIHJnYmEoMjU1LCA4MiwgODIsIDAuMDUpIDEwMCUpO1xuICAgICAgICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjQpO1xuICAgICAgICAgICAgICBib3JkZXItcmFkaXVzOiAwLjhyZW07XG4gICAgICAgICAgICAgIGNvbG9yOiAjZmY1MjUyO1xuICAgICAgICAgICAgICBmb250LXNpemU6IDEuM3JlbTtcbiAgICAgICAgICAgICAgZm9udC13ZWlnaHQ6IDUwMDtcbiAgICAgICAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjsgfVxuICAgICAgICAgICAgICAubW9kYWwgLmNvbnRlbnQgLm1lc3NhZ2UtY29udGFpbmVyIC5tZXNzYWdlLWJsb2NrLmNvbmZpcm0tbWFzdGVyLXBhc3MgLmlucHV0LWJsb2NrIC5lcnJvci1ibG9jazo6YmVmb3JlIHtcbiAgICAgICAgICAgICAgICBjb250ZW50OiBcIuKaoO+4j1wiO1xuICAgICAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xuICAgICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtOyB9XG4gIC5tb2RhbCAud3JhcHBlci1idXR0b25zIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgZ2FwOiAycmVtO1xuICAgIG1hcmdpbi10b3A6IDJyZW07IH1cbiAgICAubW9kYWwgLndyYXBwZXItYnV0dG9ucyBidXR0b24ge1xuICAgICAgZmxleDogMTtcbiAgICAgIG1heC13aWR0aDogMjByZW07XG4gICAgICBoZWlnaHQ6IDZyZW07XG4gICAgICBmb250LXNpemU6IDEuNnJlbTtcbiAgICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgICBsZXR0ZXItc3BhY2luZzogMC41cHg7XG4gICAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgICAgYm9yZGVyLXJhZGl1czogMS41cmVtO1xuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGN1YmljLWJlemllcigwLjQsIDAsIDAuMiwgMSk7IH1cbiAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIGJ1dHRvbjo6YmVmb3JlIHtcbiAgICAgICAgY29udGVudDogJyc7XG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgdG9wOiAwO1xuICAgICAgICBsZWZ0OiAtMTAwJTtcbiAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIGhlaWdodDogMTAwJTtcbiAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCB0cmFuc3BhcmVudCwgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjIpLCB0cmFuc3BhcmVudCk7XG4gICAgICAgIHRyYW5zaXRpb246IGxlZnQgMC41cyBlYXNlOyB9XG4gICAgICAubW9kYWwgLndyYXBwZXItYnV0dG9ucyBidXR0b246Zmlyc3QtY2hpbGQge1xuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjgpIDAlLCByZ2JhKDEzOSwgNjksIDE5LCAwLjgpIDEwMCUpO1xuICAgICAgICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjYpO1xuICAgICAgICBjb2xvcjogI2ZmZmZmZjsgfVxuICAgICAgICAubW9kYWwgLndyYXBwZXItYnV0dG9ucyBidXR0b246Zmlyc3QtY2hpbGQ6OmFmdGVyIHtcbiAgICAgICAgICBjb250ZW50OiBcIuKdjFwiO1xuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICBsZWZ0OiAxLjVyZW07XG4gICAgICAgICAgdG9wOiA1MCU7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICAgICAgICAgIGZvbnQtc2l6ZTogMS40cmVtOyB9XG4gICAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIGJ1dHRvbjpmaXJzdC1jaGlsZDpob3ZlciB7XG4gICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgI2ZmNTI1MiAwJSwgc2FkZGxlYnJvd24gMTAwJSk7XG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiByZ2JhKDI1NSwgODIsIDgyLCAwLjgpO1xuICAgICAgICAgIGJveC1zaGFkb3c6IDAgOHB4IDI1cHggcmdiYSgyNTUsIDgyLCA4MiwgMC40KTtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7IH1cbiAgICAgICAgICAubW9kYWwgLndyYXBwZXItYnV0dG9ucyBidXR0b246Zmlyc3QtY2hpbGQ6aG92ZXI6OmJlZm9yZSB7XG4gICAgICAgICAgICBsZWZ0OiAxMDAlOyB9XG4gICAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIGJ1dHRvbjpmaXJzdC1jaGlsZDphY3RpdmUge1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTsgfVxuICAgICAgLm1vZGFsIC53cmFwcGVyLWJ1dHRvbnMgYnV0dG9uOmxhc3QtY2hpbGQge1xuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCAjMTYyYzQ3IDAlLCAjMEIxRDMzIDUwJSwgIzE2MmM0NyAxMDAlKTtcbiAgICAgICAgYm9yZGVyOiAycHggc29saWQgIzMyREM1OTtcbiAgICAgICAgY29sb3I6ICNmZmZmZmY7IH1cbiAgICAgICAgLm1vZGFsIC53cmFwcGVyLWJ1dHRvbnMgYnV0dG9uOmxhc3QtY2hpbGQ6OmFmdGVyIHtcbiAgICAgICAgICBjb250ZW50OiBcIuKchVwiO1xuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgICAgICBsZWZ0OiAxLjVyZW07XG4gICAgICAgICAgdG9wOiA1MCU7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICAgICAgICAgIGZvbnQtc2l6ZTogMS40cmVtOyB9XG4gICAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIGJ1dHRvbjpsYXN0LWNoaWxkOmhvdmVyIHtcbiAgICAgICAgICBib3JkZXItY29sb3I6ICMzMkRDNTk7XG4gICAgICAgICAgYm94LXNoYWRvdzogMCAxMnB4IDQ4cHggcmdiYSg1MCwgMjIwLCA4OSwgMC40KSwgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0zcHgpOyB9XG4gICAgICAgICAgLm1vZGFsIC53cmFwcGVyLWJ1dHRvbnMgYnV0dG9uOmxhc3QtY2hpbGQ6aG92ZXI6OmJlZm9yZSB7XG4gICAgICAgICAgICBsZWZ0OiAxMDAlOyB9XG4gICAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIGJ1dHRvbjpsYXN0LWNoaWxkOmFjdGl2ZSB7XG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0xcHgpO1xuICAgICAgICAgIGJveC1zaGFkb3c6IDAgNHB4IDE2cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4zKSwgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7IH1cbiAgICAgICAgLm1vZGFsIC53cmFwcGVyLWJ1dHRvbnMgYnV0dG9uOmxhc3QtY2hpbGQ6ZGlzYWJsZWQge1xuICAgICAgICAgIG9wYWNpdHk6IDAuNTtcbiAgICAgICAgICBjdXJzb3I6IG5vdC1hbGxvd2VkO1xuICAgICAgICAgIHRyYW5zZm9ybTogbm9uZTsgfVxuICAgICAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIGJ1dHRvbjpsYXN0LWNoaWxkOmRpc2FibGVkOmhvdmVyIHtcbiAgICAgICAgICAgIHRyYW5zZm9ybTogbm9uZTtcbiAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgOHB4IDMycHggcmdiYSgwLCAwLCAwLCAwLjMpLCBpbnNldCAwIDFweCAwIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTsgfVxuICBAbWVkaWEgKG1heC13aWR0aDogNzY4cHgpIHtcbiAgICAubW9kYWwge1xuICAgICAgd2lkdGg6IDk1dnc7XG4gICAgICBwYWRkaW5nOiAycmVtOyB9XG4gICAgICAubW9kYWwgLnRpdGxlIHtcbiAgICAgICAgZm9udC1zaXplOiAycmVtOyB9XG4gICAgICAgIC5tb2RhbCAudGl0bGU6OmJlZm9yZSB7XG4gICAgICAgICAgZm9udC1zaXplOiAyLjVyZW07IH1cbiAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2sge1xuICAgICAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgICAgICBnYXA6IDFyZW07IH1cbiAgICAgICAgLm1vZGFsIC5jb250ZW50IC5tZXNzYWdlLWNvbnRhaW5lciAubWVzc2FnZS1ibG9jayAubWVzc2FnZS1sYWJlbCB7XG4gICAgICAgICAgbWluLXdpZHRoOiBhdXRvOyB9XG4gICAgICAgIC5tb2RhbCAuY29udGVudCAubWVzc2FnZS1jb250YWluZXIgLm1lc3NhZ2UtYmxvY2sgLm1lc3NhZ2UtdGV4dCB7XG4gICAgICAgICAgbWFyZ2luLWxlZnQ6IDA7IH1cbiAgICAgIC5tb2RhbCAud3JhcHBlci1idXR0b25zIHtcbiAgICAgICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICAgICAgZ2FwOiAxLjVyZW07IH1cbiAgICAgICAgLm1vZGFsIC53cmFwcGVyLWJ1dHRvbnMgYnV0dG9uIHtcbiAgICAgICAgICBtYXgtd2lkdGg6IDEwMCU7IH0gfVxuIiwiOmhvc3Qge1xyXG4gIHBvc2l0aW9uOiBmaXhlZDtcclxuICB0b3A6IDA7XHJcbiAgYm90dG9tOiAwO1xyXG4gIGxlZnQ6IDA7XHJcbiAgcmlnaHQ6IDA7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC45NSk7XHJcbiAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDEwcHgpO1xyXG4gIHotaW5kZXg6IDEwMDA7XHJcbiAgYW5pbWF0aW9uOiBmYWRlSW4gMC4zcyBlYXNlLW91dDtcclxuXHJcbiAgLy8g0KPQsdC40YDQsNC10Lwg0YHQutGA0L7Qu9C70LHQsNGA0Ysg0LPQu9C+0LHQsNC70YzQvdC+XHJcbiAgKiB7XHJcbiAgICBzY3JvbGxiYXItd2lkdGg6IG5vbmU7IC8qIEZpcmVmb3ggKi9cclxuICAgIC1tcy1vdmVyZmxvdy1zdHlsZTogbm9uZTsgLyogSW50ZXJuZXQgRXhwbG9yZXIgMTArICovXHJcbiAgICBcclxuICAgICY6Oi13ZWJraXQtc2Nyb2xsYmFyIHsgLyogV2ViS2l0ICovXHJcbiAgICAgIGRpc3BsYXk6IG5vbmU7XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICBAa2V5ZnJhbWVzIGZhZGVJbiB7XHJcbiAgICBmcm9tIHtcclxuICAgICAgb3BhY2l0eTogMDtcclxuICAgICAgYmFja2Ryb3AtZmlsdGVyOiBibHVyKDBweCk7XHJcbiAgICB9XHJcbiAgICB0byB7XHJcbiAgICAgIG9wYWNpdHk6IDE7XHJcbiAgICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cigxMHB4KTtcclxuICAgIH1cclxuICB9XHJcbn1cclxuXHJcbi5tb2RhbCB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDMyLCAxMTEsIDkwLCAwLjE1KSAwJSwgcmdiYSgyMiwgMTEwLCA3MCwgMC4xKSA1MCUsIHJnYmEoMCwgMjUsIDE5LCAwLjk1KSAxMDAlKTtcclxuICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gIGJvcmRlci1yYWRpdXM6IDJyZW07XHJcbiAgcGFkZGluZzogM3JlbTtcclxuICB3aWR0aDogNzByZW07XHJcbiAgbWF4LXdpZHRoOiA5MHZ3O1xyXG4gIG1heC1oZWlnaHQ6IDkwdmg7XHJcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICBib3gtc2hhZG93OiAwIDI1cHggODBweCByZ2JhKDAsIDAsIDAsIDAuNSksXHJcbiAgICAgICAgICAgICAgMCAwIDAgMXB4IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKSxcclxuICAgICAgICAgICAgICBpbnNldCAwIDFweCAwIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcclxuICBhbmltYXRpb246IG1vZGFsU2xpZGVJbiAwLjRzIGN1YmljLWJlemllcigwLjM0LCAxLjU2LCAwLjY0LCAxKTtcclxuXHJcbiAgQGtleWZyYW1lcyBtb2RhbFNsaWRlSW4ge1xyXG4gICAgZnJvbSB7XHJcbiAgICAgIG9wYWNpdHk6IDA7XHJcbiAgICAgIHRyYW5zZm9ybTogc2NhbGUoMC44KSB0cmFuc2xhdGVZKC01MHB4KTtcclxuICAgIH1cclxuICAgIHRvIHtcclxuICAgICAgb3BhY2l0eTogMTtcclxuICAgICAgdHJhbnNmb3JtOiBzY2FsZSgxKSB0cmFuc2xhdGVZKDApO1xyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLy8g0JTQvtCx0LDQstC70Y/QtdC8INGN0YTRhNC10LrRgiDQvNC10YDRhtCw0L3QuNGPINC00LvRjyDQs9GA0LDQvdC40YZcclxuICAmOjpiZWZvcmUge1xyXG4gICAgY29udGVudDogJyc7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0b3A6IC0ycHg7XHJcbiAgICBsZWZ0OiAtMnB4O1xyXG4gICAgcmlnaHQ6IC0ycHg7XHJcbiAgICBib3R0b206IC0ycHg7XHJcbiAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoNDVkZWcsIHRyYW5zcGFyZW50LCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpLCB0cmFuc3BhcmVudCwgcmdiYSg1MCwgMjIwLCA4OSwgMC4zKSwgdHJhbnNwYXJlbnQpO1xyXG4gICAgYmFja2dyb3VuZC1zaXplOiA0MDAlIDQwMCU7XHJcbiAgICBib3JkZXItcmFkaXVzOiAycmVtO1xyXG4gICAgei1pbmRleDogLTE7XHJcbiAgICBhbmltYXRpb246IGJvcmRlckdsb3cgM3MgZWFzZS1pbi1vdXQgaW5maW5pdGU7XHJcbiAgfVxyXG5cclxuICBAa2V5ZnJhbWVzIGJvcmRlckdsb3cge1xyXG4gICAgMCUsIDEwMCUgeyBiYWNrZ3JvdW5kLXBvc2l0aW9uOiAwJSA1MCU7IH1cclxuICAgIDUwJSB7IGJhY2tncm91bmQtcG9zaXRpb246IDEwMCUgNTAlOyB9XHJcbiAgfVxyXG5cclxuICAudGl0bGUge1xyXG4gICAgcGFkZGluZzogMCAwIDIuNXJlbSAwO1xyXG4gICAgZm9udC1zaXplOiAyLjRyZW07XHJcbiAgICBmb250LXdlaWdodDogNzAwO1xyXG4gICAgbGluZS1oZWlnaHQ6IDNyZW07XHJcbiAgICBjb2xvcjogIzMyREM1OTtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XHJcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgXHJcbiAgICAmOjpiZWZvcmUge1xyXG4gICAgICBjb250ZW50OiBcIuKcie+4j1wiO1xyXG4gICAgICBkaXNwbGF5OiBibG9jaztcclxuICAgICAgZm9udC1zaXplOiAzcmVtO1xyXG4gICAgICBtYXJnaW4tYm90dG9tOiAxcmVtO1xyXG4gICAgICBhbmltYXRpb246IGJvdW5jZSAycyBpbmZpbml0ZTtcclxuICAgIH1cclxuXHJcbiAgICBAa2V5ZnJhbWVzIGJvdW5jZSB7XHJcbiAgICAgIDAlLCAyMCUsIDUwJSwgODAlLCAxMDAlIHsgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApOyB9XHJcbiAgICAgIDQwJSB7IHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMTBweCk7IH1cclxuICAgICAgNjAlIHsgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01cHgpOyB9XHJcbiAgICB9XHJcblxyXG4gICAgJjo6YWZ0ZXIge1xyXG4gICAgICBjb250ZW50OiAnJztcclxuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICBib3R0b206IDFyZW07XHJcbiAgICAgIGxlZnQ6IDUwJTtcclxuICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC01MCUpO1xyXG4gICAgICB3aWR0aDogOHJlbTtcclxuICAgICAgaGVpZ2h0OiAycHg7XHJcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsICMzMkRDNTksIHRyYW5zcGFyZW50KTtcclxuICAgIH1cclxuICB9XHJcblxyXG4gIC5jb250ZW50IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAzcmVtO1xyXG5cclxuICAgIC5tZXNzYWdlLWNvbnRhaW5lciB7XHJcbiAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICAgIGFsaWduLWl0ZW1zOiBmbGV4LXN0YXJ0O1xyXG4gICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgIGdhcDogMS41cmVtO1xyXG5cclxuICAgICAgLm1lc3NhZ2UtYmxvY2sge1xyXG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSkgMCUsIHJnYmEoMCwgMCwgMCwgMC4xKSAxMDAlKTtcclxuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDEuMnJlbTtcclxuICAgICAgICBwYWRkaW5nOiAycmVtO1xyXG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgIG92ZXJmbG93OiBoaWRkZW47XHJcblxyXG4gICAgICAgICY6OmJlZm9yZSB7XHJcbiAgICAgICAgICBjb250ZW50OiAnJztcclxuICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICAgIHRvcDogMDtcclxuICAgICAgICAgIGxlZnQ6IC0xMDAlO1xyXG4gICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoOTBkZWcsIHRyYW5zcGFyZW50LCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpLCB0cmFuc3BhcmVudCk7XHJcbiAgICAgICAgICB0cmFuc2l0aW9uOiBsZWZ0IDAuNXMgZWFzZTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgICY6aG92ZXIge1xyXG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjQpO1xyXG4gICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMjVweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpO1xyXG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0ycHgpO1xyXG5cclxuICAgICAgICAgICY6OmJlZm9yZSB7XHJcbiAgICAgICAgICAgIGxlZnQ6IDEwMCU7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAubWVzc2FnZS1sYWJlbCB7XHJcbiAgICAgICAgICBtaW4td2lkdGg6IDEwcmVtO1xyXG4gICAgICAgICAgbGluZS1oZWlnaHQ6IDIuMnJlbTtcclxuICAgICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCk7XHJcbiAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuXHJcbiAgICAgICAgICAvLyDQlNC+0LHQsNCy0LvRj9C10Lwg0LjQutC+0L3QutC4INC00LvRjyDRgNCw0LfQvdGL0YUg0YLQuNC/0L7QslxyXG4gICAgICAgICAgJjo6YmVmb3JlIHtcclxuICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAxcmVtO1xyXG4gICAgICAgICAgICBmb250LXNpemU6IDEuOHJlbTtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcblxyXG4gICAgICAgIC5tZXNzYWdlLXRleHQge1xyXG4gICAgICAgICAgb3ZlcmZsb3ctd3JhcDogYnJlYWstd29yZDtcclxuICAgICAgICAgIG1hcmdpbi1sZWZ0OiAzcmVtO1xyXG4gICAgICAgICAgZmxleDogMTtcclxuICAgICAgICAgIGxpbmUtaGVpZ2h0OiAyLjJyZW07XHJcbiAgICAgICAgICBmb250LXNpemU6IDEuNXJlbTtcclxuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgICAgICAgIGZvbnQtZmFtaWx5OiAnQ291cmllciBOZXcnLCBtb25vc3BhY2U7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDAsIDAsIDAsIDAuMik7XHJcbiAgICAgICAgICBwYWRkaW5nOiAxcmVtIDEuNXJlbTtcclxuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDAuOHJlbTtcclxuICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMik7XHJcbiAgICAgICAgICB3b3JkLWJyZWFrOiBicmVhay1hbGw7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAvLyDQodC/0LXRhtC40LDQu9GM0L3Ri9C1INGB0YLQuNC70Lgg0LTQu9GPINGA0LDQt9C90YvRhSDRgtC40L/QvtCyINCx0LvQvtC60L7QslxyXG4gICAgICAgICY6bnRoLWNoaWxkKDEpIC5tZXNzYWdlLWxhYmVsOjpiZWZvcmUgeyBjb250ZW50OiBcIvCfkrBcIjsgfSAvLyDQodGD0LzQvNCwXHJcbiAgICAgICAgJjpudGgtY2hpbGQoMikgLm1lc3NhZ2UtbGFiZWw6OmJlZm9yZSB7IGNvbnRlbnQ6IFwi8J+TpFwiOyB9IC8vINCe0YIg0LrQvtCz0L5cclxuICAgICAgICAmOm50aC1jaGlsZCgzKSAubWVzc2FnZS1sYWJlbDo6YmVmb3JlIHsgY29udGVudDogXCLwn5OlXCI7IH0gLy8g0JrQvtC80YNcclxuICAgICAgICAmOm50aC1jaGlsZCg0KSAubWVzc2FnZS1sYWJlbDo6YmVmb3JlIHsgY29udGVudDogXCLwn5KsXCI7IH0gLy8g0JrQvtC80LzQtdC90YLQsNGA0LjQuVxyXG5cclxuICAgICAgICAmLmNvbmZpcm0tbWFzdGVyLXBhc3Mge1xyXG4gICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDE2NSwgMCwgMC4xKSAwJSwgcmdiYSgyNTUsIDY5LCAwLCAwLjA1KSAxMDAlKTtcclxuICAgICAgICAgIGJvcmRlci1jb2xvcjogcmdiYSgyNTUsIDE2NSwgMCwgMC4zKTtcclxuICAgICAgICAgIGFuaW1hdGlvbjogcHVsc2VXYXJuaW5nIDJzIGluZmluaXRlO1xyXG5cclxuICAgICAgICAgIEBrZXlmcmFtZXMgcHVsc2VXYXJuaW5nIHtcclxuICAgICAgICAgICAgMCUsIDEwMCUgeyBib3gtc2hhZG93OiAwIDAgMCByZ2JhKDI1NSwgMTY1LCAwLCAwLjQpOyB9XHJcbiAgICAgICAgICAgIDUwJSB7IGJveC1zaGFkb3c6IDAgMCAyMHB4IHJnYmEoMjU1LCAxNjUsIDAsIDAuMik7IH1cclxuICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICAubWVzc2FnZS1sYWJlbDo6YmVmb3JlIHsgXHJcbiAgICAgICAgICAgIGNvbnRlbnQ6IFwi8J+UkFwiOyBcclxuICAgICAgICAgICAgY29sb3I6ICNmZjZmMDA7XHJcbiAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgLmlucHV0LWJsb2NrIHtcclxuICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgICAgIG1hcmdpbi10b3A6IDEuNXJlbTtcclxuXHJcbiAgICAgICAgICAgIGxhYmVsIHtcclxuICAgICAgICAgICAgICBjb2xvcjogI2ZmNmYwMDtcclxuICAgICAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xyXG4gICAgICAgICAgICAgIGxldHRlci1zcGFjaW5nOiAwLjVweDtcclxuICAgICAgICAgICAgICBtYXJnaW4tYm90dG9tOiAxLjJyZW07XHJcbiAgICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG5cclxuICAgICAgICAgICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgICAgICAgICAgY29udGVudDogXCLwn5SRXCI7XHJcbiAgICAgICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcclxuICAgICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS44cmVtO1xyXG4gICAgICAgICAgICAgIH1cclxuICAgICAgICAgICAgfVxyXG5cclxuICAgICAgICAgICAgaW5wdXRbdHlwZT1cInBhc3N3b3JkXCJdIHtcclxuICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDg4LCA4OCwgODgsIDAuOCkgMCUsIHJnYmEoNjQsIDY0LCA2NCwgMC45KSAxMDAlKTtcclxuICAgICAgICAgICAgICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDI1NSwgMTY1LCAwLCAwLjQpO1xyXG4gICAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEuMnJlbTtcclxuICAgICAgICAgICAgICBwYWRkaW5nOiAxLjVyZW0gMnJlbTtcclxuICAgICAgICAgICAgICBmb250LXNpemU6IDEuNnJlbTtcclxuICAgICAgICAgICAgICBjb2xvcjogI2ZmZmZmZjtcclxuICAgICAgICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBjdWJpYy1iZXppZXIoMC40LCAwLCAwLjIsIDEpO1xyXG4gICAgICAgICAgICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMik7XHJcbiAgICAgICAgICAgICAgd2lkdGg6IDEwMCU7XHJcblxyXG4gICAgICAgICAgICAgICY6Zm9jdXMge1xyXG4gICAgICAgICAgICAgICAgb3V0bGluZTogbm9uZTtcclxuICAgICAgICAgICAgICAgIGJvcmRlci1jb2xvcjogI2ZmNmYwMDtcclxuICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC45KSAwJSwgcmdiYSg2NCwgNjQsIDY0LCAxKSAxMDAlKTtcclxuICAgICAgICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCAwIDRweCByZ2JhKDI1NSwgMTY1LCAwLCAwLjMpLFxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5zZXQgMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yKTtcclxuICAgICAgICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMXB4KTtcclxuICAgICAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgICAgICY6OnBsYWNlaG9sZGVyIHtcclxuICAgICAgICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNSk7XHJcbiAgICAgICAgICAgICAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG4gICAgICAgICAgICAgIH1cclxuXHJcbiAgICAgICAgICAgICAgJi5yZXF1aXJlZC1lcnJvciB7XHJcbiAgICAgICAgICAgICAgICBib3JkZXItY29sb3I6ICNmZjUyNTI7XHJcbiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDg4LCA4OCwgODgsIDAuOCkgMTAwJSk7XHJcbiAgICAgICAgICAgICAgICBhbmltYXRpb246IHNoYWtlIDAuM3MgZWFzZS1pbi1vdXQ7XHJcbiAgICAgICAgICAgICAgICBcclxuICAgICAgICAgICAgICAgICY6OnBsYWNlaG9sZGVyIHtcclxuICAgICAgICAgICAgICAgICAgY29sb3I6ICNmZjUyNTI7XHJcbiAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgfVxyXG5cclxuICAgICAgICAgICAgICBAa2V5ZnJhbWVzIHNoYWtlIHtcclxuICAgICAgICAgICAgICAgIDAlLCAxMDAlIHsgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDApOyB9XHJcbiAgICAgICAgICAgICAgICAyNSUgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTVweCk7IH1cclxuICAgICAgICAgICAgICAgIDc1JSB7IHRyYW5zZm9ybTogdHJhbnNsYXRlWCg1cHgpOyB9XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgICAuZXJyb3ItYmxvY2sge1xyXG4gICAgICAgICAgICAgIG1hcmdpbi10b3A6IDFyZW07XHJcbiAgICAgICAgICAgICAgcGFkZGluZzogMXJlbSAxLjVyZW07XHJcbiAgICAgICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDgyLCA4MiwgMC4xNSkgMCUsIHJnYmEoMjU1LCA4MiwgODIsIDAuMDUpIDEwMCUpO1xyXG4gICAgICAgICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjU1LCA4MiwgODIsIDAuNCk7XHJcbiAgICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMC44cmVtO1xyXG4gICAgICAgICAgICAgIGNvbG9yOiAjZmY1MjUyO1xyXG4gICAgICAgICAgICAgIGZvbnQtc2l6ZTogMS4zcmVtO1xyXG4gICAgICAgICAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICAgICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG5cclxuICAgICAgICAgICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgICAgICAgICAgY29udGVudDogXCLimqDvuI9cIjtcclxuICAgICAgICAgICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xyXG4gICAgICAgICAgICAgICAgZm9udC1zaXplOiAxLjZyZW07XHJcbiAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICB9XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAud3JhcHBlci1idXR0b25zIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgICBnYXA6IDJyZW07XHJcbiAgICBtYXJnaW4tdG9wOiAycmVtO1xyXG5cclxuICAgIGJ1dHRvbiB7XHJcbiAgICAgIGZsZXg6IDE7XHJcbiAgICAgIG1heC13aWR0aDogMjByZW07XHJcbiAgICAgIGhlaWdodDogNnJlbTtcclxuICAgICAgZm9udC1zaXplOiAxLjZyZW07XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiA3MDA7XHJcbiAgICAgIGxldHRlci1zcGFjaW5nOiAwLjVweDtcclxuICAgICAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcclxuICAgICAgYm9yZGVyLXJhZGl1czogMS41cmVtO1xyXG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGN1YmljLWJlemllcigwLjQsIDAsIDAuMiwgMSk7XHJcblxyXG4gICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgIGNvbnRlbnQ6ICcnO1xyXG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICB0b3A6IDA7XHJcbiAgICAgICAgbGVmdDogLTEwMCU7XHJcbiAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4yKSwgdHJhbnNwYXJlbnQpO1xyXG4gICAgICAgIHRyYW5zaXRpb246IGxlZnQgMC41cyBlYXNlO1xyXG4gICAgICB9XHJcblxyXG4gICAgICAmOmZpcnN0LWNoaWxkIHtcclxuICAgICAgICAvLyDQmtC90L7Qv9C60LAg0L7RgtC80LXQvdGLXHJcbiAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDgyLCA4MiwgMC44KSAwJSwgcmdiYSgxMzksIDY5LCAxOSwgMC44KSAxMDAlKTtcclxuICAgICAgICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjYpO1xyXG4gICAgICAgIGNvbG9yOiAjZmZmZmZmO1xyXG5cclxuICAgICAgICAmOjphZnRlciB7XHJcbiAgICAgICAgICBjb250ZW50OiBcIuKdjFwiO1xyXG4gICAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgICAgbGVmdDogMS41cmVtO1xyXG4gICAgICAgICAgdG9wOiA1MCU7XHJcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7XHJcbiAgICAgICAgICBmb250LXNpemU6IDEuNHJlbTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgICY6aG92ZXIge1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDgyLCA4MiwgMSkgMCUsIHJnYmEoMTM5LCA2OSwgMTksIDEpIDEwMCUpO1xyXG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiByZ2JhKDI1NSwgODIsIDgyLCAwLjgpO1xyXG4gICAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMjVweCByZ2JhKDI1NSwgODIsIDgyLCAwLjQpO1xyXG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0ycHgpO1xyXG5cclxuICAgICAgICAgICY6OmJlZm9yZSB7XHJcbiAgICAgICAgICAgIGxlZnQ6IDEwMCU7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAmOmFjdGl2ZSB7XHJcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMCk7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcblxyXG4gICAgICAmOmxhc3QtY2hpbGQge1xyXG4gICAgICAgIC8vINCa0L3QvtC/0LrQsCDQv9C+0LTRgtCy0LXRgNC20LTQtdC90LjRj1xyXG4gICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsICMxNjJjNDcgMCUsICMwQjFEMzMgNTAlLCAjMTYyYzQ3IDEwMCUpO1xyXG4gICAgICAgIGJvcmRlcjogMnB4IHNvbGlkICMzMkRDNTk7XHJcbiAgICAgICAgY29sb3I6ICNmZmZmZmY7XHJcblxyXG4gICAgICAgICY6OmFmdGVyIHtcclxuICAgICAgICAgIGNvbnRlbnQ6IFwi4pyFXCI7XHJcbiAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgICAgICBsZWZ0OiAxLjVyZW07XHJcbiAgICAgICAgICB0b3A6IDUwJTtcclxuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtNTAlKTtcclxuICAgICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgICBib3JkZXItY29sb3I6ICMzMkRDNTk7XHJcbiAgICAgICAgICBib3gtc2hhZG93OiAwIDEycHggNDhweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjQpLFxyXG4gICAgICAgICAgICAgICAgICAgICAgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XHJcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTNweCk7XHJcblxyXG4gICAgICAgICAgJjo6YmVmb3JlIHtcclxuICAgICAgICAgICAgbGVmdDogMTAwJTtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcblxyXG4gICAgICAgICY6YWN0aXZlIHtcclxuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMXB4KTtcclxuICAgICAgICAgIGJveC1zaGFkb3c6IDAgNHB4IDE2cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4zKSxcclxuICAgICAgICAgICAgICAgICAgICAgIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgJjpkaXNhYmxlZCB7XHJcbiAgICAgICAgICBvcGFjaXR5OiAwLjU7XHJcbiAgICAgICAgICBjdXJzb3I6IG5vdC1hbGxvd2VkO1xyXG4gICAgICAgICAgdHJhbnNmb3JtOiBub25lO1xyXG4gICAgICAgICAgXHJcbiAgICAgICAgICAmOmhvdmVyIHtcclxuICAgICAgICAgICAgdHJhbnNmb3JtOiBub25lO1xyXG4gICAgICAgICAgICBib3gtc2hhZG93OiAwIDhweCAzMnB4IHJnYmEoMCwgMCwgMCwgMC4zKSxcclxuICAgICAgICAgICAgICAgICAgICAgICAgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAvLyDQkNC00LDQv9GC0LjQstC90L7RgdGC0Ywg0LTQu9GPINC80L7QsdC40LvRjNC90YvRhSDRg9GB0YLRgNC+0LnRgdGC0LJcclxuICBAbWVkaWEgKG1heC13aWR0aDogNzY4cHgpIHtcclxuICAgIHdpZHRoOiA5NXZ3O1xyXG4gICAgcGFkZGluZzogMnJlbTtcclxuXHJcbiAgICAudGl0bGUge1xyXG4gICAgICBmb250LXNpemU6IDJyZW07XHJcbiAgICAgIFxyXG4gICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMi41cmVtO1xyXG4gICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgLmNvbnRlbnQgLm1lc3NhZ2UtY29udGFpbmVyIC5tZXNzYWdlLWJsb2NrIHtcclxuICAgICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICAgICAgZ2FwOiAxcmVtO1xyXG5cclxuICAgICAgLm1lc3NhZ2UtbGFiZWwge1xyXG4gICAgICAgIG1pbi13aWR0aDogYXV0bztcclxuICAgICAgfVxyXG5cclxuICAgICAgLm1lc3NhZ2UtdGV4dCB7XHJcbiAgICAgICAgbWFyZ2luLWxlZnQ6IDA7XHJcbiAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICAud3JhcHBlci1idXR0b25zIHtcclxuICAgICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICAgICAgZ2FwOiAxLjVyZW07XHJcblxyXG4gICAgICBidXR0b24ge1xyXG4gICAgICAgIG1heC13aWR0aDogMTAwJTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxufVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -18602,7 +22463,7 @@ module.exports = "<form *ngIf=\"!isLoading\" class=\"form-send\" [formGroup]=\"s
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ":host {\n  width: 100%; }\n\n.form-send .input-block-alias .adress-input-row {\n  position: relative;\n  width: 100%;\n  display: flex;\n  align-items: flex-end; }\n\n.form-send .input-block-alias .adress-input-row .curent-alias-adress {\n    position: absolute; }\n\n.form-send .input-block-alias .adress-input-row .curent-alias-adress.padding-bottom-01 {\n      padding-bottom: 0.1rem; }\n\n.form-send .input-block-alias input {\n  text-overflow: ellipsis; }\n\n.form-send .input-blocks-row {\n  display: flex; }\n\n.form-send .input-blocks-row > div {\n    flex-basis: 50%; }\n\n.form-send .input-blocks-row > div:first-child {\n      margin-right: 1.5rem; }\n\n.form-send .input-blocks-row > div:last-child {\n      margin-left: 1.5rem; }\n\n.form-send .send-select {\n  display: flex;\n  align-items: center;\n  background: transparent;\n  border: none;\n  font-size: 1.3rem;\n  line-height: 1.3rem;\n  margin: 1.5rem 0 0;\n  padding: 0;\n  width: 100%;\n  max-width: 15rem;\n  height: 1.3rem; }\n\n.form-send .send-select .arrow {\n    margin-left: 1rem;\n    width: 0.8rem;\n    height: 0.8rem; }\n\n.form-send .send-select .arrow.down {\n      background: center/contain no-repeat url('arrow-down.svg'); }\n\n.form-send .send-select .arrow.up {\n      background: center/contain no-repeat url('arrow-up.svg'); }\n\n.form-send .additional-details {\n  display: flex;\n  margin-top: 1.5rem;\n  padding: 0.5rem 0 2rem; }\n\n.form-send .additional-details > div {\n    flex-basis: 25%; }\n\n.form-send .additional-details > div:first-child {\n      padding-left: 1.5rem;\n      padding-right: 1rem; }\n\n.form-send .additional-details > div:last-child {\n      padding-left: 1rem;\n      padding-right: 1.5rem; }\n\n.form-send .additional-details .checkbox-block {\n    flex-basis: 50%; }\n\n.form-send .additional-details .checkbox-block > label {\n      top: 3.5rem; }\n\n.form-send .additional-details .checkbox-block.disabled-checkbox-block label {\n      cursor: url('not-allowed.svg'), not-allowed; }\n\n.form-send .additional-details .checkbox-block.disabled-checkbox-block label:before {\n        background-color: #556576;\n        border: 0.1rem solid #556576; }\n\n.form-send button {\n  margin: 2.4rem 0;\n  width: 100%;\n  max-width: 15rem; }\n\n.form-send .wrap {\n  margin-top: 2rem;\n  margin-bottom: 2rem;\n  padding: 2rem;\n  border: 0.1rem solid #2a3543; }\n\n.form-send .wrap .title {\n    font-size: 100%;\n    margin-bottom: 1.5rem;\n    color: #4db1ff; }\n\n.form-send .wrap .title .icon {\n      width: 2rem;\n      height: 2rem;\n      float: right; }\n\n.form-send .wrap .text-wrap {\n    margin: 1.5rem;\n    font-size: 1.5rem; }\n\n.form-send .wrap table tr {\n    background-color: transparent; }\n\n.form-send .wrap table tr td:first-child {\n      width: 22.5rem;\n      padding-left: 0; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2VuZC9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcc2VuZFxcc2VuZC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQVcsRUFBQTs7QUFFYjtFQUdNLGtCQUFrQjtFQUNsQixXQUFXO0VBQ1gsYUFBYTtFQUNiLHFCQUFxQixFQUFBOztBQU4zQjtJQVFRLGtCQUFrQixFQUFBOztBQVIxQjtNQVVVLHNCQUFzQixFQUFBOztBQVZoQztFQWVNLHVCQUF1QixFQUFBOztBQWY3QjtFQW1CSSxhQUFhLEVBQUE7O0FBbkJqQjtJQXFCTSxlQUFlLEVBQUE7O0FBckJyQjtNQXVCUSxvQkFBb0IsRUFBQTs7QUF2QjVCO01BMEJRLG1CQUFtQixFQUFBOztBQTFCM0I7RUErQkksYUFBYTtFQUNiLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsWUFBWTtFQUNaLGlCQUFpQjtFQUNqQixtQkFBbUI7RUFDbkIsa0JBQWtCO0VBQ2xCLFVBQVU7RUFDVixXQUFXO0VBQ1gsZ0JBQWdCO0VBQ2hCLGNBQWMsRUFBQTs7QUF6Q2xCO0lBMkNNLGlCQUFpQjtJQUNqQixhQUFhO0lBQ2IsY0FBYyxFQUFBOztBQTdDcEI7TUErQ1EsMERBQTRFLEVBQUE7O0FBL0NwRjtNQWtEUSx3REFBMEUsRUFBQTs7QUFsRGxGO0VBdURJLGFBQWE7RUFDYixrQkFBa0I7RUFDbEIsc0JBQXNCLEVBQUE7O0FBekQxQjtJQTJETSxlQUFlLEVBQUE7O0FBM0RyQjtNQTZEUSxvQkFBb0I7TUFDcEIsbUJBQW1CLEVBQUE7O0FBOUQzQjtNQWlFUSxrQkFBa0I7TUFDbEIscUJBQXFCLEVBQUE7O0FBbEU3QjtJQXNFTSxlQUFlLEVBQUE7O0FBdEVyQjtNQXdFUSxXQUFXLEVBQUE7O0FBeEVuQjtNQTRFVSwyQ0FBNEQsRUFBQTs7QUE1RXRFO1FBOEVZLHlCQUF5QjtRQUN6Qiw0QkFBNEIsRUFBQTs7QUEvRXhDO0VBc0ZJLGdCQUFnQjtFQUNoQixXQUFXO0VBQ1gsZ0JBQWdCLEVBQUE7O0FBeEZwQjtFQTJGSSxnQkFBZ0I7RUFDaEIsbUJBQW1CO0VBQ25CLGFBQWE7RUFDYiw0QkFBNEIsRUFBQTs7QUE5RmhDO0lBZ0dNLGVBQWU7SUFDZixxQkFBcUI7SUFDckIsY0FBYyxFQUFBOztBQWxHcEI7TUFvR1EsV0FBVztNQUNYLFlBQVk7TUFDWixZQUFZLEVBQUE7O0FBdEdwQjtJQTBHTSxjQUFjO0lBQ2QsaUJBQWlCLEVBQUE7O0FBM0d2QjtJQThHTSw2QkFBNkIsRUFBQTs7QUE5R25DO01BZ0hRLGNBQWM7TUFDZCxlQUFlLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9zZW5kL3NlbmQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6aG9zdCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbn1cclxuLmZvcm0tc2VuZCB7XHJcbiAgLmlucHV0LWJsb2NrLWFsaWFzIHtcclxuICAgIC5hZHJlc3MtaW5wdXQtcm93IHtcclxuICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgYWxpZ24taXRlbXM6IGZsZXgtZW5kO1xyXG4gICAgICAuY3VyZW50LWFsaWFzLWFkcmVzcyB7XHJcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgICYucGFkZGluZy1ib3R0b20tMDEge1xyXG4gICAgICAgICAgcGFkZGluZy1ib3R0b206IDAuMXJlbTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICAgIGlucHV0IHtcclxuICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XHJcbiAgICB9XHJcbiAgfVxyXG4gIC5pbnB1dC1ibG9ja3Mtcm93IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICA+IGRpdiB7XHJcbiAgICAgIGZsZXgtYmFzaXM6IDUwJTtcclxuICAgICAgJjpmaXJzdC1jaGlsZCB7XHJcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxLjVyZW07XHJcbiAgICAgIH1cclxuICAgICAgJjpsYXN0LWNoaWxkIHtcclxuICAgICAgICBtYXJnaW4tbGVmdDogMS41cmVtO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG4gIC5zZW5kLXNlbGVjdCB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgYm9yZGVyOiBub25lO1xyXG4gICAgZm9udC1zaXplOiAxLjNyZW07XHJcbiAgICBsaW5lLWhlaWdodDogMS4zcmVtO1xyXG4gICAgbWFyZ2luOiAxLjVyZW0gMCAwO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbWF4LXdpZHRoOiAxNXJlbTtcclxuICAgIGhlaWdodDogMS4zcmVtO1xyXG4gICAgLmFycm93IHtcclxuICAgICAgbWFyZ2luLWxlZnQ6IDFyZW07XHJcbiAgICAgIHdpZHRoOiAwLjhyZW07XHJcbiAgICAgIGhlaWdodDogMC44cmVtO1xyXG4gICAgICAmLmRvd24ge1xyXG4gICAgICAgIGJhY2tncm91bmQ6IGNlbnRlciAvIGNvbnRhaW4gbm8tcmVwZWF0IHVybCh+c3JjL2Fzc2V0cy9pY29ucy9hcnJvdy1kb3duLnN2Zyk7XHJcbiAgICAgIH1cclxuICAgICAgJi51cCB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKH5zcmMvYXNzZXRzL2ljb25zL2Fycm93LXVwLnN2Zyk7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbiAgLmFkZGl0aW9uYWwtZGV0YWlscyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgbWFyZ2luLXRvcDogMS41cmVtO1xyXG4gICAgcGFkZGluZzogMC41cmVtIDAgMnJlbTtcclxuICAgID4gZGl2IHtcclxuICAgICAgZmxleC1iYXNpczogMjUlO1xyXG4gICAgICAmOmZpcnN0LWNoaWxkIHtcclxuICAgICAgICBwYWRkaW5nLWxlZnQ6IDEuNXJlbTtcclxuICAgICAgICBwYWRkaW5nLXJpZ2h0OiAxcmVtO1xyXG4gICAgICB9XHJcbiAgICAgICY6bGFzdC1jaGlsZCB7XHJcbiAgICAgICAgcGFkZGluZy1sZWZ0OiAxcmVtO1xyXG4gICAgICAgIHBhZGRpbmctcmlnaHQ6IDEuNXJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gICAgLmNoZWNrYm94LWJsb2NrIHtcclxuICAgICAgZmxleC1iYXNpczogNTAlO1xyXG4gICAgICA+IGxhYmVsIHtcclxuICAgICAgICB0b3A6IDMuNXJlbTtcclxuICAgICAgfVxyXG4gICAgICAmLmRpc2FibGVkLWNoZWNrYm94LWJsb2NrIHtcclxuICAgICAgICBsYWJlbCB7XHJcbiAgICAgICAgICBjdXJzb3I6IHVybCguLi8uLi9hc3NldHMvaWNvbnMvbm90LWFsbG93ZWQuc3ZnKSwgbm90LWFsbG93ZWQ7XHJcbiAgICAgICAgICAmOmJlZm9yZSB7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQtY29sb3I6ICM1NTY1NzY7XHJcbiAgICAgICAgICAgIGJvcmRlcjogMC4xcmVtIHNvbGlkICM1NTY1NzY7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG4gIGJ1dHRvbiB7XHJcbiAgICBtYXJnaW46IDIuNHJlbSAwO1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtYXgtd2lkdGg6IDE1cmVtO1xyXG4gIH1cclxuICAud3JhcCB7XHJcbiAgICBtYXJnaW4tdG9wOiAycmVtO1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMnJlbTtcclxuICAgIHBhZGRpbmc6IDJyZW07XHJcbiAgICBib3JkZXI6IDAuMXJlbSBzb2xpZCAjMmEzNTQzO1xyXG4gICAgLnRpdGxlIHtcclxuICAgICAgZm9udC1zaXplOiAxMDAlO1xyXG4gICAgICBtYXJnaW4tYm90dG9tOiAxLjVyZW07XHJcbiAgICAgIGNvbG9yOiAjNGRiMWZmO1xyXG4gICAgICAuaWNvbiB7XHJcbiAgICAgICAgd2lkdGg6IDJyZW07XHJcbiAgICAgICAgaGVpZ2h0OiAycmVtO1xyXG4gICAgICAgIGZsb2F0OiByaWdodDtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gICAgLnRleHQtd3JhcCB7XHJcbiAgICAgIG1hcmdpbjogMS41cmVtO1xyXG4gICAgICBmb250LXNpemU6IDEuNXJlbTtcclxuICAgIH1cclxuICAgIHRhYmxlIHRyIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgICAgIHRkOmZpcnN0LWNoaWxkIHtcclxuICAgICAgICB3aWR0aDogMjIuNXJlbTtcclxuICAgICAgICBwYWRkaW5nLWxlZnQ6IDA7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbn1cclxuIl19 */"
+module.exports = "@charset \"UTF-8\";\n:host {\n  width: 100%; }\n.form-send {\n  background: linear-gradient(135deg, rgba(32, 111, 90, 0.1) 0%, rgba(22, 110, 70, 0.05) 100%);\n  border-radius: 1.5rem;\n  padding: 3rem 2.5rem;\n  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);\n  border: 1px solid rgba(50, 220, 89, 0.2);\n  transition: all 0.3s ease; }\n.form-send:hover {\n    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);\n    border-color: rgba(50, 220, 89, 0.3); }\n.form-send .input-block-alias {\n    position: relative;\n    margin-bottom: 3rem; }\n.form-send .input-block-alias label {\n      color: #32DC59;\n      font-weight: 600;\n      font-size: 1.4rem;\n      letter-spacing: 0.5px;\n      margin-bottom: 1rem;\n      display: flex;\n      align-items: center; }\n.form-send .input-block-alias label::before {\n        content: \"📧\";\n        margin-right: 0.8rem;\n        font-size: 1.6rem; }\n.form-send .input-block-alias .adress-input-row {\n      position: relative;\n      width: 100%;\n      display: flex;\n      align-items: flex-end; }\n.form-send .input-block-alias .adress-input-row input {\n        background: linear-gradient(135deg, rgba(88, 88, 88, 0.8) 0%, rgba(64, 64, 64, 0.9) 100%);\n        border: 2px solid rgba(50, 220, 89, 0.3);\n        border-radius: 1.2rem;\n        padding: 1.5rem 2rem;\n        font-size: 1.6rem;\n        color: #ffffff;\n        text-overflow: ellipsis;\n        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); }\n.form-send .input-block-alias .adress-input-row input:focus {\n          outline: none;\n          border-color: #32DC59;\n          background: linear-gradient(135deg, rgba(88, 88, 88, 0.9) 0%, #404040 100%);\n          box-shadow: 0 0 0 4px rgba(50, 220, 89, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2);\n          transform: translateY(-1px); }\n.form-send .input-block-alias .adress-input-row input::-moz-placeholder {\n          color: rgba(255, 255, 255, 0.5);\n          text-align: left; }\n.form-send .input-block-alias .adress-input-row input::placeholder {\n          color: rgba(255, 255, 255, 0.5);\n          text-align: left; }\n.form-send .input-block-alias .adress-input-row input.required-error {\n          border-color: #ff5252;\n          background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(88, 88, 88, 0.8) 100%); }\n.form-send .input-block-alias .adress-input-row input.required-error::-moz-placeholder {\n            color: #ff5252; }\n.form-send .input-block-alias .adress-input-row input.required-error::placeholder {\n            color: #ff5252; }\n.form-send .input-block-alias .adress-input-row .curent-alias-adress {\n        position: absolute;\n        background: rgba(50, 220, 89, 0.15);\n        color: #32DC59;\n        padding: 0.4rem 0.8rem;\n        border-radius: 0.8rem;\n        font-size: 1.2rem;\n        border: 1px solid rgba(50, 220, 89, 0.3);\n        -webkit-backdrop-filter: blur(4px);\n                backdrop-filter: blur(4px); }\n.form-send .input-block-alias .adress-input-row .curent-alias-adress.padding-bottom-01 {\n          padding-bottom: 0.1rem; }\n.form-send .input-block-alias .alias-dropdown {\n      position: absolute;\n      top: 100%;\n      left: 0;\n      right: 0;\n      background: linear-gradient(135deg, rgba(22, 110, 70, 0.95) 0%, rgba(32, 111, 90, 0.95) 100%);\n      border: 1px solid rgba(50, 220, 89, 0.4);\n      border-radius: 1.2rem;\n      margin-top: 0.5rem;\n      padding: 1rem;\n      max-height: 20rem;\n      overflow-y: auto;\n      z-index: 100;\n      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);\n      -webkit-backdrop-filter: blur(10px);\n              backdrop-filter: blur(10px); }\n.form-send .input-block-alias .alias-dropdown div {\n        padding: 1.2rem 1.5rem;\n        cursor: pointer;\n        color: #ffffff;\n        border-radius: 0.8rem;\n        transition: all 0.2s ease;\n        margin-bottom: 0.5rem; }\n.form-send .input-block-alias .alias-dropdown div:hover {\n          background: rgba(50, 220, 89, 0.2);\n          color: #32DC59;\n          transform: translateX(0.5rem); }\n.form-send .input-block-alias .alias-dropdown div:last-child {\n          margin-bottom: 0; }\n.form-send .input-block-alias .error-block {\n      margin-top: 1rem;\n      padding: 1rem 1.5rem;\n      background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(255, 82, 82, 0.05) 100%);\n      border: 1px solid rgba(255, 82, 82, 0.3);\n      border-radius: 0.8rem;\n      color: #ff5252;\n      font-size: 1.3rem;\n      animation: shake 0.3s ease-in-out; }\n@keyframes shake {\n  0%, 100% {\n    transform: translateX(0); }\n  25% {\n    transform: translateX(-0.5rem); }\n  75% {\n    transform: translateX(0.5rem); } }\n.form-send .input-blocks-row {\n    display: flex;\n    gap: 2rem;\n    margin-bottom: 2rem; }\n.form-send .input-blocks-row > div {\n      flex: 1; }\n.form-send .input-blocks-row > div label {\n        color: #32DC59;\n        font-weight: 600;\n        font-size: 1.4rem;\n        letter-spacing: 0.5px;\n        margin-bottom: 1rem;\n        display: flex;\n        align-items: center; }\n.form-send .input-blocks-row > div label[for=\"send-amount\"]::before {\n          content: \"💰\";\n          margin-right: 0.8rem;\n          font-size: 1.6rem; }\n.form-send .input-blocks-row > div label[for=\"send-comment\"]::before {\n          content: \"💬\";\n          margin-right: 0.8rem;\n          font-size: 1.6rem; }\n.form-send .input-blocks-row > div input {\n        background: linear-gradient(135deg, rgba(88, 88, 88, 0.8) 0%, rgba(64, 64, 64, 0.9) 100%);\n        border: 2px solid rgba(50, 220, 89, 0.3);\n        border-radius: 1.2rem;\n        padding: 1.5rem 2rem;\n        font-size: 1.6rem;\n        color: #ffffff;\n        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);\n        width: 100%; }\n.form-send .input-blocks-row > div input:focus {\n          outline: none;\n          border-color: #32DC59;\n          background: linear-gradient(135deg, rgba(88, 88, 88, 0.9) 0%, #404040 100%);\n          box-shadow: 0 0 0 4px rgba(50, 220, 89, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2);\n          transform: translateY(-1px); }\n.form-send .input-blocks-row > div input::-moz-placeholder {\n          color: rgba(255, 255, 255, 0.5);\n          text-align: left; }\n.form-send .input-blocks-row > div input::placeholder {\n          color: rgba(255, 255, 255, 0.5);\n          text-align: left; }\n.form-send .input-blocks-row > div input.required-error {\n          border-color: #ff5252;\n          background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(88, 88, 88, 0.8) 100%); }\n.form-send .input-blocks-row > div input.required-error::-moz-placeholder {\n            color: #ff5252; }\n.form-send .input-blocks-row > div input.required-error::placeholder {\n            color: #ff5252; }\n.form-send .input-blocks-row > div .error-block {\n        margin-top: 1rem;\n        padding: 1rem 1.5rem;\n        background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(255, 82, 82, 0.05) 100%);\n        border: 1px solid rgba(255, 82, 82, 0.3);\n        border-radius: 0.8rem;\n        color: #ff5252;\n        font-size: 1.3rem;\n        animation: shake 0.3s ease-in-out; }\n.form-send .wrap {\n    margin: 3rem 0;\n    background: linear-gradient(135deg, rgba(50, 220, 89, 0.05) 0%, rgba(22, 110, 70, 0.1) 100%);\n    border: 2px solid rgba(50, 220, 89, 0.3);\n    border-radius: 1.5rem;\n    padding: 2.5rem;\n    position: relative;\n    overflow: hidden;\n    animation: glow 2s ease-in-out infinite alternate; }\n@keyframes glow {\n  0% {\n    box-shadow: 0 0 20px rgba(50, 220, 89, 0.1); }\n  100% {\n    box-shadow: 0 0 30px rgba(50, 220, 89, 0.2); } }\n.form-send .wrap::before {\n      content: '';\n      position: absolute;\n      top: 0;\n      left: -100%;\n      width: 100%;\n      height: 100%;\n      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);\n      animation: shimmer 3s infinite; }\n@keyframes shimmer {\n  0% {\n    left: -100%; }\n  100% {\n    left: 100%; } }\n.form-send .wrap .title {\n      font-size: 1.6rem;\n      font-weight: 600;\n      margin-bottom: 1.5rem;\n      color: #32DC59;\n      display: flex;\n      align-items: center;\n      letter-spacing: 0.5px; }\n.form-send .wrap .title .icon {\n        width: 2rem;\n        height: 2rem;\n        margin-left: auto;\n        filter: drop-shadow(0 0 8px rgba(50, 220, 89, 0.5)); }\n.form-send .wrap .text-wrap {\n      margin: 1.5rem 0;\n      font-size: 1.4rem;\n      color: rgba(255, 255, 255, 0.9);\n      line-height: 1.6; }\n.form-send .wrap table {\n      width: 100%;\n      border-collapse: separate;\n      border-spacing: 0 0.8rem; }\n.form-send .wrap table tr {\n        background-color: transparent; }\n.form-send .wrap table tr td {\n          padding: 1rem 1.5rem;\n          background: rgba(0, 0, 0, 0.2);\n          border-radius: 0.8rem;\n          color: #ffffff;\n          font-size: 1.4rem; }\n.form-send .wrap table tr td:first-child {\n            border-top-left-radius: 0.8rem;\n            border-bottom-left-radius: 0.8rem;\n            border-right: 1px solid rgba(50, 220, 89, 0.2);\n            color: rgba(255, 255, 255, 0.8);\n            font-weight: 500; }\n.form-send .wrap table tr td:last-child {\n            border-top-right-radius: 0.8rem;\n            border-bottom-right-radius: 0.8rem;\n            color: #32DC59;\n            font-weight: 600; }\n.form-send .send-select {\n    display: flex;\n    align-items: center;\n    background: linear-gradient(135deg, rgba(50, 220, 89, 0.1) 0%, rgba(22, 110, 70, 0.15) 100%);\n    border: 2px solid rgba(50, 220, 89, 0.3);\n    border-radius: 1.2rem;\n    font-size: 1.4rem;\n    font-weight: 600;\n    line-height: 1.3rem;\n    margin: 2.5rem 0 0;\n    padding: 1.5rem 2rem;\n    width: 100%;\n    max-width: 20rem;\n    height: auto;\n    color: #32DC59;\n    cursor: pointer;\n    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n    position: relative;\n    overflow: hidden; }\n.form-send .send-select::before {\n      content: \"⚙️\";\n      margin-right: 1rem;\n      font-size: 1.6rem; }\n.form-send .send-select:hover {\n      background: linear-gradient(135deg, rgba(50, 220, 89, 0.15) 0%, rgba(22, 110, 70, 0.2) 100%);\n      border-color: #32DC59;\n      transform: translateY(-2px);\n      box-shadow: 0 8px 25px rgba(50, 220, 89, 0.3); }\n.form-send .send-select:active {\n      transform: translateY(0); }\n.form-send .send-select .arrow {\n      margin-left: auto;\n      width: 1.2rem;\n      height: 1.2rem;\n      transition: all 0.3s ease;\n      filter: drop-shadow(0 0 4px rgba(50, 220, 89, 0.5)); }\n.form-send .send-select .arrow.down {\n        background: center/contain no-repeat url('arrow-down.svg');\n        transform: rotate(0deg); }\n.form-send .send-select .arrow.up {\n        background: center/contain no-repeat url('arrow-up.svg');\n        transform: rotate(180deg); }\n.form-send .additional-details {\n    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(50, 220, 89, 0.05) 100%);\n    border: 1px solid rgba(50, 220, 89, 0.2);\n    border-radius: 1.5rem;\n    margin-top: 2rem;\n    padding: 2.5rem;\n    animation: slideDown 0.3s ease-out;\n    display: flex;\n    flex-wrap: wrap;\n    gap: 2rem; }\n@keyframes slideDown {\n  from {\n    opacity: 0;\n    transform: translateY(-20px); }\n  to {\n    opacity: 1;\n    transform: translateY(0); } }\n.form-send .additional-details .input-block {\n      flex: 1;\n      min-width: 20rem; }\n.form-send .additional-details .input-block label {\n        color: #32DC59;\n        font-weight: 600;\n        font-size: 1.4rem;\n        letter-spacing: 0.5px;\n        margin-bottom: 1rem;\n        display: flex;\n        align-items: center; }\n.form-send .additional-details .input-block label[for=\"send-mixin\"]::before {\n          content: \"🔀\";\n          margin-right: 0.8rem;\n          font-size: 1.6rem; }\n.form-send .additional-details .input-block label[for=\"send-fee\"]::before {\n          content: \"💸\";\n          margin-right: 0.8rem;\n          font-size: 1.6rem; }\n.form-send .additional-details .input-block input {\n        background: linear-gradient(135deg, rgba(88, 88, 88, 0.6) 0%, rgba(64, 64, 64, 0.8) 100%);\n        border: 2px solid rgba(50, 220, 89, 0.2);\n        border-radius: 1rem;\n        padding: 1.2rem 1.8rem;\n        font-size: 1.5rem;\n        color: #ffffff;\n        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n        width: 100%; }\n.form-send .additional-details .input-block input:focus {\n          outline: none;\n          border-color: #32DC59;\n          background: linear-gradient(135deg, rgba(88, 88, 88, 0.8) 0%, #404040 100%);\n          box-shadow: 0 0 0 3px rgba(50, 220, 89, 0.2); }\n.form-send .additional-details .input-block input::-moz-placeholder {\n          color: rgba(255, 255, 255, 0.4); }\n.form-send .additional-details .input-block input::placeholder {\n          color: rgba(255, 255, 255, 0.4); }\n.form-send .additional-details .input-block input.required-error {\n          border-color: #ff5252; }\n.form-send .additional-details .input-block input.required-error::-moz-placeholder {\n            color: #ff5252; }\n.form-send .additional-details .input-block input.required-error::placeholder {\n            color: #ff5252; }\n.form-send .additional-details .input-block .error-block {\n        margin-top: 0.8rem;\n        padding: 0.8rem 1.2rem;\n        background: linear-gradient(135deg, rgba(255, 82, 82, 0.1) 0%, rgba(255, 82, 82, 0.05) 100%);\n        border: 1px solid rgba(255, 82, 82, 0.3);\n        border-radius: 0.6rem;\n        color: #ff5252;\n        font-size: 1.2rem; }\n.form-send .additional-details .checkbox-block {\n      flex: 1;\n      min-width: 20rem;\n      display: flex;\n      align-items: center;\n      padding-top: 2rem; }\n.form-send .additional-details .checkbox-block input[type=\"checkbox\"] {\n        margin-right: 1.5rem;\n        transform: scale(1.3);\n        accent-color: #32DC59; }\n.form-send .additional-details .checkbox-block label {\n        color: #ffffff;\n        font-size: 1.4rem;\n        font-weight: 500;\n        cursor: pointer;\n        transition: all 0.2s ease;\n        display: flex;\n        align-items: center; }\n.form-send .additional-details .checkbox-block label::before {\n          content: \"🔒\";\n          margin-right: 0.8rem;\n          font-size: 1.6rem; }\n.form-send .additional-details .checkbox-block label:hover {\n          color: #32DC59; }\n.form-send .additional-details .checkbox-block.disabled-checkbox-block {\n        opacity: 0.6; }\n.form-send .additional-details .checkbox-block.disabled-checkbox-block label {\n          cursor: not-allowed; }\n.form-send .additional-details .checkbox-block.disabled-checkbox-block label:hover {\n            color: #ffffff; }\n.form-send button.blue-button {\n    margin: 3rem auto 2rem;\n    width: 100%;\n    max-width: 25rem;\n    height: 6rem;\n    font-size: 1.8rem;\n    font-weight: 700;\n    letter-spacing: 1px;\n    text-transform: uppercase;\n    border-radius: 2rem;\n    position: relative;\n    overflow: hidden;\n    background: linear-gradient(135deg, #162c47 0%, #0B1D33 50%, #162c47 100%);\n    border: 2px solid #32DC59;\n    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }\n.form-send button.blue-button::before {\n      content: '';\n      position: absolute;\n      top: 0;\n      left: -100%;\n      width: 100%;\n      height: 100%;\n      background: linear-gradient(90deg, transparent, rgba(50, 220, 89, 0.2), transparent);\n      transition: left 0.5s ease; }\n.form-send button.blue-button:not(:disabled):hover {\n      border-color: #32DC59;\n      box-shadow: 0 12px 48px rgba(50, 220, 89, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);\n      transform: translateY(-3px); }\n.form-send button.blue-button:not(:disabled):hover::before {\n        left: 100%; }\n.form-send button.blue-button:not(:disabled):active {\n      transform: translateY(-1px);\n      box-shadow: 0 4px 16px rgba(50, 220, 89, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }\n.form-send button.blue-button:disabled {\n      opacity: 0.5;\n      cursor: not-allowed;\n      transform: none; }\n.form-send button.blue-button:disabled:hover {\n        transform: none;\n        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2VuZC9zZW5kLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9zZW5kL0Y6XFxHaXRIdWJcXE5pcm1hdGFHVUlcXGh0bWxfc291cmNlL3NyY1xcYXBwXFxzZW5kXFxzZW5kLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGdCQUFnQjtBQ0FoQjtFQUNFLFdBQVcsRUFBQTtBQUdiO0VBRUUsNEZBQTRGO0VBQzVGLHFCQUFxQjtFQUNyQixvQkFBb0I7RUFDcEIsaUZBQ2tEO0VBQ2xELHdDQUF3QztFQUN4Qyx5QkFBeUIsRUFBQTtBQVIzQjtJQVdJLG1GQUNtRDtJQUNuRCxvQ0FBb0MsRUFBQTtBQWJ4QztJQWtCSSxrQkFBa0I7SUFDbEIsbUJBQW1CLEVBQUE7QUFuQnZCO01Bc0JNLGNBQWM7TUFDZCxnQkFBZ0I7TUFDaEIsaUJBQWlCO01BQ2pCLHFCQUFxQjtNQUNyQixtQkFBbUI7TUFDbkIsYUFBYTtNQUNiLG1CQUFtQixFQUFBO0FBNUJ6QjtRQStCUSxhQUFTO1FBQ1Qsb0JBQW9CO1FBQ3BCLGlCQUFpQixFQUFBO0FBakN6QjtNQXNDTSxrQkFBa0I7TUFDbEIsV0FBVztNQUNYLGFBQWE7TUFDYixxQkFBcUIsRUFBQTtBQXpDM0I7UUE0Q1EseUZBQXlGO1FBQ3pGLHdDQUF3QztRQUN4QyxxQkFBcUI7UUFDckIsb0JBQW9CO1FBQ3BCLGlCQUFpQjtRQUNqQixjQUFjO1FBQ2QsdUJBQXVCO1FBQ3ZCLGlEQUFpRDtRQUNqRCw4Q0FBOEMsRUFBQTtBQXBEdEQ7VUF1RFUsYUFBYTtVQUNiLHFCQUFxQjtVQUNyQiwyRUFBdUY7VUFDdkYsZ0ZBQzhDO1VBQzlDLDJCQUEyQixFQUFBO0FBNURyQztVQWdFVSwrQkFBK0I7VUFDL0IsZ0JBQWdCLEVBQUE7QUFqRTFCO1VBZ0VVLCtCQUErQjtVQUMvQixnQkFBZ0IsRUFBQTtBQWpFMUI7VUFxRVUscUJBQXFCO1VBQ3JCLDBGQUEwRixFQUFBO0FBdEVwRztZQXlFWSxjQUFjLEVBQUE7QUF6RTFCO1lBeUVZLGNBQWMsRUFBQTtBQXpFMUI7UUErRVEsa0JBQWtCO1FBQ2xCLG1DQUFtQztRQUNuQyxjQUFjO1FBQ2Qsc0JBQXNCO1FBQ3RCLHFCQUFxQjtRQUNyQixpQkFBaUI7UUFDakIsd0NBQXdDO1FBQ3hDLGtDQUEwQjtnQkFBMUIsMEJBQTBCLEVBQUE7QUF0RmxDO1VBeUZVLHNCQUFzQixFQUFBO0FBekZoQztNQWdHTSxrQkFBa0I7TUFDbEIsU0FBUztNQUNULE9BQU87TUFDUCxRQUFRO01BQ1IsNkZBQTZGO01BQzdGLHdDQUF3QztNQUN4QyxxQkFBcUI7TUFDckIsa0JBQWtCO01BQ2xCLGFBQWE7TUFDYixpQkFBaUI7TUFDakIsZ0JBQWdCO01BQ2hCLFlBQVk7TUFDWix5Q0FBeUM7TUFDekMsbUNBQTJCO2NBQTNCLDJCQUEyQixFQUFBO0FBN0dqQztRQWdIUSxzQkFBc0I7UUFDdEIsZUFBZTtRQUNmLGNBQWM7UUFDZCxxQkFBcUI7UUFDckIseUJBQXlCO1FBQ3pCLHFCQUFxQixFQUFBO0FBckg3QjtVQXdIVSxrQ0FBa0M7VUFDbEMsY0FBYztVQUNkLDZCQUE2QixFQUFBO0FBMUh2QztVQThIVSxnQkFBZ0IsRUFBQTtBQTlIMUI7TUFvSU0sZ0JBQWdCO01BQ2hCLG9CQUFvQjtNQUNwQiw0RkFBNEY7TUFDNUYsd0NBQXdDO01BQ3hDLHFCQUFxQjtNQUNyQixjQUFjO01BQ2QsaUJBQWlCO01BQ2pCLGlDQUFpQyxFQUFBO0FBRWpDO0VBQ0U7SUFBVyx3QkFBd0IsRUFBQTtFQUNuQztJQUFNLDhCQUE4QixFQUFBO0VBQ3BDO0lBQU0sNkJBQTZCLEVBQUEsRUFBQTtBQWhKM0M7SUF1SkksYUFBYTtJQUNiLFNBQVM7SUFDVCxtQkFBbUIsRUFBQTtBQXpKdkI7TUE0Sk0sT0FBTyxFQUFBO0FBNUpiO1FBK0pRLGNBQWM7UUFDZCxnQkFBZ0I7UUFDaEIsaUJBQWlCO1FBQ2pCLHFCQUFxQjtRQUNyQixtQkFBbUI7UUFDbkIsYUFBYTtRQUNiLG1CQUFtQixFQUFBO0FBckszQjtVQXdLVSxhQUFTO1VBQ1Qsb0JBQW9CO1VBQ3BCLGlCQUFpQixFQUFBO0FBMUszQjtVQThLVSxhQUFTO1VBQ1Qsb0JBQW9CO1VBQ3BCLGlCQUFpQixFQUFBO0FBaEwzQjtRQXFMUSx5RkFBeUY7UUFDekYsd0NBQXdDO1FBQ3hDLHFCQUFxQjtRQUNyQixvQkFBb0I7UUFDcEIsaUJBQWlCO1FBQ2pCLGNBQWM7UUFDZCxpREFBaUQ7UUFDakQsOENBQThDO1FBQzlDLFdBQVcsRUFBQTtBQTdMbkI7VUFnTVUsYUFBYTtVQUNiLHFCQUFxQjtVQUNyQiwyRUFBdUY7VUFDdkYsZ0ZBQzhDO1VBQzlDLDJCQUEyQixFQUFBO0FBck1yQztVQXlNVSwrQkFBK0I7VUFDL0IsZ0JBQWdCLEVBQUE7QUExTTFCO1VBeU1VLCtCQUErQjtVQUMvQixnQkFBZ0IsRUFBQTtBQTFNMUI7VUE4TVUscUJBQXFCO1VBQ3JCLDBGQUEwRixFQUFBO0FBL01wRztZQWtOWSxjQUFjLEVBQUE7QUFsTjFCO1lBa05ZLGNBQWMsRUFBQTtBQWxOMUI7UUF3TlEsZ0JBQWdCO1FBQ2hCLG9CQUFvQjtRQUNwQiw0RkFBNEY7UUFDNUYsd0NBQXdDO1FBQ3hDLHFCQUFxQjtRQUNyQixjQUFjO1FBQ2QsaUJBQWlCO1FBQ2pCLGlDQUFpQyxFQUFBO0FBL056QztJQXNPSSxjQUFjO0lBQ2QsNEZBQTRGO0lBQzVGLHdDQUF3QztJQUN4QyxxQkFBcUI7SUFDckIsZUFBZTtJQUNmLGtCQUFrQjtJQUNsQixnQkFBZ0I7SUFDaEIsaURBQWlELEVBQUE7QUFFakQ7RUFDRTtJQUFLLDJDQUEyQyxFQUFBO0VBQ2hEO0lBQU8sMkNBQTJDLEVBQUEsRUFBQTtBQWpQeEQ7TUFxUE0sV0FBVztNQUNYLGtCQUFrQjtNQUNsQixNQUFNO01BQ04sV0FBVztNQUNYLFdBQVc7TUFDWCxZQUFZO01BQ1osdUZBQXVGO01BQ3ZGLDhCQUE4QixFQUFBO0FBR2hDO0VBQ0U7SUFBSyxXQUFXLEVBQUE7RUFDaEI7SUFBTyxVQUFVLEVBQUEsRUFBQTtBQWpRdkI7TUFxUU0saUJBQWlCO01BQ2pCLGdCQUFnQjtNQUNoQixxQkFBcUI7TUFDckIsY0FBYztNQUNkLGFBQWE7TUFDYixtQkFBbUI7TUFDbkIscUJBQXFCLEVBQUE7QUEzUTNCO1FBOFFRLFdBQVc7UUFDWCxZQUFZO1FBQ1osaUJBQWlCO1FBQ2pCLG1EQUFtRCxFQUFBO0FBalIzRDtNQXNSTSxnQkFBZ0I7TUFDaEIsaUJBQWlCO01BQ2pCLCtCQUErQjtNQUMvQixnQkFBZ0IsRUFBQTtBQXpSdEI7TUE2Uk0sV0FBVztNQUNYLHlCQUF5QjtNQUN6Qix3QkFBd0IsRUFBQTtBQS9SOUI7UUFrU1EsNkJBQTZCLEVBQUE7QUFsU3JDO1VBcVNVLG9CQUFvQjtVQUNwQiw4QkFBOEI7VUFDOUIscUJBQXFCO1VBQ3JCLGNBQWM7VUFDZCxpQkFBaUIsRUFBQTtBQXpTM0I7WUE0U1ksOEJBQThCO1lBQzlCLGlDQUFpQztZQUNqQyw4Q0FBOEM7WUFDOUMsK0JBQStCO1lBQy9CLGdCQUFnQixFQUFBO0FBaFQ1QjtZQW9UWSwrQkFBK0I7WUFDL0Isa0NBQWtDO1lBQ2xDLGNBQWM7WUFDZCxnQkFBZ0IsRUFBQTtBQXZUNUI7SUFnVUksYUFBYTtJQUNiLG1CQUFtQjtJQUNuQiw0RkFBNEY7SUFDNUYsd0NBQXdDO0lBQ3hDLHFCQUFxQjtJQUNyQixpQkFBaUI7SUFDakIsZ0JBQWdCO0lBQ2hCLG1CQUFtQjtJQUNuQixrQkFBa0I7SUFDbEIsb0JBQW9CO0lBQ3BCLFdBQVc7SUFDWCxnQkFBZ0I7SUFDaEIsWUFBWTtJQUNaLGNBQWM7SUFDZCxlQUFlO0lBQ2YsaURBQWlEO0lBQ2pELGtCQUFrQjtJQUNsQixnQkFBZ0IsRUFBQTtBQWpWcEI7TUFvVk0sYUFBUztNQUNULGtCQUFrQjtNQUNsQixpQkFBaUIsRUFBQTtBQXRWdkI7TUEwVk0sNEZBQTRGO01BQzVGLHFCQUFxQjtNQUNyQiwyQkFBMkI7TUFDM0IsNkNBQTZDLEVBQUE7QUE3Vm5EO01BaVdNLHdCQUF3QixFQUFBO0FBalc5QjtNQXFXTSxpQkFBaUI7TUFDakIsYUFBYTtNQUNiLGNBQWM7TUFDZCx5QkFBeUI7TUFDekIsbURBQW1ELEVBQUE7QUF6V3pEO1FBNFdRLDBEQUE0RTtRQUM1RSx1QkFBdUIsRUFBQTtBQTdXL0I7UUFpWFEsd0RBQTBFO1FBQzFFLHlCQUF5QixFQUFBO0FBbFhqQztJQXlYSSx3RkFBd0Y7SUFDeEYsd0NBQXdDO0lBQ3hDLHFCQUFxQjtJQUNyQixnQkFBZ0I7SUFDaEIsZUFBZTtJQUNmLGtDQUFrQztJQWFsQyxhQUFhO0lBQ2IsZUFBZTtJQUNmLFNBQVMsRUFBQTtBQWJUO0VBQ0U7SUFDRSxVQUFVO0lBQ1YsNEJBQTRCLEVBQUE7RUFFOUI7SUFDRSxVQUFVO0lBQ1Ysd0JBQXdCLEVBQUEsRUFBQTtBQXZZaEM7TUFnWk0sT0FBTztNQUNQLGdCQUFnQixFQUFBO0FBalp0QjtRQW9aUSxjQUFjO1FBQ2QsZ0JBQWdCO1FBQ2hCLGlCQUFpQjtRQUNqQixxQkFBcUI7UUFDckIsbUJBQW1CO1FBQ25CLGFBQWE7UUFDYixtQkFBbUIsRUFBQTtBQTFaM0I7VUE2WlUsYUFBUztVQUNULG9CQUFvQjtVQUNwQixpQkFBaUIsRUFBQTtBQS9aM0I7VUFtYVUsYUFBUztVQUNULG9CQUFvQjtVQUNwQixpQkFBaUIsRUFBQTtBQXJhM0I7UUEwYVEseUZBQXlGO1FBQ3pGLHdDQUF3QztRQUN4QyxtQkFBbUI7UUFDbkIsc0JBQXNCO1FBQ3RCLGlCQUFpQjtRQUNqQixjQUFjO1FBQ2QsaURBQWlEO1FBQ2pELFdBQVcsRUFBQTtBQWpibkI7VUFvYlUsYUFBYTtVQUNiLHFCQUFxQjtVQUNyQiwyRUFBdUY7VUFDdkYsNENBQTRDLEVBQUE7QUF2YnREO1VBMmJVLCtCQUErQixFQUFBO0FBM2J6QztVQTJiVSwrQkFBK0IsRUFBQTtBQTNiekM7VUErYlUscUJBQXFCLEVBQUE7QUEvYi9CO1lBa2NZLGNBQWMsRUFBQTtBQWxjMUI7WUFrY1ksY0FBYyxFQUFBO0FBbGMxQjtRQXdjUSxrQkFBa0I7UUFDbEIsc0JBQXNCO1FBQ3RCLDRGQUE0RjtRQUM1Rix3Q0FBd0M7UUFDeEMscUJBQXFCO1FBQ3JCLGNBQWM7UUFDZCxpQkFBaUIsRUFBQTtBQTljekI7TUFtZE0sT0FBTztNQUNQLGdCQUFnQjtNQUNoQixhQUFhO01BQ2IsbUJBQW1CO01BQ25CLGlCQUFpQixFQUFBO0FBdmR2QjtRQTBkUSxvQkFBb0I7UUFDcEIscUJBQXFCO1FBQ3JCLHFCQUFxQixFQUFBO0FBNWQ3QjtRQWdlUSxjQUFjO1FBQ2QsaUJBQWlCO1FBQ2pCLGdCQUFnQjtRQUNoQixlQUFlO1FBQ2YseUJBQXlCO1FBQ3pCLGFBQWE7UUFDYixtQkFBbUIsRUFBQTtBQXRlM0I7VUF5ZVUsYUFBUztVQUNULG9CQUFvQjtVQUNwQixpQkFBaUIsRUFBQTtBQTNlM0I7VUErZVUsY0FBYyxFQUFBO0FBL2V4QjtRQW9mUSxZQUFZLEVBQUE7QUFwZnBCO1VBdWZVLG1CQUFtQixFQUFBO0FBdmY3QjtZQTBmWSxjQUFjLEVBQUE7QUExZjFCO0lBbWdCSSxzQkFBc0I7SUFDdEIsV0FBVztJQUNYLGdCQUFnQjtJQUNoQixZQUFZO0lBQ1osaUJBQWlCO0lBQ2pCLGdCQUFnQjtJQUNoQixtQkFBbUI7SUFDbkIseUJBQXlCO0lBQ3pCLG1CQUFtQjtJQUNuQixrQkFBa0I7SUFDbEIsZ0JBQWdCO0lBRWhCLDBFQUEwRTtJQUMxRSx5QkFBeUI7SUFDekIsaUZBQ2tELEVBQUE7QUFsaEJ0RDtNQXFoQk0sV0FBVztNQUNYLGtCQUFrQjtNQUNsQixNQUFNO01BQ04sV0FBVztNQUNYLFdBQVc7TUFDWCxZQUFZO01BQ1osb0ZBQW9GO01BQ3BGLDBCQUEwQixFQUFBO0FBNWhCaEM7TUFpaUJRLHFCQUFxQjtNQUNyQixzRkFDa0Q7TUFDbEQsMkJBQTJCLEVBQUE7QUFwaUJuQztRQXVpQlUsVUFBVSxFQUFBO0FBdmlCcEI7TUE0aUJRLDJCQUEyQjtNQUMzQixxRkFDa0QsRUFBQTtBQTlpQjFEO01BbWpCTSxZQUFZO01BQ1osbUJBQW1CO01BQ25CLGVBQWUsRUFBQTtBQXJqQnJCO1FBd2pCUSxlQUFlO1FBQ2YsaUZBQ2tELEVBQUEiLCJmaWxlIjoic3JjL2FwcC9zZW5kL3NlbmQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAY2hhcnNldCBcIlVURi04XCI7XG46aG9zdCB7XG4gIHdpZHRoOiAxMDAlOyB9XG5cbi5mb3JtLXNlbmQge1xuICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDMyLCAxMTEsIDkwLCAwLjEpIDAlLCByZ2JhKDIyLCAxMTAsIDcwLCAwLjA1KSAxMDAlKTtcbiAgYm9yZGVyLXJhZGl1czogMS41cmVtO1xuICBwYWRkaW5nOiAzcmVtIDIuNXJlbTtcbiAgYm94LXNoYWRvdzogMCA4cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMiksIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xuICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xuICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBlYXNlOyB9XG4gIC5mb3JtLXNlbmQ6aG92ZXIge1xuICAgIGJveC1zaGFkb3c6IDAgMTJweCA0OHB4IHJnYmEoMCwgMCwgMCwgMC4zKSwgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMTUpO1xuICAgIGJvcmRlci1jb2xvcjogcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTsgfVxuICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9jay1hbGlhcyB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIG1hcmdpbi1ib3R0b206IDNyZW07IH1cbiAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9jay1hbGlhcyBsYWJlbCB7XG4gICAgICBjb2xvcjogIzMyREM1OTtcbiAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICBmb250LXNpemU6IDEuNHJlbTtcbiAgICAgIGxldHRlci1zcGFjaW5nOiAwLjVweDtcbiAgICAgIG1hcmdpbi1ib3R0b206IDFyZW07XG4gICAgICBkaXNwbGF5OiBmbGV4O1xuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjsgfVxuICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2stYWxpYXMgbGFiZWw6OmJlZm9yZSB7XG4gICAgICAgIGNvbnRlbnQ6IFwi8J+Tp1wiO1xuICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcbiAgICAgICAgZm9udC1zaXplOiAxLjZyZW07IH1cbiAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9jay1hbGlhcyAuYWRyZXNzLWlucHV0LXJvdyB7XG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICBhbGlnbi1pdGVtczogZmxleC1lbmQ7IH1cbiAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2NrLWFsaWFzIC5hZHJlc3MtaW5wdXQtcm93IGlucHV0IHtcbiAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg4OCwgODgsIDg4LCAwLjgpIDAlLCByZ2JhKDY0LCA2NCwgNjQsIDAuOSkgMTAwJSk7XG4gICAgICAgIGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDEuMnJlbTtcbiAgICAgICAgcGFkZGluZzogMS41cmVtIDJyZW07XG4gICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xuICAgICAgICBjb2xvcjogI2ZmZmZmZjtcbiAgICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGN1YmljLWJlemllcigwLjQsIDAsIDAuMiwgMSk7XG4gICAgICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMik7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2stYWxpYXMgLmFkcmVzcy1pbnB1dC1yb3cgaW5wdXQ6Zm9jdXMge1xuICAgICAgICAgIG91dGxpbmU6IG5vbmU7XG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xuICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC45KSAwJSwgIzQwNDA0MCAxMDAlKTtcbiAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMCA0cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4yKSwgaW5zZXQgMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yKTtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2stYWxpYXMgLmFkcmVzcy1pbnB1dC1yb3cgaW5wdXQ6OnBsYWNlaG9sZGVyIHtcbiAgICAgICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjUpO1xuICAgICAgICAgIHRleHQtYWxpZ246IGxlZnQ7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2stYWxpYXMgLmFkcmVzcy1pbnB1dC1yb3cgaW5wdXQucmVxdWlyZWQtZXJyb3Ige1xuICAgICAgICAgIGJvcmRlci1jb2xvcjogI2ZmNTI1MjtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDg4LCA4OCwgODgsIDAuOCkgMTAwJSk7IH1cbiAgICAgICAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9jay1hbGlhcyAuYWRyZXNzLWlucHV0LXJvdyBpbnB1dC5yZXF1aXJlZC1lcnJvcjo6cGxhY2Vob2xkZXIge1xuICAgICAgICAgICAgY29sb3I6ICNmZjUyNTI7IH1cbiAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2NrLWFsaWFzIC5hZHJlc3MtaW5wdXQtcm93IC5jdXJlbnQtYWxpYXMtYWRyZXNzIHtcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjE1KTtcbiAgICAgICAgY29sb3I6ICMzMkRDNTk7XG4gICAgICAgIHBhZGRpbmc6IDAuNHJlbSAwLjhyZW07XG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDAuOHJlbTtcbiAgICAgICAgZm9udC1zaXplOiAxLjJyZW07XG4gICAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XG4gICAgICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpOyB9XG4gICAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2NrLWFsaWFzIC5hZHJlc3MtaW5wdXQtcm93IC5jdXJlbnQtYWxpYXMtYWRyZXNzLnBhZGRpbmctYm90dG9tLTAxIHtcbiAgICAgICAgICBwYWRkaW5nLWJvdHRvbTogMC4xcmVtOyB9XG4gICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2stYWxpYXMgLmFsaWFzLWRyb3Bkb3duIHtcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIHRvcDogMTAwJTtcbiAgICAgIGxlZnQ6IDA7XG4gICAgICByaWdodDogMDtcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoMjIsIDExMCwgNzAsIDAuOTUpIDAlLCByZ2JhKDMyLCAxMTEsIDkwLCAwLjk1KSAxMDAlKTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuNCk7XG4gICAgICBib3JkZXItcmFkaXVzOiAxLjJyZW07XG4gICAgICBtYXJnaW4tdG9wOiAwLjVyZW07XG4gICAgICBwYWRkaW5nOiAxcmVtO1xuICAgICAgbWF4LWhlaWdodDogMjByZW07XG4gICAgICBvdmVyZmxvdy15OiBhdXRvO1xuICAgICAgei1pbmRleDogMTAwO1xuICAgICAgYm94LXNoYWRvdzogMCA4cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMyk7XG4gICAgICBiYWNrZHJvcC1maWx0ZXI6IGJsdXIoMTBweCk7IH1cbiAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2NrLWFsaWFzIC5hbGlhcy1kcm9wZG93biBkaXYge1xuICAgICAgICBwYWRkaW5nOiAxLjJyZW0gMS41cmVtO1xuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgICAgIGNvbG9yOiAjZmZmZmZmO1xuICAgICAgICBib3JkZXItcmFkaXVzOiAwLjhyZW07XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XG4gICAgICAgIG1hcmdpbi1ib3R0b206IDAuNXJlbTsgfVxuICAgICAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9jay1hbGlhcyAuYWxpYXMtZHJvcGRvd24gZGl2OmhvdmVyIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgwLjVyZW0pOyB9XG4gICAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2NrLWFsaWFzIC5hbGlhcy1kcm9wZG93biBkaXY6bGFzdC1jaGlsZCB7XG4gICAgICAgICAgbWFyZ2luLWJvdHRvbTogMDsgfVxuICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2NrLWFsaWFzIC5lcnJvci1ibG9jayB7XG4gICAgICBtYXJnaW4tdG9wOiAxcmVtO1xuICAgICAgcGFkZGluZzogMXJlbSAxLjVyZW07XG4gICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDI1NSwgODIsIDgyLCAwLjA1KSAxMDAlKTtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoMjU1LCA4MiwgODIsIDAuMyk7XG4gICAgICBib3JkZXItcmFkaXVzOiAwLjhyZW07XG4gICAgICBjb2xvcjogI2ZmNTI1MjtcbiAgICAgIGZvbnQtc2l6ZTogMS4zcmVtO1xuICAgICAgYW5pbWF0aW9uOiBzaGFrZSAwLjNzIGVhc2UtaW4tb3V0OyB9XG5cbkBrZXlmcmFtZXMgc2hha2Uge1xuICAwJSwgMTAwJSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDApOyB9XG4gIDI1JSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKC0wLjVyZW0pOyB9XG4gIDc1JSB7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVYKDAuNXJlbSk7IH0gfVxuICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93IHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGdhcDogMnJlbTtcbiAgICBtYXJnaW4tYm90dG9tOiAycmVtOyB9XG4gICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyA+IGRpdiB7XG4gICAgICBmbGV4OiAxOyB9XG4gICAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93ID4gZGl2IGxhYmVsIHtcbiAgICAgICAgY29sb3I6ICMzMkRDNTk7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xuICAgICAgICBsZXR0ZXItc3BhY2luZzogMC41cHg7XG4gICAgICAgIG1hcmdpbi1ib3R0b206IDFyZW07XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyA+IGRpdiBsYWJlbFtmb3I9XCJzZW5kLWFtb3VudFwiXTo6YmVmb3JlIHtcbiAgICAgICAgICBjb250ZW50OiBcIvCfkrBcIjtcbiAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcbiAgICAgICAgICBmb250LXNpemU6IDEuNnJlbTsgfVxuICAgICAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93ID4gZGl2IGxhYmVsW2Zvcj1cInNlbmQtY29tbWVudFwiXTo6YmVmb3JlIHtcbiAgICAgICAgICBjb250ZW50OiBcIvCfkqxcIjtcbiAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcbiAgICAgICAgICBmb250LXNpemU6IDEuNnJlbTsgfVxuICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyA+IGRpdiBpbnB1dCB7XG4gICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC44KSAwJSwgcmdiYSg2NCwgNjQsIDY0LCAwLjkpIDEwMCUpO1xuICAgICAgICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xuICAgICAgICBib3JkZXItcmFkaXVzOiAxLjJyZW07XG4gICAgICAgIHBhZGRpbmc6IDEuNXJlbSAycmVtO1xuICAgICAgICBmb250LXNpemU6IDEuNnJlbTtcbiAgICAgICAgY29sb3I6ICNmZmZmZmY7XG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGN1YmljLWJlemllcigwLjQsIDAsIDAuMiwgMSk7XG4gICAgICAgIGJveC1zaGFkb3c6IGluc2V0IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMik7XG4gICAgICAgIHdpZHRoOiAxMDAlOyB9XG4gICAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgPiBkaXYgaW5wdXQ6Zm9jdXMge1xuICAgICAgICAgIG91dGxpbmU6IG5vbmU7XG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xuICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC45KSAwJSwgIzQwNDA0MCAxMDAlKTtcbiAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMCA0cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4yKSwgaW5zZXQgMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yKTtcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyA+IGRpdiBpbnB1dDo6cGxhY2Vob2xkZXIge1xuICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNSk7XG4gICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDsgfVxuICAgICAgICAuZm9ybS1zZW5kIC5pbnB1dC1ibG9ja3Mtcm93ID4gZGl2IGlucHV0LnJlcXVpcmVkLWVycm9yIHtcbiAgICAgICAgICBib3JkZXItY29sb3I6ICNmZjUyNTI7XG4gICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDgyLCA4MiwgMC4xKSAwJSwgcmdiYSg4OCwgODgsIDg4LCAwLjgpIDEwMCUpOyB9XG4gICAgICAgICAgLmZvcm0tc2VuZCAuaW5wdXQtYmxvY2tzLXJvdyA+IGRpdiBpbnB1dC5yZXF1aXJlZC1lcnJvcjo6cGxhY2Vob2xkZXIge1xuICAgICAgICAgICAgY29sb3I6ICNmZjUyNTI7IH1cbiAgICAgIC5mb3JtLXNlbmQgLmlucHV0LWJsb2Nrcy1yb3cgPiBkaXYgLmVycm9yLWJsb2NrIHtcbiAgICAgICAgbWFyZ2luLXRvcDogMXJlbTtcbiAgICAgICAgcGFkZGluZzogMXJlbSAxLjVyZW07XG4gICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoMjU1LCA4MiwgODIsIDAuMSkgMCUsIHJnYmEoMjU1LCA4MiwgODIsIDAuMDUpIDEwMCUpO1xuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjMpO1xuICAgICAgICBib3JkZXItcmFkaXVzOiAwLjhyZW07XG4gICAgICAgIGNvbG9yOiAjZmY1MjUyO1xuICAgICAgICBmb250LXNpemU6IDEuM3JlbTtcbiAgICAgICAgYW5pbWF0aW9uOiBzaGFrZSAwLjNzIGVhc2UtaW4tb3V0OyB9XG4gIC5mb3JtLXNlbmQgLndyYXAge1xuICAgIG1hcmdpbjogM3JlbSAwO1xuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoNTAsIDIyMCwgODksIDAuMDUpIDAlLCByZ2JhKDIyLCAxMTAsIDcwLCAwLjEpIDEwMCUpO1xuICAgIGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XG4gICAgYm9yZGVyLXJhZGl1czogMS41cmVtO1xuICAgIHBhZGRpbmc6IDIuNXJlbTtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICBhbmltYXRpb246IGdsb3cgMnMgZWFzZS1pbi1vdXQgaW5maW5pdGUgYWx0ZXJuYXRlOyB9XG5cbkBrZXlmcmFtZXMgZ2xvdyB7XG4gIDAlIHtcbiAgICBib3gtc2hhZG93OiAwIDAgMjBweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjEpOyB9XG4gIDEwMCUge1xuICAgIGJveC1zaGFkb3c6IDAgMCAzMHB4IHJnYmEoNTAsIDIyMCwgODksIDAuMik7IH0gfVxuICAgIC5mb3JtLXNlbmQgLndyYXA6OmJlZm9yZSB7XG4gICAgICBjb250ZW50OiAnJztcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICAgIHRvcDogMDtcbiAgICAgIGxlZnQ6IC0xMDAlO1xuICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICBoZWlnaHQ6IDEwMCU7XG4gICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoOTBkZWcsIHRyYW5zcGFyZW50LCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpLCB0cmFuc3BhcmVudCk7XG4gICAgICBhbmltYXRpb246IHNoaW1tZXIgM3MgaW5maW5pdGU7IH1cblxuQGtleWZyYW1lcyBzaGltbWVyIHtcbiAgMCUge1xuICAgIGxlZnQ6IC0xMDAlOyB9XG4gIDEwMCUge1xuICAgIGxlZnQ6IDEwMCU7IH0gfVxuICAgIC5mb3JtLXNlbmQgLndyYXAgLnRpdGxlIHtcbiAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xuICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgICAgIG1hcmdpbi1ib3R0b206IDEuNXJlbTtcbiAgICAgIGNvbG9yOiAjMzJEQzU5O1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICBsZXR0ZXItc3BhY2luZzogMC41cHg7IH1cbiAgICAgIC5mb3JtLXNlbmQgLndyYXAgLnRpdGxlIC5pY29uIHtcbiAgICAgICAgd2lkdGg6IDJyZW07XG4gICAgICAgIGhlaWdodDogMnJlbTtcbiAgICAgICAgbWFyZ2luLWxlZnQ6IGF1dG87XG4gICAgICAgIGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDhweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpKTsgfVxuICAgIC5mb3JtLXNlbmQgLndyYXAgLnRleHQtd3JhcCB7XG4gICAgICBtYXJnaW46IDEuNXJlbSAwO1xuICAgICAgZm9udC1zaXplOiAxLjRyZW07XG4gICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjkpO1xuICAgICAgbGluZS1oZWlnaHQ6IDEuNjsgfVxuICAgIC5mb3JtLXNlbmQgLndyYXAgdGFibGUge1xuICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICBib3JkZXItY29sbGFwc2U6IHNlcGFyYXRlO1xuICAgICAgYm9yZGVyLXNwYWNpbmc6IDAgMC44cmVtOyB9XG4gICAgICAuZm9ybS1zZW5kIC53cmFwIHRhYmxlIHRyIHtcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAud3JhcCB0YWJsZSB0ciB0ZCB7XG4gICAgICAgICAgcGFkZGluZzogMXJlbSAxLjVyZW07XG4gICAgICAgICAgYmFja2dyb3VuZDogcmdiYSgwLCAwLCAwLCAwLjIpO1xuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDAuOHJlbTtcbiAgICAgICAgICBjb2xvcjogI2ZmZmZmZjtcbiAgICAgICAgICBmb250LXNpemU6IDEuNHJlbTsgfVxuICAgICAgICAgIC5mb3JtLXNlbmQgLndyYXAgdGFibGUgdHIgdGQ6Zmlyc3QtY2hpbGQge1xuICAgICAgICAgICAgYm9yZGVyLXRvcC1sZWZ0LXJhZGl1czogMC44cmVtO1xuICAgICAgICAgICAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogMC44cmVtO1xuICAgICAgICAgICAgYm9yZGVyLXJpZ2h0OiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcbiAgICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOCk7XG4gICAgICAgICAgICBmb250LXdlaWdodDogNTAwOyB9XG4gICAgICAgICAgLmZvcm0tc2VuZCAud3JhcCB0YWJsZSB0ciB0ZDpsYXN0LWNoaWxkIHtcbiAgICAgICAgICAgIGJvcmRlci10b3AtcmlnaHQtcmFkaXVzOiAwLjhyZW07XG4gICAgICAgICAgICBib3JkZXItYm90dG9tLXJpZ2h0LXJhZGl1czogMC44cmVtO1xuICAgICAgICAgICAgY29sb3I6ICMzMkRDNTk7XG4gICAgICAgICAgICBmb250LXdlaWdodDogNjAwOyB9XG4gIC5mb3JtLXNlbmQgLnNlbmQtc2VsZWN0IHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4xKSAwJSwgcmdiYSgyMiwgMTEwLCA3MCwgMC4xNSkgMTAwJSk7XG4gICAgYm9yZGVyOiAycHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTtcbiAgICBib3JkZXItcmFkaXVzOiAxLjJyZW07XG4gICAgZm9udC1zaXplOiAxLjRyZW07XG4gICAgZm9udC13ZWlnaHQ6IDYwMDtcbiAgICBsaW5lLWhlaWdodDogMS4zcmVtO1xuICAgIG1hcmdpbjogMi41cmVtIDAgMDtcbiAgICBwYWRkaW5nOiAxLjVyZW0gMnJlbTtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBtYXgtd2lkdGg6IDIwcmVtO1xuICAgIGhlaWdodDogYXV0bztcbiAgICBjb2xvcjogIzMyREM1OTtcbiAgICBjdXJzb3I6IHBvaW50ZXI7XG4gICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgY3ViaWMtYmV6aWVyKDAuNCwgMCwgMC4yLCAxKTtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgb3ZlcmZsb3c6IGhpZGRlbjsgfVxuICAgIC5mb3JtLXNlbmQgLnNlbmQtc2VsZWN0OjpiZWZvcmUge1xuICAgICAgY29udGVudDogXCLimpnvuI9cIjtcbiAgICAgIG1hcmdpbi1yaWdodDogMXJlbTtcbiAgICAgIGZvbnQtc2l6ZTogMS42cmVtOyB9XG4gICAgLmZvcm0tc2VuZCAuc2VuZC1zZWxlY3Q6aG92ZXIge1xuICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4xNSkgMCUsIHJnYmEoMjIsIDExMCwgNzAsIDAuMikgMTAwJSk7XG4gICAgICBib3JkZXItY29sb3I6ICMzMkRDNTk7XG4gICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7XG4gICAgICBib3gtc2hhZG93OiAwIDhweCAyNXB4IHJnYmEoNTAsIDIyMCwgODksIDAuMyk7IH1cbiAgICAuZm9ybS1zZW5kIC5zZW5kLXNlbGVjdDphY3RpdmUge1xuICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApOyB9XG4gICAgLmZvcm0tc2VuZCAuc2VuZC1zZWxlY3QgLmFycm93IHtcbiAgICAgIG1hcmdpbi1sZWZ0OiBhdXRvO1xuICAgICAgd2lkdGg6IDEuMnJlbTtcbiAgICAgIGhlaWdodDogMS4ycmVtO1xuICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgZWFzZTtcbiAgICAgIGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDRweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpKTsgfVxuICAgICAgLmZvcm0tc2VuZCAuc2VuZC1zZWxlY3QgLmFycm93LmRvd24ge1xuICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIvY29udGFpbiBuby1yZXBlYXQgdXJsKH5zcmMvYXNzZXRzL2ljb25zL2Fycm93LWRvd24uc3ZnKTtcbiAgICAgICAgdHJhbnNmb3JtOiByb3RhdGUoMGRlZyk7IH1cbiAgICAgIC5mb3JtLXNlbmQgLnNlbmQtc2VsZWN0IC5hcnJvdy51cCB7XG4gICAgICAgIGJhY2tncm91bmQ6IGNlbnRlci9jb250YWluIG5vLXJlcGVhdCB1cmwofnNyYy9hc3NldHMvaWNvbnMvYXJyb3ctdXAuc3ZnKTtcbiAgICAgICAgdHJhbnNmb3JtOiByb3RhdGUoMTgwZGVnKTsgfVxuICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMge1xuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoMCwgMCwgMCwgMC4xKSAwJSwgcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSkgMTAwJSk7XG4gICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcbiAgICBib3JkZXItcmFkaXVzOiAxLjVyZW07XG4gICAgbWFyZ2luLXRvcDogMnJlbTtcbiAgICBwYWRkaW5nOiAyLjVyZW07XG4gICAgYW5pbWF0aW9uOiBzbGlkZURvd24gMC4zcyBlYXNlLW91dDtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGZsZXgtd3JhcDogd3JhcDtcbiAgICBnYXA6IDJyZW07IH1cblxuQGtleWZyYW1lcyBzbGlkZURvd24ge1xuICBmcm9tIHtcbiAgICBvcGFjaXR5OiAwO1xuICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMjBweCk7IH1cbiAgdG8ge1xuICAgIG9wYWNpdHk6IDE7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApOyB9IH1cbiAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmlucHV0LWJsb2NrIHtcbiAgICAgIGZsZXg6IDE7XG4gICAgICBtaW4td2lkdGg6IDIwcmVtOyB9XG4gICAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmlucHV0LWJsb2NrIGxhYmVsIHtcbiAgICAgICAgY29sb3I6ICMzMkRDNTk7XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XG4gICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xuICAgICAgICBsZXR0ZXItc3BhY2luZzogMC41cHg7XG4gICAgICAgIG1hcmdpbi1ib3R0b206IDFyZW07XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuYWRkaXRpb25hbC1kZXRhaWxzIC5pbnB1dC1ibG9jayBsYWJlbFtmb3I9XCJzZW5kLW1peGluXCJdOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+UgFwiO1xuICAgICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xuICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtOyB9XG4gICAgICAgIC5mb3JtLXNlbmQgLmFkZGl0aW9uYWwtZGV0YWlscyAuaW5wdXQtYmxvY2sgbGFiZWxbZm9yPVwic2VuZC1mZWVcIl06OmJlZm9yZSB7XG4gICAgICAgICAgY29udGVudDogXCLwn5K4XCI7XG4gICAgICAgICAgbWFyZ2luLXJpZ2h0OiAwLjhyZW07XG4gICAgICAgICAgZm9udC1zaXplOiAxLjZyZW07IH1cbiAgICAgIC5mb3JtLXNlbmQgLmFkZGl0aW9uYWwtZGV0YWlscyAuaW5wdXQtYmxvY2sgaW5wdXQge1xuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDg4LCA4OCwgODgsIDAuNikgMCUsIHJnYmEoNjQsIDY0LCA2NCwgMC44KSAxMDAlKTtcbiAgICAgICAgYm9yZGVyOiAycHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMXJlbTtcbiAgICAgICAgcGFkZGluZzogMS4ycmVtIDEuOHJlbTtcbiAgICAgICAgZm9udC1zaXplOiAxLjVyZW07XG4gICAgICAgIGNvbG9yOiAjZmZmZmZmO1xuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBjdWJpYy1iZXppZXIoMC40LCAwLCAwLjIsIDEpO1xuICAgICAgICB3aWR0aDogMTAwJTsgfVxuICAgICAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmlucHV0LWJsb2NrIGlucHV0OmZvY3VzIHtcbiAgICAgICAgICBvdXRsaW5lOiBub25lO1xuICAgICAgICAgIGJvcmRlci1jb2xvcjogIzMyREM1OTtcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDg4LCA4OCwgODgsIDAuOCkgMCUsICM0MDQwNDAgMTAwJSk7XG4gICAgICAgICAgYm94LXNoYWRvdzogMCAwIDAgM3B4IHJnYmEoNTAsIDIyMCwgODksIDAuMik7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuYWRkaXRpb25hbC1kZXRhaWxzIC5pbnB1dC1ibG9jayBpbnB1dDo6cGxhY2Vob2xkZXIge1xuICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNCk7IH1cbiAgICAgICAgLmZvcm0tc2VuZCAuYWRkaXRpb25hbC1kZXRhaWxzIC5pbnB1dC1ibG9jayBpbnB1dC5yZXF1aXJlZC1lcnJvciB7XG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiAjZmY1MjUyOyB9XG4gICAgICAgICAgLmZvcm0tc2VuZCAuYWRkaXRpb25hbC1kZXRhaWxzIC5pbnB1dC1ibG9jayBpbnB1dC5yZXF1aXJlZC1lcnJvcjo6cGxhY2Vob2xkZXIge1xuICAgICAgICAgICAgY29sb3I6ICNmZjUyNTI7IH1cbiAgICAgIC5mb3JtLXNlbmQgLmFkZGl0aW9uYWwtZGV0YWlscyAuaW5wdXQtYmxvY2sgLmVycm9yLWJsb2NrIHtcbiAgICAgICAgbWFyZ2luLXRvcDogMC44cmVtO1xuICAgICAgICBwYWRkaW5nOiAwLjhyZW0gMS4ycmVtO1xuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDI1NSwgODIsIDgyLCAwLjA1KSAxMDAlKTtcbiAgICAgICAgYm9yZGVyOiAxcHggc29saWQgcmdiYSgyNTUsIDgyLCA4MiwgMC4zKTtcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMC42cmVtO1xuICAgICAgICBjb2xvcjogI2ZmNTI1MjtcbiAgICAgICAgZm9udC1zaXplOiAxLjJyZW07IH1cbiAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmNoZWNrYm94LWJsb2NrIHtcbiAgICAgIGZsZXg6IDE7XG4gICAgICBtaW4td2lkdGg6IDIwcmVtO1xuICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAgICBwYWRkaW5nLXRvcDogMnJlbTsgfVxuICAgICAgLmZvcm0tc2VuZCAuYWRkaXRpb25hbC1kZXRhaWxzIC5jaGVja2JveC1ibG9jayBpbnB1dFt0eXBlPVwiY2hlY2tib3hcIl0ge1xuICAgICAgICBtYXJnaW4tcmlnaHQ6IDEuNXJlbTtcbiAgICAgICAgdHJhbnNmb3JtOiBzY2FsZSgxLjMpO1xuICAgICAgICBhY2NlbnQtY29sb3I6ICMzMkRDNTk7IH1cbiAgICAgIC5mb3JtLXNlbmQgLmFkZGl0aW9uYWwtZGV0YWlscyAuY2hlY2tib3gtYmxvY2sgbGFiZWwge1xuICAgICAgICBjb2xvcjogI2ZmZmZmZjtcbiAgICAgICAgZm9udC1zaXplOiAxLjRyZW07XG4gICAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XG4gICAgICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnMgZWFzZTtcbiAgICAgICAgZGlzcGxheTogZmxleDtcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjsgfVxuICAgICAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmNoZWNrYm94LWJsb2NrIGxhYmVsOjpiZWZvcmUge1xuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+UklwiO1xuICAgICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xuICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtOyB9XG4gICAgICAgIC5mb3JtLXNlbmQgLmFkZGl0aW9uYWwtZGV0YWlscyAuY2hlY2tib3gtYmxvY2sgbGFiZWw6aG92ZXIge1xuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5OyB9XG4gICAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmNoZWNrYm94LWJsb2NrLmRpc2FibGVkLWNoZWNrYm94LWJsb2NrIHtcbiAgICAgICAgb3BhY2l0eTogMC42OyB9XG4gICAgICAgIC5mb3JtLXNlbmQgLmFkZGl0aW9uYWwtZGV0YWlscyAuY2hlY2tib3gtYmxvY2suZGlzYWJsZWQtY2hlY2tib3gtYmxvY2sgbGFiZWwge1xuICAgICAgICAgIGN1cnNvcjogbm90LWFsbG93ZWQ7IH1cbiAgICAgICAgICAuZm9ybS1zZW5kIC5hZGRpdGlvbmFsLWRldGFpbHMgLmNoZWNrYm94LWJsb2NrLmRpc2FibGVkLWNoZWNrYm94LWJsb2NrIGxhYmVsOmhvdmVyIHtcbiAgICAgICAgICAgIGNvbG9yOiAjZmZmZmZmOyB9XG4gIC5mb3JtLXNlbmQgYnV0dG9uLmJsdWUtYnV0dG9uIHtcbiAgICBtYXJnaW46IDNyZW0gYXV0byAycmVtO1xuICAgIHdpZHRoOiAxMDAlO1xuICAgIG1heC13aWR0aDogMjVyZW07XG4gICAgaGVpZ2h0OiA2cmVtO1xuICAgIGZvbnQtc2l6ZTogMS44cmVtO1xuICAgIGZvbnQtd2VpZ2h0OiA3MDA7XG4gICAgbGV0dGVyLXNwYWNpbmc6IDFweDtcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgIGJvcmRlci1yYWRpdXM6IDJyZW07XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIG92ZXJmbG93OiBoaWRkZW47XG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgIzE2MmM0NyAwJSwgIzBCMUQzMyA1MCUsICMxNjJjNDcgMTAwJSk7XG4gICAgYm9yZGVyOiAycHggc29saWQgIzMyREM1OTtcbiAgICBib3gtc2hhZG93OiAwIDhweCAzMnB4IHJnYmEoMCwgMCwgMCwgMC4zKSwgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7IH1cbiAgICAuZm9ybS1zZW5kIGJ1dHRvbi5ibHVlLWJ1dHRvbjo6YmVmb3JlIHtcbiAgICAgIGNvbnRlbnQ6ICcnO1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgdG9wOiAwO1xuICAgICAgbGVmdDogLTEwMCU7XG4gICAgICB3aWR0aDogMTAwJTtcbiAgICAgIGhlaWdodDogMTAwJTtcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsIHJnYmEoNTAsIDIyMCwgODksIDAuMiksIHRyYW5zcGFyZW50KTtcbiAgICAgIHRyYW5zaXRpb246IGxlZnQgMC41cyBlYXNlOyB9XG4gICAgLmZvcm0tc2VuZCBidXR0b24uYmx1ZS1idXR0b246bm90KDpkaXNhYmxlZCk6aG92ZXIge1xuICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xuICAgICAgYm94LXNoYWRvdzogMCAxMnB4IDQ4cHggcmdiYSg1MCwgMjIwLCA4OSwgMC40KSwgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XG4gICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTNweCk7IH1cbiAgICAgIC5mb3JtLXNlbmQgYnV0dG9uLmJsdWUtYnV0dG9uOm5vdCg6ZGlzYWJsZWQpOmhvdmVyOjpiZWZvcmUge1xuICAgICAgICBsZWZ0OiAxMDAlOyB9XG4gICAgLmZvcm0tc2VuZCBidXR0b24uYmx1ZS1idXR0b246bm90KDpkaXNhYmxlZCk6YWN0aXZlIHtcbiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMXB4KTtcbiAgICAgIGJveC1zaGFkb3c6IDAgNHB4IDE2cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4zKSwgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7IH1cbiAgICAuZm9ybS1zZW5kIGJ1dHRvbi5ibHVlLWJ1dHRvbjpkaXNhYmxlZCB7XG4gICAgICBvcGFjaXR5OiAwLjU7XG4gICAgICBjdXJzb3I6IG5vdC1hbGxvd2VkO1xuICAgICAgdHJhbnNmb3JtOiBub25lOyB9XG4gICAgICAuZm9ybS1zZW5kIGJ1dHRvbi5ibHVlLWJ1dHRvbjpkaXNhYmxlZDpob3ZlciB7XG4gICAgICAgIHRyYW5zZm9ybTogbm9uZTtcbiAgICAgICAgYm94LXNoYWRvdzogMCA4cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMyksIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpOyB9XG4iLCI6aG9zdCB7XHJcbiAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbi5mb3JtLXNlbmQge1xyXG4gIC8vINCe0YHQvdC+0LLQvdC+0Lkg0LrQvtC90YLQtdC50L3QtdGAINGE0L7RgNC80Ysg0YEg0LPRgNCw0LTQuNC10L3RgtC90YvQvCDRhNC+0L3QvtC8XHJcbiAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgzMiwgMTExLCA5MCwgMC4xKSAwJSwgcmdiYSgyMiwgMTEwLCA3MCwgMC4wNSkgMTAwJSk7XHJcbiAgYm9yZGVyLXJhZGl1czogMS41cmVtO1xyXG4gIHBhZGRpbmc6IDNyZW0gMi41cmVtO1xyXG4gIGJveC1zaGFkb3c6IDAgOHB4IDMycHggcmdiYSgwLCAwLCAwLCAwLjIpLCBcclxuICAgICAgICAgICAgICBpbnNldCAwIDFweCAwIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKTtcclxuICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcblxyXG4gICY6aG92ZXIge1xyXG4gICAgYm94LXNoYWRvdzogMCAxMnB4IDQ4cHggcmdiYSgwLCAwLCAwLCAwLjMpLCBcclxuICAgICAgICAgICAgICAgIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjE1KTtcclxuICAgIGJvcmRlci1jb2xvcjogcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTtcclxuICB9XHJcblxyXG4gIC8vINCh0YLQuNC70LjQt9Cw0YbQuNGPINCx0LvQvtC60LAg0LDQtNGA0LXRgdCwINGBINGD0LvRg9GH0YjQtdC90L3QvtC5INCw0L3QuNC80LDRhtC40LXQuVxyXG4gIC5pbnB1dC1ibG9jay1hbGlhcyB7XHJcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAzcmVtO1xyXG5cclxuICAgIGxhYmVsIHtcclxuICAgICAgY29sb3I6ICMzMkRDNTk7XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICBsZXR0ZXItc3BhY2luZzogMC41cHg7XHJcbiAgICAgIG1hcmdpbi1ib3R0b206IDFyZW07XHJcbiAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcblxyXG4gICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgIGNvbnRlbnQ6IFwi8J+Tp1wiO1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xyXG4gICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgLmFkcmVzcy1pbnB1dC1yb3cge1xyXG4gICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICBhbGlnbi1pdGVtczogZmxleC1lbmQ7XHJcblxyXG4gICAgICBpbnB1dCB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg4OCwgODgsIDg4LCAwLjgpIDAlLCByZ2JhKDY0LCA2NCwgNjQsIDAuOSkgMTAwJSk7XHJcbiAgICAgICAgYm9yZGVyOiAycHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTtcclxuICAgICAgICBib3JkZXItcmFkaXVzOiAxLjJyZW07XHJcbiAgICAgICAgcGFkZGluZzogMS41cmVtIDJyZW07XHJcbiAgICAgICAgZm9udC1zaXplOiAxLjZyZW07XHJcbiAgICAgICAgY29sb3I6ICNmZmZmZmY7XHJcbiAgICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XHJcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuM3MgY3ViaWMtYmV6aWVyKDAuNCwgMCwgMC4yLCAxKTtcclxuICAgICAgICBib3gtc2hhZG93OiBpbnNldCAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjIpO1xyXG5cclxuICAgICAgICAmOmZvY3VzIHtcclxuICAgICAgICAgIG91dGxpbmU6IG5vbmU7XHJcbiAgICAgICAgICBib3JkZXItY29sb3I6ICMzMkRDNTk7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDg4LCA4OCwgODgsIDAuOSkgMCUsIHJnYmEoNjQsIDY0LCA2NCwgMSkgMTAwJSk7XHJcbiAgICAgICAgICBib3gtc2hhZG93OiAwIDAgMCA0cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4yKSxcclxuICAgICAgICAgICAgICAgICAgICAgIGluc2V0IDAgMnB4IDRweCByZ2JhKDAsIDAsIDAsIDAuMik7XHJcbiAgICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAmOjpwbGFjZWhvbGRlciB7XHJcbiAgICAgICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjUpO1xyXG4gICAgICAgICAgdGV4dC1hbGlnbjogbGVmdDtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgICYucmVxdWlyZWQtZXJyb3Ige1xyXG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiAjZmY1MjUyO1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyNTUsIDgyLCA4MiwgMC4xKSAwJSwgcmdiYSg4OCwgODgsIDg4LCAwLjgpIDEwMCUpO1xyXG4gICAgICAgICAgXHJcbiAgICAgICAgICAmOjpwbGFjZWhvbGRlciB7XHJcbiAgICAgICAgICAgIGNvbG9yOiAjZmY1MjUyO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG5cclxuICAgICAgLmN1cmVudC1hbGlhcy1hZHJlc3Mge1xyXG4gICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDUwLCAyMjAsIDg5LCAwLjE1KTtcclxuICAgICAgICBjb2xvcjogIzMyREM1OTtcclxuICAgICAgICBwYWRkaW5nOiAwLjRyZW0gMC44cmVtO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDAuOHJlbTtcclxuICAgICAgICBmb250LXNpemU6IDEuMnJlbTtcclxuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gICAgICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cig0cHgpO1xyXG4gICAgICAgIFxyXG4gICAgICAgICYucGFkZGluZy1ib3R0b20tMDEge1xyXG4gICAgICAgICAgcGFkZGluZy1ib3R0b206IDAuMXJlbTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICAvLyDQo9C70YPRh9GI0LXQvdC90YvQuSDQstGL0L/QsNC00LDRjtGJ0LjQuSDRgdC/0LjRgdC+0Log0LDQu9C40LDRgdC+0LJcclxuICAgIC5hbGlhcy1kcm9wZG93biB7XHJcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgdG9wOiAxMDAlO1xyXG4gICAgICBsZWZ0OiAwO1xyXG4gICAgICByaWdodDogMDtcclxuICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSgyMiwgMTEwLCA3MCwgMC45NSkgMCUsIHJnYmEoMzIsIDExMSwgOTAsIDAuOTUpIDEwMCUpO1xyXG4gICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjQpO1xyXG4gICAgICBib3JkZXItcmFkaXVzOiAxLjJyZW07XHJcbiAgICAgIG1hcmdpbi10b3A6IDAuNXJlbTtcclxuICAgICAgcGFkZGluZzogMXJlbTtcclxuICAgICAgbWF4LWhlaWdodDogMjByZW07XHJcbiAgICAgIG92ZXJmbG93LXk6IGF1dG87XHJcbiAgICAgIHotaW5kZXg6IDEwMDtcclxuICAgICAgYm94LXNoYWRvdzogMCA4cHggMzJweCByZ2JhKDAsIDAsIDAsIDAuMyk7XHJcbiAgICAgIGJhY2tkcm9wLWZpbHRlcjogYmx1cigxMHB4KTtcclxuXHJcbiAgICAgIGRpdiB7XHJcbiAgICAgICAgcGFkZGluZzogMS4ycmVtIDEuNXJlbTtcclxuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgY29sb3I6ICNmZmZmZmY7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMC44cmVtO1xyXG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjJzIGVhc2U7XHJcbiAgICAgICAgbWFyZ2luLWJvdHRvbTogMC41cmVtO1xyXG5cclxuICAgICAgICAmOmhvdmVyIHtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoNTAsIDIyMCwgODksIDAuMik7XHJcbiAgICAgICAgICBjb2xvcjogIzMyREM1OTtcclxuICAgICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWCgwLjVyZW0pO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgJjpsYXN0LWNoaWxkIHtcclxuICAgICAgICAgIG1hcmdpbi1ib3R0b206IDA7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgLmVycm9yLWJsb2NrIHtcclxuICAgICAgbWFyZ2luLXRvcDogMXJlbTtcclxuICAgICAgcGFkZGluZzogMXJlbSAxLjVyZW07XHJcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoMjU1LCA4MiwgODIsIDAuMSkgMCUsIHJnYmEoMjU1LCA4MiwgODIsIDAuMDUpIDEwMCUpO1xyXG4gICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjMpO1xyXG4gICAgICBib3JkZXItcmFkaXVzOiAwLjhyZW07XHJcbiAgICAgIGNvbG9yOiAjZmY1MjUyO1xyXG4gICAgICBmb250LXNpemU6IDEuM3JlbTtcclxuICAgICAgYW5pbWF0aW9uOiBzaGFrZSAwLjNzIGVhc2UtaW4tb3V0O1xyXG5cclxuICAgICAgQGtleWZyYW1lcyBzaGFrZSB7XHJcbiAgICAgICAgMCUsIDEwMCUgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoMCk7IH1cclxuICAgICAgICAyNSUgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoLTAuNXJlbSk7IH1cclxuICAgICAgICA3NSUgeyB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoMC41cmVtKTsgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAvLyDQo9C70YPRh9GI0LXQvdC90LDRjyDRgdGC0YDQvtC60LAg0YEg0LTQstGD0LzRjyDQv9C+0LvRj9C80Lgg0LLQstC+0LTQsFxyXG4gIC5pbnB1dC1ibG9ja3Mtcm93IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBnYXA6IDJyZW07XHJcbiAgICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG5cclxuICAgID4gZGl2IHtcclxuICAgICAgZmxleDogMTtcclxuICAgICAgXHJcbiAgICAgIGxhYmVsIHtcclxuICAgICAgICBjb2xvcjogIzMyREM1OTtcclxuICAgICAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICAgIGxldHRlci1zcGFjaW5nOiAwLjVweDtcclxuICAgICAgICBtYXJnaW4tYm90dG9tOiAxcmVtO1xyXG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuXHJcbiAgICAgICAgJltmb3I9XCJzZW5kLWFtb3VudFwiXTo6YmVmb3JlIHtcclxuICAgICAgICAgIGNvbnRlbnQ6IFwi8J+SsFwiO1xyXG4gICAgICAgICAgbWFyZ2luLXJpZ2h0OiAwLjhyZW07XHJcbiAgICAgICAgICBmb250LXNpemU6IDEuNnJlbTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgICZbZm9yPVwic2VuZC1jb21tZW50XCJdOjpiZWZvcmUge1xyXG4gICAgICAgICAgY29udGVudDogXCLwn5KsXCI7XHJcbiAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcclxuICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG5cclxuICAgICAgaW5wdXQge1xyXG4gICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC44KSAwJSwgcmdiYSg2NCwgNjQsIDY0LCAwLjkpIDEwMCUpO1xyXG4gICAgICAgIGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMyk7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMS4ycmVtO1xyXG4gICAgICAgIHBhZGRpbmc6IDEuNXJlbSAycmVtO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xyXG4gICAgICAgIGNvbG9yOiAjZmZmZmZmO1xyXG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGN1YmljLWJlemllcigwLjQsIDAsIDAuMiwgMSk7XHJcbiAgICAgICAgYm94LXNoYWRvdzogaW5zZXQgMCAycHggNHB4IHJnYmEoMCwgMCwgMCwgMC4yKTtcclxuICAgICAgICB3aWR0aDogMTAwJTtcclxuXHJcbiAgICAgICAgJjpmb2N1cyB7XHJcbiAgICAgICAgICBvdXRsaW5lOiBub25lO1xyXG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg4OCwgODgsIDg4LCAwLjkpIDAlLCByZ2JhKDY0LCA2NCwgNjQsIDEpIDEwMCUpO1xyXG4gICAgICAgICAgYm94LXNoYWRvdzogMCAwIDAgNHB4IHJnYmEoNTAsIDIyMCwgODksIDAuMiksXHJcbiAgICAgICAgICAgICAgICAgICAgICBpbnNldCAwIDJweCA0cHggcmdiYSgwLCAwLCAwLCAwLjIpO1xyXG4gICAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0xcHgpO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgJjo6cGxhY2Vob2xkZXIge1xyXG4gICAgICAgICAgY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC41KTtcclxuICAgICAgICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAmLnJlcXVpcmVkLWVycm9yIHtcclxuICAgICAgICAgIGJvcmRlci1jb2xvcjogI2ZmNTI1MjtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoMjU1LCA4MiwgODIsIDAuMSkgMCUsIHJnYmEoODgsIDg4LCA4OCwgMC44KSAxMDAlKTtcclxuICAgICAgICAgIFxyXG4gICAgICAgICAgJjo6cGxhY2Vob2xkZXIge1xyXG4gICAgICAgICAgICBjb2xvcjogI2ZmNTI1MjtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuXHJcbiAgICAgIC5lcnJvci1ibG9jayB7XHJcbiAgICAgICAgbWFyZ2luLXRvcDogMXJlbTtcclxuICAgICAgICBwYWRkaW5nOiAxcmVtIDEuNXJlbTtcclxuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDI1NSwgODIsIDgyLCAwLjA1KSAxMDAlKTtcclxuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjMpO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDAuOHJlbTtcclxuICAgICAgICBjb2xvcjogI2ZmNTI1MjtcclxuICAgICAgICBmb250LXNpemU6IDEuM3JlbTtcclxuICAgICAgICBhbmltYXRpb246IHNoYWtlIDAuM3MgZWFzZS1pbi1vdXQ7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcblxyXG4gIC8vINCj0LvRg9GH0YjQtdC90L3QsNGPINGB0LXQutGG0LjRjyBXcmFwINGBINCw0L3QuNC80LjRgNC+0LLQsNC90L3Ri9C80Lgg0LrQsNGA0YLQvtGH0LrQsNC80LhcclxuICAud3JhcCB7XHJcbiAgICBtYXJnaW46IDNyZW0gMDtcclxuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoNTAsIDIyMCwgODksIDAuMDUpIDAlLCByZ2JhKDIyLCAxMTAsIDcwLCAwLjEpIDEwMCUpO1xyXG4gICAgYm9yZGVyOiAycHggc29saWQgcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTtcclxuICAgIGJvcmRlci1yYWRpdXM6IDEuNXJlbTtcclxuICAgIHBhZGRpbmc6IDIuNXJlbTtcclxuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBhbmltYXRpb246IGdsb3cgMnMgZWFzZS1pbi1vdXQgaW5maW5pdGUgYWx0ZXJuYXRlO1xyXG5cclxuICAgIEBrZXlmcmFtZXMgZ2xvdyB7XHJcbiAgICAgIDAlIHsgYm94LXNoYWRvdzogMCAwIDIwcHggcmdiYSg1MCwgMjIwLCA4OSwgMC4xKTsgfVxyXG4gICAgICAxMDAlIHsgYm94LXNoYWRvdzogMCAwIDMwcHggcmdiYSg1MCwgMjIwLCA4OSwgMC4yKTsgfVxyXG4gICAgfVxyXG5cclxuICAgICY6OmJlZm9yZSB7XHJcbiAgICAgIGNvbnRlbnQ6ICcnO1xyXG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAgIHRvcDogMDtcclxuICAgICAgbGVmdDogLTEwMCU7XHJcbiAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCg5MGRlZywgdHJhbnNwYXJlbnQsIHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wNSksIHRyYW5zcGFyZW50KTtcclxuICAgICAgYW5pbWF0aW9uOiBzaGltbWVyIDNzIGluZmluaXRlO1xyXG4gICAgfVxyXG5cclxuICAgIEBrZXlmcmFtZXMgc2hpbW1lciB7XHJcbiAgICAgIDAlIHsgbGVmdDogLTEwMCU7IH1cclxuICAgICAgMTAwJSB7IGxlZnQ6IDEwMCU7IH1cclxuICAgIH1cclxuXHJcbiAgICAudGl0bGUge1xyXG4gICAgICBmb250LXNpemU6IDEuNnJlbTtcclxuICAgICAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICAgICAgbWFyZ2luLWJvdHRvbTogMS41cmVtO1xyXG4gICAgICBjb2xvcjogIzMyREM1OTtcclxuICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgbGV0dGVyLXNwYWNpbmc6IDAuNXB4O1xyXG5cclxuICAgICAgLmljb24ge1xyXG4gICAgICAgIHdpZHRoOiAycmVtO1xyXG4gICAgICAgIGhlaWdodDogMnJlbTtcclxuICAgICAgICBtYXJnaW4tbGVmdDogYXV0bztcclxuICAgICAgICBmaWx0ZXI6IGRyb3Atc2hhZG93KDAgMCA4cHggcmdiYSg1MCwgMjIwLCA4OSwgMC41KSk7XHJcbiAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICAudGV4dC13cmFwIHtcclxuICAgICAgbWFyZ2luOiAxLjVyZW0gMDtcclxuICAgICAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuOSk7XHJcbiAgICAgIGxpbmUtaGVpZ2h0OiAxLjY7XHJcbiAgICB9XHJcblxyXG4gICAgdGFibGUge1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgYm9yZGVyLWNvbGxhcHNlOiBzZXBhcmF0ZTtcclxuICAgICAgYm9yZGVyLXNwYWNpbmc6IDAgMC44cmVtO1xyXG5cclxuICAgICAgdHIge1xyXG4gICAgICAgIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xyXG5cclxuICAgICAgICB0ZCB7XHJcbiAgICAgICAgICBwYWRkaW5nOiAxcmVtIDEuNXJlbTtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMCwgMCwgMCwgMC4yKTtcclxuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDAuOHJlbTtcclxuICAgICAgICAgIGNvbG9yOiAjZmZmZmZmO1xyXG4gICAgICAgICAgZm9udC1zaXplOiAxLjRyZW07XHJcblxyXG4gICAgICAgICAgJjpmaXJzdC1jaGlsZCB7XHJcbiAgICAgICAgICAgIGJvcmRlci10b3AtbGVmdC1yYWRpdXM6IDAuOHJlbTtcclxuICAgICAgICAgICAgYm9yZGVyLWJvdHRvbS1sZWZ0LXJhZGl1czogMC44cmVtO1xyXG4gICAgICAgICAgICBib3JkZXItcmlnaHQ6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gICAgICAgICAgICBjb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjgpO1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogNTAwO1xyXG4gICAgICAgICAgfVxyXG5cclxuICAgICAgICAgICY6bGFzdC1jaGlsZCB7XHJcbiAgICAgICAgICAgIGJvcmRlci10b3AtcmlnaHQtcmFkaXVzOiAwLjhyZW07XHJcbiAgICAgICAgICAgIGJvcmRlci1ib3R0b20tcmlnaHQtcmFkaXVzOiAwLjhyZW07XHJcbiAgICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgICAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLy8g0KPQu9GD0YfRiNC10L3QvdCw0Y8g0LrQvdC+0L/QutCwINC00LXRgtCw0LvQtdC5XHJcbiAgLnNlbmQtc2VsZWN0IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDEzNWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4xKSAwJSwgcmdiYSgyMiwgMTEwLCA3MCwgMC4xNSkgMTAwJSk7XHJcbiAgICBib3JkZXI6IDJweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMS4ycmVtO1xyXG4gICAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgICBmb250LXdlaWdodDogNjAwO1xyXG4gICAgbGluZS1oZWlnaHQ6IDEuM3JlbTtcclxuICAgIG1hcmdpbjogMi41cmVtIDAgMDtcclxuICAgIHBhZGRpbmc6IDEuNXJlbSAycmVtO1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBtYXgtd2lkdGg6IDIwcmVtO1xyXG4gICAgaGVpZ2h0OiBhdXRvO1xyXG4gICAgY29sb3I6ICMzMkRDNTk7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICB0cmFuc2l0aW9uOiBhbGwgMC4zcyBjdWJpYy1iZXppZXIoMC40LCAwLCAwLjIsIDEpO1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuXHJcbiAgICAmOjpiZWZvcmUge1xyXG4gICAgICBjb250ZW50OiBcIuKame+4j1wiO1xyXG4gICAgICBtYXJnaW4tcmlnaHQ6IDFyZW07XHJcbiAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xyXG4gICAgfVxyXG5cclxuICAgICY6aG92ZXIge1xyXG4gICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDUwLCAyMjAsIDg5LCAwLjE1KSAwJSwgcmdiYSgyMiwgMTEwLCA3MCwgMC4yKSAxMDAlKTtcclxuICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTJweCk7XHJcbiAgICAgIGJveC1zaGFkb3c6IDAgOHB4IDI1cHggcmdiYSg1MCwgMjIwLCA4OSwgMC4zKTtcclxuICAgIH1cclxuXHJcbiAgICAmOmFjdGl2ZSB7XHJcbiAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgwKTtcclxuICAgIH1cclxuXHJcbiAgICAuYXJyb3cge1xyXG4gICAgICBtYXJnaW4tbGVmdDogYXV0bztcclxuICAgICAgd2lkdGg6IDEuMnJlbTtcclxuICAgICAgaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgICAgIGZpbHRlcjogZHJvcC1zaGFkb3coMCAwIDRweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjUpKTtcclxuXHJcbiAgICAgICYuZG93biB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKH5zcmMvYXNzZXRzL2ljb25zL2Fycm93LWRvd24uc3ZnKTtcclxuICAgICAgICB0cmFuc2Zvcm06IHJvdGF0ZSgwZGVnKTtcclxuICAgICAgfVxyXG5cclxuICAgICAgJi51cCB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKH5zcmMvYXNzZXRzL2ljb25zL2Fycm93LXVwLnN2Zyk7XHJcbiAgICAgICAgdHJhbnNmb3JtOiByb3RhdGUoMTgwZGVnKTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLy8g0KPQu9GD0YfRiNC10L3QvdGL0LUg0LTQvtC/0L7Qu9C90LjRgtC10LvRjNC90YvQtSDQtNC10YLQsNC70LhcclxuICAuYWRkaXRpb25hbC1kZXRhaWxzIHtcclxuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoMCwgMCwgMCwgMC4xKSAwJSwgcmdiYSg1MCwgMjIwLCA4OSwgMC4wNSkgMTAwJSk7XHJcbiAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMS41cmVtO1xyXG4gICAgbWFyZ2luLXRvcDogMnJlbTtcclxuICAgIHBhZGRpbmc6IDIuNXJlbTtcclxuICAgIGFuaW1hdGlvbjogc2xpZGVEb3duIDAuM3MgZWFzZS1vdXQ7XHJcblxyXG4gICAgQGtleWZyYW1lcyBzbGlkZURvd24ge1xyXG4gICAgICBmcm9tIHtcclxuICAgICAgICBvcGFjaXR5OiAwO1xyXG4gICAgICAgIHRyYW5zZm9ybTogdHJhbnNsYXRlWSgtMjBweCk7XHJcbiAgICAgIH1cclxuICAgICAgdG8ge1xyXG4gICAgICAgIG9wYWNpdHk6IDE7XHJcbiAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKDApO1xyXG4gICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGZsZXgtd3JhcDogd3JhcDtcclxuICAgIGdhcDogMnJlbTtcclxuXHJcbiAgICAuaW5wdXQtYmxvY2sge1xyXG4gICAgICBmbGV4OiAxO1xyXG4gICAgICBtaW4td2lkdGg6IDIwcmVtO1xyXG5cclxuICAgICAgbGFiZWwge1xyXG4gICAgICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgICAgICAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgICAgICAgbGV0dGVyLXNwYWNpbmc6IDAuNXB4O1xyXG4gICAgICAgIG1hcmdpbi1ib3R0b206IDFyZW07XHJcbiAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG5cclxuICAgICAgICAmW2Zvcj1cInNlbmQtbWl4aW5cIl06OmJlZm9yZSB7XHJcbiAgICAgICAgICBjb250ZW50OiBcIvCflIBcIjtcclxuICAgICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xyXG4gICAgICAgICAgZm9udC1zaXplOiAxLjZyZW07XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAmW2Zvcj1cInNlbmQtZmVlXCJdOjpiZWZvcmUge1xyXG4gICAgICAgICAgY29udGVudDogXCLwn5K4XCI7XHJcbiAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcclxuICAgICAgICAgIGZvbnQtc2l6ZTogMS42cmVtO1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG5cclxuICAgICAgaW5wdXQge1xyXG4gICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC42KSAwJSwgcmdiYSg2NCwgNjQsIDY0LCAwLjgpIDEwMCUpO1xyXG4gICAgICAgIGJvcmRlcjogMnB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMik7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMXJlbTtcclxuICAgICAgICBwYWRkaW5nOiAxLjJyZW0gMS44cmVtO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMS41cmVtO1xyXG4gICAgICAgIGNvbG9yOiAjZmZmZmZmO1xyXG4gICAgICAgIHRyYW5zaXRpb246IGFsbCAwLjNzIGN1YmljLWJlemllcigwLjQsIDAsIDAuMiwgMSk7XHJcbiAgICAgICAgd2lkdGg6IDEwMCU7XHJcblxyXG4gICAgICAgICY6Zm9jdXMge1xyXG4gICAgICAgICAgb3V0bGluZTogbm9uZTtcclxuICAgICAgICAgIGJvcmRlci1jb2xvcjogIzMyREM1OTtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsIHJnYmEoODgsIDg4LCA4OCwgMC44KSAwJSwgcmdiYSg2NCwgNjQsIDY0LCAxKSAxMDAlKTtcclxuICAgICAgICAgIGJveC1zaGFkb3c6IDAgMCAwIDNweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjIpO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgJjo6cGxhY2Vob2xkZXIge1xyXG4gICAgICAgICAgY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC40KTtcclxuICAgICAgICB9XHJcblxyXG4gICAgICAgICYucmVxdWlyZWQtZXJyb3Ige1xyXG4gICAgICAgICAgYm9yZGVyLWNvbG9yOiAjZmY1MjUyO1xyXG4gICAgICAgICAgXHJcbiAgICAgICAgICAmOjpwbGFjZWhvbGRlciB7XHJcbiAgICAgICAgICAgIGNvbG9yOiAjZmY1MjUyO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG5cclxuICAgICAgLmVycm9yLWJsb2NrIHtcclxuICAgICAgICBtYXJnaW4tdG9wOiAwLjhyZW07XHJcbiAgICAgICAgcGFkZGluZzogMC44cmVtIDEuMnJlbTtcclxuICAgICAgICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDI1NSwgODIsIDgyLCAwLjEpIDAlLCByZ2JhKDI1NSwgODIsIDgyLCAwLjA1KSAxMDAlKTtcclxuICAgICAgICBib3JkZXI6IDFweCBzb2xpZCByZ2JhKDI1NSwgODIsIDgyLCAwLjMpO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDAuNnJlbTtcclxuICAgICAgICBjb2xvcjogI2ZmNTI1MjtcclxuICAgICAgICBmb250LXNpemU6IDEuMnJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG5cclxuICAgIC5jaGVja2JveC1ibG9jayB7XHJcbiAgICAgIGZsZXg6IDE7XHJcbiAgICAgIG1pbi13aWR0aDogMjByZW07XHJcbiAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgIHBhZGRpbmctdG9wOiAycmVtO1xyXG5cclxuICAgICAgaW5wdXRbdHlwZT1cImNoZWNrYm94XCJdIHtcclxuICAgICAgICBtYXJnaW4tcmlnaHQ6IDEuNXJlbTtcclxuICAgICAgICB0cmFuc2Zvcm06IHNjYWxlKDEuMyk7XHJcbiAgICAgICAgYWNjZW50LWNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICB9XHJcblxyXG4gICAgICBsYWJlbCB7XHJcbiAgICAgICAgY29sb3I6ICNmZmZmZmY7XHJcbiAgICAgICAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgICAgICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMnMgZWFzZTtcclxuICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcblxyXG4gICAgICAgICY6OmJlZm9yZSB7XHJcbiAgICAgICAgICBjb250ZW50OiBcIvCflJJcIjtcclxuICAgICAgICAgIG1hcmdpbi1yaWdodDogMC44cmVtO1xyXG4gICAgICAgICAgZm9udC1zaXplOiAxLjZyZW07XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICAmOmhvdmVyIHtcclxuICAgICAgICAgIGNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG5cclxuICAgICAgJi5kaXNhYmxlZC1jaGVja2JveC1ibG9jayB7XHJcbiAgICAgICAgb3BhY2l0eTogMC42O1xyXG4gICAgICAgIFxyXG4gICAgICAgIGxhYmVsIHtcclxuICAgICAgICAgIGN1cnNvcjogbm90LWFsbG93ZWQ7XHJcbiAgICAgICAgICBcclxuICAgICAgICAgICY6aG92ZXIge1xyXG4gICAgICAgICAgICBjb2xvcjogI2ZmZmZmZjtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcblxyXG4gIC8vINCj0LvRg9GH0YjQtdC90L3QsNGPINC+0YHQvdC+0LLQvdCw0Y8g0LrQvdC+0L/QutCwINC+0YLQv9GA0LDQstC60LhcclxuICBidXR0b24uYmx1ZS1idXR0b24ge1xyXG4gICAgbWFyZ2luOiAzcmVtIGF1dG8gMnJlbTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbWF4LXdpZHRoOiAyNXJlbTtcclxuICAgIGhlaWdodDogNnJlbTtcclxuICAgIGZvbnQtc2l6ZTogMS44cmVtO1xyXG4gICAgZm9udC13ZWlnaHQ6IDcwMDtcclxuICAgIGxldHRlci1zcGFjaW5nOiAxcHg7XHJcbiAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMnJlbTtcclxuICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICBcclxuICAgIGJhY2tncm91bmQ6IGxpbmVhci1ncmFkaWVudCgxMzVkZWcsICMxNjJjNDcgMCUsICMwQjFEMzMgNTAlLCAjMTYyYzQ3IDEwMCUpO1xyXG4gICAgYm9yZGVyOiAycHggc29saWQgIzMyREM1OTtcclxuICAgIGJveC1zaGFkb3c6IDAgOHB4IDMycHggcmdiYSgwLCAwLCAwLCAwLjMpLFxyXG4gICAgICAgICAgICAgICAgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSk7XHJcblxyXG4gICAgJjo6YmVmb3JlIHtcclxuICAgICAgY29udGVudDogJyc7XHJcbiAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgICAgdG9wOiAwO1xyXG4gICAgICBsZWZ0OiAtMTAwJTtcclxuICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgIGhlaWdodDogMTAwJTtcclxuICAgICAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDkwZGVnLCB0cmFuc3BhcmVudCwgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKSwgdHJhbnNwYXJlbnQpO1xyXG4gICAgICB0cmFuc2l0aW9uOiBsZWZ0IDAuNXMgZWFzZTtcclxuICAgIH1cclxuXHJcbiAgICAmOm5vdCg6ZGlzYWJsZWQpIHtcclxuICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgYm9yZGVyLWNvbG9yOiAjMzJEQzU5O1xyXG4gICAgICAgIGJveC1zaGFkb3c6IDAgMTJweCA0OHB4IHJnYmEoNTAsIDIyMCwgODksIDAuNCksXHJcbiAgICAgICAgICAgICAgICAgICAgaW5zZXQgMCAxcHggMCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XHJcbiAgICAgICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0zcHgpO1xyXG5cclxuICAgICAgICAmOjpiZWZvcmUge1xyXG4gICAgICAgICAgbGVmdDogMTAwJTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuXHJcbiAgICAgICY6YWN0aXZlIHtcclxuICAgICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTFweCk7XHJcbiAgICAgICAgYm94LXNoYWRvdzogMCA0cHggMTZweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpLFxyXG4gICAgICAgICAgICAgICAgICAgIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xyXG4gICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgJjpkaXNhYmxlZCB7XHJcbiAgICAgIG9wYWNpdHk6IDAuNTtcclxuICAgICAgY3Vyc29yOiBub3QtYWxsb3dlZDtcclxuICAgICAgdHJhbnNmb3JtOiBub25lO1xyXG4gICAgICBcclxuICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgdHJhbnNmb3JtOiBub25lO1xyXG4gICAgICAgIGJveC1zaGFkb3c6IDAgOHB4IDMycHggcmdiYSgwLCAwLCAwLCAwLjMpLFxyXG4gICAgICAgICAgICAgICAgICAgIGluc2V0IDAgMXB4IDAgcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -18626,7 +22487,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../_shared/constants */ "./src/app/_shared/constants.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _helpers_pipes_money_to_int_pipe__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../_helpers/pipes/money-to-int.pipe */ "./src/app/_helpers/pipes/money-to-int.pipe.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18636,7 +22496,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
 
 
 
@@ -18800,14 +22659,14 @@ var SendComponent = /** @class */ (function () {
         });
     };
     SendComponent.prototype.getWrapInfo = function () {
-        var _this = this;
-        this.http.get('#')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["finalize"])(function () {
-            _this.isLoading = false;
-        }))
-            .subscribe(function (info) {
-            _this.wrapInfo = info;
-        });
+        this.isLoading = false;
+        /*this.http.get<WrapInfo>('#')
+          .pipe(finalize(() => {
+            this.isLoading = false;
+          }))
+          .subscribe(info => {
+            this.wrapInfo = info;
+          });*/
     };
     SendComponent.prototype.showDialog = function () {
         this.isModalDialogVisible = true;
@@ -18958,7 +22817,7 @@ var SendComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"content scrolled-content settings-page\">\r\n\r\n  <div class=\"settings-container-head\">\r\n    <div class=\"head\">\r\n      <h3 class=\"settings-title\">{{ 'SETTINGS.TITLE' | translate }}</h3>\r\n      <button type=\"button\" class=\"back-btn\" (click)=\"back()\">\r\n        <i class=\"icon back\"></i>\r\n        <span>{{ 'COMMON.BACK' | translate }}</span>\r\n      </button>\r\n    </div>\r\n  </div>\r\n  \r\n  <div class=\"settings-container\">\r\n    <div class=\"settings-container-left\">\r\n      \r\n        <div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.LANGUAGE.TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"languagesOptions\" bindValue=\"name\" bindLabel=\"language\"\r\n            [(ngModel)]=\"variablesService.settings.language\" [clearable]=\"false\" [searchable]=\"false\"\r\n            (change)=\"onLanguageChange()\">\r\n            <ng-template ng-label-tmp let-item=\"item\">\r\n              {{item.language | translate}}\r\n            </ng-template>\r\n            <ng-template ng-option-tmp let-item=\"item\" let-index=\"index\">\r\n              {{item.language | translate}}\r\n            </ng-template>\r\n          </ng-select>\r\n        </div>\r\n\r\n        <!--<div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.APP_LOCK.TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"appLockOptions\" bindValue=\"id\" bindLabel=\"name\"\r\n            [(ngModel)]=\"variablesService.settings.appLockTime\" [clearable]=\"false\" [searchable]=\"false\"\r\n            (change)=\"onLockChange()\">\r\n            <ng-template ng-label-tmp let-item=\"item\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n            <ng-template ng-option-tmp let-item=\"item\" let-index=\"index\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n          </ng-select>\r\n        </div>-->\r\n\r\n        <div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.SCALE.TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"appScaleOptions\" bindValue=\"id\" bindLabel=\"name\"\r\n            [(ngModel)]=\"variablesService.settings.scale\" [clearable]=\"false\" [searchable]=\"false\" (change)=\"setScale()\">\r\n            <ng-template ng-label-tmp let-item=\"item\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n            <ng-template ng-option-tmp let-item=\"item\" let-index=\"index\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n          </ng-select>\r\n        </div>\r\n\r\n        <div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.APP_LOG_TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"appLogOptions\" bindValue=\"id\" bindLabel=\"id\"\r\n            [(ngModel)]=\"variablesService.settings.appLog\" [clearable]=\"false\" [searchable]=\"false\"\r\n            (change)=\"onLogChange()\">\r\n          </ng-select>\r\n        </div>\r\n    </div>\r\n    <div class=\"settings-container-right\">\r\n      <div class=\"lock-selection lock-selection-switch\">\r\n        <label class=\"lock-selection-title\">{{ 'SETTINGS.NOTIFICATIONS' | translate }}</label>\r\n        <div class=\"notifications-switch\">\r\n          <div class=\"switch\" (click)=\"toggleNotifications()\" [ngClass]=\"correntNotificationsState ? 'off' : 'on'\">\r\n            <span class=\"circle\"></span>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <form class=\"master-password\" [formGroup]=\"changeForm\" (ngSubmit)=\"onSubmitChangePass()\">\r\n\r\n        <span class=\"master-password-title\">{{ 'SETTINGS.MASTER_PASSWORD.TITLE' | translate }}</span>\r\n\r\n        <div class=\"input-block\" *ngIf=\"variablesService.appPass\">\r\n          <label for=\"old-password\">{{ 'SETTINGS.MASTER_PASSWORD.OLD' | translate }}</label>\r\n          <input type=\"password\" id=\"old-password\" formControlName=\"password\"\r\n            placeholder=\"{{ 'PLACEHOLDERS.PLACEHOLDER_OLD' | translate }}\"\r\n            (contextmenu)=\"variablesService.onContextMenuPasteSelect($event)\" />\r\n          <div class=\"error-block\"\r\n            *ngIf=\"changeForm.invalid && changeForm.controls['password'].valid && (changeForm.controls['password'].dirty || changeForm.controls['password'].touched) && changeForm.errors && changeForm.errors.pass_mismatch && changeForm.get('password').value.length > 0\">\r\n            {{ 'SETTINGS.FORM_ERRORS.PASS_NOT_MATCH' | translate }}\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"input-block\">\r\n          <label for=\"new-password\">{{ 'SETTINGS.MASTER_PASSWORD.NEW' | translate }}</label>\r\n          <input type=\"password\" id=\"new-password\" formControlName=\"new_password\"\r\n            placeholder=\"{{ 'PLACEHOLDERS.PLACEHOLDER_NEW' | translate }}\"\r\n            (contextmenu)=\"variablesService.onContextMenuPasteSelect($event)\" />\r\n          <div class=\"error-block\"\r\n            *ngIf=\"changeForm.controls['new_password'].dirty && changeForm.controls['new_password'].errors\">\r\n            <div *ngIf=\"changeForm.controls['new_password'].errors.pattern\">\r\n              {{ 'ERRORS.WRONG_PASSWORD' | translate }}\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"input-block\">\r\n          <label for=\"confirm-password\">{{ 'SETTINGS.MASTER_PASSWORD.CONFIRM' | translate }}</label>\r\n          <input type=\"password\" id=\"confirm-password\" formControlName=\"new_confirmation\"\r\n            placeholder=\"{{ 'PLACEHOLDERS.PLACEHOLDER_CONFIRM' | translate }}\"\r\n            (contextmenu)=\"variablesService.onContextMenuPasteSelect($event)\" />\r\n          <div class=\"error-block\"\r\n            *ngIf=\"changeForm.invalid && (changeForm.controls['new_confirmation'].dirty || changeForm.controls['new_confirmation'].touched) && changeForm.errors && changeForm.errors.confirm_mismatch && changeForm.get('new_confirmation').value.length > 0\">\r\n            {{ 'SETTINGS.FORM_ERRORS.CONFIRM_NOT_MATCH' | translate }}\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"submit-button-container\">\r\n          <button type=\"submit\" class=\"blue-button\" [disabled]=\"!changeForm.valid\">{{ 'SETTINGS.MASTER_PASSWORD.BUTTON'\r\n            |\r\n            translate }}</button>\r\n          <span class=\"saved-message\" [class.active]=\"ifSaved\">{{ 'SETTINGS.SETTINGS_SAVED' | translate }}</span>\r\n        </div>\r\n      </form>\r\n      <div class=\"app_version\">App version: 1.6.18 | {{networkType}}</div>\r\n    </div>\r\n  </div>\r\n  <div>\r\n    <!-- <div class=\"last-build\">{{ 'SETTINGS.LAST_BUILD' | translate : {value: currentBuild} }}</div> -->\r\n  </div>\r\n\r\n</div>\r\n"
+module.exports = "<div class=\"content scrolled-content settings-page\">\r\n\r\n  <div class=\"settings-container-head\">\r\n    <div class=\"head\">\r\n      <h3 class=\"settings-title\">{{ 'SETTINGS.TITLE' | translate }}</h3>\r\n      <button type=\"button\" class=\"back-btn\" (click)=\"back()\">\r\n        <i class=\"icon back\"></i>\r\n        <span>{{ 'COMMON.BACK' | translate }}</span>\r\n      </button>\r\n    </div>\r\n  </div>\r\n  \r\n  <div class=\"settings-container\">\r\n    <div class=\"settings-container-left\">\r\n      \r\n        <div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.LANGUAGE.TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"languagesOptions\" bindValue=\"name\" bindLabel=\"language\"\r\n            [(ngModel)]=\"variablesService.settings.language\" [clearable]=\"false\" [searchable]=\"false\"\r\n            (change)=\"onLanguageChange()\">\r\n            <ng-template ng-label-tmp let-item=\"item\">\r\n              {{item.language | translate}}\r\n            </ng-template>\r\n            <ng-template ng-option-tmp let-item=\"item\" let-index=\"index\">\r\n              {{item.language | translate}}\r\n            </ng-template>\r\n          </ng-select>\r\n        </div>\r\n\r\n        <!--<div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.APP_LOCK.TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"appLockOptions\" bindValue=\"id\" bindLabel=\"name\"\r\n            [(ngModel)]=\"variablesService.settings.appLockTime\" [clearable]=\"false\" [searchable]=\"false\"\r\n            (change)=\"onLockChange()\">\r\n            <ng-template ng-label-tmp let-item=\"item\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n            <ng-template ng-option-tmp let-item=\"item\" let-index=\"index\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n          </ng-select>\r\n        </div>-->\r\n\r\n        <div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.SCALE.TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"appScaleOptions\" bindValue=\"id\" bindLabel=\"name\"\r\n            [(ngModel)]=\"variablesService.settings.scale\" [clearable]=\"false\" [searchable]=\"false\" (change)=\"setScale()\">\r\n            <ng-template ng-label-tmp let-item=\"item\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n            <ng-template ng-option-tmp let-item=\"item\" let-index=\"index\">\r\n              {{item.name | translate}}\r\n            </ng-template>\r\n          </ng-select>\r\n        </div>\r\n\r\n        <div class=\"lock-selection\">\r\n          <label class=\"lock-selection-title\">{{ 'SETTINGS.APP_LOG_TITLE' | translate }}</label>\r\n          <ng-select class=\"custom-select\" [items]=\"appLogOptions\" bindValue=\"id\" bindLabel=\"id\"\r\n            [(ngModel)]=\"variablesService.settings.appLog\" [clearable]=\"false\" [searchable]=\"false\"\r\n            (change)=\"onLogChange()\">\r\n          </ng-select>\r\n        </div>\r\n    </div>\r\n    <div class=\"settings-container-right\">\r\n      <div class=\"lock-selection lock-selection-switch\">\r\n        <label class=\"lock-selection-title\">{{ 'SETTINGS.NOTIFICATIONS' | translate }}</label>\r\n        <div class=\"notifications-switch\">\r\n          <div class=\"switch\" (click)=\"toggleNotifications()\" [ngClass]=\"correntNotificationsState ? 'off' : 'on'\">\r\n            <span class=\"circle\"></span>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <form class=\"master-password\" [formGroup]=\"changeForm\" (ngSubmit)=\"onSubmitChangePass()\">\r\n\r\n        <span class=\"master-password-title\">{{ 'SETTINGS.MASTER_PASSWORD.TITLE' | translate }}</span>\r\n\r\n        <div class=\"input-block\" *ngIf=\"variablesService.appPass\">\r\n          <label for=\"old-password\">{{ 'SETTINGS.MASTER_PASSWORD.OLD' | translate }}</label>\r\n          <input type=\"password\" id=\"old-password\" formControlName=\"password\"\r\n            placeholder=\"{{ 'PLACEHOLDERS.PLACEHOLDER_OLD' | translate }}\"\r\n            (contextmenu)=\"variablesService.onContextMenuPasteSelect($event)\" />\r\n          <div class=\"error-block\"\r\n            *ngIf=\"changeForm.invalid && changeForm.controls['password'].valid && (changeForm.controls['password'].dirty || changeForm.controls['password'].touched) && changeForm.errors && changeForm.errors.pass_mismatch && changeForm.get('password').value.length > 0\">\r\n            {{ 'SETTINGS.FORM_ERRORS.PASS_NOT_MATCH' | translate }}\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"input-block\">\r\n          <label for=\"new-password\">{{ 'SETTINGS.MASTER_PASSWORD.NEW' | translate }}</label>\r\n          <input type=\"password\" id=\"new-password\" formControlName=\"new_password\"\r\n            placeholder=\"{{ 'PLACEHOLDERS.PLACEHOLDER_NEW' | translate }}\"\r\n            (contextmenu)=\"variablesService.onContextMenuPasteSelect($event)\" />\r\n          <div class=\"error-block\"\r\n            *ngIf=\"changeForm.controls['new_password'].dirty && changeForm.controls['new_password'].errors\">\r\n            <div *ngIf=\"changeForm.controls['new_password'].errors.pattern\">\r\n              {{ 'ERRORS.WRONG_PASSWORD' | translate }}\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"input-block\">\r\n          <label for=\"confirm-password\">{{ 'SETTINGS.MASTER_PASSWORD.CONFIRM' | translate }}</label>\r\n          <input type=\"password\" id=\"confirm-password\" formControlName=\"new_confirmation\"\r\n            placeholder=\"{{ 'PLACEHOLDERS.PLACEHOLDER_CONFIRM' | translate }}\"\r\n            (contextmenu)=\"variablesService.onContextMenuPasteSelect($event)\" />\r\n          <div class=\"error-block\"\r\n            *ngIf=\"changeForm.invalid && (changeForm.controls['new_confirmation'].dirty || changeForm.controls['new_confirmation'].touched) && changeForm.errors && changeForm.errors.confirm_mismatch && changeForm.get('new_confirmation').value.length > 0\">\r\n            {{ 'SETTINGS.FORM_ERRORS.CONFIRM_NOT_MATCH' | translate }}\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"submit-button-container\">\r\n          <button type=\"submit\" class=\"blue-button\" [disabled]=\"!changeForm.valid\">{{ 'SETTINGS.MASTER_PASSWORD.BUTTON'\r\n            |\r\n            translate }}</button>\r\n          <span class=\"saved-message\" [class.active]=\"ifSaved\">{{ 'SETTINGS.SETTINGS_SAVED' | translate }}</span>\r\n        </div>\r\n      </form>\r\n      <div class=\"app_version\">App version: 1.7.0 | {{networkType}}</div>\r\n    </div>\r\n  </div>\r\n  <div>\r\n    <!-- <div class=\"last-build\">{{ 'SETTINGS.LAST_BUILD' | translate : {value: currentBuild} }}</div> -->\r\n  </div>\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -19268,7 +23127,7 @@ module.exports = "<div class=\"sidebar-header\">\r\n  <div class=\"logo\">\r\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ":host {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex: 0 0 25rem; }\n\n.animated {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-right: 1.2rem; }\n\n.animated::ng-deep svg {\n    width: 2rem;\n    height: 2rem; }\n\n.animated::ng-deep svg path,\n    .animated::ng-deep svg circle,\n    .animated::ng-deep svg polygon {\n      fill: #32DC59; }\n\n.sidebar-header {\n  margin-top: 2rem;\n  margin-left: 5px;\n  min-height: 7rem;\n  display: flex;\n  justify-content: center;\n  margin-bottom: 2.3rem; }\n\n.sidebar-header img {\n    height: 60%;\n    width: 60%; }\n\n.wallet-type {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 0.7rem;\n  height: 100%;\n  background-color: transparent;\n  transition: all ease 0.3s;\n  overflow: hidden; }\n\n.wallet-type:hover {\n    width: 2.8rem; }\n\n.wallet-type .content {\n    height: 100%;\n    padding: 0.7rem;\n    font-size: 1.2rem;\n    line-height: 1.4rem;\n    font-weight: 500;\n    color: #ffffff;\n    text-decoration: none;\n    text-transform: capitalize;\n    transition: all ease 0.3s;\n    writing-mode: vertical-rl;\n    text-orientation: mixed; }\n\n.wallet-type .content.auditable {\n      background-color: #5cda9d; }\n\n.wallet-type .content.watch-only, .wallet-type .content.auditable-watch-only {\n      background-color: #206F5A; }\n\n.cdk-drag-placeholder {\n  opacity: 0.3; }\n\n.cdk-drag-animating {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }\n\n.cdk-drag-preview.sidebar-account {\n  color: #ffffff;\n  background: #206F5A;\n  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12); }\n\n.cdk-drag-preview.sidebar-account.account-price .price {\n    color: #32DC59; }\n\n.cdk-drag-preview.sidebar-account.account-price .price-percent {\n    color: #BEBEBE; }\n\n.sidebar-account {\n  border-radius: 1.5rem;\n  margin: 1rem;\n  width: 25rem;\n  height: 16rem;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  flex-shrink: 0;\n  padding: 1.3rem 1rem; }\n\n.sidebar-account .close-wallet-button {\n    position: absolute;\n    right: 5px;\n    padding: 0;\n    height: auto;\n    background: transparent;\n    border: none; }\n\n.sidebar-account .close-wallet-button .icon {\n      width: 1.6rem;\n      height: 1.6rem;\n      display: block;\n      content: \"\";\n      background: center/contain no-repeat url('close-wallet.svg'); }\n\n.sidebar-account .sidebar-account-row:last-child {\n    margin-bottom: 0;\n    padding-top: 15px; }\n\n.sidebar-account .sidebar-account-row {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    margin-bottom: 5px; }\n\n.sidebar-account .sidebar-account-row.account-alias {\n      justify-content: flex-start;\n      font-size: 2rem;\n      padding: 3px; }\n\n.sidebar-account .sidebar-account-row.account-alias .name {\n        position: relative;\n        margin-right: 1rem;\n        display: flex;\n        align-items: center;\n        flex-shrink: 1;\n        line-height: 1.7rem; }\n\n.sidebar-account .sidebar-account-row.account-alias .name span {\n          text-overflow: ellipsis;\n          overflow: hidden;\n          white-space: nowrap; }\n\n.sidebar-account .sidebar-account-row.account-alias .name .indicator {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          border-radius: 50%;\n          width: 2rem;\n          height: 2rem;\n          margin-right: 0.8rem;\n          font-size: 1.4rem;\n          line-height: 1rem; }\n\n.sidebar-account .sidebar-account-row.account-title-balance .balance {\n      font-size: 2rem;\n      line-height: 2.4rem;\n      font-weight: 400;\n      white-space: nowrap; }\n\n.sidebar-account .sidebar-account-row.account-price {\n      font-size: 1.4rem;\n      line-height: 1.7rem;\n      display: flex;\n      justify-content: flex-start; }\n\n.sidebar-account .sidebar-account-row.account-price .price-percent {\n        margin-left: 0.7rem; }\n\n.sidebar-account .sidebar-account-row.account-staking .text {\n      line-height: 1.9rem;\n      font-size: 1.6rem; }\n\n.sidebar-account .sidebar-account-row.account-synchronization {\n      display: flex;\n      align-items: center;\n      width: 100%; }\n\n.sidebar-account .sidebar-account-row.account-synchronization .progress-bar {\n        border-radius: 1rem;\n        flex: 1 0 auto;\n        height: 0.4rem;\n        overflow: hidden; }\n\n.sidebar-account .sidebar-account-row.account-synchronization .progress-bar .fill {\n          height: 100%; }\n\n.sidebar-account .sidebar-account-row.account-synchronization .progress-percent {\n        flex: 0 0 auto;\n        font-size: 1.4rem;\n        line-height: 1.7rem;\n        padding-left: 1rem; }\n\n.sidebar-account:focus {\n    outline: none; }\n\n.sidebar-accounts {\n  margin: 4rem;\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  width: 70%;\n  height: 90%; }\n\n.sidebar-accounts .sidebar-accounts-list {\n    padding: 0 0.9rem;\n    display: flex;\n    flex-direction: row;\n    flex: 1 1 auto;\n    overflow-x: auto;\n    white-space: nowrap; }\n\n.sidebar-settings {\n  margin: 4rem;\n  flex: 0 0 auto; }\n\n.sidebar-settings .wrap-button {\n    transition: all 0.25s ease;\n    margin-top: 1.5rem; }\n\n.sidebar-settings .wrap-button button {\n      transition: all 0.25s ease;\n      display: flex;\n      align-items: center;\n      background: transparent;\n      border: none;\n      font-size: 2rem;\n      font-weight: 400;\n      line-height: 2.4rem;\n      outline: none; }\n\n.sidebar-settings .wrap-button button:hover span {\n        transition: margin 0.25s ease;\n        margin-left: 0.5rem; }\n\n.sidebar-settings .wrap-button button span {\n        transition: margin 0.25s ease; }\n\n.sidebar-settings .wrap-button button .add-wallet-div {\n        max-width: 1.2rem;\n        max-height: 1.2rem; }\n\n.sidebar-settings .wrap-button button.disabled {\n        cursor: url('not-allowed.svg') not-allowed; }\n\n.sidebar-settings .wrap-button button .icon {\n        margin-right: 0.7rem;\n        width: 2rem;\n        height: 2rem;\n        transition: all 0.25s ease; }\n\n.sidebar-settings .wrap-button button .icon.add-wallet {\n          width: 1.4rem;\n          height: 1.4rem;\n          background: center/contain no-repeat url('addnew.svg'); }\n\n.sidebar-settings .wrap-button button .icon.contacts {\n          background: center/contain no-repeat url('contacts.svg'); }\n\n.sidebar-settings .wrap-button button .icon.settings {\n          background: center/contain no-repeat url('settings-gear.svg'); }\n\n.sidebar-settings .wrap-button button .icon.logout {\n          background: none;\n          background: center/contain no-repeat url('logout.svg'); }\n\n.logo {\n  display: flex;\n  width: 100%;\n  height: 100%;\n  text-align: center; }\n\n.synchronization-status {\n  margin: 2rem 3rem 2rem 3rem;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  flex: 0 0 7rem;\n  font-size: 1.4rem; }\n\n.synchronization-status .status-container {\n    padding-bottom: 1.5rem;\n    position: relative;\n    flex-grow: 1;\n    text-align: left; }\n\n.synchronization-status .status-container .offline,\n    .synchronization-status .status-container .online {\n      bottom: -3rem;\n      position: relative;\n      display: block;\n      line-height: 1.2rem;\n      padding-left: 2.2rem; }\n\n.synchronization-status .status-container .offline:before,\n      .synchronization-status .status-container .online:before {\n        content: \"\";\n        position: absolute;\n        top: 0;\n        left: 0;\n        border-radius: 50%;\n        width: 1.2rem;\n        height: 1.2rem; }\n\n.synchronization-status .status-container .progress-bar-container {\n      height: 0.8rem;\n      width: 100%; }\n\n.synchronization-status .status-container .progress-bar-container .syncing {\n        display: flex; }\n\n.synchronization-status .status-container .progress-bar-container .syncing .progress-bar {\n          border-radius: 1rem;\n          flex: 1 0 auto;\n          overflow: hidden; }\n\n.synchronization-status .status-container .progress-bar-container .syncing .progress-bar .fill {\n            border-radius: 1rem;\n            height: 100%; }\n\n.synchronization-status .status-container .progress-bar-container .syncing .progress-percent {\n          flex: 0 0 auto;\n          font-size: 1.4rem;\n          line-height: 1.7rem;\n          padding-left: 1.2rem; }\n\n.synchronization-status .status-container .progress-bar-container .loading {\n        animation: move 5s linear infinite;\n        background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.125, rgba(0, 0, 0, 0.15)), color-stop(0.125, transparent), color-stop(0.25, transparent), color-stop(0.25, rgba(0, 0, 0, 0.1)), color-stop(0.375, rgba(0, 0, 0, 0.1)), color-stop(0.375, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(0, 0, 0, 0.15)), color-stop(0.625, rgba(0, 0, 0, 0.15)), color-stop(0.625, transparent), color-stop(0.75, transparent), color-stop(0.75, rgba(0, 0, 0, 0.1)), color-stop(0.875, rgba(0, 0, 0, 0.1)), color-stop(0.875, transparent), to(transparent)), -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.125, rgba(0, 0, 0, 0.3)), color-stop(0.125, transparent), color-stop(0.25, transparent), color-stop(0.25, rgba(0, 0, 0, 0.25)), color-stop(0.375, rgba(0, 0, 0, 0.25)), color-stop(0.375, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(0, 0, 0, 0.3)), color-stop(0.625, rgba(0, 0, 0, 0.3)), color-stop(0.625, transparent), color-stop(0.75, transparent), color-stop(0.75, rgba(0, 0, 0, 0.25)), color-stop(0.875, rgba(0, 0, 0, 0.25)), color-stop(0.875, transparent), to(transparent));\n        background-size: 7rem 7rem;\n        height: 100%; }\n\n.synchronization-status .update-container {\n    display: flex;\n    flex-grow: 1;\n    margin-left: 1rem;\n    text-align: right; }\n\n.synchronization-status .update-container .update-text {\n      flex: 1 1 auto;\n      font-size: 1.2rem;\n      line-height: 1.8rem;\n      text-align: left;\n      background-color: red; }\n\n.synchronization-status .update-container .update-text.time {\n        font-size: 1.1rem; }\n\n.synchronization-status .update-container .icon {\n      flex: 1 0 auto;\n      margin: 0.3rem 0 0 0.6rem;\n      width: 1.2rem;\n      height: 1.2rem; }\n\n.synchronization-status .update-container .icon.update {\n        background: center/contain no-repeat url('update.svg'); }\n\n.synchronization-status .update-container .icon.time {\n        background: center/contain no-repeat url('time.svg'); }\n\n.settings-block {\n  position: relative; }\n\n.settings-block button {\n    margin: 0; }\n\n.settings-block button:disabled {\n      cursor: url('not-allowed.svg'), not-allowed; }\n\n.settings-block .settings-dropdown {\n    position: absolute;\n    border-radius: 0.6rem;\n    top: 3rem;\n    right: 0;\n    width: 19rem;\n    background-color: #1b5c2d; }\n\n.settings-block .settings-dropdown button {\n      height: 4rem;\n      display: flex;\n      padding-left: 1.1rem;\n      align-items: center;\n      width: 100%; }\n\n.settings-block .settings-dropdown button:disabled {\n        cursor: url('not-allowed.svg'), not-allowed; }\n\n.settings-block .settings-dropdown button:disabled .icon svg path,\n        .settings-block .settings-dropdown button:disabled .icon svg .st0 {\n          fill: rgba(255, 255, 255, 0.4); }\n\n.settings-block .settings-dropdown button:disabled span {\n          color: rgba(255, 255, 255, 0.4); }\n\n.settings-block .settings-dropdown button.dark-line {\n        border-bottom: 1px solid #32DC59; }\n\n.settings-block .settings-dropdown button span {\n        font-size: 1.4rem;\n        line-height: 1.7rem; }\n\n.settings-block .settings-dropdown button .icon {\n        height: 1.8rem;\n        width: 1.8rem;\n        margin-right: 1rem; }\n\n.settings-block .settings-dropdown button .icon svg {\n          height: 100%;\n          width: 100%; }\n\n.settings-block .settings-dropdown button .icon.resync-wallet {\n          height: 1.7rem;\n          width: 1.7rem; }\n\n.settings-block .settings-dropdown button .icon.close-wallet {\n          background: center/contain no-repeat url('close-wallet-dropdown.svg'); }\n\n.alias {\n  display: flex;\n  align-items: center;\n  font-size: 1.3rem; }\n\n.alias .icon {\n    cursor: pointer;\n    margin-right: 1.2rem;\n    width: 2.4rem;\n    height: 2.4rem; }\n\n.alias .icon.edit {\n      background: center/contain no-repeat url('details.svg'); }\n\n.alias .icon.transfer {\n      background: center/contain no-repeat url('send.svg'); }\n\n@keyframes move {\n  0% {\n    background-position: 100% -7rem; }\n  100% {\n    background-position: 100% 7rem; } }\n\n.sidebar-account {\n  /* Set perspective for the 3D effect */\n  perspective: 1000px;\n  /* Define the transition duration for the flip effect */\n  transition: transform 0.6s; }\n\n.sidebar-account-back {\n  /* Initially hide the back view */\n  transform: rotateY(180deg); }\n\n.sidebar-account.active {\n  /* Apply the flip effect when the active class is present */\n  transform: rotateY(180deg); }\n\n.lock_wallet {\n  display: flex;\n  align-items: center;\n  justify-content: center; }\n\n.lock_wallet .icon_lock {\n    width: 5rem;\n    height: 8rem;\n    background: center/contain no-repeat url('lock_wallet.svg'); }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2lkZWJhci9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcc2lkZWJhclxcc2lkZWJhci5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvc2lkZWJhci9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFzc2V0c1xcc2Nzc1xcYmFzZVxcX3ZhcmlhYmxlcy5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQiw4QkFBOEI7RUFDOUIsZUFBZSxFQUFBOztBQUdqQjtFQUNFLGFBQWE7RUFDYix1QkFBdUI7RUFDdkIsbUJBQW1CO0VBQ25CLG9CQUFvQixFQUFBOztBQUp0QjtJQU1JLFdBQVc7SUFDWCxZQUFZLEVBQUE7O0FBUGhCOzs7TUFXTSxhQUFhLEVBQUE7O0FBSW5CO0VBQ0UsZ0JBQWdCO0VBQ2hCLGdCQUFnQjtFQUNoQixnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLHVCQUF1QjtFQUN2QixxQkFBcUIsRUFBQTs7QUFOdkI7SUFRSSxXQUFXO0lBQ1gsVUFBVSxFQUFBOztBQUdkO0VBQ0Usa0JBQWtCO0VBQ2xCLE1BQU07RUFDTixPQUFPO0VBQ1AsYUFBYTtFQUNiLFlBQVk7RUFDWiw2QkFBNkI7RUFDN0IseUJBQXlCO0VBQ3pCLGdCQUFnQixFQUFBOztBQVJsQjtJQVVJLGFBQWEsRUFBQTs7QUFWakI7SUFhSSxZQUFZO0lBQ1osZUFBZTtJQUNmLGlCQUFpQjtJQUNqQixtQkFBbUI7SUFDbkIsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxxQkFBcUI7SUFDckIsMEJBQTBCO0lBQzFCLHlCQUF5QjtJQUN6Qix5QkFBeUI7SUFDekIsdUJBQXVCLEVBQUE7O0FBdkIzQjtNQXlCTSx5QkFBeUIsRUFBQTs7QUF6Qi9CO01BNkJNLHlCQ1ppQyxFQUFBOztBRGdCdkM7RUFDRSxZQUFZLEVBQUE7O0FBRWQ7RUFDRSxzREFBc0QsRUFBQTs7QUFFeEQ7RUFDRSxjQ3JCNEI7RURzQjVCLG1CQ3hCcUM7RUR5QnJDLHFIQzlCa0MsRUFBQTs7QUQyQnBDO0lBTU0sY0NGb0IsRUFBQTs7QURKMUI7SUFTTSxjQUFjLEVBQUE7O0FBS3BCO0VBQ0UscUJBQXFCO0VBQ3JCLFlBQVk7RUFDWixZQUFZO0VBQ1osYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLGNBQWM7RUFDZCxvQkFBb0IsRUFBQTs7QUFUdEI7SUFXSSxrQkFBa0I7SUFFbEIsVUFBVTtJQUNWLFVBQVU7SUFDVixZQUFZO0lBQ1osdUJBQXVCO0lBQ3ZCLFlBQVksRUFBQTs7QUFqQmhCO01BbUJNLGFBQWE7TUFDYixjQUFjO01BQ2QsY0FBYztNQUNkLFdBQVc7TUFDWCw0REFBaUYsRUFBQTs7QUF2QnZGO0lBNkJJLGdCQUFnQjtJQUNoQixpQkFBaUIsRUFBQTs7QUE5QnJCO0lBaUNJLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsOEJBQThCO0lBQzlCLGtCQUFrQixFQUFBOztBQXBDdEI7TUF1Q00sMkJBQTJCO01BQzNCLGVBQWU7TUFDZixZQUFZLEVBQUE7O0FBekNsQjtRQTJDUSxrQkFBa0I7UUFDbEIsa0JBQWtCO1FBQ2xCLGFBQWE7UUFDYixtQkFBbUI7UUFDbkIsY0FBYztRQUNkLG1CQUFtQixFQUFBOztBQWhEM0I7VUFrRFUsdUJBQXVCO1VBQ3ZCLGdCQUFnQjtVQUNoQixtQkFBbUIsRUFBQTs7QUFwRDdCO1VBdURVLGFBQWE7VUFDYixtQkFBbUI7VUFDbkIsdUJBQXVCO1VBQ3ZCLGtCQUFrQjtVQUNsQixXQUFXO1VBQ1gsWUFBWTtVQUNaLG9CQUFvQjtVQUNwQixpQkFBaUI7VUFDakIsaUJBQWlCLEVBQUE7O0FBL0QzQjtNQXFFUSxlQUFlO01BQ2YsbUJBQW1CO01BQ25CLGdCQUFnQjtNQUNoQixtQkFBbUIsRUFBQTs7QUF4RTNCO01BNEVNLGlCQUFpQjtNQUNqQixtQkFBbUI7TUFDbkIsYUFBYTtNQUNiLDJCQUEyQixFQUFBOztBQS9FakM7UUFpRlEsbUJBQW1CLEVBQUE7O0FBakYzQjtNQXVGUSxtQkFBbUI7TUFDbkIsaUJBQWlCLEVBQUE7O0FBeEZ6QjtNQTZGTSxhQUFhO01BQ2IsbUJBQW1CO01BQ25CLFdBQVcsRUFBQTs7QUEvRmpCO1FBaUdRLG1CQUFtQjtRQUNuQixjQUFjO1FBQ2QsY0FBYztRQUNkLGdCQUFnQixFQUFBOztBQXBHeEI7VUFzR1UsWUFBWSxFQUFBOztBQXRHdEI7UUEwR1EsY0FBYztRQUNkLGlCQUFpQjtRQUNqQixtQkFBbUI7UUFDbkIsa0JBQWtCLEVBQUE7O0FBN0cxQjtJQWtISSxhQUFhLEVBQUE7O0FBR2pCO0VBQ0UsWUFBWTtFQUNaLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLGNBQWM7RUFDZCxVQUFVO0VBQ1YsV0FBVyxFQUFBOztBQVBiO0lBU0ksaUJBQWlCO0lBQ2pCLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsY0FBYztJQUNkLGdCQUFnQjtJQUNoQixtQkFBbUIsRUFBQTs7QUFHdkI7RUFDRSxZQUFZO0VBQ1osY0FBYyxFQUFBOztBQUZoQjtJQUlJLDBCQUEwQjtJQUMxQixrQkFBa0IsRUFBQTs7QUFMdEI7TUFPTSwwQkFBMEI7TUFDMUIsYUFBYTtNQUNiLG1CQUFtQjtNQUNuQix1QkFBdUI7TUFDdkIsWUFBWTtNQUNaLGVBQWU7TUFDZixnQkFBZ0I7TUFDaEIsbUJBQW1CO01BQ25CLGFBQWEsRUFBQTs7QUFmbkI7UUFrQlUsNkJBQTZCO1FBQzdCLG1CQUFtQixFQUFBOztBQW5CN0I7UUF1QlEsNkJBQTZCLEVBQUE7O0FBdkJyQztRQTBCUSxpQkFBaUI7UUFDakIsa0JBQWtCLEVBQUE7O0FBM0IxQjtRQThCUSwwQ0FBMkQsRUFBQTs7QUE5Qm5FO1FBaUNRLG9CQUFvQjtRQUNwQixXQUFXO1FBQ1gsWUFBWTtRQUNaLDBCQUEwQixFQUFBOztBQXBDbEM7VUFzQ1UsYUFBYTtVQUNiLGNBQWM7VUFDZCxzREFBeUUsRUFBQTs7QUF4Q25GO1VBMkNVLHdEQUEyRSxFQUFBOztBQTNDckY7VUE4Q1UsNkRBQWdGLEVBQUE7O0FBOUMxRjtVQWlEVSxnQkFBZ0I7VUFDaEIsc0RBQXlFLEVBQUE7O0FBTW5GO0VBQ0UsYUFBYTtFQUNiLFdBQVc7RUFDWCxZQUFZO0VBQ1osa0JBQWtCLEVBQUE7O0FBRXBCO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsMkJBQTJCO0VBQzNCLGNBQWM7RUFDZCxpQkFBaUIsRUFBQTs7QUFObkI7SUFRSSxzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLFlBQVk7SUFDWixnQkFBZ0IsRUFBQTs7QUFYcEI7O01BY00sYUFBYTtNQUNiLGtCQUFrQjtNQUNsQixjQUFjO01BQ2QsbUJBQW1CO01BQ25CLG9CQUFvQixFQUFBOztBQWxCMUI7O1FBcUJRLFdBQVc7UUFDWCxrQkFBa0I7UUFDbEIsTUFBTTtRQUNOLE9BQU87UUFDUCxrQkFBa0I7UUFDbEIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUEzQnRCO01BK0JNLGNBQWM7TUFDZCxXQUFXLEVBQUE7O0FBaENqQjtRQWtDUSxhQUFhLEVBQUE7O0FBbENyQjtVQW9DVSxtQkFBbUI7VUFDbkIsY0FBYztVQUNkLGdCQUFnQixFQUFBOztBQXRDMUI7WUF3Q1ksbUJBQW1CO1lBQ25CLFlBQVksRUFBQTs7QUF6Q3hCO1VBNkNVLGNBQWM7VUFDZCxpQkFBaUI7VUFDakIsbUJBQW1CO1VBQ25CLG9CQUFvQixFQUFBOztBQWhEOUI7UUFxRFEsa0NBQWtDO1FBQ2xDLCtsQ0FvQndpQjtRQUN4aUIsMEJBQTBCO1FBQzFCLFlBQVksRUFBQTs7QUE1RXBCO0lBaUZJLGFBQWE7SUFDYixZQUFZO0lBQ1osaUJBQWlCO0lBQ2pCLGlCQUFpQixFQUFBOztBQXBGckI7TUF1Rk0sY0FBYztNQUNkLGlCQUFpQjtNQUNqQixtQkFBbUI7TUFDbkIsZ0JBQWdCO01BQ2hCLHFCQUFxQixFQUFBOztBQTNGM0I7UUE2RlEsaUJBQWlCLEVBQUE7O0FBN0Z6QjtNQWlHTSxjQUFjO01BQ2QseUJBQXlCO01BQ3pCLGFBQWE7TUFDYixjQUFjLEVBQUE7O0FBcEdwQjtRQXNHUSxzREFBeUUsRUFBQTs7QUF0R2pGO1FBeUdRLG9EQUF1RSxFQUFBOztBQU0vRTtFQUNFLGtCQUFrQixFQUFBOztBQURwQjtJQU1JLFNBQVMsRUFBQTs7QUFOYjtNQUlNLDJDQUE0RCxFQUFBOztBQUpsRTtJQVNJLGtCQUFrQjtJQUNsQixxQkFBcUI7SUFDckIsU0FBUztJQUNULFFBQVE7SUFDUixZQUFZO0lBQ1oseUJBQXlCLEVBQUE7O0FBZDdCO01BZ0JNLFlBQVk7TUFDWixhQUFhO01BQ2Isb0JBQW9CO01BQ3BCLG1CQUFtQjtNQUNuQixXQUFXLEVBQUE7O0FBcEJqQjtRQXNCUSwyQ0FBNEQsRUFBQTs7QUF0QnBFOztVQTBCVSw4QkFBOEIsRUFBQTs7QUExQnhDO1VBNkJVLCtCQUErQixFQUFBOztBQTdCekM7UUFpQ1EsZ0NBQWdDLEVBQUE7O0FBakN4QztRQW9DUSxpQkFBaUI7UUFDakIsbUJBQW1CLEVBQUE7O0FBckMzQjtRQXdDUSxjQUFjO1FBQ2QsYUFBYTtRQUNiLGtCQUFrQixFQUFBOztBQTFDMUI7VUE0Q1UsWUFBWTtVQUNaLFdBQVcsRUFBQTs7QUE3Q3JCO1VBZ0RVLGNBQWM7VUFDZCxhQUFhLEVBQUE7O0FBakR2QjtVQW9EVSxxRUFBd0YsRUFBQTs7QUFNbEc7RUFDRSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLGlCQUFpQixFQUFBOztBQUhuQjtJQUtJLGVBQWU7SUFDZixvQkFBb0I7SUFDcEIsYUFBYTtJQUNiLGNBQWMsRUFBQTs7QUFSbEI7TUFVTSx1REFBMEUsRUFBQTs7QUFWaEY7TUFhTSxvREFBdUUsRUFBQTs7QUFLN0U7RUFDRTtJQUNFLCtCQUErQixFQUFBO0VBRWpDO0lBQ0UsOEJBQThCLEVBQUEsRUFBQTs7QUFHbEM7RUFDRSxzQ0FBQTtFQUNBLG1CQUFtQjtFQUNuQix1REFBQTtFQUNBLDBCQUEwQixFQUFBOztBQUc1QjtFQUNFLGlDQUFBO0VBQ0EsMEJBQTBCLEVBQUE7O0FBRzVCO0VBQ0UsMkRBQUE7RUFDQSwwQkFBMEIsRUFBQTs7QUFFNUI7RUFDRSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLHVCQUF1QixFQUFBOztBQUh6QjtJQUtFLFdBQVc7SUFDWCxZQUFZO0lBQ1osMkRBQThFLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9zaWRlYmFyL3NpZGViYXIuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJAaW1wb3J0IFwiLi4vLi4vYXNzZXRzL3Njc3MvYmFzZS92YXJpYWJsZXNcIjtcclxuOmhvc3Qge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IHNwYWNlLWJldHdlZW47XHJcbiAgZmxleDogMCAwIDI1cmVtO1xyXG4gIC8vcGFkZGluZzogMS44cmVtIDAgMnJlbSAwO1xyXG59XHJcbi5hbmltYXRlZCB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIG1hcmdpbi1yaWdodDogMS4ycmVtO1xyXG4gICY6Om5nLWRlZXAgc3ZnIHtcclxuICAgIHdpZHRoOiAycmVtO1xyXG4gICAgaGVpZ2h0OiAycmVtO1xyXG4gICAgcGF0aCxcclxuICAgIGNpcmNsZSxcclxuICAgIHBvbHlnb24ge1xyXG4gICAgICBmaWxsOiAjMzJEQzU5O1xyXG4gICAgfVxyXG4gIH1cclxufVxyXG4uc2lkZWJhci1oZWFkZXIge1xyXG4gIG1hcmdpbi10b3A6IDJyZW07XHJcbiAgbWFyZ2luLWxlZnQ6IDVweDtcclxuICBtaW4taGVpZ2h0OiA3cmVtO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgbWFyZ2luLWJvdHRvbTogMi4zcmVtO1xyXG4gIGltZyB7XHJcbiAgICBoZWlnaHQ6IDYwJTtcclxuICAgIHdpZHRoOiA2MCU7XHJcbiAgfVxyXG59XHJcbi53YWxsZXQtdHlwZSB7XHJcbiAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gIHRvcDogMDtcclxuICBsZWZ0OiAwO1xyXG4gIHdpZHRoOiAwLjdyZW07XHJcbiAgaGVpZ2h0OiAxMDAlO1xyXG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xyXG4gIHRyYW5zaXRpb246IGFsbCBlYXNlIDAuM3M7XHJcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAmOmhvdmVyIHtcclxuICAgIHdpZHRoOiAyLjhyZW07XHJcbiAgfVxyXG4gIC5jb250ZW50IHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIHBhZGRpbmc6IDAuN3JlbTtcclxuICAgIGZvbnQtc2l6ZTogMS4ycmVtO1xyXG4gICAgbGluZS1oZWlnaHQ6IDEuNHJlbTtcclxuICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICBjb2xvcjogI2ZmZmZmZjtcclxuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcclxuICAgIHRleHQtdHJhbnNmb3JtOiBjYXBpdGFsaXplO1xyXG4gICAgdHJhbnNpdGlvbjogYWxsIGVhc2UgMC4zcztcclxuICAgIHdyaXRpbmctbW9kZTogdmVydGljYWwtcmw7XHJcbiAgICB0ZXh0LW9yaWVudGF0aW9uOiBtaXhlZDtcclxuICAgICYuYXVkaXRhYmxlIHtcclxuICAgICAgYmFja2dyb3VuZC1jb2xvcjogIzVjZGE5ZDtcclxuICAgIH1cclxuICAgICYud2F0Y2gtb25seSxcclxuICAgICYuYXVkaXRhYmxlLXdhdGNoLW9ubHkge1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkYWNjb3VudEFjdGl2ZUJhY2tncm91bmRDb2xvcjtcclxuICAgIH1cclxuICB9XHJcbn1cclxuLmNkay1kcmFnLXBsYWNlaG9sZGVyIHtcclxuICBvcGFjaXR5OiAwLjM7XHJcbn1cclxuLmNkay1kcmFnLWFuaW1hdGluZyB7XHJcbiAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDI1MG1zIGN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpO1xyXG59XHJcbi5jZGstZHJhZy1wcmV2aWV3LnNpZGViYXItYWNjb3VudCB7XHJcbiAgY29sb3I6ICRhY2NvdW50TWFpblRleHRDb2xvcjtcclxuICBiYWNrZ3JvdW5kOiAkYWNjb3VudEFjdGl2ZUJhY2tncm91bmRDb2xvcjtcclxuICBib3gtc2hhZG93OiAkYWNjb3VudERyYWdCb3hTaGFkb3c7XHJcbiAgJi5hY2NvdW50LXByaWNlIHtcclxuICAgIC5wcmljZSB7XHJcbiAgICAgIGNvbG9yOiAkdG9vbHRpcFRleHRDb2xvcjtcclxuICAgIH1cclxuICAgIC5wcmljZS1wZXJjZW50IHtcclxuICAgICAgY29sb3I6ICNCRUJFQkU7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG4uc2lkZWJhci1hY2NvdW50IHtcclxuICBib3JkZXItcmFkaXVzOiAxLjVyZW07XHJcbiAgbWFyZ2luOiAxcmVtO1xyXG4gIHdpZHRoOiAyNXJlbTtcclxuICBoZWlnaHQ6IDE2cmVtO1xyXG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgZmxleC1zaHJpbms6IDA7XHJcbiAgcGFkZGluZzogMS4zcmVtIDFyZW07XHJcbiAgLmNsb3NlLXdhbGxldC1idXR0b24ge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgLy90b3A6IDEuMnJlbTtcclxuICAgIHJpZ2h0OiA1cHg7XHJcbiAgICBwYWRkaW5nOiAwO1xyXG4gICAgaGVpZ2h0OiBhdXRvO1xyXG4gICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICBib3JkZXI6IG5vbmU7XHJcbiAgICAuaWNvbiB7XHJcbiAgICAgIHdpZHRoOiAxLjZyZW07XHJcbiAgICAgIGhlaWdodDogMS42cmVtO1xyXG4gICAgICBkaXNwbGF5OiBibG9jaztcclxuICAgICAgY29udGVudDogXCJcIjtcclxuICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKFwiLi4vLi4vYXNzZXRzL2ljb25zL2Nsb3NlLXdhbGxldC5zdmdcIik7XHJcbiAgICB9XHJcbiAgICBcclxuICB9XHJcblxyXG4gIC5zaWRlYmFyLWFjY291bnQtcm93Omxhc3QtY2hpbGQge1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMDtcclxuICAgIHBhZGRpbmctdG9wOiAxNXB4O1xyXG4gIH1cclxuICAuc2lkZWJhci1hY2NvdW50LXJvdyB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICAgIG1hcmdpbi1ib3R0b206IDVweDtcclxuXHJcbiAgICAmLmFjY291bnQtYWxpYXMge1xyXG4gICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7XHJcbiAgICAgIGZvbnQtc2l6ZTogMnJlbTtcclxuICAgICAgcGFkZGluZzogM3B4O1xyXG4gICAgICAubmFtZSB7XHJcbiAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogMXJlbTtcclxuICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAgZmxleC1zaHJpbms6IDE7XHJcbiAgICAgICAgbGluZS1oZWlnaHQ6IDEuN3JlbTtcclxuICAgICAgICBzcGFuIHtcclxuICAgICAgICAgIHRleHQtb3ZlcmZsb3c6IGVsbGlwc2lzO1xyXG4gICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5pbmRpY2F0b3Ige1xyXG4gICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgICAgICAgIHdpZHRoOiAycmVtO1xyXG4gICAgICAgICAgaGVpZ2h0OiAycmVtO1xyXG4gICAgICAgICAgbWFyZ2luLXJpZ2h0OiAwLjhyZW07XHJcbiAgICAgICAgICBmb250LXNpemU6IDEuNHJlbTtcclxuICAgICAgICAgIGxpbmUtaGVpZ2h0OiAxcmVtO1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gICAgJi5hY2NvdW50LXRpdGxlLWJhbGFuY2Uge1xyXG4gICAgICAuYmFsYW5jZSB7XHJcbiAgICAgICAgZm9udC1zaXplOiAycmVtO1xyXG4gICAgICAgIGxpbmUtaGVpZ2h0OiAyLjRyZW07XHJcbiAgICAgICAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICAgICAgICB3aGl0ZS1zcGFjZTogbm93cmFwO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAmLmFjY291bnQtcHJpY2Uge1xyXG4gICAgICBmb250LXNpemU6IDEuNHJlbTtcclxuICAgICAgbGluZS1oZWlnaHQ6IDEuN3JlbTtcclxuICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xyXG4gICAgICAucHJpY2UtcGVyY2VudCB7XHJcbiAgICAgICAgbWFyZ2luLWxlZnQ6IDAuN3JlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG5cclxuICAgICYuYWNjb3VudC1zdGFraW5nIHtcclxuICAgICAgLnRleHQge1xyXG4gICAgICAgIGxpbmUtaGVpZ2h0OiAxLjlyZW07XHJcbiAgICAgICAgZm9udC1zaXplOiAxLjZyZW07XHJcbiAgICAgIH1cclxuICAgIH1cclxuXHJcbiAgICAmLmFjY291bnQtc3luY2hyb25pemF0aW9uIHtcclxuICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgIC5wcm9ncmVzcy1iYXIge1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDFyZW07XHJcbiAgICAgICAgZmxleDogMSAwIGF1dG87XHJcbiAgICAgICAgaGVpZ2h0OiAwLjRyZW07XHJcbiAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAuZmlsbCB7XHJcbiAgICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICAgIC5wcm9ncmVzcy1wZXJjZW50IHtcclxuICAgICAgICBmbGV4OiAwIDAgYXV0bztcclxuICAgICAgICBmb250LXNpemU6IDEuNHJlbTtcclxuICAgICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICAgIHBhZGRpbmctbGVmdDogMXJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuICAmOmZvY3VzIHtcclxuICAgIG91dGxpbmU6IG5vbmU7XHJcbiAgfVxyXG59XHJcbi5zaWRlYmFyLWFjY291bnRzIHtcclxuICBtYXJnaW46IDRyZW07XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICBmbGV4OiAxIDEgYXV0bztcclxuICB3aWR0aDogNzAlO1xyXG4gIGhlaWdodDogOTAlO1xyXG4gIC5zaWRlYmFyLWFjY291bnRzLWxpc3Qge1xyXG4gICAgcGFkZGluZzogMCAwLjlyZW07XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1kaXJlY3Rpb246IHJvdztcclxuICAgIGZsZXg6IDEgMSBhdXRvO1xyXG4gICAgb3ZlcmZsb3cteDogYXV0bztcclxuICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgfVxyXG59XHJcbi5zaWRlYmFyLXNldHRpbmdzIHtcclxuICBtYXJnaW46IDRyZW07XHJcbiAgZmxleDogMCAwIGF1dG87XHJcbiAgLndyYXAtYnV0dG9uIHtcclxuICAgIHRyYW5zaXRpb246IGFsbCAwLjI1cyBlYXNlO1xyXG4gICAgbWFyZ2luLXRvcDogMS41cmVtO1xyXG4gICAgYnV0dG9uIHtcclxuICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMjVzIGVhc2U7XHJcbiAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gICAgICBib3JkZXI6IG5vbmU7XHJcbiAgICAgIGZvbnQtc2l6ZTogMnJlbTtcclxuICAgICAgZm9udC13ZWlnaHQ6IDQwMDtcclxuICAgICAgbGluZS1oZWlnaHQ6IDIuNHJlbTtcclxuICAgICAgb3V0bGluZTogbm9uZTtcclxuICAgICAgJjpob3ZlciB7XHJcbiAgICAgICAgc3BhbiB7XHJcbiAgICAgICAgICB0cmFuc2l0aW9uOiBtYXJnaW4gMC4yNXMgZWFzZTtcclxuICAgICAgICAgIG1hcmdpbi1sZWZ0OiAwLjVyZW07XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICAgIHNwYW4ge1xyXG4gICAgICAgIHRyYW5zaXRpb246IG1hcmdpbiAwLjI1cyBlYXNlO1xyXG4gICAgICB9XHJcbiAgICAgIC5hZGQtd2FsbGV0LWRpdiB7XHJcbiAgICAgICAgbWF4LXdpZHRoOiAxLjJyZW07XHJcbiAgICAgICAgbWF4LWhlaWdodDogMS4ycmVtO1xyXG4gICAgICB9XHJcbiAgICAgICYuZGlzYWJsZWQge1xyXG4gICAgICAgIGN1cnNvcjogdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9ub3QtYWxsb3dlZC5zdmcpIG5vdC1hbGxvd2VkO1xyXG4gICAgICB9XHJcbiAgICAgIC5pY29uIHtcclxuICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuN3JlbTtcclxuICAgICAgICB3aWR0aDogMnJlbTtcclxuICAgICAgICBoZWlnaHQ6IDJyZW07XHJcbiAgICAgICAgdHJhbnNpdGlvbjogYWxsIDAuMjVzIGVhc2U7XHJcbiAgICAgICAgJi5hZGQtd2FsbGV0IHtcclxuICAgICAgICAgIHdpZHRoOiAxLjRyZW07XHJcbiAgICAgICAgICBoZWlnaHQ6IDEuNHJlbTtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IGNlbnRlciAvIGNvbnRhaW4gbm8tcmVwZWF0IHVybCguLi8uLi9hc3NldHMvaWNvbnMvYWRkbmV3LnN2Zyk7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYuY29udGFjdHMge1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9jb250YWN0cy5zdmcpO1xyXG4gICAgICAgIH1cclxuICAgICAgICAmLnNldHRpbmdzIHtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IGNlbnRlciAvIGNvbnRhaW4gbm8tcmVwZWF0IHVybCguLi8uLi9hc3NldHMvaWNvbnMvc2V0dGluZ3MtZ2Vhci5zdmcpO1xyXG4gICAgICAgIH1cclxuICAgICAgICAmLmxvZ291dCB7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBub25lO1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9sb2dvdXQuc3ZnKTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbn1cclxuLmxvZ297XHJcbiAgZGlzcGxheTogZmxleDtcclxuICB3aWR0aDogMTAwJTtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG59XHJcbi5zeW5jaHJvbml6YXRpb24tc3RhdHVzIHtcclxuICBtYXJnaW46IDJyZW0gM3JlbSAycmVtIDNyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICBmbGV4OiAwIDAgN3JlbTtcclxuICBmb250LXNpemU6IDEuNHJlbTtcclxuICAuc3RhdHVzLWNvbnRhaW5lciB7XHJcbiAgICBwYWRkaW5nLWJvdHRvbTogMS41cmVtO1xyXG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgZmxleC1ncm93OiAxO1xyXG4gICAgdGV4dC1hbGlnbjogbGVmdDtcclxuICAgIC5vZmZsaW5lLFxyXG4gICAgLm9ubGluZSB7XHJcbiAgICAgIGJvdHRvbTogLTNyZW07XHJcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICAgIGxpbmUtaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgIHBhZGRpbmctbGVmdDogMi4ycmVtO1xyXG5cclxuICAgICAgJjpiZWZvcmUge1xyXG4gICAgICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgIHRvcDogMDtcclxuICAgICAgICBsZWZ0OiAwO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgICAgICB3aWR0aDogMS4ycmVtO1xyXG4gICAgICAgIGhlaWdodDogMS4ycmVtO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAucHJvZ3Jlc3MtYmFyLWNvbnRhaW5lciB7XHJcbiAgICAgIGhlaWdodDogMC44cmVtO1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgLnN5bmNpbmcge1xyXG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgLnByb2dyZXNzLWJhciB7XHJcbiAgICAgICAgICBib3JkZXItcmFkaXVzOiAxcmVtO1xyXG4gICAgICAgICAgZmxleDogMSAwIGF1dG87XHJcbiAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgLmZpbGwge1xyXG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiAxcmVtO1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5wcm9ncmVzcy1wZXJjZW50IHtcclxuICAgICAgICAgIGZsZXg6IDAgMCBhdXRvO1xyXG4gICAgICAgICAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgICAgICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICAgICAgcGFkZGluZy1sZWZ0OiAxLjJyZW07XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcblxyXG4gICAgICAubG9hZGluZyB7XHJcbiAgICAgICAgYW5pbWF0aW9uOiBtb3ZlIDVzIGxpbmVhciBpbmZpbml0ZTtcclxuICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiAtd2Via2l0LWdyYWRpZW50KFxyXG4gICAgICAgICAgICBsaW5lYXIsXHJcbiAgICAgICAgICAgIDAgMCxcclxuICAgICAgICAgICAgMTAwJSAxMDAlLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMTI1LCByZ2JhKDAsIDAsIDAsIDAuMTUpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjEyNSwgdHJhbnNwYXJlbnQpLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMjUsIHRyYW5zcGFyZW50KSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjI1LCByZ2JhKDAsIDAsIDAsIDAuMSkpLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMzc1LCByZ2JhKDAsIDAsIDAsIDAuMSkpLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMzc1LCB0cmFuc3BhcmVudCksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC41LCB0cmFuc3BhcmVudCksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC41LCByZ2JhKDAsIDAsIDAsIDAuMTUpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjYyNSwgcmdiYSgwLCAwLCAwLCAwLjE1KSksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC42MjUsIHRyYW5zcGFyZW50KSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjc1LCB0cmFuc3BhcmVudCksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC43NSwgcmdiYSgwLCAwLCAwLCAwLjEpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjg3NSwgcmdiYSgwLCAwLCAwLCAwLjEpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjg3NSwgdHJhbnNwYXJlbnQpLFxyXG4gICAgICAgICAgICB0byh0cmFuc3BhcmVudClcclxuICAgICAgICAgICksXHJcbiAgICAgICAgICAtd2Via2l0LWdyYWRpZW50KGxpbmVhciwgMCAxMDAlLCAxMDAlIDAsIGNvbG9yLXN0b3AoMC4xMjUsIHJnYmEoMCwgMCwgMCwgMC4zKSksIGNvbG9yLXN0b3AoMC4xMjUsIHRyYW5zcGFyZW50KSwgY29sb3Itc3RvcCgwLjI1LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC4yNSwgcmdiYSgwLCAwLCAwLCAwLjI1KSksIGNvbG9yLXN0b3AoMC4zNzUsIHJnYmEoMCwgMCwgMCwgMC4yNSkpLCBjb2xvci1zdG9wKDAuMzc1LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC41LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC41LCByZ2JhKDAsIDAsIDAsIDAuMykpLCBjb2xvci1zdG9wKDAuNjI1LCByZ2JhKDAsIDAsIDAsIDAuMykpLCBjb2xvci1zdG9wKDAuNjI1LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC43NSwgdHJhbnNwYXJlbnQpLCBjb2xvci1zdG9wKDAuNzUsIHJnYmEoMCwgMCwgMCwgMC4yNSkpLCBjb2xvci1zdG9wKDAuODc1LCByZ2JhKDAsIDAsIDAsIDAuMjUpKSwgY29sb3Itc3RvcCgwLjg3NSwgdHJhbnNwYXJlbnQpLCB0byh0cmFuc3BhcmVudCkpO1xyXG4gICAgICAgIGJhY2tncm91bmQtc2l6ZTogN3JlbSA3cmVtO1xyXG4gICAgICAgIGhlaWdodDogMTAwJTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuICAudXBkYXRlLWNvbnRhaW5lciB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1ncm93OiAxO1xyXG4gICAgbWFyZ2luLWxlZnQ6IDFyZW07XHJcbiAgICB0ZXh0LWFsaWduOiByaWdodDtcclxuXHJcbiAgICAudXBkYXRlLXRleHQge1xyXG4gICAgICBmbGV4OiAxIDEgYXV0bztcclxuICAgICAgZm9udC1zaXplOiAxLjJyZW07XHJcbiAgICAgIGxpbmUtaGVpZ2h0OiAxLjhyZW07XHJcbiAgICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6IHJlZDtcclxuICAgICAgJi50aW1lIHtcclxuICAgICAgICBmb250LXNpemU6IDEuMXJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gICAgLmljb24ge1xyXG4gICAgICBmbGV4OiAxIDAgYXV0bztcclxuICAgICAgbWFyZ2luOiAwLjNyZW0gMCAwIDAuNnJlbTtcclxuICAgICAgd2lkdGg6IDEuMnJlbTtcclxuICAgICAgaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgICYudXBkYXRlIHtcclxuICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL3VwZGF0ZS5zdmcpO1xyXG4gICAgICB9XHJcbiAgICAgICYudGltZSB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy90aW1lLnN2Zyk7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbn1cclxuXHJcbi5zZXR0aW5ncy1ibG9jayB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGJ1dHRvbiB7XHJcbiAgICAmOmRpc2FibGVkIHtcclxuICAgICAgY3Vyc29yOiB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL25vdC1hbGxvd2VkLnN2ZyksIG5vdC1hbGxvd2VkO1xyXG4gICAgfVxyXG4gICAgbWFyZ2luOiAwO1xyXG4gIH1cclxuICAuc2V0dGluZ3MtZHJvcGRvd24ge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMC42cmVtO1xyXG4gICAgdG9wOiAzcmVtO1xyXG4gICAgcmlnaHQ6IDA7XHJcbiAgICB3aWR0aDogMTlyZW07XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMWI1YzJkO1xyXG4gICAgYnV0dG9uIHtcclxuICAgICAgaGVpZ2h0OiA0cmVtO1xyXG4gICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICBwYWRkaW5nLWxlZnQ6IDEuMXJlbTtcclxuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICY6ZGlzYWJsZWQge1xyXG4gICAgICAgIGN1cnNvcjogdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9ub3QtYWxsb3dlZC5zdmcpLCBub3QtYWxsb3dlZDtcclxuXHJcbiAgICAgICAgLmljb24gc3ZnIHBhdGgsXHJcbiAgICAgICAgLmljb24gc3ZnIC5zdDAge1xyXG4gICAgICAgICAgZmlsbDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjQpO1xyXG4gICAgICAgIH1cclxuICAgICAgICBzcGFuIHtcclxuICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNCk7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICAgICYuZGFyay1saW5lIHtcclxuICAgICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgIzMyREM1OTtcclxuICAgICAgfVxyXG4gICAgICBzcGFuIHtcclxuICAgICAgICBmb250LXNpemU6IDEuNHJlbTtcclxuICAgICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICB9XHJcbiAgICAgIC5pY29uIHtcclxuICAgICAgICBoZWlnaHQ6IDEuOHJlbTtcclxuICAgICAgICB3aWR0aDogMS44cmVtO1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogMXJlbTtcclxuICAgICAgICBzdmcge1xyXG4gICAgICAgICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYucmVzeW5jLXdhbGxldCB7XHJcbiAgICAgICAgICBoZWlnaHQ6IDEuN3JlbTtcclxuICAgICAgICAgIHdpZHRoOiAxLjdyZW07XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYuY2xvc2Utd2FsbGV0IHtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IGNlbnRlciAvIGNvbnRhaW4gbm8tcmVwZWF0IHVybCguLi8uLi9hc3NldHMvaWNvbnMvY2xvc2Utd2FsbGV0LWRyb3Bkb3duLnN2Zyk7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbi5hbGlhcyB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGZvbnQtc2l6ZTogMS4zcmVtO1xyXG4gIC5pY29uIHtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgIG1hcmdpbi1yaWdodDogMS4ycmVtO1xyXG4gICAgd2lkdGg6IDIuNHJlbTtcclxuICAgIGhlaWdodDogMi40cmVtO1xyXG4gICAgJi5lZGl0IHtcclxuICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9kZXRhaWxzLnN2Zyk7XHJcbiAgICB9XHJcbiAgICAmLnRyYW5zZmVyIHtcclxuICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9zZW5kLnN2Zyk7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIG1vdmUge1xyXG4gIDAlIHtcclxuICAgIGJhY2tncm91bmQtcG9zaXRpb246IDEwMCUgLTdyZW07XHJcbiAgfVxyXG4gIDEwMCUge1xyXG4gICAgYmFja2dyb3VuZC1wb3NpdGlvbjogMTAwJSA3cmVtO1xyXG4gIH1cclxufVxyXG4uc2lkZWJhci1hY2NvdW50IHtcclxuICAvKiBTZXQgcGVyc3BlY3RpdmUgZm9yIHRoZSAzRCBlZmZlY3QgKi9cclxuICBwZXJzcGVjdGl2ZTogMTAwMHB4O1xyXG4gIC8qIERlZmluZSB0aGUgdHJhbnNpdGlvbiBkdXJhdGlvbiBmb3IgdGhlIGZsaXAgZWZmZWN0ICovXHJcbiAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuNnM7XHJcbn1cclxuXHJcbi5zaWRlYmFyLWFjY291bnQtYmFjayB7XHJcbiAgLyogSW5pdGlhbGx5IGhpZGUgdGhlIGJhY2sgdmlldyAqL1xyXG4gIHRyYW5zZm9ybTogcm90YXRlWSgxODBkZWcpO1xyXG59XHJcblxyXG4uc2lkZWJhci1hY2NvdW50LmFjdGl2ZSB7XHJcbiAgLyogQXBwbHkgdGhlIGZsaXAgZWZmZWN0IHdoZW4gdGhlIGFjdGl2ZSBjbGFzcyBpcyBwcmVzZW50ICovXHJcbiAgdHJhbnNmb3JtOiByb3RhdGVZKDE4MGRlZyk7XHJcbn1cclxuLmxvY2tfd2FsbGV0IHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAuaWNvbl9sb2Nre1xyXG4gIHdpZHRoOiA1cmVtO1xyXG4gIGhlaWdodDogOHJlbTtcclxuICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL2xvY2tfd2FsbGV0LnN2Zyk7XHJcbiB9XHJcbn0iLCIkYm9keUJhY2tncm91bmRDb2xvcjogbGluZWFyLWdyYWRpZW50KCMwMDAgMTAlLCMzNjE1N2UgNTAlLCMwMDAgOTAlKTtcclxuJHNpZGViYXJCYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMzEsIDE0MywgMjM1LCAwKTtcclxuJHNpZGViYXJCb3JkZXJDb2xvcjogcmdiYSgzMSwgMTQzLCAyMzUsIDApO1xyXG5cclxuJG9ubGluZUNvbG9yOiAjMWJhMTAwO1xyXG4kb2ZmbGluZUNvbG9yOiAjZmYwMDAwO1xyXG4kY29udGVudEJhY2tncm91bmRDb2xvcjogcmdiYSgxNCwgNDgsIDM5LCAwLjgpO1xyXG5cclxuJG1haW5UZXh0Q29sb3I6ICMzMkRDNTk7XHJcbiRhbHRlcm5hdGl2ZVRleHRDb2xvcjogcmdiYSgyNTMsIDI1NCwgMjU1LCAxKTtcclxuJG9wdGlvbmFsVGV4dENvbG9yOiAjMmIwYzNhO1xyXG4kYmx1ZVRleHRDb2xvcjogIzMyREM1OTtcclxuJGdyZWVuVGV4dENvbG9yOiAjMTBhMDFjO1xyXG4kb3JhbmdlVGV4dENvbG9yOiAjZmY2ZjAwO1xyXG4kcmVkVGV4dENvbG9yOiAjZmYwMDAwO1xyXG4kYWRkcmVzc1RleHRDb2xvcjogIzMyREM1OTtcclxuJHBsYWNlaG9sZGVyVGV4dENvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XHJcblxyXG4kYmx1ZUJ1dHRvbkJhY2tncm91bmRDb2xvcjogIzIwNkY1QTtcclxuJGJsdWVCdXR0b25Cb3hTaGFkb3c6IDBweCAxMHB4IDQwcHggcmdiYSg5NiwgMywgMTU4LCAwKTtcclxuJGJsdWVCdXR0b25Ib3ZlckNvbG9yOiAjMTY2RTQ2O1xyXG4kYmx1ZUJ1dHRvbkhvdmVyQm94U2hhZG93OiAwcHggMTBweCA1MHB4IHJnYmEoOTYsIDMsIDE1OCwgMCk7XHJcbiRibHVlQnV0dG9uRm9jdXNDb2xvcjogIzE2NkU0NjtcclxuJGJsdWVCdXR0b25Gb2N1c0JveFNoYWRvdzogMHB4IDEwcHggMjBweCByZ2JhKDk2LCAzLCAxNTgsIDApO1xyXG4kYmx1ZUJ1dHRvbmRpc2FibGVkQ29sb3I6ICMxNjZFNDYsIDAuNTtcclxuXHJcbiRyZXNldEJ1dHRvbkJhY2tncm91bmRDb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiRyZXNldEJ1dHRvbkNvbG9yOiAjMzJEQzU5O1xyXG4kcmVzZXRCdXR0b25Ib3ZlckNvbG9yOiAjMTY2RTQ2O1xyXG4kcmVzZXRCdXR0b25Gb2N1c0NvbG9yOiAjMjA2RjVBO1xyXG4kcmVzZXRCdXR0b25EaXNhYmxlZENvbG9yOiByZ2JhKDI1MywgMjU0LCAyNTUsIDAuNyk7XHJcblxyXG4kcGFnaW5hdGlvbkJ1dHRvbkNvbG9yOiByZ2JhKDI1MywgMjU0LCAyNTUsIDAuNyk7XHJcbiRwYWdpbmF0aW9uQnV0dG9uSG92ZXJDb2xvcjogcmdiYSgyNTMsIDI1NCwgMjU1LCAwLjQpO1xyXG5cclxuJGlucHV0QmFja2dyb3VuZENvbG9yOiB0cmFuc3BhcmVudDtcclxuJHNlbGVjdERyb3Bkb3duQmFja2dyb3VuZENvbG9yOiAjMjA2RjVBO1xyXG5cclxuJHNlbGVjdEhvdmVyQ29sb3I6IHJnYmEoNzIsIDU4LCA4NSwgMC41KTtcclxuJHNlbGVjdFNlbGVjdGVkQ29sb3I6IHJnYmEoNTcsIDQzLCA2OCwgMC41KTtcclxuXHJcbiRzd2l0Y2hPbkJhY2tncm91bmRDb2xvcjogIzE3OGIwMDtcclxuJHN3aXRjaE9mZkJhY2tncm91bmRDb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjIpO1xyXG4kc3dpdGNoQ2lyY2VsZUJveFNoYWRvdzogMHB4IDIuMTE3NjVweCA1LjY0NzA2cHggcmdiYSgwLCAwLCAwLCAwLjE1KSwgMHB4IDIuMTE3NjVweCAwLjcwNTg4MnB4IHJnYmEoMCwgMCwgMCwgMC4wNik7XHJcblxyXG4kYWNjb3VudEJveFNoYWRvdzogMHB4IDBweCAxNXB4IDNweCByZ2JhKDE2MCwgNywgMjU1LCAwKTtcclxuJGFjY291bnREcmFnQm94U2hhZG93OiAwIDVweCA1cHggLTNweCByZ2JhKDAsIDAsIDAsIDAuMiksIDAgOHB4IDEwcHggMXB4IHJnYmEoMCwgMCwgMCwgMC4xNCksXHJcbiAgMCAzcHggMTRweCAycHggcmdiYSgwLCAwLCAwLCAwLjEyKTtcclxuJGFjY291bnRCYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMTI1LCAzMCwgMjMzLCAwLjMpO1xyXG4kYWNjb3VudFdhdGNoT25seUJvcmRlckNvbG9yOiAjOWE2OWY3O1xyXG4kYWNjb3VudEF1ZGl0YWJsZUJvcmRlckNvbG9yOiAjZmZmZmZmO1xyXG4kYWNjb3VudEJhY2tncm91bmRDb2xvcjogIzAwMTkxMztcclxuJGFjY291bnRBY3RpdmVCYWNrZ3JvdW5kQ29sb3I6ICAjMjA2RjVBO1xyXG4kYWNjb3VudEhvdmVyQmFja2dyb3VuZENvbG9yOiAjMTY2RTQ2O1xyXG4kYWNjb3VudE1haW5UZXh0Q29sb3I6ICNmZmZmZmY7XHJcblxyXG4kc2VlZFBocmFzZUZvcm1CYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMzEsIDIzNSwgMjA0LCAwLjE1KTtcclxuJHNlY3VyZWRTZWVkOiAjZTBlMGUwO1xyXG4kc2VlZEl0ZW1UZXh0OiAjZTBlMGUwO1xyXG4kY29weUJhY2tncm91bmQ6IHJnYmEoMTE4LCAzMCwgMjMzLCAwLjYpO1xyXG4kY29weUJhY2tncm91bmRIb3ZlcjogcmdiYSgxMTgsIDMwLCAyMzMsIDAuOSk7XHJcbiRzZWVkSXRlbUJhY2tncm91bmRDb2xvcjogIzI5MTgyYTtcclxuJGFjY291bnRPcHRpb25hbFRleHRDb2xvcjogIzY3NTU3NjtcclxuJGFjY291bnRJbmRpY2F0b3JUZXh0Q29sb3I6ICMyODBjM2E7XHJcbiRhY2NvdW50SW5kaWNhdG9yQmFja2dyb3VuZENvbG9yOiAjZmZmZmZmO1xyXG5cclxuJHRhYkluYWN0aXZlQmFja2dyb3VuZENvbG9yOiByZ2JhKDE0MywgMzEsIDIzNSwgMCk7XHJcbiR0YWJIb3ZlckJhY2tncm91bmRDb2xvcjogcmdiYSgxNDMsIDMxLCAyMzUsIDApO1xyXG4kdGFibGVCYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMTQzLCAzMSwgMjM1LCAwKTtcclxuJG1lc3NhZ2VNeUJhY2tncm91bmRDb2xvcjogIzM1MmE0NDtcclxuJG1lc3NhZ2VCdWRkeUJhY2tncm91bmRDb2xvcjogIzI0MTgyYTtcclxuJHByb2dyZXNzQmFyQmFja2dyb3VuZENvbG9yOiByZ2JhKDE0MywgMzEsIDIzNSwgMCk7XHJcbiRwcm9ncmVzc0JhckFjY291bnRDb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjIpO1xyXG4kcHJvZ3Jlc3NCYXJBY2NvdW50QWN0aXZlQ29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4yKTtcclxuJHByb2dyZXNzQmFyRnVsbEJhY2tncm91bmRDb2xvcjogIzMyREM1OTtcclxuJGNoYXJ0T3B0aW9uc0JhY2tncm91bmRDb2xvcjogIzM3MmI0NDtcclxuJGNoYXJ0T3B0aW9uc0hvdmVyQ29sb3I6ICM2MjU1NzY7XHJcbiR0b29sdGlwQmFja2dyb3VuZENvbG9yOiAjMjA2RjVBO1xyXG4kdG9vbHRpcFRleHRDb2xvcjogIzMyREM1OTtcclxuJHRvb2x0aXBJbXBvcnRhbnRUZXh0Q29sb3I6ICNmZjZmMDA7XHJcbiR0b29sdGlwSW1wb3J0YW50QmFja2dyb3VuZENvbG9yOiAjNWYyYjExO1xyXG4kdG9vbHRpcENyaXRpY2FsVGV4dENvbG9yOiAjZmY1MjUyO1xyXG4kdG9vbHRpcENyaXRpY2FsQmFja2dyb3VuZENvbG9yOiAjNWYxZDFkO1xyXG4kdG9vbHRpcFNoYWRvdzogMCAwIDFyZW0gcmdiYSgwLCAwLCAwLCAwLjUpO1xyXG4kbW9kYWxCYWNrZ3JvdW5kOiAjMjA2RjVBO1xyXG4kY2xvc2VCdXR0b25Db2xvcjogIzZkNTU3NjtcclxuJGhvdmVyUGFnZTogcmdiYSg3MiwgNTgsIDkwLCAwLjI0Nyk7XHJcblxyXG4kYWxpYXNEcm9wZG93bkJhY2tncm91bmQ6ICMxNjZFNDY7XHJcbiJdfQ== */"
+module.exports = ":host {\n  display: flex;\n  flex-direction: row;\n  justify-content: space-between;\n  flex: 0 0 25rem; }\n\n.animated {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-right: 1.2rem; }\n\n.animated::ng-deep svg {\n    width: 2rem;\n    height: 2rem; }\n\n.animated::ng-deep svg path,\n    .animated::ng-deep svg circle,\n    .animated::ng-deep svg polygon {\n      fill: #32DC59; }\n\n.sidebar-header {\n  margin-top: 2rem;\n  margin-left: 5px;\n  min-height: 7rem;\n  display: flex;\n  justify-content: center;\n  margin-bottom: 2.3rem; }\n\n.sidebar-header img {\n    height: 60%;\n    width: 60%; }\n\n.wallet-type {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 0.7rem;\n  height: 100%;\n  background-color: transparent;\n  transition: all ease 0.3s;\n  overflow: hidden; }\n\n.wallet-type:hover {\n    width: 2.8rem; }\n\n.wallet-type .content {\n    height: 100%;\n    padding: 0.7rem;\n    font-size: 1.2rem;\n    line-height: 1.4rem;\n    font-weight: 500;\n    color: #ffffff;\n    text-decoration: none;\n    text-transform: capitalize;\n    transition: all ease 0.3s;\n    writing-mode: vertical-rl;\n    text-orientation: mixed; }\n\n.wallet-type .content.auditable {\n      background-color: #5cda9d; }\n\n.wallet-type .content.watch-only, .wallet-type .content.auditable-watch-only {\n      background-color: #206F5A; }\n\n.cdk-drag-placeholder {\n  opacity: 0.3; }\n\n.cdk-drag-animating {\n  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1); }\n\n.cdk-drag-preview.sidebar-account {\n  color: #ffffff;\n  background: #206F5A;\n  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12); }\n\n.cdk-drag-preview.sidebar-account.account-price .price {\n    color: #32DC59; }\n\n.cdk-drag-preview.sidebar-account.account-price .price-percent {\n    color: #BEBEBE; }\n\n.sidebar-account {\n  border-radius: 1.5rem;\n  margin: 1rem;\n  width: 25rem;\n  height: 16rem;\n  position: relative;\n  display: flex;\n  flex-direction: column;\n  flex-shrink: 0;\n  padding: 1.3rem 1rem; }\n\n.sidebar-account .close-wallet-button {\n    position: absolute;\n    right: 5px;\n    padding: 0;\n    height: auto;\n    background: transparent;\n    border: none; }\n\n.sidebar-account .close-wallet-button .icon {\n      width: 1.6rem;\n      height: 1.6rem;\n      display: block;\n      content: \"\";\n      background: center/contain no-repeat url('close-wallet.svg'); }\n\n.sidebar-account .sidebar-account-row:last-child {\n    margin-bottom: 0;\n    padding-top: 15px; }\n\n.sidebar-account .sidebar-account-row {\n    display: flex;\n    align-items: center;\n    justify-content: space-between;\n    margin-bottom: 5px; }\n\n.sidebar-account .sidebar-account-row.account-alias {\n      justify-content: flex-start;\n      font-size: 2rem;\n      padding: 3px; }\n\n.sidebar-account .sidebar-account-row.account-alias .name {\n        position: relative;\n        margin-right: 1rem;\n        display: flex;\n        align-items: center;\n        flex-shrink: 1;\n        line-height: 1.7rem; }\n\n.sidebar-account .sidebar-account-row.account-alias .name span {\n          text-overflow: ellipsis;\n          overflow: hidden;\n          white-space: nowrap; }\n\n.sidebar-account .sidebar-account-row.account-alias .name .indicator {\n          display: flex;\n          align-items: center;\n          justify-content: center;\n          border-radius: 50%;\n          width: 2rem;\n          height: 2rem;\n          margin-right: 0.8rem;\n          font-size: 1.4rem;\n          line-height: 1rem; }\n\n.sidebar-account .sidebar-account-row.account-title-balance .balance {\n      font-size: 2rem;\n      line-height: 2.4rem;\n      font-weight: 400;\n      white-space: nowrap; }\n\n.sidebar-account .sidebar-account-row.account-price {\n      font-size: 1.4rem;\n      line-height: 1.7rem;\n      display: flex;\n      justify-content: flex-start; }\n\n.sidebar-account .sidebar-account-row.account-price .price-percent {\n        margin-left: 0.7rem; }\n\n.sidebar-account .sidebar-account-row.account-staking .text {\n      line-height: 1.9rem;\n      font-size: 1.6rem; }\n\n.sidebar-account .sidebar-account-row.account-synchronization {\n      display: flex;\n      align-items: center;\n      width: 100%; }\n\n.sidebar-account .sidebar-account-row.account-synchronization .progress-bar {\n        border-radius: 1rem;\n        flex: 1 0 auto;\n        height: 0.4rem;\n        overflow: hidden; }\n\n.sidebar-account .sidebar-account-row.account-synchronization .progress-bar .fill {\n          height: 100%; }\n\n.sidebar-account .sidebar-account-row.account-synchronization .progress-percent {\n        flex: 0 0 auto;\n        font-size: 1.4rem;\n        line-height: 1.7rem;\n        padding-left: 1rem; }\n\n.sidebar-account:focus {\n    outline: none; }\n\n.sidebar-accounts {\n  margin: 4rem;\n  position: relative;\n  display: flex;\n  flex-direction: row;\n  flex: 1 1 auto;\n  width: 70%;\n  height: 90%; }\n\n.sidebar-accounts .sidebar-accounts-list {\n    padding: 0 0.9rem;\n    display: flex;\n    flex-direction: row;\n    flex: 1 1 auto;\n    overflow-x: auto;\n    white-space: nowrap; }\n\n.sidebar-settings {\n  margin: 4rem;\n  flex: 0 0 auto; }\n\n.sidebar-settings .wrap-button {\n    transition: all 0.25s ease;\n    margin-top: 1.5rem; }\n\n.sidebar-settings .wrap-button button {\n      transition: all 0.25s ease;\n      display: flex;\n      align-items: center;\n      background: transparent;\n      border: none;\n      font-size: 2rem;\n      font-weight: 400;\n      line-height: 2.4rem;\n      outline: none; }\n\n.sidebar-settings .wrap-button button:hover span {\n        transition: margin 0.25s ease;\n        margin-left: 0.5rem; }\n\n.sidebar-settings .wrap-button button span {\n        transition: margin 0.25s ease; }\n\n.sidebar-settings .wrap-button button .add-wallet-div {\n        max-width: 1.2rem;\n        max-height: 1.2rem; }\n\n.sidebar-settings .wrap-button button.disabled {\n        cursor: url('not-allowed.svg') not-allowed; }\n\n.sidebar-settings .wrap-button button .icon {\n        margin-right: 0.7rem;\n        width: 2rem;\n        height: 2rem;\n        transition: all 0.25s ease; }\n\n.sidebar-settings .wrap-button button .icon.add-wallet {\n          width: 1.4rem;\n          height: 1.4rem;\n          background: center/contain no-repeat url('addnew.svg'); }\n\n.sidebar-settings .wrap-button button .icon.contacts {\n          background: center/contain no-repeat url('contacts.svg'); }\n\n.sidebar-settings .wrap-button button .icon.settings {\n          background: center/contain no-repeat url('settings-gear.svg'); }\n\n.sidebar-settings .wrap-button button .icon.logout {\n          background: none;\n          background: center/contain no-repeat url('logout.svg'); }\n\n.logo {\n  display: flex;\n  width: 100%;\n  height: 100%;\n  text-align: center; }\n\n.synchronization-status {\n  margin: 2rem 3rem 2rem 3rem;\n  display: flex;\n  align-items: center;\n  justify-content: flex-start;\n  flex: 0 0 7rem;\n  font-size: 1.4rem; }\n\n.synchronization-status .status-container {\n    padding-bottom: 1.5rem;\n    position: relative;\n    flex-grow: 1;\n    text-align: left; }\n\n.synchronization-status .status-container .offline,\n    .synchronization-status .status-container .online,\n    .synchronization-status .status-container .syncing,\n    .synchronization-status .status-container .loading {\n      bottom: -3rem;\n      position: relative;\n      display: block;\n      line-height: 1.2rem;\n      padding-left: 2.2rem;\n      font-weight: 500; }\n\n.synchronization-status .status-container .offline:before,\n      .synchronization-status .status-container .online:before,\n      .synchronization-status .status-container .syncing:before,\n      .synchronization-status .status-container .loading:before {\n        content: \"\";\n        position: absolute;\n        top: 0;\n        left: 0;\n        border-radius: 50%;\n        width: 1.2rem;\n        height: 1.2rem;\n        animation: pulse 2s infinite; }\n\n.synchronization-status .status-container .offline:before {\n      background: #ff4757;\n      box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }\n\n.synchronization-status .status-container .online:before {\n      background: #32DC59;\n      box-shadow: 0 0 0 0 rgba(50, 220, 89, 0.7); }\n\n.synchronization-status .status-container .syncing:before {\n      background: #ffa502;\n      box-shadow: 0 0 0 0 rgba(255, 165, 2, 0.7); }\n\n.synchronization-status .status-container .loading:before {\n      background: #3742fa;\n      box-shadow: 0 0 0 0 rgba(55, 66, 250, 0.7); }\n\n.synchronization-status .status-container .progress-bar-container {\n      height: 0.8rem;\n      width: 100%; }\n\n.synchronization-status .status-container .progress-bar-container .syncing {\n        display: flex; }\n\n.synchronization-status .status-container .progress-bar-container .syncing .progress-bar {\n          border-radius: 1rem;\n          flex: 1 0 auto;\n          overflow: hidden; }\n\n.synchronization-status .status-container .progress-bar-container .syncing .progress-bar .fill {\n            border-radius: 1rem;\n            height: 100%; }\n\n.synchronization-status .status-container .progress-bar-container .syncing .progress-percent {\n          flex: 0 0 auto;\n          font-size: 1.4rem;\n          line-height: 1.7rem;\n          padding-left: 1.2rem; }\n\n.synchronization-status .status-container .progress-bar-container .loading {\n        animation: move 5s linear infinite;\n        background-image: -webkit-gradient(linear, 0 0, 100% 100%, color-stop(0.125, rgba(0, 0, 0, 0.15)), color-stop(0.125, transparent), color-stop(0.25, transparent), color-stop(0.25, rgba(0, 0, 0, 0.1)), color-stop(0.375, rgba(0, 0, 0, 0.1)), color-stop(0.375, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(0, 0, 0, 0.15)), color-stop(0.625, rgba(0, 0, 0, 0.15)), color-stop(0.625, transparent), color-stop(0.75, transparent), color-stop(0.75, rgba(0, 0, 0, 0.1)), color-stop(0.875, rgba(0, 0, 0, 0.1)), color-stop(0.875, transparent), to(transparent)), -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.125, rgba(0, 0, 0, 0.3)), color-stop(0.125, transparent), color-stop(0.25, transparent), color-stop(0.25, rgba(0, 0, 0, 0.25)), color-stop(0.375, rgba(0, 0, 0, 0.25)), color-stop(0.375, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(0, 0, 0, 0.3)), color-stop(0.625, rgba(0, 0, 0, 0.3)), color-stop(0.625, transparent), color-stop(0.75, transparent), color-stop(0.75, rgba(0, 0, 0, 0.25)), color-stop(0.875, rgba(0, 0, 0, 0.25)), color-stop(0.875, transparent), to(transparent));\n        background-size: 7rem 7rem;\n        height: 100%; }\n\n.synchronization-status .update-container {\n    display: flex;\n    flex-grow: 1;\n    margin-left: 1rem;\n    text-align: right; }\n\n.synchronization-status .update-container .update-text {\n      flex: 1 1 auto;\n      font-size: 1.2rem;\n      line-height: 1.8rem;\n      text-align: left;\n      background-color: red; }\n\n.synchronization-status .update-container .update-text.time {\n        font-size: 1.1rem; }\n\n.synchronization-status .update-container .icon {\n      flex: 1 0 auto;\n      margin: 0.3rem 0 0 0.6rem;\n      width: 1.2rem;\n      height: 1.2rem; }\n\n.synchronization-status .update-container .icon.update {\n        background: center/contain no-repeat url('update.svg'); }\n\n.synchronization-status .update-container .icon.time {\n        background: center/contain no-repeat url('time.svg'); }\n\n.settings-block {\n  position: relative; }\n\n.settings-block button {\n    margin: 0; }\n\n.settings-block button:disabled {\n      cursor: url('not-allowed.svg'), not-allowed; }\n\n.settings-block .settings-dropdown {\n    position: absolute;\n    border-radius: 0.6rem;\n    top: 3rem;\n    right: 0;\n    width: 19rem;\n    background-color: #1b5c2d; }\n\n.settings-block .settings-dropdown button {\n      height: 4rem;\n      display: flex;\n      padding-left: 1.1rem;\n      align-items: center;\n      width: 100%; }\n\n.settings-block .settings-dropdown button:disabled {\n        cursor: url('not-allowed.svg'), not-allowed; }\n\n.settings-block .settings-dropdown button:disabled .icon svg path,\n        .settings-block .settings-dropdown button:disabled .icon svg .st0 {\n          fill: rgba(255, 255, 255, 0.4); }\n\n.settings-block .settings-dropdown button:disabled span {\n          color: rgba(255, 255, 255, 0.4); }\n\n.settings-block .settings-dropdown button.dark-line {\n        border-bottom: 1px solid #32DC59; }\n\n.settings-block .settings-dropdown button span {\n        font-size: 1.4rem;\n        line-height: 1.7rem; }\n\n.settings-block .settings-dropdown button .icon {\n        height: 1.8rem;\n        width: 1.8rem;\n        margin-right: 1rem; }\n\n.settings-block .settings-dropdown button .icon svg {\n          height: 100%;\n          width: 100%; }\n\n.settings-block .settings-dropdown button .icon.resync-wallet {\n          height: 1.7rem;\n          width: 1.7rem; }\n\n.settings-block .settings-dropdown button .icon.close-wallet {\n          background: center/contain no-repeat url('close-wallet-dropdown.svg'); }\n\n.alias {\n  display: flex;\n  align-items: center;\n  font-size: 1.3rem; }\n\n.alias .icon {\n    cursor: pointer;\n    margin-right: 1.2rem;\n    width: 2.4rem;\n    height: 2.4rem; }\n\n.alias .icon.edit {\n      background: center/contain no-repeat url('details.svg'); }\n\n.alias .icon.transfer {\n      background: center/contain no-repeat url('send.svg'); }\n\n@keyframes move {\n  0% {\n    background-position: 100% -7rem; }\n  100% {\n    background-position: 100% 7rem; } }\n\n@keyframes pulse {\n  0% {\n    box-shadow: 0 0 0 0 currentColor;\n    opacity: 1; }\n  100% {\n    box-shadow: 0 0 0 10px transparent;\n    opacity: 0; } }\n\n.sidebar-account {\n  /* Set perspective for the 3D effect */\n  perspective: 1000px;\n  /* Define the transition duration for the flip effect */\n  transition: transform 0.6s; }\n\n.sidebar-account-back {\n  /* Initially hide the back view */\n  transform: rotateY(180deg); }\n\n.sidebar-account.active {\n  /* Apply the flip effect when the active class is present */\n  transform: rotateY(180deg); }\n\n.lock_wallet {\n  display: flex;\n  align-items: center;\n  justify-content: center; }\n\n.lock_wallet .icon_lock {\n    width: 5rem;\n    height: 8rem;\n    background: center/contain no-repeat url('lock_wallet.svg'); }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2lkZWJhci9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcc2lkZWJhclxcc2lkZWJhci5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvc2lkZWJhci9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFzc2V0c1xcc2Nzc1xcYmFzZVxcX3ZhcmlhYmxlcy5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBO0VBQ0UsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQiw4QkFBOEI7RUFDOUIsZUFBZSxFQUFBOztBQUdqQjtFQUNFLGFBQWE7RUFDYix1QkFBdUI7RUFDdkIsbUJBQW1CO0VBQ25CLG9CQUFvQixFQUFBOztBQUp0QjtJQU1JLFdBQVc7SUFDWCxZQUFZLEVBQUE7O0FBUGhCOzs7TUFXTSxhQUFhLEVBQUE7O0FBSW5CO0VBQ0UsZ0JBQWdCO0VBQ2hCLGdCQUFnQjtFQUNoQixnQkFBZ0I7RUFDaEIsYUFBYTtFQUNiLHVCQUF1QjtFQUN2QixxQkFBcUIsRUFBQTs7QUFOdkI7SUFRSSxXQUFXO0lBQ1gsVUFBVSxFQUFBOztBQUdkO0VBQ0Usa0JBQWtCO0VBQ2xCLE1BQU07RUFDTixPQUFPO0VBQ1AsYUFBYTtFQUNiLFlBQVk7RUFDWiw2QkFBNkI7RUFDN0IseUJBQXlCO0VBQ3pCLGdCQUFnQixFQUFBOztBQVJsQjtJQVVJLGFBQWEsRUFBQTs7QUFWakI7SUFhSSxZQUFZO0lBQ1osZUFBZTtJQUNmLGlCQUFpQjtJQUNqQixtQkFBbUI7SUFDbkIsZ0JBQWdCO0lBQ2hCLGNBQWM7SUFDZCxxQkFBcUI7SUFDckIsMEJBQTBCO0lBQzFCLHlCQUF5QjtJQUN6Qix5QkFBeUI7SUFDekIsdUJBQXVCLEVBQUE7O0FBdkIzQjtNQXlCTSx5QkFBeUIsRUFBQTs7QUF6Qi9CO01BNkJNLHlCQ1ppQyxFQUFBOztBRGdCdkM7RUFDRSxZQUFZLEVBQUE7O0FBRWQ7RUFDRSxzREFBc0QsRUFBQTs7QUFFeEQ7RUFDRSxjQ3JCNEI7RURzQjVCLG1CQ3hCcUM7RUR5QnJDLHFIQzlCa0MsRUFBQTs7QUQyQnBDO0lBTU0sY0NGb0IsRUFBQTs7QURKMUI7SUFTTSxjQUFjLEVBQUE7O0FBS3BCO0VBQ0UscUJBQXFCO0VBQ3JCLFlBQVk7RUFDWixZQUFZO0VBQ1osYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2Isc0JBQXNCO0VBQ3RCLGNBQWM7RUFDZCxvQkFBb0IsRUFBQTs7QUFUdEI7SUFXSSxrQkFBa0I7SUFFbEIsVUFBVTtJQUNWLFVBQVU7SUFDVixZQUFZO0lBQ1osdUJBQXVCO0lBQ3ZCLFlBQVksRUFBQTs7QUFqQmhCO01BbUJNLGFBQWE7TUFDYixjQUFjO01BQ2QsY0FBYztNQUNkLFdBQVc7TUFDWCw0REFBaUYsRUFBQTs7QUF2QnZGO0lBNkJJLGdCQUFnQjtJQUNoQixpQkFBaUIsRUFBQTs7QUE5QnJCO0lBaUNJLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsOEJBQThCO0lBQzlCLGtCQUFrQixFQUFBOztBQXBDdEI7TUF1Q00sMkJBQTJCO01BQzNCLGVBQWU7TUFDZixZQUFZLEVBQUE7O0FBekNsQjtRQTJDUSxrQkFBa0I7UUFDbEIsa0JBQWtCO1FBQ2xCLGFBQWE7UUFDYixtQkFBbUI7UUFDbkIsY0FBYztRQUNkLG1CQUFtQixFQUFBOztBQWhEM0I7VUFrRFUsdUJBQXVCO1VBQ3ZCLGdCQUFnQjtVQUNoQixtQkFBbUIsRUFBQTs7QUFwRDdCO1VBdURVLGFBQWE7VUFDYixtQkFBbUI7VUFDbkIsdUJBQXVCO1VBQ3ZCLGtCQUFrQjtVQUNsQixXQUFXO1VBQ1gsWUFBWTtVQUNaLG9CQUFvQjtVQUNwQixpQkFBaUI7VUFDakIsaUJBQWlCLEVBQUE7O0FBL0QzQjtNQXFFUSxlQUFlO01BQ2YsbUJBQW1CO01BQ25CLGdCQUFnQjtNQUNoQixtQkFBbUIsRUFBQTs7QUF4RTNCO01BNEVNLGlCQUFpQjtNQUNqQixtQkFBbUI7TUFDbkIsYUFBYTtNQUNiLDJCQUEyQixFQUFBOztBQS9FakM7UUFpRlEsbUJBQW1CLEVBQUE7O0FBakYzQjtNQXVGUSxtQkFBbUI7TUFDbkIsaUJBQWlCLEVBQUE7O0FBeEZ6QjtNQTZGTSxhQUFhO01BQ2IsbUJBQW1CO01BQ25CLFdBQVcsRUFBQTs7QUEvRmpCO1FBaUdRLG1CQUFtQjtRQUNuQixjQUFjO1FBQ2QsY0FBYztRQUNkLGdCQUFnQixFQUFBOztBQXBHeEI7VUFzR1UsWUFBWSxFQUFBOztBQXRHdEI7UUEwR1EsY0FBYztRQUNkLGlCQUFpQjtRQUNqQixtQkFBbUI7UUFDbkIsa0JBQWtCLEVBQUE7O0FBN0cxQjtJQWtISSxhQUFhLEVBQUE7O0FBR2pCO0VBQ0UsWUFBWTtFQUNaLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLGNBQWM7RUFDZCxVQUFVO0VBQ1YsV0FBVyxFQUFBOztBQVBiO0lBU0ksaUJBQWlCO0lBQ2pCLGFBQWE7SUFDYixtQkFBbUI7SUFDbkIsY0FBYztJQUNkLGdCQUFnQjtJQUNoQixtQkFBbUIsRUFBQTs7QUFHdkI7RUFDRSxZQUFZO0VBQ1osY0FBYyxFQUFBOztBQUZoQjtJQUlJLDBCQUEwQjtJQUMxQixrQkFBa0IsRUFBQTs7QUFMdEI7TUFPTSwwQkFBMEI7TUFDMUIsYUFBYTtNQUNiLG1CQUFtQjtNQUNuQix1QkFBdUI7TUFDdkIsWUFBWTtNQUNaLGVBQWU7TUFDZixnQkFBZ0I7TUFDaEIsbUJBQW1CO01BQ25CLGFBQWEsRUFBQTs7QUFmbkI7UUFrQlUsNkJBQTZCO1FBQzdCLG1CQUFtQixFQUFBOztBQW5CN0I7UUF1QlEsNkJBQTZCLEVBQUE7O0FBdkJyQztRQTBCUSxpQkFBaUI7UUFDakIsa0JBQWtCLEVBQUE7O0FBM0IxQjtRQThCUSwwQ0FBMkQsRUFBQTs7QUE5Qm5FO1FBaUNRLG9CQUFvQjtRQUNwQixXQUFXO1FBQ1gsWUFBWTtRQUNaLDBCQUEwQixFQUFBOztBQXBDbEM7VUFzQ1UsYUFBYTtVQUNiLGNBQWM7VUFDZCxzREFBeUUsRUFBQTs7QUF4Q25GO1VBMkNVLHdEQUEyRSxFQUFBOztBQTNDckY7VUE4Q1UsNkRBQWdGLEVBQUE7O0FBOUMxRjtVQWlEVSxnQkFBZ0I7VUFDaEIsc0RBQXlFLEVBQUE7O0FBTW5GO0VBQ0UsYUFBYTtFQUNiLFdBQVc7RUFDWCxZQUFZO0VBQ1osa0JBQWtCLEVBQUE7O0FBRXBCO0VBQ0UsMkJBQTJCO0VBQzNCLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsMkJBQTJCO0VBQzNCLGNBQWM7RUFDZCxpQkFBaUIsRUFBQTs7QUFObkI7SUFRSSxzQkFBc0I7SUFDdEIsa0JBQWtCO0lBQ2xCLFlBQVk7SUFDWixnQkFBZ0IsRUFBQTs7QUFYcEI7Ozs7TUFnQk0sYUFBYTtNQUNiLGtCQUFrQjtNQUNsQixjQUFjO01BQ2QsbUJBQW1CO01BQ25CLG9CQUFvQjtNQUNwQixnQkFBZ0IsRUFBQTs7QUFyQnRCOzs7O1FBd0JRLFdBQVc7UUFDWCxrQkFBa0I7UUFDbEIsTUFBTTtRQUNOLE9BQU87UUFDUCxrQkFBa0I7UUFDbEIsYUFBYTtRQUNiLGNBQWM7UUFDZCw0QkFBNEIsRUFBQTs7QUEvQnBDO01Bb0NNLG1CQUFtQjtNQUNuQiwwQ0FBMEMsRUFBQTs7QUFyQ2hEO01BeUNNLG1CQUFtQjtNQUNuQiwwQ0FBMEMsRUFBQTs7QUExQ2hEO01BOENNLG1CQUFtQjtNQUNuQiwwQ0FBMEMsRUFBQTs7QUEvQ2hEO01BbURNLG1CQUFtQjtNQUNuQiwwQ0FBMEMsRUFBQTs7QUFwRGhEO01BdURNLGNBQWM7TUFDZCxXQUFXLEVBQUE7O0FBeERqQjtRQTBEUSxhQUFhLEVBQUE7O0FBMURyQjtVQTREVSxtQkFBbUI7VUFDbkIsY0FBYztVQUNkLGdCQUFnQixFQUFBOztBQTlEMUI7WUFnRVksbUJBQW1CO1lBQ25CLFlBQVksRUFBQTs7QUFqRXhCO1VBcUVVLGNBQWM7VUFDZCxpQkFBaUI7VUFDakIsbUJBQW1CO1VBQ25CLG9CQUFvQixFQUFBOztBQXhFOUI7UUE2RVEsa0NBQWtDO1FBQ2xDLCtsQ0FvQndpQjtRQUN4aUIsMEJBQTBCO1FBQzFCLFlBQVksRUFBQTs7QUFwR3BCO0lBeUdJLGFBQWE7SUFDYixZQUFZO0lBQ1osaUJBQWlCO0lBQ2pCLGlCQUFpQixFQUFBOztBQTVHckI7TUErR00sY0FBYztNQUNkLGlCQUFpQjtNQUNqQixtQkFBbUI7TUFDbkIsZ0JBQWdCO01BQ2hCLHFCQUFxQixFQUFBOztBQW5IM0I7UUFxSFEsaUJBQWlCLEVBQUE7O0FBckh6QjtNQXlITSxjQUFjO01BQ2QseUJBQXlCO01BQ3pCLGFBQWE7TUFDYixjQUFjLEVBQUE7O0FBNUhwQjtRQThIUSxzREFBeUUsRUFBQTs7QUE5SGpGO1FBaUlRLG9EQUF1RSxFQUFBOztBQU0vRTtFQUNFLGtCQUFrQixFQUFBOztBQURwQjtJQU1JLFNBQVMsRUFBQTs7QUFOYjtNQUlNLDJDQUE0RCxFQUFBOztBQUpsRTtJQVNJLGtCQUFrQjtJQUNsQixxQkFBcUI7SUFDckIsU0FBUztJQUNULFFBQVE7SUFDUixZQUFZO0lBQ1oseUJBQXlCLEVBQUE7O0FBZDdCO01BZ0JNLFlBQVk7TUFDWixhQUFhO01BQ2Isb0JBQW9CO01BQ3BCLG1CQUFtQjtNQUNuQixXQUFXLEVBQUE7O0FBcEJqQjtRQXNCUSwyQ0FBNEQsRUFBQTs7QUF0QnBFOztVQTBCVSw4QkFBOEIsRUFBQTs7QUExQnhDO1VBNkJVLCtCQUErQixFQUFBOztBQTdCekM7UUFpQ1EsZ0NBQWdDLEVBQUE7O0FBakN4QztRQW9DUSxpQkFBaUI7UUFDakIsbUJBQW1CLEVBQUE7O0FBckMzQjtRQXdDUSxjQUFjO1FBQ2QsYUFBYTtRQUNiLGtCQUFrQixFQUFBOztBQTFDMUI7VUE0Q1UsWUFBWTtVQUNaLFdBQVcsRUFBQTs7QUE3Q3JCO1VBZ0RVLGNBQWM7VUFDZCxhQUFhLEVBQUE7O0FBakR2QjtVQW9EVSxxRUFBd0YsRUFBQTs7QUFNbEc7RUFDRSxhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLGlCQUFpQixFQUFBOztBQUhuQjtJQUtJLGVBQWU7SUFDZixvQkFBb0I7SUFDcEIsYUFBYTtJQUNiLGNBQWMsRUFBQTs7QUFSbEI7TUFVTSx1REFBMEUsRUFBQTs7QUFWaEY7TUFhTSxvREFBdUUsRUFBQTs7QUFLN0U7RUFDRTtJQUNFLCtCQUErQixFQUFBO0VBRWpDO0lBQ0UsOEJBQThCLEVBQUEsRUFBQTs7QUFJbEM7RUFDRTtJQUNFLGdDQUFnQztJQUNoQyxVQUFVLEVBQUE7RUFFWjtJQUNFLGtDQUFrQztJQUNsQyxVQUFVLEVBQUEsRUFBQTs7QUFHZDtFQUNFLHNDQUFBO0VBQ0EsbUJBQW1CO0VBQ25CLHVEQUFBO0VBQ0EsMEJBQTBCLEVBQUE7O0FBRzVCO0VBQ0UsaUNBQUE7RUFDQSwwQkFBMEIsRUFBQTs7QUFHNUI7RUFDRSwyREFBQTtFQUNBLDBCQUEwQixFQUFBOztBQUU1QjtFQUNFLGFBQWE7RUFDYixtQkFBbUI7RUFDbkIsdUJBQXVCLEVBQUE7O0FBSHpCO0lBS0UsV0FBVztJQUNYLFlBQVk7SUFDWiwyREFBOEUsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3NpZGViYXIvc2lkZWJhci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBpbXBvcnQgXCIuLi8uLi9hc3NldHMvc2Nzcy9iYXNlL3ZhcmlhYmxlc1wiO1xyXG46aG9zdCB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogcm93O1xyXG4gIGp1c3RpZnktY29udGVudDogc3BhY2UtYmV0d2VlbjtcclxuICBmbGV4OiAwIDAgMjVyZW07XHJcbiAgLy9wYWRkaW5nOiAxLjhyZW0gMCAycmVtIDA7XHJcbn1cclxuLmFuaW1hdGVkIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgbWFyZ2luLXJpZ2h0OiAxLjJyZW07XHJcbiAgJjo6bmctZGVlcCBzdmcge1xyXG4gICAgd2lkdGg6IDJyZW07XHJcbiAgICBoZWlnaHQ6IDJyZW07XHJcbiAgICBwYXRoLFxyXG4gICAgY2lyY2xlLFxyXG4gICAgcG9seWdvbiB7XHJcbiAgICAgIGZpbGw6ICMzMkRDNTk7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbi5zaWRlYmFyLWhlYWRlciB7XHJcbiAgbWFyZ2luLXRvcDogMnJlbTtcclxuICBtYXJnaW4tbGVmdDogNXB4O1xyXG4gIG1pbi1oZWlnaHQ6IDdyZW07XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBtYXJnaW4tYm90dG9tOiAyLjNyZW07XHJcbiAgaW1nIHtcclxuICAgIGhlaWdodDogNjAlO1xyXG4gICAgd2lkdGg6IDYwJTtcclxuICB9XHJcbn1cclxuLndhbGxldC10eXBlIHtcclxuICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgdG9wOiAwO1xyXG4gIGxlZnQ6IDA7XHJcbiAgd2lkdGg6IDAuN3JlbTtcclxuICBoZWlnaHQ6IDEwMCU7XHJcbiAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiAgdHJhbnNpdGlvbjogYWxsIGVhc2UgMC4zcztcclxuICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICY6aG92ZXIge1xyXG4gICAgd2lkdGg6IDIuOHJlbTtcclxuICB9XHJcbiAgLmNvbnRlbnQge1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgcGFkZGluZzogMC43cmVtO1xyXG4gICAgZm9udC1zaXplOiAxLjJyZW07XHJcbiAgICBsaW5lLWhlaWdodDogMS40cmVtO1xyXG4gICAgZm9udC13ZWlnaHQ6IDUwMDtcclxuICAgIGNvbG9yOiAjZmZmZmZmO1xyXG4gICAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xyXG4gICAgdGV4dC10cmFuc2Zvcm06IGNhcGl0YWxpemU7XHJcbiAgICB0cmFuc2l0aW9uOiBhbGwgZWFzZSAwLjNzO1xyXG4gICAgd3JpdGluZy1tb2RlOiB2ZXJ0aWNhbC1ybDtcclxuICAgIHRleHQtb3JpZW50YXRpb246IG1peGVkO1xyXG4gICAgJi5hdWRpdGFibGUge1xyXG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjNWNkYTlkO1xyXG4gICAgfVxyXG4gICAgJi53YXRjaC1vbmx5LFxyXG4gICAgJi5hdWRpdGFibGUtd2F0Y2gtb25seSB7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICRhY2NvdW50QWN0aXZlQmFja2dyb3VuZENvbG9yO1xyXG4gICAgfVxyXG4gIH1cclxufVxyXG4uY2RrLWRyYWctcGxhY2Vob2xkZXIge1xyXG4gIG9wYWNpdHk6IDAuMztcclxufVxyXG4uY2RrLWRyYWctYW5pbWF0aW5nIHtcclxuICB0cmFuc2l0aW9uOiB0cmFuc2Zvcm0gMjUwbXMgY3ViaWMtYmV6aWVyKDAsIDAsIDAuMiwgMSk7XHJcbn1cclxuLmNkay1kcmFnLXByZXZpZXcuc2lkZWJhci1hY2NvdW50IHtcclxuICBjb2xvcjogJGFjY291bnRNYWluVGV4dENvbG9yO1xyXG4gIGJhY2tncm91bmQ6ICRhY2NvdW50QWN0aXZlQmFja2dyb3VuZENvbG9yO1xyXG4gIGJveC1zaGFkb3c6ICRhY2NvdW50RHJhZ0JveFNoYWRvdztcclxuICAmLmFjY291bnQtcHJpY2Uge1xyXG4gICAgLnByaWNlIHtcclxuICAgICAgY29sb3I6ICR0b29sdGlwVGV4dENvbG9yO1xyXG4gICAgfVxyXG4gICAgLnByaWNlLXBlcmNlbnQge1xyXG4gICAgICBjb2xvcjogI0JFQkVCRTtcclxuICAgIH1cclxuICB9XHJcbn1cclxuXHJcbi5zaWRlYmFyLWFjY291bnQge1xyXG4gIGJvcmRlci1yYWRpdXM6IDEuNXJlbTtcclxuICBtYXJnaW46IDFyZW07XHJcbiAgd2lkdGg6IDI1cmVtO1xyXG4gIGhlaWdodDogMTZyZW07XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcclxuICBmbGV4LXNocmluazogMDtcclxuICBwYWRkaW5nOiAxLjNyZW0gMXJlbTtcclxuICAuY2xvc2Utd2FsbGV0LWJ1dHRvbiB7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICAvL3RvcDogMS4ycmVtO1xyXG4gICAgcmlnaHQ6IDVweDtcclxuICAgIHBhZGRpbmc6IDA7XHJcbiAgICBoZWlnaHQ6IGF1dG87XHJcbiAgICBiYWNrZ3JvdW5kOiB0cmFuc3BhcmVudDtcclxuICAgIGJvcmRlcjogbm9uZTtcclxuICAgIC5pY29uIHtcclxuICAgICAgd2lkdGg6IDEuNnJlbTtcclxuICAgICAgaGVpZ2h0OiAxLjZyZW07XHJcbiAgICAgIGRpc3BsYXk6IGJsb2NrO1xyXG4gICAgICBjb250ZW50OiBcIlwiO1xyXG4gICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoXCIuLi8uLi9hc3NldHMvaWNvbnMvY2xvc2Utd2FsbGV0LnN2Z1wiKTtcclxuICAgIH1cclxuICAgIFxyXG4gIH1cclxuXHJcbiAgLnNpZGViYXItYWNjb3VudC1yb3c6bGFzdC1jaGlsZCB7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAwO1xyXG4gICAgcGFkZGluZy10b3A6IDE1cHg7XHJcbiAgfVxyXG4gIC5zaWRlYmFyLWFjY291bnQtcm93IHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xyXG4gICAgbWFyZ2luLWJvdHRvbTogNXB4O1xyXG5cclxuICAgICYuYWNjb3VudC1hbGlhcyB7XHJcbiAgICAgIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICAgICAgZm9udC1zaXplOiAycmVtO1xyXG4gICAgICBwYWRkaW5nOiAzcHg7XHJcbiAgICAgIC5uYW1lIHtcclxuICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgbWFyZ2luLXJpZ2h0OiAxcmVtO1xyXG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICBmbGV4LXNocmluazogMTtcclxuICAgICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICAgIHNwYW4ge1xyXG4gICAgICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XHJcbiAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcclxuICAgICAgICB9XHJcbiAgICAgICAgLmluZGljYXRvciB7XHJcbiAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xyXG4gICAgICAgICAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gICAgICAgICAgd2lkdGg6IDJyZW07XHJcbiAgICAgICAgICBoZWlnaHQ6IDJyZW07XHJcbiAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuOHJlbTtcclxuICAgICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICAgICAgbGluZS1oZWlnaHQ6IDFyZW07XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgICAmLmFjY291bnQtdGl0bGUtYmFsYW5jZSB7XHJcbiAgICAgIC5iYWxhbmNlIHtcclxuICAgICAgICBmb250LXNpemU6IDJyZW07XHJcbiAgICAgICAgbGluZS1oZWlnaHQ6IDIuNHJlbTtcclxuICAgICAgICBmb250LXdlaWdodDogNDAwO1xyXG4gICAgICAgIHdoaXRlLXNwYWNlOiBub3dyYXA7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICAgICYuYWNjb3VudC1wcmljZSB7XHJcbiAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7XHJcbiAgICAgIC5wcmljZS1wZXJjZW50IHtcclxuICAgICAgICBtYXJnaW4tbGVmdDogMC43cmVtO1xyXG4gICAgICB9XHJcbiAgICB9XHJcblxyXG4gICAgJi5hY2NvdW50LXN0YWtpbmcge1xyXG4gICAgICAudGV4dCB7XHJcbiAgICAgICAgbGluZS1oZWlnaHQ6IDEuOXJlbTtcclxuICAgICAgICBmb250LXNpemU6IDEuNnJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG5cclxuICAgICYuYWNjb3VudC1zeW5jaHJvbml6YXRpb24ge1xyXG4gICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgLnByb2dyZXNzLWJhciB7XHJcbiAgICAgICAgYm9yZGVyLXJhZGl1czogMXJlbTtcclxuICAgICAgICBmbGV4OiAxIDAgYXV0bztcclxuICAgICAgICBoZWlnaHQ6IDAuNHJlbTtcclxuICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgIC5maWxsIHtcclxuICAgICAgICAgIGhlaWdodDogMTAwJTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgICAgLnByb2dyZXNzLXBlcmNlbnQge1xyXG4gICAgICAgIGZsZXg6IDAgMCBhdXRvO1xyXG4gICAgICAgIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gICAgICAgIGxpbmUtaGVpZ2h0OiAxLjdyZW07XHJcbiAgICAgICAgcGFkZGluZy1sZWZ0OiAxcmVtO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG4gICY6Zm9jdXMge1xyXG4gICAgb3V0bGluZTogbm9uZTtcclxuICB9XHJcbn1cclxuLnNpZGViYXItYWNjb3VudHMge1xyXG4gIG1hcmdpbjogNHJlbTtcclxuICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBmbGV4LWRpcmVjdGlvbjogcm93O1xyXG4gIGZsZXg6IDEgMSBhdXRvO1xyXG4gIHdpZHRoOiA3MCU7XHJcbiAgaGVpZ2h0OiA5MCU7XHJcbiAgLnNpZGViYXItYWNjb3VudHMtbGlzdCB7XHJcbiAgICBwYWRkaW5nOiAwIDAuOXJlbTtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogcm93O1xyXG4gICAgZmxleDogMSAxIGF1dG87XHJcbiAgICBvdmVyZmxvdy14OiBhdXRvO1xyXG4gICAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcclxuICB9XHJcbn1cclxuLnNpZGViYXItc2V0dGluZ3Mge1xyXG4gIG1hcmdpbjogNHJlbTtcclxuICBmbGV4OiAwIDAgYXV0bztcclxuICAud3JhcC1idXR0b24ge1xyXG4gICAgdHJhbnNpdGlvbjogYWxsIDAuMjVzIGVhc2U7XHJcbiAgICBtYXJnaW4tdG9wOiAxLjVyZW07XHJcbiAgICBidXR0b24ge1xyXG4gICAgICB0cmFuc2l0aW9uOiBhbGwgMC4yNXMgZWFzZTtcclxuICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgYmFja2dyb3VuZDogdHJhbnNwYXJlbnQ7XHJcbiAgICAgIGJvcmRlcjogbm9uZTtcclxuICAgICAgZm9udC1zaXplOiAycmVtO1xyXG4gICAgICBmb250LXdlaWdodDogNDAwO1xyXG4gICAgICBsaW5lLWhlaWdodDogMi40cmVtO1xyXG4gICAgICBvdXRsaW5lOiBub25lO1xyXG4gICAgICAmOmhvdmVyIHtcclxuICAgICAgICBzcGFuIHtcclxuICAgICAgICAgIHRyYW5zaXRpb246IG1hcmdpbiAwLjI1cyBlYXNlO1xyXG4gICAgICAgICAgbWFyZ2luLWxlZnQ6IDAuNXJlbTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgICAgc3BhbiB7XHJcbiAgICAgICAgdHJhbnNpdGlvbjogbWFyZ2luIDAuMjVzIGVhc2U7XHJcbiAgICAgIH1cclxuICAgICAgLmFkZC13YWxsZXQtZGl2IHtcclxuICAgICAgICBtYXgtd2lkdGg6IDEuMnJlbTtcclxuICAgICAgICBtYXgtaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgIH1cclxuICAgICAgJi5kaXNhYmxlZCB7XHJcbiAgICAgICAgY3Vyc29yOiB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL25vdC1hbGxvd2VkLnN2Zykgbm90LWFsbG93ZWQ7XHJcbiAgICAgIH1cclxuICAgICAgLmljb24ge1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogMC43cmVtO1xyXG4gICAgICAgIHdpZHRoOiAycmVtO1xyXG4gICAgICAgIGhlaWdodDogMnJlbTtcclxuICAgICAgICB0cmFuc2l0aW9uOiBhbGwgMC4yNXMgZWFzZTtcclxuICAgICAgICAmLmFkZC13YWxsZXQge1xyXG4gICAgICAgICAgd2lkdGg6IDEuNHJlbTtcclxuICAgICAgICAgIGhlaWdodDogMS40cmVtO1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9hZGRuZXcuc3ZnKTtcclxuICAgICAgICB9XHJcbiAgICAgICAgJi5jb250YWN0cyB7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL2NvbnRhY3RzLnN2Zyk7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYuc2V0dGluZ3Mge1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9zZXR0aW5ncy1nZWFyLnN2Zyk7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYubG9nb3V0IHtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IG5vbmU7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL2xvZ291dC5zdmcpO1xyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxufVxyXG4ubG9nb3tcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogMTAwJTtcclxuICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxuLnN5bmNocm9uaXphdGlvbi1zdGF0dXMge1xyXG4gIG1hcmdpbjogMnJlbSAzcmVtIDJyZW0gM3JlbTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xyXG4gIGZsZXg6IDAgMCA3cmVtO1xyXG4gIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gIC5zdGF0dXMtY29udGFpbmVyIHtcclxuICAgIHBhZGRpbmctYm90dG9tOiAxLjVyZW07XHJcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICBmbGV4LWdyb3c6IDE7XHJcbiAgICB0ZXh0LWFsaWduOiBsZWZ0O1xyXG4gICAgLm9mZmxpbmUsXHJcbiAgICAub25saW5lLFxyXG4gICAgLnN5bmNpbmcsXHJcbiAgICAubG9hZGluZyB7XHJcbiAgICAgIGJvdHRvbTogLTNyZW07XHJcbiAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgZGlzcGxheTogYmxvY2s7XHJcbiAgICAgIGxpbmUtaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgIHBhZGRpbmctbGVmdDogMi4ycmVtO1xyXG4gICAgICBmb250LXdlaWdodDogNTAwO1xyXG5cclxuICAgICAgJjpiZWZvcmUge1xyXG4gICAgICAgIGNvbnRlbnQ6IFwiXCI7XHJcbiAgICAgICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgICAgIHRvcDogMDtcclxuICAgICAgICBsZWZ0OiAwO1xyXG4gICAgICAgIGJvcmRlci1yYWRpdXM6IDUwJTtcclxuICAgICAgICB3aWR0aDogMS4ycmVtO1xyXG4gICAgICAgIGhlaWdodDogMS4ycmVtO1xyXG4gICAgICAgIGFuaW1hdGlvbjogcHVsc2UgMnMgaW5maW5pdGU7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICAgIFxyXG4gICAgLm9mZmxpbmU6YmVmb3JlIHtcclxuICAgICAgYmFja2dyb3VuZDogI2ZmNDc1NztcclxuICAgICAgYm94LXNoYWRvdzogMCAwIDAgMCByZ2JhKDI1NSwgNzEsIDg3LCAwLjcpO1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICAub25saW5lOmJlZm9yZSB7XHJcbiAgICAgIGJhY2tncm91bmQ6ICMzMkRDNTk7XHJcbiAgICAgIGJveC1zaGFkb3c6IDAgMCAwIDAgcmdiYSg1MCwgMjIwLCA4OSwgMC43KTtcclxuICAgIH1cclxuICAgIFxyXG4gICAgLnN5bmNpbmc6YmVmb3JlIHtcclxuICAgICAgYmFja2dyb3VuZDogI2ZmYTUwMjtcclxuICAgICAgYm94LXNoYWRvdzogMCAwIDAgMCByZ2JhKDI1NSwgMTY1LCAyLCAwLjcpO1xyXG4gICAgfVxyXG4gICAgXHJcbiAgICAubG9hZGluZzpiZWZvcmUge1xyXG4gICAgICBiYWNrZ3JvdW5kOiAjMzc0MmZhO1xyXG4gICAgICBib3gtc2hhZG93OiAwIDAgMCAwIHJnYmEoNTUsIDY2LCAyNTAsIDAuNyk7XHJcbiAgICB9XHJcbiAgICAucHJvZ3Jlc3MtYmFyLWNvbnRhaW5lciB7XHJcbiAgICAgIGhlaWdodDogMC44cmVtO1xyXG4gICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgLnN5bmNpbmcge1xyXG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICAgICAgLnByb2dyZXNzLWJhciB7XHJcbiAgICAgICAgICBib3JkZXItcmFkaXVzOiAxcmVtO1xyXG4gICAgICAgICAgZmxleDogMSAwIGF1dG87XHJcbiAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgLmZpbGwge1xyXG4gICAgICAgICAgICBib3JkZXItcmFkaXVzOiAxcmVtO1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDEwMCU7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5wcm9ncmVzcy1wZXJjZW50IHtcclxuICAgICAgICAgIGZsZXg6IDAgMCBhdXRvO1xyXG4gICAgICAgICAgZm9udC1zaXplOiAxLjRyZW07XHJcbiAgICAgICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICAgICAgcGFkZGluZy1sZWZ0OiAxLjJyZW07XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcblxyXG4gICAgICAubG9hZGluZyB7XHJcbiAgICAgICAgYW5pbWF0aW9uOiBtb3ZlIDVzIGxpbmVhciBpbmZpbml0ZTtcclxuICAgICAgICBiYWNrZ3JvdW5kLWltYWdlOiAtd2Via2l0LWdyYWRpZW50KFxyXG4gICAgICAgICAgICBsaW5lYXIsXHJcbiAgICAgICAgICAgIDAgMCxcclxuICAgICAgICAgICAgMTAwJSAxMDAlLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMTI1LCByZ2JhKDAsIDAsIDAsIDAuMTUpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjEyNSwgdHJhbnNwYXJlbnQpLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMjUsIHRyYW5zcGFyZW50KSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjI1LCByZ2JhKDAsIDAsIDAsIDAuMSkpLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMzc1LCByZ2JhKDAsIDAsIDAsIDAuMSkpLFxyXG4gICAgICAgICAgICBjb2xvci1zdG9wKDAuMzc1LCB0cmFuc3BhcmVudCksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC41LCB0cmFuc3BhcmVudCksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC41LCByZ2JhKDAsIDAsIDAsIDAuMTUpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjYyNSwgcmdiYSgwLCAwLCAwLCAwLjE1KSksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC42MjUsIHRyYW5zcGFyZW50KSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjc1LCB0cmFuc3BhcmVudCksXHJcbiAgICAgICAgICAgIGNvbG9yLXN0b3AoMC43NSwgcmdiYSgwLCAwLCAwLCAwLjEpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjg3NSwgcmdiYSgwLCAwLCAwLCAwLjEpKSxcclxuICAgICAgICAgICAgY29sb3Itc3RvcCgwLjg3NSwgdHJhbnNwYXJlbnQpLFxyXG4gICAgICAgICAgICB0byh0cmFuc3BhcmVudClcclxuICAgICAgICAgICksXHJcbiAgICAgICAgICAtd2Via2l0LWdyYWRpZW50KGxpbmVhciwgMCAxMDAlLCAxMDAlIDAsIGNvbG9yLXN0b3AoMC4xMjUsIHJnYmEoMCwgMCwgMCwgMC4zKSksIGNvbG9yLXN0b3AoMC4xMjUsIHRyYW5zcGFyZW50KSwgY29sb3Itc3RvcCgwLjI1LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC4yNSwgcmdiYSgwLCAwLCAwLCAwLjI1KSksIGNvbG9yLXN0b3AoMC4zNzUsIHJnYmEoMCwgMCwgMCwgMC4yNSkpLCBjb2xvci1zdG9wKDAuMzc1LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC41LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC41LCByZ2JhKDAsIDAsIDAsIDAuMykpLCBjb2xvci1zdG9wKDAuNjI1LCByZ2JhKDAsIDAsIDAsIDAuMykpLCBjb2xvci1zdG9wKDAuNjI1LCB0cmFuc3BhcmVudCksIGNvbG9yLXN0b3AoMC43NSwgdHJhbnNwYXJlbnQpLCBjb2xvci1zdG9wKDAuNzUsIHJnYmEoMCwgMCwgMCwgMC4yNSkpLCBjb2xvci1zdG9wKDAuODc1LCByZ2JhKDAsIDAsIDAsIDAuMjUpKSwgY29sb3Itc3RvcCgwLjg3NSwgdHJhbnNwYXJlbnQpLCB0byh0cmFuc3BhcmVudCkpO1xyXG4gICAgICAgIGJhY2tncm91bmQtc2l6ZTogN3JlbSA3cmVtO1xyXG4gICAgICAgIGhlaWdodDogMTAwJTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuICAudXBkYXRlLWNvbnRhaW5lciB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgZmxleC1ncm93OiAxO1xyXG4gICAgbWFyZ2luLWxlZnQ6IDFyZW07XHJcbiAgICB0ZXh0LWFsaWduOiByaWdodDtcclxuXHJcbiAgICAudXBkYXRlLXRleHQge1xyXG4gICAgICBmbGV4OiAxIDEgYXV0bztcclxuICAgICAgZm9udC1zaXplOiAxLjJyZW07XHJcbiAgICAgIGxpbmUtaGVpZ2h0OiAxLjhyZW07XHJcbiAgICAgIHRleHQtYWxpZ246IGxlZnQ7XHJcbiAgICAgIGJhY2tncm91bmQtY29sb3I6IHJlZDtcclxuICAgICAgJi50aW1lIHtcclxuICAgICAgICBmb250LXNpemU6IDEuMXJlbTtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gICAgLmljb24ge1xyXG4gICAgICBmbGV4OiAxIDAgYXV0bztcclxuICAgICAgbWFyZ2luOiAwLjNyZW0gMCAwIDAuNnJlbTtcclxuICAgICAgd2lkdGg6IDEuMnJlbTtcclxuICAgICAgaGVpZ2h0OiAxLjJyZW07XHJcbiAgICAgICYudXBkYXRlIHtcclxuICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL3VwZGF0ZS5zdmcpO1xyXG4gICAgICB9XHJcbiAgICAgICYudGltZSB7XHJcbiAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy90aW1lLnN2Zyk7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcbn1cclxuXHJcbi5zZXR0aW5ncy1ibG9jayB7XHJcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gIGJ1dHRvbiB7XHJcbiAgICAmOmRpc2FibGVkIHtcclxuICAgICAgY3Vyc29yOiB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL25vdC1hbGxvd2VkLnN2ZyksIG5vdC1hbGxvd2VkO1xyXG4gICAgfVxyXG4gICAgbWFyZ2luOiAwO1xyXG4gIH1cclxuICAuc2V0dGluZ3MtZHJvcGRvd24ge1xyXG4gICAgcG9zaXRpb246IGFic29sdXRlO1xyXG4gICAgYm9yZGVyLXJhZGl1czogMC42cmVtO1xyXG4gICAgdG9wOiAzcmVtO1xyXG4gICAgcmlnaHQ6IDA7XHJcbiAgICB3aWR0aDogMTlyZW07XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMWI1YzJkO1xyXG4gICAgYnV0dG9uIHtcclxuICAgICAgaGVpZ2h0OiA0cmVtO1xyXG4gICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICBwYWRkaW5nLWxlZnQ6IDEuMXJlbTtcclxuICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICY6ZGlzYWJsZWQge1xyXG4gICAgICAgIGN1cnNvcjogdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9ub3QtYWxsb3dlZC5zdmcpLCBub3QtYWxsb3dlZDtcclxuXHJcbiAgICAgICAgLmljb24gc3ZnIHBhdGgsXHJcbiAgICAgICAgLmljb24gc3ZnIC5zdDAge1xyXG4gICAgICAgICAgZmlsbDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjQpO1xyXG4gICAgICAgIH1cclxuICAgICAgICBzcGFuIHtcclxuICAgICAgICAgIGNvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuNCk7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICAgICYuZGFyay1saW5lIHtcclxuICAgICAgICBib3JkZXItYm90dG9tOiAxcHggc29saWQgIzMyREM1OTtcclxuICAgICAgfVxyXG4gICAgICBzcGFuIHtcclxuICAgICAgICBmb250LXNpemU6IDEuNHJlbTtcclxuICAgICAgICBsaW5lLWhlaWdodDogMS43cmVtO1xyXG4gICAgICB9XHJcbiAgICAgIC5pY29uIHtcclxuICAgICAgICBoZWlnaHQ6IDEuOHJlbTtcclxuICAgICAgICB3aWR0aDogMS44cmVtO1xyXG4gICAgICAgIG1hcmdpbi1yaWdodDogMXJlbTtcclxuICAgICAgICBzdmcge1xyXG4gICAgICAgICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgICAgICAgd2lkdGg6IDEwMCU7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYucmVzeW5jLXdhbGxldCB7XHJcbiAgICAgICAgICBoZWlnaHQ6IDEuN3JlbTtcclxuICAgICAgICAgIHdpZHRoOiAxLjdyZW07XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYuY2xvc2Utd2FsbGV0IHtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IGNlbnRlciAvIGNvbnRhaW4gbm8tcmVwZWF0IHVybCguLi8uLi9hc3NldHMvaWNvbnMvY2xvc2Utd2FsbGV0LWRyb3Bkb3duLnN2Zyk7XHJcbiAgICAgICAgfVxyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcbi5hbGlhcyB7XHJcbiAgZGlzcGxheTogZmxleDtcclxuICBhbGlnbi1pdGVtczogY2VudGVyO1xyXG4gIGZvbnQtc2l6ZTogMS4zcmVtO1xyXG4gIC5pY29uIHtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgIG1hcmdpbi1yaWdodDogMS4ycmVtO1xyXG4gICAgd2lkdGg6IDIuNHJlbTtcclxuICAgIGhlaWdodDogMi40cmVtO1xyXG4gICAgJi5lZGl0IHtcclxuICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9kZXRhaWxzLnN2Zyk7XHJcbiAgICB9XHJcbiAgICAmLnRyYW5zZmVyIHtcclxuICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy9zZW5kLnN2Zyk7XHJcbiAgICB9XHJcbiAgfVxyXG59XHJcblxyXG5Aa2V5ZnJhbWVzIG1vdmUge1xyXG4gIDAlIHtcclxuICAgIGJhY2tncm91bmQtcG9zaXRpb246IDEwMCUgLTdyZW07XHJcbiAgfVxyXG4gIDEwMCUge1xyXG4gICAgYmFja2dyb3VuZC1wb3NpdGlvbjogMTAwJSA3cmVtO1xyXG4gIH1cclxufVxyXG5cclxuQGtleWZyYW1lcyBwdWxzZSB7XHJcbiAgMCUge1xyXG4gICAgYm94LXNoYWRvdzogMCAwIDAgMCBjdXJyZW50Q29sb3I7XHJcbiAgICBvcGFjaXR5OiAxO1xyXG4gIH1cclxuICAxMDAlIHtcclxuICAgIGJveC1zaGFkb3c6IDAgMCAwIDEwcHggdHJhbnNwYXJlbnQ7XHJcbiAgICBvcGFjaXR5OiAwO1xyXG4gIH1cclxufVxyXG4uc2lkZWJhci1hY2NvdW50IHtcclxuICAvKiBTZXQgcGVyc3BlY3RpdmUgZm9yIHRoZSAzRCBlZmZlY3QgKi9cclxuICBwZXJzcGVjdGl2ZTogMTAwMHB4O1xyXG4gIC8qIERlZmluZSB0aGUgdHJhbnNpdGlvbiBkdXJhdGlvbiBmb3IgdGhlIGZsaXAgZWZmZWN0ICovXHJcbiAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuNnM7XHJcbn1cclxuXHJcbi5zaWRlYmFyLWFjY291bnQtYmFjayB7XHJcbiAgLyogSW5pdGlhbGx5IGhpZGUgdGhlIGJhY2sgdmlldyAqL1xyXG4gIHRyYW5zZm9ybTogcm90YXRlWSgxODBkZWcpO1xyXG59XHJcblxyXG4uc2lkZWJhci1hY2NvdW50LmFjdGl2ZSB7XHJcbiAgLyogQXBwbHkgdGhlIGZsaXAgZWZmZWN0IHdoZW4gdGhlIGFjdGl2ZSBjbGFzcyBpcyBwcmVzZW50ICovXHJcbiAgdHJhbnNmb3JtOiByb3RhdGVZKDE4MGRlZyk7XHJcbn1cclxuLmxvY2tfd2FsbGV0IHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAuaWNvbl9sb2Nre1xyXG4gIHdpZHRoOiA1cmVtO1xyXG4gIGhlaWdodDogOHJlbTtcclxuICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL2xvY2tfd2FsbGV0LnN2Zyk7XHJcbiB9XHJcbn0iLCIkYm9keUJhY2tncm91bmRDb2xvcjogbGluZWFyLWdyYWRpZW50KCMwMDAgMTAlLCMzNjE1N2UgNTAlLCMwMDAgOTAlKTtcclxuJHNpZGViYXJCYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMzEsIDE0MywgMjM1LCAwKTtcclxuJHNpZGViYXJCb3JkZXJDb2xvcjogcmdiYSgzMSwgMTQzLCAyMzUsIDApO1xyXG5cclxuJG9ubGluZUNvbG9yOiAjMWJhMTAwO1xyXG4kb2ZmbGluZUNvbG9yOiAjZmYwMDAwO1xyXG4kY29udGVudEJhY2tncm91bmRDb2xvcjogcmdiYSgxNCwgNDgsIDM5LCAwLjgpO1xyXG5cclxuJG1haW5UZXh0Q29sb3I6ICMzMkRDNTk7XHJcbiRhbHRlcm5hdGl2ZVRleHRDb2xvcjogcmdiYSgyNTMsIDI1NCwgMjU1LCAxKTtcclxuJG9wdGlvbmFsVGV4dENvbG9yOiAjMmIwYzNhO1xyXG4kYmx1ZVRleHRDb2xvcjogIzMyREM1OTtcclxuJGdyZWVuVGV4dENvbG9yOiAjMTBhMDFjO1xyXG4kb3JhbmdlVGV4dENvbG9yOiAjZmY2ZjAwO1xyXG4kcmVkVGV4dENvbG9yOiAjZmYwMDAwO1xyXG4kYWRkcmVzc1RleHRDb2xvcjogIzMyREM1OTtcclxuJHBsYWNlaG9sZGVyVGV4dENvbG9yOiByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMik7XHJcblxyXG4kYmx1ZUJ1dHRvbkJhY2tncm91bmRDb2xvcjogIzIwNkY1QTtcclxuJGJsdWVCdXR0b25Cb3hTaGFkb3c6IDBweCAxMHB4IDQwcHggcmdiYSg5NiwgMywgMTU4LCAwKTtcclxuJGJsdWVCdXR0b25Ib3ZlckNvbG9yOiAjMTY2RTQ2O1xyXG4kYmx1ZUJ1dHRvbkhvdmVyQm94U2hhZG93OiAwcHggMTBweCA1MHB4IHJnYmEoOTYsIDMsIDE1OCwgMCk7XHJcbiRibHVlQnV0dG9uRm9jdXNDb2xvcjogIzE2NkU0NjtcclxuJGJsdWVCdXR0b25Gb2N1c0JveFNoYWRvdzogMHB4IDEwcHggMjBweCByZ2JhKDk2LCAzLCAxNTgsIDApO1xyXG4kYmx1ZUJ1dHRvbmRpc2FibGVkQ29sb3I6ICMxNjZFNDYsIDAuNTtcclxuXHJcbiRyZXNldEJ1dHRvbkJhY2tncm91bmRDb2xvcjogdHJhbnNwYXJlbnQ7XHJcbiRyZXNldEJ1dHRvbkNvbG9yOiAjMzJEQzU5O1xyXG4kcmVzZXRCdXR0b25Ib3ZlckNvbG9yOiAjMTY2RTQ2O1xyXG4kcmVzZXRCdXR0b25Gb2N1c0NvbG9yOiAjMjA2RjVBO1xyXG4kcmVzZXRCdXR0b25EaXNhYmxlZENvbG9yOiByZ2JhKDI1MywgMjU0LCAyNTUsIDAuNyk7XHJcblxyXG4kcGFnaW5hdGlvbkJ1dHRvbkNvbG9yOiByZ2JhKDI1MywgMjU0LCAyNTUsIDAuNyk7XHJcbiRwYWdpbmF0aW9uQnV0dG9uSG92ZXJDb2xvcjogcmdiYSgyNTMsIDI1NCwgMjU1LCAwLjQpO1xyXG5cclxuJGlucHV0QmFja2dyb3VuZENvbG9yOiB0cmFuc3BhcmVudDtcclxuJHNlbGVjdERyb3Bkb3duQmFja2dyb3VuZENvbG9yOiAjMjA2RjVBO1xyXG5cclxuJHNlbGVjdEhvdmVyQ29sb3I6IHJnYmEoNzIsIDU4LCA4NSwgMC41KTtcclxuJHNlbGVjdFNlbGVjdGVkQ29sb3I6IHJnYmEoNTcsIDQzLCA2OCwgMC41KTtcclxuXHJcbiRzd2l0Y2hPbkJhY2tncm91bmRDb2xvcjogIzE3OGIwMDtcclxuJHN3aXRjaE9mZkJhY2tncm91bmRDb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjIpO1xyXG4kc3dpdGNoQ2lyY2VsZUJveFNoYWRvdzogMHB4IDIuMTE3NjVweCA1LjY0NzA2cHggcmdiYSgwLCAwLCAwLCAwLjE1KSwgMHB4IDIuMTE3NjVweCAwLjcwNTg4MnB4IHJnYmEoMCwgMCwgMCwgMC4wNik7XHJcblxyXG4kYWNjb3VudEJveFNoYWRvdzogMHB4IDBweCAxNXB4IDNweCByZ2JhKDE2MCwgNywgMjU1LCAwKTtcclxuJGFjY291bnREcmFnQm94U2hhZG93OiAwIDVweCA1cHggLTNweCByZ2JhKDAsIDAsIDAsIDAuMiksIDAgOHB4IDEwcHggMXB4IHJnYmEoMCwgMCwgMCwgMC4xNCksXHJcbiAgMCAzcHggMTRweCAycHggcmdiYSgwLCAwLCAwLCAwLjEyKTtcclxuJGFjY291bnRCYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMTI1LCAzMCwgMjMzLCAwLjMpO1xyXG4kYWNjb3VudFdhdGNoT25seUJvcmRlckNvbG9yOiAjOWE2OWY3O1xyXG4kYWNjb3VudEF1ZGl0YWJsZUJvcmRlckNvbG9yOiAjZmZmZmZmO1xyXG4kYWNjb3VudEJhY2tncm91bmRDb2xvcjogIzAwMTkxMztcclxuJGFjY291bnRBY3RpdmVCYWNrZ3JvdW5kQ29sb3I6ICAjMjA2RjVBO1xyXG4kYWNjb3VudEhvdmVyQmFja2dyb3VuZENvbG9yOiAjMTY2RTQ2O1xyXG4kYWNjb3VudE1haW5UZXh0Q29sb3I6ICNmZmZmZmY7XHJcblxyXG4kc2VlZFBocmFzZUZvcm1CYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMzEsIDIzNSwgMjA0LCAwLjE1KTtcclxuJHNlY3VyZWRTZWVkOiAjZTBlMGUwO1xyXG4kc2VlZEl0ZW1UZXh0OiAjZTBlMGUwO1xyXG4kY29weUJhY2tncm91bmQ6IHJnYmEoMTE4LCAzMCwgMjMzLCAwLjYpO1xyXG4kY29weUJhY2tncm91bmRIb3ZlcjogcmdiYSgxMTgsIDMwLCAyMzMsIDAuOSk7XHJcbiRzZWVkSXRlbUJhY2tncm91bmRDb2xvcjogIzI5MTgyYTtcclxuJGFjY291bnRPcHRpb25hbFRleHRDb2xvcjogIzY3NTU3NjtcclxuJGFjY291bnRJbmRpY2F0b3JUZXh0Q29sb3I6ICMyODBjM2E7XHJcbiRhY2NvdW50SW5kaWNhdG9yQmFja2dyb3VuZENvbG9yOiAjZmZmZmZmO1xyXG5cclxuJHRhYkluYWN0aXZlQmFja2dyb3VuZENvbG9yOiByZ2JhKDE0MywgMzEsIDIzNSwgMCk7XHJcbiR0YWJIb3ZlckJhY2tncm91bmRDb2xvcjogcmdiYSgxNDMsIDMxLCAyMzUsIDApO1xyXG4kdGFibGVCYWNrZ3JvdW5kQ29sb3I6IHJnYmEoMTQzLCAzMSwgMjM1LCAwKTtcclxuJG1lc3NhZ2VNeUJhY2tncm91bmRDb2xvcjogIzM1MmE0NDtcclxuJG1lc3NhZ2VCdWRkeUJhY2tncm91bmRDb2xvcjogIzI0MTgyYTtcclxuJHByb2dyZXNzQmFyQmFja2dyb3VuZENvbG9yOiByZ2JhKDE0MywgMzEsIDIzNSwgMCk7XHJcbiRwcm9ncmVzc0JhckFjY291bnRDb2xvcjogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjIpO1xyXG4kcHJvZ3Jlc3NCYXJBY2NvdW50QWN0aXZlQ29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC4yKTtcclxuJHByb2dyZXNzQmFyRnVsbEJhY2tncm91bmRDb2xvcjogIzMyREM1OTtcclxuJGNoYXJ0T3B0aW9uc0JhY2tncm91bmRDb2xvcjogIzM3MmI0NDtcclxuJGNoYXJ0T3B0aW9uc0hvdmVyQ29sb3I6ICM2MjU1NzY7XHJcbiR0b29sdGlwQmFja2dyb3VuZENvbG9yOiAjMjA2RjVBO1xyXG4kdG9vbHRpcFRleHRDb2xvcjogIzMyREM1OTtcclxuJHRvb2x0aXBJbXBvcnRhbnRUZXh0Q29sb3I6ICNmZjZmMDA7XHJcbiR0b29sdGlwSW1wb3J0YW50QmFja2dyb3VuZENvbG9yOiAjNWYyYjExO1xyXG4kdG9vbHRpcENyaXRpY2FsVGV4dENvbG9yOiAjZmY1MjUyO1xyXG4kdG9vbHRpcENyaXRpY2FsQmFja2dyb3VuZENvbG9yOiAjNWYxZDFkO1xyXG4kdG9vbHRpcFNoYWRvdzogMCAwIDFyZW0gcmdiYSgwLCAwLCAwLCAwLjUpO1xyXG4kbW9kYWxCYWNrZ3JvdW5kOiAjMjA2RjVBO1xyXG4kY2xvc2VCdXR0b25Db2xvcjogIzZkNTU3NjtcclxuJGhvdmVyUGFnZTogcmdiYSg3MiwgNTgsIDkwLCAwLjI0Nyk7XHJcblxyXG4kYWxpYXNEcm9wZG93bkJhY2tncm91bmQ6ICMxNjZFNDY7XHJcbiJdfQ== */"
 
 /***/ }),
 
@@ -19394,7 +23253,9 @@ var SidebarComponent = /** @class */ (function () {
         this.selectedWalletId = id;
     };
     SidebarComponent.prototype.isOpened = function (walletId) {
-        return this.selectedWalletId === walletId;
+        // Активный кошелек должен быть открыт по умолчанию
+        var isActive = this.variablesService.currentWallet && this.variablesService.currentWallet.wallet_id === walletId;
+        return isActive || this.selectedWalletId === walletId;
     };
     SidebarComponent.prototype.contactsRoute = function () {
         var _this = this;
@@ -20082,7 +23943,7 @@ var OffersDetailsComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"!hasAlias\" class=\"alert alert-warning\">\r\n  <h1>{{ 'SWAP.TITLE' | translate}}</h1>\r\n  <p>{{ 'SWAP.NOT_ALIAS' | translate}}</p>\r\n</div>\r\n<div *ngIf=\"hasAlias\">\r\n  <div class=\"swap_contaner\">\r\n    <div class=\"header\">\r\n      <h1>{{ 'SWAP.TITLE' | translate}}</h1>\r\n      <p class=\"peer-help\" (click)=\"openInBrowser('docs.nirmata-network.com/docs/peerswap/working-with-offers')\">{{ 'SWAP.LINK_HELP' | translate}}</p>\r\n      <div class=\"offers_header\">\r\n        <div class=\"offer_buttons\">\r\n          <button type=\"submit\" class=\"blue-button offer_button\" [disabled]=\"!confirmedTransactions\" (click)=\"marketplace_offer_create = !marketplace_offer_create; marketplace_offer_cancel = false; marketplace_offer_update = false; confirmedContract()\">{{ 'SWAP.CREATE_OFFER' | translate}}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplace_offer_cancel = !marketplace_offer_cancel; marketplace_offer_create = false; marketplace_offer_update = false\">{{ 'SWAP.CANCEL_OFFER' | translate}}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplace_offer_update = !marketplace_offer_update; marketplace_offer_create = false; marketplace_offer_cancel = false; confirmedContract()\">{{ 'SWAP.UPDATE_OFFER' | translate}}</button>\r\n          <button class=\"blue-button offer_button\" (click)=\"refreshOffers()\">{{ 'SWAP.REFRESH_OFFERS' | translate}}</button>\r\n        </div>\r\n        <div class=\"filter-form\">\r\n          <input type=\"text\" [(ngModel)]=\"filter.category\" placeholder=\"coin\">\r\n          <button class=\"filter-button\" (click)=\"applyFilters()\">{{ 'SWAP.FILTER_APPLY' | translate}}</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"offers_page\">\r\n<!-------------------------------------Create Offer---------------------------------------------------------->\r\n    <ng-container *ngIf=\"marketplace_offer_create\">\r\n      <div class=\"offer-page\">\r\n        <h1>{{ 'SWAP.CREATE_OFFER' | translate}}</h1>\r\n        <form [formGroup]=\"offerForm\" (ngSubmit)=\"submitOffer()\" class=\"create_offer\">\r\n          <div class=\"input-block\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELECT_TYPE' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"title\" id=\"t\">\r\n              <option value=\"Buy\">{{ 'SWAP.BUY_TYPE' | translate}}</option>\r\n              <option value=\"Sell\">{{ 'SWAP.SELL_TYPE' | translate}}</option>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.ALIAS' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"alias\" id=\"url\" readonly>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_OFFER' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"category\" id=\"cat\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_GET' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"comment\" id=\"com\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_ADDRESS' | translate}}</p>\r\n            <input type=\"text\" class=\"row input_text\" formControlName=\"payment_type\" placeholder=\"your address\" id=\"pt\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_PRICE' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"price\" placeholder=\"Price\" id=\"lci\" (keypress)=\"numberOnly($event)\">\r\n            <!--<p class=\"input_description\">Quantity</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"amount\" placeholder=\"Amount\" id=\"lco\">-->\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_DESCRIPTION' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"description\" placeholder=\"Description\" id=\"do\" maxlength=\"233\"></textarea>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_CONTACT' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"contact\" placeholder=\"Contacts\" id=\"cnt\" maxlength=\"233\"></textarea>\r\n            <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"validateAndSubmit()\">{{ 'SWAP.SUBMIT' | translate}}</button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"marketplace_offer_send\">\r\n      <div class=\"creating_offer\">\r\n        <div class=\"title\">\r\n          <h1>{{ 'SWAP.CREATE_OFFER' | translate}}</h1>\r\n        </div>\r\n        <div class=\"data-container confirmation\">\r\n          <div class=\"row\"><span>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}:</span> {{actionData.title}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_OFFER' | translate}}:</span> {{actionData.category}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_GET' | translate}}:</span> {{actionData.comment}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_ADDRESS' | translate}}:</span><p style=\"font-size: 16px;margin-top: 10px;\">{{actionData.payment_type}}</p></div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_PRICE' | translate}}:</span> {{actionData.price}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_DESCRIPTION' | translate}}:</span> {{actionData.description}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_CONTACT' | translate}}:</span> {{actionData.contact}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.ALIAS' | translate}}:</span> {{actionData.url}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.TRANSACTION_FEE' | translate}}:</span> {{this.variablesService.default_fee}} NiR</div>\r\n        </div>\r\n        <div class=\"wrapper-buttons\">\r\n          <button type=\"button\" class=\"blue-button offer_button\" (click)=\"canselAction()\">{{ 'EXPORT_HISTORY.CANCEL' | translate\r\n            }}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplaceSend()\">{{ 'SWAP.BUTTON_SEND' | translate}}</button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n<!-------------------------------------Update Offer---------------------------------------------------------->\r\n    <ng-container *ngIf=\"marketplace_offer_update\">\r\n      <div class=\"offer-page\">\r\n        <h1>{{ 'SWAP.UPDATE_OFFER' | translate}}</h1>\r\n        <form [formGroup]=\"updateOfferForm\" (ngSubmit)=\"submitUpdateOffer()\" class=\"create_offer\">\r\n          <div class=\"input-block\">\r\n            <p class=\"input_description\">{{ 'SWAP.TX_OFFER' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"tx_id\" placeholder=\"Transaction hash\">\r\n            <p class=\"input_description\">{{ 'SWAP.NUMBER_OFFER' | translate}}</p>\r\n            <input type=\"number\" class=\"row\" formControlName=\"no\" placeholder=\"Offer number\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELECT_TYPE' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"title\" id=\"t\">\r\n              <option value=\"Buy\">{{ 'SWAP.BUY_TYPE' | translate}}</option>\r\n              <option value=\"Sell\">{{ 'SWAP.SELL_TYPE' | translate}}</option>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.ALIAS' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"alias\" id=\"url\" readonly>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_OFFER' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"category\" id=\"cat\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_GET' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"comment\" id=\"com\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_ADDRESS' | translate}}</p>\r\n            <input type=\"text\" class=\"row input_text\" formControlName=\"payment_type\" placeholder=\"your address\" id=\"pt\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_PRICE' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"price\" placeholder=\"Price\" id=\"lci\">\r\n            <!--<p class=\"input_description\">Amount</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"amount\" placeholder=\"Amount\" id=\"lco\">-->\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_DESCRIPTION' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"description\" placeholder=\"Description\" id=\"do\" maxlength=\"233\"></textarea>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_CONTACT' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"contact\" placeholder=\"Contacts\" id=\"cnt\" maxlength=\"233\"></textarea>\r\n            <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"validateAndSubmit()\">{{ 'SWAP.SUBMIT' | translate}}</button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!marketplace_offer_create && !marketplace_offer_send && marketplace_offer_update && !marketplace_offer_cancel && !marketplace_offer_update_send\">          \r\n      <h1>{{ 'SWAP.WALLET_OFFERS' | translate}}</h1>\r\n      <table class=\"offers-table scrolled-content\">\r\n        <thead class=\"offers_thead_tabs\">\r\n          <tr #head (window:resize)=\"calculateWidth()\">\r\n            <th>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}</th>\r\n            <th>{{ 'SWAP.SELLING' | translate}}</th>\r\n            <th>{{ 'SWAP.BUYING' | translate}}</th>\r\n            <th>{{ 'OFFERS.PRICE' | translate}}</th>\r\n            <th>{{ 'OFFERS.AMMOUNT_CONTRACTS' | translate}}</th>\r\n            <th>{{ 'OFFERS.ALIAS' | translate}}</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <ng-container *ngFor=\"let item of thisWalletOffers; let i = index\">\r\n            <tr (click)=\"openDetails(item.tx_hash)\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td>\r\n                <span>{{item.t}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.cat}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.com}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.lci}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.at}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.url}}</span>\r\n              </td>\r\n            </tr>\r\n            <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td colspan=\"6\">\r\n                <ng-container *ngIf=\"item.tx_hash === openedDetails\">\r\n                  <app-offers-details [offerDetails]=\"offersDetails\" [sizes]=\"calculatedWidth\"></app-offers-details>\r\n                </ng-container>\r\n              </td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"marketplace_offer_update_send\">\r\n      <div class=\"creating_offer\">\r\n        <div class=\"title\">\r\n          <h1>{{ 'SWAP.UPDATE_OFFER' | translate}}</h1>\r\n        </div>\r\n        <div class=\"data-container confirmation\">\r\n          <div class=\"row\"><span>{{ 'SWAP.TX_ID' | translate}}:</span> {{actionData.tx_id}}</div>\r\n          <!--<div class=\"row\"><span>{{ 'SWAP.NUMBER_OFFER' | translate}}:</span> {{actionData.no}}</div>-->\r\n          <div class=\"row\"><span>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}:</span> {{actionData.title}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_OFFER' | translate}}:</span> {{actionData.category}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_GET' | translate}}:</span>{{actionData.comment}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_ADDRESS' | translate}}:</span>{{actionData.payment_type}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_PRICE' | translate}}:</span> {{actionData.price}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_DESCRIPTION' | translate}}:</span> {{actionData.description}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_CONTACT' | translate}}:</span> {{actionData.contact}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.ALIAS' | translate}}:</span> {{actionData.url}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.TRANSACTION_FEE' | translate}}:</span> {{this.variablesService.default_fee}} NiR</div>\r\n        </div>\r\n        <div class=\"wrapper-buttons\">\r\n          <button type=\"button\" class=\"blue-button offer_button\" (click)=\"canselAction()\">{{ 'EXPORT_HISTORY.CANCEL' | translate\r\n            }}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplaceUpdate()\">{{ 'SWAP.BUTTON_SEND' | translate}}</button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n<!-------------------------------------Cancel Offer---------------------------------------------------------->\r\n    <ng-container *ngIf=\"marketplace_offer_cancel\">\r\n      <div class=\"offer-page\">\r\n        <h1>{{ 'SWAP.CANCEL_OFFER' | translate}}</h1>\r\n        <form [formGroup]=\"cancelOfferForm\" (ngSubmit)=\"submitOffer()\" class=\"cancel_offer\">\r\n          <div class=\"input-block\">\r\n            <p class=\"input_description\">{{ 'SWAP.TX_OFFER' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"tx_id\" placeholder=\"Transaction hash\">\r\n            <p class=\"input_description\">{{ 'SWAP.NUMBER_OFFER' | translate}}</p>\r\n            <input type=\"number\" class=\"row\" formControlName=\"no\" placeholder=\"Offer number\">\r\n            <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"validateAndSubmit()\">{{ 'SWAP.SUBMIT' | translate}}</button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </ng-container>\r\n    \r\n    <ng-container *ngIf=\"!marketplace_offer_create && marketplace_offer_cancel && !marketplace_offer_send && !marketplace_offer_update && !marketplace_offer_update_send\">          \r\n      <h1>{{ 'SWAP.WALLET_OFFERS' | translate}}</h1>\r\n      <table class=\"offers-table scrolled-content\">\r\n        <thead class=\"offers_thead_tabs\">\r\n          <tr #head (window:resize)=\"calculateWidth()\">\r\n            <th>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}</th>\r\n            <th>{{ 'SWAP.SELLING' | translate}}</th>\r\n            <th>{{ 'SWAP.BUYING' | translate}}</th>\r\n            <th>{{ 'OFFERS.PRICE' | translate}}</th>\r\n            <th>{{ 'OFFERS.AMMOUNT_CONTRACTS' | translate}}</th>\r\n            <th>{{ 'OFFERS.ALIAS' | translate}}</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <ng-container *ngFor=\"let item of thisWalletOffers; let i = index\">\r\n            <tr (click)=\"openDetails(item.tx_hash)\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td>\r\n                <span>{{item.t}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.cat}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.com}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.lci}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.at}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.url}}</span>\r\n              </td>\r\n            </tr>\r\n            <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td colspan=\"6\">\r\n                <ng-container *ngIf=\"item.tx_hash === openedDetails\">\r\n                  <app-offers-details [offerDetails]=\"offersDetails\" [sizes]=\"calculatedWidth\"></app-offers-details>\r\n                </ng-container>\r\n              </td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n    </ng-container>\r\n<!-------------------------------------Table Offers---------------------------------------------------------->\r\n    <ng-container *ngIf=\"!marketplace_offer_create && !marketplace_offer_cancel && !marketplace_offer_send && !marketplace_offer_update && !marketplace_offer_update_send\">          \r\n      <table class=\"offers-table scrolled-content\">\r\n        <thead class=\"offers_thead_tabs\">\r\n          <tr #head (window:resize)=\"calculateWidth()\">\r\n            <th>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}</th>\r\n            <th>{{ 'SWAP.SELLING' | translate}}</th>\r\n            <th>{{ 'SWAP.BUYING' | translate}}</th>\r\n            <th>{{ 'OFFERS.PRICE' | translate}}</th>\r\n            <th>{{ 'OFFERS.AMMOUNT_CONTRACTS' | translate}}</th>\r\n            <th>{{ 'OFFERS.ALIAS' | translate}}</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <ng-container *ngFor=\"let item of filteredOffers; let i = index\">\r\n            <tr (click)=\"openDetails(item.tx_hash)\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td>\r\n                <span>{{item.t}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.cat}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.com}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.lci}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.at}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.url}}</span>\r\n              </td>\r\n            </tr>\r\n            <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td colspan=\"6\">\r\n                <ng-container *ngIf=\"item.tx_hash === openedDetails\">\r\n                  <app-offers-details [offerDetails]=\"offersDetails\" [sizes]=\"calculatedWidth\"></app-offers-details>\r\n                </ng-container>\r\n              </td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n    </ng-container>\r\n    <div *ngIf=\"checkOffers\" class=\"no-offers\">\r\n      <h1>{{ 'SWAP.NO_OFFERS' | translate}}</h1>\r\n    </div>\r\n  </div>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div *ngIf=\"!hasAlias\" class=\"no-alias-container\">\r\n  <div class=\"no-alias-card\">\r\n    <div class=\"no-alias-icon\">\r\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n        <path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\" fill=\"currentColor\"/>\r\n      </svg>\r\n    </div>\r\n    <h2 class=\"no-alias-title\">{{ 'SWAP.NOT_ALIAS' | translate }}</h2>\r\n    <p class=\"no-alias-description\">{{ 'SWAP.ALIAS_DESCRIPTION' | translate }}</p>\r\n    <button class=\"no-alias-button\" routerLink=\"/wallet/register-alias\">\r\n      <span>{{ 'WALLET.REGISTER_ALIAS' | translate }}</span>\r\n      <svg viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n        <path d=\"M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z\" fill=\"currentColor\"/>\r\n      </svg>\r\n    </button>\r\n  </div>\r\n</div>\r\n<div *ngIf=\"hasAlias\">\r\n  <div class=\"swap_contaner\">\r\n    <div class=\"header\">\r\n      <h1>{{ 'SWAP.TITLE' | translate}}</h1>\r\n      <p class=\"peer-help\" (click)=\"openInBrowser('docs.nirmata-network.com/docs/peerswap/working-with-offers')\">{{ 'SWAP.LINK_HELP' | translate}}</p>\r\n      <div class=\"offers_header\">\r\n        <div class=\"offer_buttons\">\r\n          <button type=\"submit\" class=\"blue-button offer_button\" [disabled]=\"!confirmedTransactions\" (click)=\"marketplace_offer_create = !marketplace_offer_create; marketplace_offer_cancel = false; marketplace_offer_update = false; confirmedContract()\">{{ 'SWAP.CREATE_OFFER' | translate}}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplace_offer_cancel = !marketplace_offer_cancel; marketplace_offer_create = false; marketplace_offer_update = false\">{{ 'SWAP.CANCEL_OFFER' | translate}}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplace_offer_update = !marketplace_offer_update; marketplace_offer_create = false; marketplace_offer_cancel = false; confirmedContract()\">{{ 'SWAP.UPDATE_OFFER' | translate}}</button>\r\n          <button class=\"blue-button offer_button\" (click)=\"refreshOffers()\">{{ 'SWAP.REFRESH_OFFERS' | translate}}</button>\r\n        </div>\r\n        <div class=\"filter-form\">\r\n          <input type=\"text\" [(ngModel)]=\"filter.category\" placeholder=\"coin\">\r\n          <button class=\"filter-button\" (click)=\"applyFilters()\">{{ 'SWAP.FILTER_APPLY' | translate}}</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"offers_page\">\r\n<!-------------------------------------Create Offer---------------------------------------------------------->\r\n    <ng-container *ngIf=\"marketplace_offer_create\">\r\n      <div class=\"offer-page\">\r\n        <h1>{{ 'SWAP.CREATE_OFFER' | translate}}</h1>\r\n        <form [formGroup]=\"offerForm\" (ngSubmit)=\"submitOffer()\" class=\"create_offer\">\r\n          <div class=\"input-block\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELECT_TYPE' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"title\" id=\"t\">\r\n              <option value=\"Buy\">{{ 'SWAP.BUY_TYPE' | translate}}</option>\r\n              <option value=\"Sell\">{{ 'SWAP.SELL_TYPE' | translate}}</option>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.ALIAS' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"alias\" id=\"url\" readonly>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_OFFER' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"category\" id=\"cat\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_GET' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"comment\" id=\"com\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_ADDRESS' | translate}}</p>\r\n            <input type=\"text\" class=\"row input_text\" formControlName=\"payment_type\" placeholder=\"your address\" id=\"pt\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_PRICE' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"price\" placeholder=\"Price\" id=\"lci\" (keypress)=\"numberOnly($event)\">\r\n            <!--<p class=\"input_description\">Quantity</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"amount\" placeholder=\"Amount\" id=\"lco\">-->\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_DESCRIPTION' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"description\" placeholder=\"Description\" id=\"do\" maxlength=\"233\"></textarea>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_CONTACT' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"contact\" placeholder=\"Contacts\" id=\"cnt\" maxlength=\"233\"></textarea>\r\n            <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"validateAndSubmit()\">{{ 'SWAP.SUBMIT' | translate}}</button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"marketplace_offer_send\">\r\n      <div class=\"creating_offer\">\r\n        <div class=\"title\">\r\n          <h1>{{ 'SWAP.CREATE_OFFER' | translate}}</h1>\r\n        </div>\r\n        <div class=\"data-container confirmation\">\r\n          <div class=\"row\"><span>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}:</span> {{actionData.title}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_OFFER' | translate}}:</span> {{actionData.category}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_GET' | translate}}:</span> {{actionData.comment}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_ADDRESS' | translate}}:</span><p style=\"font-size: 16px;margin-top: 10px;\">{{actionData.payment_type}}</p></div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_PRICE' | translate}}:</span> {{actionData.price}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_DESCRIPTION' | translate}}:</span> {{actionData.description}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_CONTACT' | translate}}:</span> {{actionData.contact}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.ALIAS' | translate}}:</span> {{actionData.url}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.TRANSACTION_FEE' | translate}}:</span> {{this.variablesService.default_fee}} NiR</div>\r\n        </div>\r\n        <div class=\"wrapper-buttons\">\r\n          <button type=\"button\" class=\"blue-button offer_button\" (click)=\"canselAction()\">{{ 'EXPORT_HISTORY.CANCEL' | translate\r\n            }}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplaceSend()\">{{ 'SWAP.BUTTON_SEND' | translate}}</button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n<!-------------------------------------Update Offer---------------------------------------------------------->\r\n    <ng-container *ngIf=\"marketplace_offer_update\">\r\n      <div class=\"offer-page\">\r\n        <h1>{{ 'SWAP.UPDATE_OFFER' | translate}}</h1>\r\n        <form [formGroup]=\"updateOfferForm\" (ngSubmit)=\"submitUpdateOffer()\" class=\"create_offer\">\r\n          <div class=\"input-block\">\r\n            <p class=\"input_description\">{{ 'SWAP.TX_OFFER' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"tx_id\" placeholder=\"Transaction hash\">\r\n            <p class=\"input_description\">{{ 'SWAP.NUMBER_OFFER' | translate}}</p>\r\n            <input type=\"number\" class=\"row\" formControlName=\"no\" placeholder=\"Offer number\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELECT_TYPE' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"title\" id=\"t\">\r\n              <option value=\"Buy\">{{ 'SWAP.BUY_TYPE' | translate}}</option>\r\n              <option value=\"Sell\">{{ 'SWAP.SELL_TYPE' | translate}}</option>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.ALIAS' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"alias\" id=\"url\" readonly>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_OFFER' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"category\" id=\"cat\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_GET' | translate}}</p>\r\n            <select class=\"row buy_sell\" formControlName=\"comment\" id=\"com\">\r\n              <optgroup label=\"Crypto\">\r\n                <option *ngFor=\"let option of optionsToOffer.crypto\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n              <optgroup label=\"Fiat\">\r\n                <option *ngFor=\"let option of optionsToOffer.fiat\" [value]=\"option.value\">{{option.label}}</option>\r\n              </optgroup>\r\n            </select>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_ADDRESS' | translate}}</p>\r\n            <input type=\"text\" class=\"row input_text\" formControlName=\"payment_type\" placeholder=\"your address\" id=\"pt\">\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_PRICE' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"price\" placeholder=\"Price\" id=\"lci\">\r\n            <!--<p class=\"input_description\">Amount</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"amount\" placeholder=\"Amount\" id=\"lco\">-->\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_DESCRIPTION' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"description\" placeholder=\"Description\" id=\"do\" maxlength=\"233\"></textarea>\r\n            <p class=\"input_description\">{{ 'SWAP.SELLING_CONTACT' | translate}}</p>\r\n            <textarea type=\"text\" class=\"row input_text\" formControlName=\"contact\" placeholder=\"Contacts\" id=\"cnt\" maxlength=\"233\"></textarea>\r\n            <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"validateAndSubmit()\">{{ 'SWAP.SUBMIT' | translate}}</button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!marketplace_offer_create && !marketplace_offer_send && marketplace_offer_update && !marketplace_offer_cancel && !marketplace_offer_update_send\">          \r\n      <h1>{{ 'SWAP.WALLET_OFFERS' | translate}}</h1>\r\n      <table class=\"offers-table scrolled-content\">\r\n        <thead class=\"offers_thead_tabs\">\r\n          <tr #head (window:resize)=\"calculateWidth()\">\r\n            <th>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}</th>\r\n            <th>{{ 'SWAP.SELLING' | translate}}</th>\r\n            <th>{{ 'SWAP.BUYING' | translate}}</th>\r\n            <th>{{ 'OFFERS.PRICE' | translate}}</th>\r\n            <th>{{ 'OFFERS.AMMOUNT_CONTRACTS' | translate}}</th>\r\n            <th>{{ 'OFFERS.ALIAS' | translate}}</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <ng-container *ngFor=\"let item of thisWalletOffers; let i = index\">\r\n            <tr (click)=\"openDetails(item.tx_hash)\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td>\r\n                <span>{{item.t}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.cat}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.com}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.lci}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.at}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.url}}</span>\r\n              </td>\r\n            </tr>\r\n            <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td colspan=\"6\">\r\n                <ng-container *ngIf=\"item.tx_hash === openedDetails\">\r\n                  <app-offers-details [offerDetails]=\"offersDetails\" [sizes]=\"calculatedWidth\"></app-offers-details>\r\n                </ng-container>\r\n              </td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"marketplace_offer_update_send\">\r\n      <div class=\"creating_offer\">\r\n        <div class=\"title\">\r\n          <h1>{{ 'SWAP.UPDATE_OFFER' | translate}}</h1>\r\n        </div>\r\n        <div class=\"data-container confirmation\">\r\n          <div class=\"row\"><span>{{ 'SWAP.TX_ID' | translate}}:</span> {{actionData.tx_id}}</div>\r\n          <!--<div class=\"row\"><span>{{ 'SWAP.NUMBER_OFFER' | translate}}:</span> {{actionData.no}}</div>-->\r\n          <div class=\"row\"><span>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}:</span> {{actionData.title}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_OFFER' | translate}}:</span> {{actionData.category}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_GET' | translate}}:</span>{{actionData.comment}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_ADDRESS' | translate}}:</span>{{actionData.payment_type}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_PRICE' | translate}}:</span> {{actionData.price}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_DESCRIPTION' | translate}}:</span> {{actionData.description}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.SELLING_CONTACT' | translate}}:</span> {{actionData.contact}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.ALIAS' | translate}}:</span> {{actionData.url}}</div>\r\n          <div class=\"row\"><span>{{ 'SWAP.TRANSACTION_FEE' | translate}}:</span> {{this.variablesService.default_fee}} NiR</div>\r\n        </div>\r\n        <div class=\"wrapper-buttons\">\r\n          <button type=\"button\" class=\"blue-button offer_button\" (click)=\"canselAction()\">{{ 'EXPORT_HISTORY.CANCEL' | translate\r\n            }}</button>\r\n          <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"marketplaceUpdate()\">{{ 'SWAP.BUTTON_SEND' | translate}}</button>\r\n        </div>\r\n      </div>\r\n    </ng-container>\r\n<!-------------------------------------Cancel Offer---------------------------------------------------------->\r\n    <ng-container *ngIf=\"marketplace_offer_cancel\">\r\n      <div class=\"offer-page\">\r\n        <h1>{{ 'SWAP.CANCEL_OFFER' | translate}}</h1>\r\n        <form [formGroup]=\"cancelOfferForm\" (ngSubmit)=\"submitOffer()\" class=\"cancel_offer\">\r\n          <div class=\"input-block\">\r\n            <p class=\"input_description\">{{ 'SWAP.TX_OFFER' | translate}}</p>\r\n            <input type=\"text\" class=\"row\" formControlName=\"tx_id\" placeholder=\"Transaction hash\">\r\n            <p class=\"input_description\">{{ 'SWAP.NUMBER_OFFER' | translate}}</p>\r\n            <input type=\"number\" class=\"row\" formControlName=\"no\" placeholder=\"Offer number\">\r\n            <button type=\"submit\" class=\"blue-button offer_button\" (click)=\"validateAndSubmit()\">{{ 'SWAP.SUBMIT' | translate}}</button>\r\n          </div>\r\n        </form>\r\n      </div>\r\n    </ng-container>\r\n    \r\n    <ng-container *ngIf=\"!marketplace_offer_create && marketplace_offer_cancel && !marketplace_offer_send && !marketplace_offer_update && !marketplace_offer_update_send\">          \r\n      <h1>{{ 'SWAP.WALLET_OFFERS' | translate}}</h1>\r\n      <table class=\"offers-table scrolled-content\">\r\n        <thead class=\"offers_thead_tabs\">\r\n          <tr #head (window:resize)=\"calculateWidth()\">\r\n            <th>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}</th>\r\n            <th>{{ 'SWAP.SELLING' | translate}}</th>\r\n            <th>{{ 'SWAP.BUYING' | translate}}</th>\r\n            <th>{{ 'OFFERS.PRICE' | translate}}</th>\r\n            <th>{{ 'OFFERS.AMMOUNT_CONTRACTS' | translate}}</th>\r\n            <th>{{ 'OFFERS.ALIAS' | translate}}</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <ng-container *ngFor=\"let item of thisWalletOffers; let i = index\">\r\n            <tr (click)=\"openDetails(item.tx_hash)\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td>\r\n                <span>{{item.t}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.cat}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.com}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.lci}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.at}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.url}}</span>\r\n              </td>\r\n            </tr>\r\n            <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td colspan=\"6\">\r\n                <ng-container *ngIf=\"item.tx_hash === openedDetails\">\r\n                  <app-offers-details [offerDetails]=\"offersDetails\" [sizes]=\"calculatedWidth\"></app-offers-details>\r\n                </ng-container>\r\n              </td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n    </ng-container>\r\n<!-------------------------------------Table Offers---------------------------------------------------------->\r\n    <ng-container *ngIf=\"!marketplace_offer_create && !marketplace_offer_cancel && !marketplace_offer_send && !marketplace_offer_update && !marketplace_offer_update_send\">          \r\n      <table class=\"offers-table scrolled-content\">\r\n        <thead class=\"offers_thead_tabs\">\r\n          <tr #head (window:resize)=\"calculateWidth()\">\r\n            <th>{{ 'SWAP.BUY_TYPE' | translate}}/{{ 'SWAP.SELL_TYPE' | translate}}</th>\r\n            <th>{{ 'SWAP.SELLING' | translate}}</th>\r\n            <th>{{ 'SWAP.BUYING' | translate}}</th>\r\n            <th>{{ 'OFFERS.PRICE' | translate}}</th>\r\n            <th>{{ 'OFFERS.AMMOUNT_CONTRACTS' | translate}}</th>\r\n            <th>{{ 'OFFERS.ALIAS' | translate}}</th>\r\n          </tr>\r\n        </thead>\r\n        <tbody>\r\n          <ng-container *ngFor=\"let item of filteredOffers; let i = index\">\r\n            <tr (click)=\"openDetails(item.tx_hash)\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td>\r\n                <span>{{item.t}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.cat}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.com}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.lci}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.at}}</span>\r\n              </td>\r\n              <td>\r\n                <span>{{item.url}}</span>\r\n              </td>\r\n            </tr>\r\n            <tr class=\"transaction-details\" [class.open]=\"item.tx_hash === openedDetails\" [ngClass]=\"{'odd-row': i % 2 !== 0, 'even-row': i % 2 === 0}\">\r\n              <td colspan=\"6\">\r\n                <ng-container *ngIf=\"item.tx_hash === openedDetails\">\r\n                  <app-offers-details [offerDetails]=\"offersDetails\" [sizes]=\"calculatedWidth\"></app-offers-details>\r\n                </ng-container>\r\n              </td>\r\n            </tr>\r\n          </ng-container>\r\n        </tbody>\r\n      </table>\r\n    </ng-container>\r\n    <div *ngIf=\"checkOffers\" class=\"no-offers\">\r\n      <h1>{{ 'SWAP.NO_OFFERS' | translate}}</h1>\r\n    </div>\r\n  </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -20093,7 +23954,7 @@ module.exports = "<div *ngIf=\"!hasAlias\" class=\"alert alert-warning\">\r\n  <
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".swap_contaner {\n  width: 100%; }\n\nh1 {\n  font-size: 4rem;\n  text-align: center;\n  margin-bottom: 2rem; }\n\ninput, .buy_sell {\n  margin-bottom: 2rem; }\n\n.offer_buttons {\n  width: 100%;\n  display: flex;\n  justify-content: flex-start;\n  margin-bottom: 2rem; }\n\n.offers_header {\n  display: flex; }\n\n.offer_button {\n  margin: 1rem; }\n\n.offers_thead_tabs {\n  background-color: #166E46;\n  font-size: 16px; }\n\n.offers_thead_tabs th {\n  padding: 1.5rem;\n  text-align: center; }\n\ntable.offers-table {\n  height: 100%;\n  overflow-x: hidden;\n  overflow-y: overlay;\n  flex-direction: column; }\n\ntable.offers-table tbody {\n    font-weight: 500; }\n\ntable.offers-table tbody tr td {\n      min-width: 10rem;\n      overflow: hidden;\n      text-align: center; }\n\ntable.offers-table tbody tr .status {\n      position: relative;\n      display: flex;\n      align-items: center; }\n\ntable.offers-table tbody tr .status .confirmation {\n        margin-right: 0.7rem;\n        width: 1.7rem;\n        height: 1.7rem; }\n\ntable.offers-table tbody tr .status .lock-transaction {\n        background: center/contain no-repeat url('lock-transaction.svg');\n        margin-left: 0.7rem;\n        width: 1.4rem;\n        height: 1.4rem; }\n\ntable.offers-table tbody tr .status .unlock-transaction {\n        background: center/contain no-repeat url('unlock-transaction.svg');\n        margin-left: 0.7rem;\n        width: 1.4rem;\n        height: 1.4rem; }\n\ntable.offers-table tbody tr .status img.status-transaction {\n        margin-right: 0.7rem;\n        width: 1.5rem;\n        height: 1.5rem; }\n\ntable.offers-table tbody tr .remote-address span {\n      display: inline-flex;\n      width: 100%;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n\ntable.offers-table tbody tr:not(.transaction-details) {\n      cursor: pointer; }\n\ntable.offers-table tbody tr.transaction-details {\n      transition: 0.5s height linear, 0s font-size;\n      transition-delay: 0s, 0.5s;\n      height: 0; }\n\ntable.offers-table tbody tr.transaction-details.open {\n        height: 45rem; }\n\ntable.offers-table tbody tr.transaction-details td {\n        border-radius: 1rem;\n        position: relative;\n        overflow: hidden;\n        line-height: inherit;\n        padding-top: 0;\n        padding-bottom: 0; }\n\n.odd-row {\n  background-color: #166e46ba; }\n\n.even-row {\n  background-color: #206f5a8c; }\n\n.filter-button {\n  margin-left: 1.5rem;\n  border: 2px solid black;\n  background-color: white;\n  padding: 1rem;\n  color: black; }\n\n.filter-form {\n  margin: 1.5rem;\n  display: flex;\n  justify-content: flex-end;\n  height: 50%; }\n\n.alert-warning {\n  text-align: center;\n  margin-top: 15rem; }\n\n.create_offer, .cancel_offer {\n  display: flex;\n  justify-content: center; }\n\n.creating_offer {\n  text-align: center; }\n\n.creating_offer .confirmation .row {\n    font-size: 3rem;\n    margin-bottom: 2rem; }\n\n.input_text {\n  padding: 0.5rem;\n  font-size: 2.5rem;\n  width: 100%;\n  margin-bottom: 2rem;\n  min-height: 50px;\n  overflow-y: hidden; }\n\n.peer-help {\n  cursor: pointer;\n  position: absolute;\n  top: 20rem;\n  right: 7rem;\n  color: wheat; }\n\n.no-offers {\n  margin-top: 5%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc3dhcC9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcc3dhcFxcc3dhcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLFdBQVcsRUFBQTs7QUFHZjtFQUNJLGVBQWU7RUFDZixrQkFBa0I7RUFDbEIsbUJBQW1CLEVBQUE7O0FBR3ZCO0VBQ0UsbUJBQ0YsRUFBQTs7QUFFQTtFQUNJLFdBQVc7RUFDWCxhQUFhO0VBQ2IsMkJBQTJCO0VBQzNCLG1CQUFtQixFQUFBOztBQUd2QjtFQUNFLGFBQWEsRUFBQTs7QUFHZjtFQUNJLFlBQVksRUFBQTs7QUFHaEI7RUFDSSx5QkFBeUI7RUFDekIsZUFBZSxFQUFBOztBQUduQjtFQUNJLGVBQWU7RUFDZixrQkFBa0IsRUFBQTs7QUFFdEI7RUFDSSxZQUFZO0VBQ1osa0JBQWtCO0VBQ2xCLG1CQUFtQjtFQUNuQixzQkFBc0IsRUFBQTs7QUFKMUI7SUFNTSxnQkFBZ0IsRUFBQTs7QUFOdEI7TUFTVSxnQkFBZ0I7TUFDaEIsZ0JBQWdCO01BQ2hCLGtCQUFrQixFQUFBOztBQVg1QjtNQWNVLGtCQUFrQjtNQUNsQixhQUFhO01BQ2IsbUJBQW1CLEVBQUE7O0FBaEI3QjtRQWtCWSxvQkFBb0I7UUFDcEIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUFwQjFCO1FBdUJZLGdFQUFtRjtRQUNuRixtQkFBbUI7UUFDbkIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUExQjFCO1FBNkJZLGtFQUFxRjtRQUNyRixtQkFBbUI7UUFDbkIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUFoQzFCO1FBbUNZLG9CQUFvQjtRQUNwQixhQUFhO1FBQ2IsY0FBYyxFQUFBOztBQXJDMUI7TUEwQ1ksb0JBQW9CO01BQ3BCLFdBQVc7TUFDWCxnQkFBZ0I7TUFDaEIsdUJBQXVCLEVBQUE7O0FBN0NuQztNQWlEVSxlQUFlLEVBQUE7O0FBakR6QjtNQXFEVSw0Q0FBNEM7TUFDNUMsMEJBQTBCO01BQzFCLFNBQVMsRUFBQTs7QUF2RG5CO1FBeURZLGFBQWEsRUFBQTs7QUF6RHpCO1FBNERZLG1CQUFtQjtRQUNuQixrQkFBa0I7UUFDbEIsZ0JBQWdCO1FBQ2hCLG9CQUFvQjtRQUNwQixjQUFjO1FBQ2QsaUJBQWlCLEVBQUE7O0FBTzNCO0VBQ0UsMkJBQTJCLEVBQUE7O0FBRzdCO0VBQ0UsMkJBQTJCLEVBQUE7O0FBRzdCO0VBQ0UsbUJBQW1CO0VBQ25CLHVCQUF1QjtFQUN2Qix1QkFBdUI7RUFDdkIsYUFBYTtFQUNiLFlBQVksRUFBQTs7QUFHZDtFQUNFLGNBQWM7RUFDZCxhQUFhO0VBQ2IseUJBQXlCO0VBQ3pCLFdBQVcsRUFBQTs7QUFHYjtFQUNFLGtCQUFrQjtFQUNsQixpQkFBaUIsRUFBQTs7QUFHbkI7RUFDRSxhQUFhO0VBQ2IsdUJBQXVCLEVBQUE7O0FBR3pCO0VBQ0Usa0JBQWtCLEVBQUE7O0FBRHBCO0lBR0ksZUFBZTtJQUNmLG1CQUFtQixFQUFBOztBQUl2QjtFQUNFLGVBQWU7RUFDZixpQkFBaUI7RUFDakIsV0FBVztFQUNYLG1CQUFtQjtFQUNuQixnQkFBZ0I7RUFDaEIsa0JBQWtCLEVBQUE7O0FBT3BCO0VBQ0UsZUFBZTtFQUNmLGtCQUFrQjtFQUNsQixVQUFVO0VBQ1YsV0FBVztFQUNYLFlBQVksRUFBQTs7QUFHZDtFQUNFLGNBQWMsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3N3YXAvc3dhcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5zd2FwX2NvbnRhbmVyIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG59XHJcblxyXG5oMSB7XHJcbiAgICBmb250LXNpemU6IDRyZW07XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG59XHJcblxyXG5pbnB1dCwgLmJ1eV9zZWxsIHtcclxuICBtYXJnaW4tYm90dG9tOiAycmVtXHJcbn1cclxuXHJcbi5vZmZlcl9idXR0b25zIHtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogZmxleC1zdGFydDtcclxuICAgIG1hcmdpbi1ib3R0b206IDJyZW07XHJcbn1cclxuXHJcbi5vZmZlcnNfaGVhZGVyIHtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG59XHJcblxyXG4ub2ZmZXJfYnV0dG9uIHtcclxuICAgIG1hcmdpbjogMXJlbTtcclxufVxyXG5cclxuLm9mZmVyc190aGVhZF90YWJzIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICMxNjZFNDY7XHJcbiAgICBmb250LXNpemU6IDE2cHg7XHJcbn1cclxuXHJcbi5vZmZlcnNfdGhlYWRfdGFicyB0aCB7XHJcbiAgICBwYWRkaW5nOiAxLjVyZW07XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbn1cclxudGFibGUub2ZmZXJzLXRhYmxlIHtcclxuICAgIGhlaWdodDogMTAwJTtcclxuICAgIG92ZXJmbG93LXg6IGhpZGRlbjtcclxuICAgIG92ZXJmbG93LXk6IG92ZXJsYXk7XHJcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xyXG4gICAgdGJvZHkge1xyXG4gICAgICBmb250LXdlaWdodDogNTAwO1xyXG4gICAgICB0ciB7XHJcbiAgICAgICAgdGQge1xyXG4gICAgICAgICAgbWluLXdpZHRoOiAxMHJlbTtcclxuICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47XHJcbiAgICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5zdGF0dXMge1xyXG4gICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgZGlzcGxheTogZmxleDtcclxuICAgICAgICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAgICAgICAgICAuY29uZmlybWF0aW9uIHtcclxuICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAwLjdyZW07XHJcbiAgICAgICAgICAgIHdpZHRoOiAxLjdyZW07XHJcbiAgICAgICAgICAgIGhlaWdodDogMS43cmVtO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgICAgLmxvY2stdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL2xvY2stdHJhbnNhY3Rpb24uc3ZnKTtcclxuICAgICAgICAgICAgbWFyZ2luLWxlZnQ6IDAuN3JlbTtcclxuICAgICAgICAgICAgd2lkdGg6IDEuNHJlbTtcclxuICAgICAgICAgICAgaGVpZ2h0OiAxLjRyZW07XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICAudW5sb2NrLXRyYW5zYWN0aW9uIHtcclxuICAgICAgICAgICAgYmFja2dyb3VuZDogY2VudGVyIC8gY29udGFpbiBuby1yZXBlYXQgdXJsKC4uLy4uL2Fzc2V0cy9pY29ucy91bmxvY2stdHJhbnNhY3Rpb24uc3ZnKTtcclxuICAgICAgICAgICAgbWFyZ2luLWxlZnQ6IDAuN3JlbTtcclxuICAgICAgICAgICAgd2lkdGg6IDEuNHJlbTtcclxuICAgICAgICAgICAgaGVpZ2h0OiAxLjRyZW07XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICBpbWcuc3RhdHVzLXRyYW5zYWN0aW9uIHtcclxuICAgICAgICAgICAgbWFyZ2luLXJpZ2h0OiAwLjdyZW07XHJcbiAgICAgICAgICAgIHdpZHRoOiAxLjVyZW07XHJcbiAgICAgICAgICAgIGhlaWdodDogMS41cmVtO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgICAucmVtb3RlLWFkZHJlc3Mge1xyXG4gICAgICAgICAgc3BhbiB7XHJcbiAgICAgICAgICAgIGRpc3BsYXk6IGlubGluZS1mbGV4O1xyXG4gICAgICAgICAgICB3aWR0aDogMTAwJTtcclxuICAgICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgICAgdGV4dC1vdmVyZmxvdzogZWxsaXBzaXM7XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgICY6bm90KC50cmFuc2FjdGlvbi1kZXRhaWxzKSB7XHJcbiAgICAgICAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICAgICAgfVxyXG4gICAgICAgICYudHJhbnNhY3Rpb24tZGV0YWlscyB7XHJcbiAgICAgICAgICAtd2Via2l0LXRyYW5zaXRpb246IDAuNXMgaGVpZ2h0IGxpbmVhciwgMHMgZm9udC1zaXplO1xyXG4gICAgICAgICAgdHJhbnNpdGlvbjogMC41cyBoZWlnaHQgbGluZWFyLCAwcyBmb250LXNpemU7XHJcbiAgICAgICAgICB0cmFuc2l0aW9uLWRlbGF5OiAwcywgMC41cztcclxuICAgICAgICAgIGhlaWdodDogMDtcclxuICAgICAgICAgICYub3BlbiB7XHJcbiAgICAgICAgICAgIGhlaWdodDogNDVyZW07XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICB0ZCB7XHJcbiAgICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDFyZW07XHJcbiAgICAgICAgICAgIHBvc2l0aW9uOiByZWxhdGl2ZTtcclxuICAgICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgICAgbGluZS1oZWlnaHQ6IGluaGVyaXQ7XHJcbiAgICAgICAgICAgIHBhZGRpbmctdG9wOiAwO1xyXG4gICAgICAgICAgICBwYWRkaW5nLWJvdHRvbTogMDtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9XHJcblxyXG4gIC5vZGQtcm93IHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICMxNjZlNDZiYTsgXHJcbiAgfVxyXG4gIFxyXG4gIC5ldmVuLXJvdyB7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjMjA2ZjVhOGM7IFxyXG4gIH1cclxuXHJcbiAgLmZpbHRlci1idXR0b24ge1xyXG4gICAgbWFyZ2luLWxlZnQ6IDEuNXJlbTtcclxuICAgIGJvcmRlcjogMnB4IHNvbGlkIGJsYWNrO1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogd2hpdGU7XHJcbiAgICBwYWRkaW5nOiAxcmVtO1xyXG4gICAgY29sb3I6IGJsYWNrO1xyXG4gIH1cclxuXHJcbiAgLmZpbHRlci1mb3JtIHtcclxuICAgIG1hcmdpbjogMS41cmVtO1xyXG4gICAgZGlzcGxheTogZmxleDtcclxuICAgIGp1c3RpZnktY29udGVudDogZmxleC1lbmQ7XHJcbiAgICBoZWlnaHQ6IDUwJTtcclxuICB9XHJcblxyXG4gIC5hbGVydC13YXJuaW5nIHtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIG1hcmdpbi10b3A6IDE1cmVtO1xyXG4gIH1cclxuXHJcbiAgLmNyZWF0ZV9vZmZlciwgLmNhbmNlbF9vZmZlciB7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgfVxyXG5cclxuICAuY3JlYXRpbmdfb2ZmZXIge1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgLmNvbmZpcm1hdGlvbiAucm93IHtcclxuICAgICAgZm9udC1zaXplOiAzcmVtO1xyXG4gICAgICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLmlucHV0X3RleHQge1xyXG4gICAgcGFkZGluZzogMC41cmVtO1xyXG4gICAgZm9udC1zaXplOiAyLjVyZW07XHJcbiAgICB3aWR0aDogMTAwJTtcclxuICAgIG1hcmdpbi1ib3R0b206IDJyZW07XHJcbiAgICBtaW4taGVpZ2h0OiA1MHB4O1xyXG4gICAgb3ZlcmZsb3cteTogaGlkZGVuO1xyXG4gIH1cclxuXHJcbiAgLm9mZmVyc19wYWdlIHtcclxuICAgIFxyXG4gIH1cclxuXHJcbiAgLnBlZXItaGVscCB7XHJcbiAgICBjdXJzb3I6IHBvaW50ZXI7XHJcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XHJcbiAgICB0b3A6IDIwcmVtO1xyXG4gICAgcmlnaHQ6IDdyZW07XHJcbiAgICBjb2xvcjogd2hlYXQ7XHJcbiAgfVxyXG5cclxuICAubm8tb2ZmZXJzIHtcclxuICAgIG1hcmdpbi10b3A6IDUlO1xyXG4gIH1cclxuIl19 */"
+module.exports = ".no-alias-container {\n  width: 100%;\n  height: calc(100vh - 200px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 2rem; }\n\n.no-alias-card {\n  background: transparent;\n  border: 1px solid rgba(50, 220, 89, 0.2);\n  border-radius: 24px;\n  padding: 4rem;\n  text-align: center;\n  max-width: 500px;\n  box-shadow: 0 0 40px rgba(50, 220, 89, 0.05);\n  animation: fadeIn 0.5s ease-out; }\n\n@keyframes fadeIn {\n  from {\n    opacity: 0;\n    transform: translateY(20px); }\n  to {\n    opacity: 1;\n    transform: translateY(0); } }\n\n.no-alias-icon {\n  width: 80px;\n  height: 80px;\n  margin: 0 auto 2rem;\n  background: linear-gradient(145deg, rgba(50, 220, 89, 0.2), rgba(50, 220, 89, 0.1));\n  border-radius: 50%;\n  display: flex;\n  align-items: center;\n  justify-content: center; }\n\n.no-alias-icon svg {\n    width: 40px;\n    height: 40px;\n    color: #32DC59; }\n\n.no-alias-title {\n  color: #fff;\n  font-size: 1.8rem;\n  font-weight: 600;\n  margin-bottom: 1rem;\n  line-height: 1.4; }\n\n.no-alias-description {\n  color: rgba(255, 255, 255, 0.6);\n  font-size: 1.4rem;\n  line-height: 1.6;\n  margin-bottom: 2.5rem; }\n\n.no-alias-button {\n  display: inline-flex;\n  align-items: center;\n  gap: 0.8rem;\n  background: linear-gradient(145deg, #32DC59, #28B94A);\n  border: none;\n  border-radius: 12px;\n  padding: 1.2rem 2.5rem;\n  color: #fff;\n  font-size: 1.4rem;\n  font-weight: 600;\n  cursor: pointer;\n  transition: all 0.3s ease; }\n\n.no-alias-button svg {\n    width: 20px;\n    height: 20px;\n    transition: transform 0.3s ease; }\n\n.no-alias-button:hover {\n    transform: translateY(-3px);\n    box-shadow: 0 10px 30px rgba(50, 220, 89, 0.3); }\n\n.no-alias-button:hover svg {\n      transform: translateX(4px); }\n\n.no-alias-button:active {\n    transform: translateY(-1px); }\n\n.swap_contaner {\n  width: 100%; }\n\nh1 {\n  font-size: 4rem;\n  text-align: center;\n  margin-bottom: 2rem; }\n\ninput, .buy_sell {\n  margin-bottom: 2rem; }\n\n.offer_buttons {\n  width: 100%;\n  display: flex;\n  justify-content: flex-start;\n  margin-bottom: 2rem; }\n\n.offers_header {\n  display: flex; }\n\n.offer_button {\n  margin: 1rem; }\n\n.offers_thead_tabs {\n  background-color: #166E46;\n  font-size: 16px; }\n\n.offers_thead_tabs th {\n  padding: 1.5rem;\n  text-align: center; }\n\ntable.offers-table {\n  height: 100%;\n  overflow-x: hidden;\n  overflow-y: overlay;\n  flex-direction: column; }\n\ntable.offers-table tbody {\n    font-weight: 500; }\n\ntable.offers-table tbody tr td {\n      min-width: 10rem;\n      overflow: hidden;\n      text-align: center; }\n\ntable.offers-table tbody tr .status {\n      position: relative;\n      display: flex;\n      align-items: center; }\n\ntable.offers-table tbody tr .status .confirmation {\n        margin-right: 0.7rem;\n        width: 1.7rem;\n        height: 1.7rem; }\n\ntable.offers-table tbody tr .status .lock-transaction {\n        background: center/contain no-repeat url('lock-transaction.svg');\n        margin-left: 0.7rem;\n        width: 1.4rem;\n        height: 1.4rem; }\n\ntable.offers-table tbody tr .status .unlock-transaction {\n        background: center/contain no-repeat url('unlock-transaction.svg');\n        margin-left: 0.7rem;\n        width: 1.4rem;\n        height: 1.4rem; }\n\ntable.offers-table tbody tr .status img.status-transaction {\n        margin-right: 0.7rem;\n        width: 1.5rem;\n        height: 1.5rem; }\n\ntable.offers-table tbody tr .remote-address span {\n      display: inline-flex;\n      width: 100%;\n      overflow: hidden;\n      text-overflow: ellipsis; }\n\ntable.offers-table tbody tr:not(.transaction-details) {\n      cursor: pointer; }\n\ntable.offers-table tbody tr.transaction-details {\n      transition: 0.5s height linear, 0s font-size;\n      transition-delay: 0s, 0.5s;\n      height: 0; }\n\ntable.offers-table tbody tr.transaction-details.open {\n        height: 45rem; }\n\ntable.offers-table tbody tr.transaction-details td {\n        border-radius: 1rem;\n        position: relative;\n        overflow: hidden;\n        line-height: inherit;\n        padding-top: 0;\n        padding-bottom: 0; }\n\n.odd-row {\n  background-color: #166e46ba; }\n\n.even-row {\n  background-color: #206f5a8c; }\n\n.filter-button {\n  margin-left: 1.5rem;\n  border: 2px solid black;\n  background-color: white;\n  padding: 1rem;\n  color: black; }\n\n.filter-form {\n  margin: 1.5rem;\n  display: flex;\n  justify-content: flex-end;\n  height: 50%; }\n\n.alert-warning {\n  text-align: center;\n  margin-top: 15rem; }\n\n.create_offer, .cancel_offer {\n  display: flex;\n  justify-content: center; }\n\n.creating_offer {\n  text-align: center; }\n\n.creating_offer .confirmation .row {\n    font-size: 3rem;\n    margin-bottom: 2rem; }\n\n.input_text {\n  padding: 0.5rem;\n  font-size: 2.5rem;\n  width: 100%;\n  margin-bottom: 2rem;\n  min-height: 50px;\n  overflow-y: hidden; }\n\n.peer-help {\n  cursor: pointer;\n  position: absolute;\n  top: 20rem;\n  right: 7rem;\n  color: wheat; }\n\n.no-offers {\n  margin-top: 5%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc3dhcC9GOlxcR2l0SHViXFxOaXJtYXRhR1VJXFxodG1sX3NvdXJjZS9zcmNcXGFwcFxcc3dhcFxcc3dhcC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQVc7RUFDWCwyQkFBMkI7RUFDM0IsYUFBYTtFQUNiLG1CQUFtQjtFQUNuQix1QkFBdUI7RUFDdkIsYUFBYSxFQUFBOztBQUdmO0VBQ0UsdUJBQXVCO0VBQ3ZCLHdDQUF3QztFQUN4QyxtQkFBbUI7RUFDbkIsYUFBYTtFQUNiLGtCQUFrQjtFQUNsQixnQkFBZ0I7RUFDaEIsNENBQTRDO0VBQzVDLCtCQUErQixFQUFBOztBQUdqQztFQUNFO0lBQ0UsVUFBVTtJQUNWLDJCQUEyQixFQUFBO0VBRTdCO0lBQ0UsVUFBVTtJQUNWLHdCQUF3QixFQUFBLEVBQUE7O0FBSTVCO0VBQ0UsV0FBVztFQUNYLFlBQVk7RUFDWixtQkFBbUI7RUFDbkIsbUZBQW1GO0VBQ25GLGtCQUFrQjtFQUNsQixhQUFhO0VBQ2IsbUJBQW1CO0VBQ25CLHVCQUF1QixFQUFBOztBQVJ6QjtJQVdJLFdBQVc7SUFDWCxZQUFZO0lBQ1osY0FBYyxFQUFBOztBQUlsQjtFQUNFLFdBQVc7RUFDWCxpQkFBaUI7RUFDakIsZ0JBQWdCO0VBQ2hCLG1CQUFtQjtFQUNuQixnQkFBZ0IsRUFBQTs7QUFHbEI7RUFDRSwrQkFBK0I7RUFDL0IsaUJBQWlCO0VBQ2pCLGdCQUFnQjtFQUNoQixxQkFBcUIsRUFBQTs7QUFHdkI7RUFDRSxvQkFBb0I7RUFDcEIsbUJBQW1CO0VBQ25CLFdBQVc7RUFDWCxxREFBcUQ7RUFDckQsWUFBWTtFQUNaLG1CQUFtQjtFQUNuQixzQkFBc0I7RUFDdEIsV0FBVztFQUNYLGlCQUFpQjtFQUNqQixnQkFBZ0I7RUFDaEIsZUFBZTtFQUNmLHlCQUF5QixFQUFBOztBQVozQjtJQWVJLFdBQVc7SUFDWCxZQUFZO0lBQ1osK0JBQStCLEVBQUE7O0FBakJuQztJQXFCSSwyQkFBMkI7SUFDM0IsOENBQThDLEVBQUE7O0FBdEJsRDtNQXlCTSwwQkFBMEIsRUFBQTs7QUF6QmhDO0lBOEJJLDJCQUEyQixFQUFBOztBQUkvQjtFQUNJLFdBQVcsRUFBQTs7QUFHZjtFQUNJLGVBQWU7RUFDZixrQkFBa0I7RUFDbEIsbUJBQW1CLEVBQUE7O0FBR3ZCO0VBQ0UsbUJBQ0YsRUFBQTs7QUFFQTtFQUNJLFdBQVc7RUFDWCxhQUFhO0VBQ2IsMkJBQTJCO0VBQzNCLG1CQUFtQixFQUFBOztBQUd2QjtFQUNFLGFBQWEsRUFBQTs7QUFHZjtFQUNJLFlBQVksRUFBQTs7QUFHaEI7RUFDSSx5QkFBeUI7RUFDekIsZUFBZSxFQUFBOztBQUduQjtFQUNJLGVBQWU7RUFDZixrQkFBa0IsRUFBQTs7QUFFdEI7RUFDSSxZQUFZO0VBQ1osa0JBQWtCO0VBQ2xCLG1CQUFtQjtFQUNuQixzQkFBc0IsRUFBQTs7QUFKMUI7SUFNTSxnQkFBZ0IsRUFBQTs7QUFOdEI7TUFTVSxnQkFBZ0I7TUFDaEIsZ0JBQWdCO01BQ2hCLGtCQUFrQixFQUFBOztBQVg1QjtNQWNVLGtCQUFrQjtNQUNsQixhQUFhO01BQ2IsbUJBQW1CLEVBQUE7O0FBaEI3QjtRQWtCWSxvQkFBb0I7UUFDcEIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUFwQjFCO1FBdUJZLGdFQUFtRjtRQUNuRixtQkFBbUI7UUFDbkIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUExQjFCO1FBNkJZLGtFQUFxRjtRQUNyRixtQkFBbUI7UUFDbkIsYUFBYTtRQUNiLGNBQWMsRUFBQTs7QUFoQzFCO1FBbUNZLG9CQUFvQjtRQUNwQixhQUFhO1FBQ2IsY0FBYyxFQUFBOztBQXJDMUI7TUEwQ1ksb0JBQW9CO01BQ3BCLFdBQVc7TUFDWCxnQkFBZ0I7TUFDaEIsdUJBQXVCLEVBQUE7O0FBN0NuQztNQWlEVSxlQUFlLEVBQUE7O0FBakR6QjtNQXFEVSw0Q0FBNEM7TUFDNUMsMEJBQTBCO01BQzFCLFNBQVMsRUFBQTs7QUF2RG5CO1FBeURZLGFBQWEsRUFBQTs7QUF6RHpCO1FBNERZLG1CQUFtQjtRQUNuQixrQkFBa0I7UUFDbEIsZ0JBQWdCO1FBQ2hCLG9CQUFvQjtRQUNwQixjQUFjO1FBQ2QsaUJBQWlCLEVBQUE7O0FBTzNCO0VBQ0UsMkJBQTJCLEVBQUE7O0FBRzdCO0VBQ0UsMkJBQTJCLEVBQUE7O0FBRzdCO0VBQ0UsbUJBQW1CO0VBQ25CLHVCQUF1QjtFQUN2Qix1QkFBdUI7RUFDdkIsYUFBYTtFQUNiLFlBQVksRUFBQTs7QUFHZDtFQUNFLGNBQWM7RUFDZCxhQUFhO0VBQ2IseUJBQXlCO0VBQ3pCLFdBQVcsRUFBQTs7QUFHYjtFQUNFLGtCQUFrQjtFQUNsQixpQkFBaUIsRUFBQTs7QUFHbkI7RUFDRSxhQUFhO0VBQ2IsdUJBQXVCLEVBQUE7O0FBR3pCO0VBQ0Usa0JBQWtCLEVBQUE7O0FBRHBCO0lBR0ksZUFBZTtJQUNmLG1CQUFtQixFQUFBOztBQUl2QjtFQUNFLGVBQWU7RUFDZixpQkFBaUI7RUFDakIsV0FBVztFQUNYLG1CQUFtQjtFQUNuQixnQkFBZ0I7RUFDaEIsa0JBQWtCLEVBQUE7O0FBT3BCO0VBQ0UsZUFBZTtFQUNmLGtCQUFrQjtFQUNsQixVQUFVO0VBQ1YsV0FBVztFQUNYLFlBQVksRUFBQTs7QUFHZDtFQUNFLGNBQWMsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3N3YXAvc3dhcC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5uby1hbGlhcy1jb250YWluZXIge1xyXG4gIHdpZHRoOiAxMDAlO1xyXG4gIGhlaWdodDogY2FsYygxMDB2aCAtIDIwMHB4KTtcclxuICBkaXNwbGF5OiBmbGV4O1xyXG4gIGFsaWduLWl0ZW1zOiBjZW50ZXI7XHJcbiAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XHJcbiAgcGFkZGluZzogMnJlbTtcclxufVxyXG5cclxuLm5vLWFsaWFzLWNhcmQge1xyXG4gIGJhY2tncm91bmQ6IHRyYW5zcGFyZW50O1xyXG4gIGJvcmRlcjogMXB4IHNvbGlkIHJnYmEoNTAsIDIyMCwgODksIDAuMik7XHJcbiAgYm9yZGVyLXJhZGl1czogMjRweDtcclxuICBwYWRkaW5nOiA0cmVtO1xyXG4gIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICBtYXgtd2lkdGg6IDUwMHB4O1xyXG4gIGJveC1zaGFkb3c6IDAgMCA0MHB4IHJnYmEoNTAsIDIyMCwgODksIDAuMDUpO1xyXG4gIGFuaW1hdGlvbjogZmFkZUluIDAuNXMgZWFzZS1vdXQ7XHJcbn1cclxuXHJcbkBrZXlmcmFtZXMgZmFkZUluIHtcclxuICBmcm9tIHtcclxuICAgIG9wYWNpdHk6IDA7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMjBweCk7XHJcbiAgfVxyXG4gIHRvIHtcclxuICAgIG9wYWNpdHk6IDE7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoMCk7XHJcbiAgfVxyXG59XHJcblxyXG4ubm8tYWxpYXMtaWNvbiB7XHJcbiAgd2lkdGg6IDgwcHg7XHJcbiAgaGVpZ2h0OiA4MHB4O1xyXG4gIG1hcmdpbjogMCBhdXRvIDJyZW07XHJcbiAgYmFja2dyb3VuZDogbGluZWFyLWdyYWRpZW50KDE0NWRlZywgcmdiYSg1MCwgMjIwLCA4OSwgMC4yKSwgcmdiYSg1MCwgMjIwLCA4OSwgMC4xKSk7XHJcbiAgYm9yZGVyLXJhZGl1czogNTAlO1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICBcclxuICBzdmcge1xyXG4gICAgd2lkdGg6IDQwcHg7XHJcbiAgICBoZWlnaHQ6IDQwcHg7XHJcbiAgICBjb2xvcjogIzMyREM1OTtcclxuICB9XHJcbn1cclxuXHJcbi5uby1hbGlhcy10aXRsZSB7XHJcbiAgY29sb3I6ICNmZmY7XHJcbiAgZm9udC1zaXplOiAxLjhyZW07XHJcbiAgZm9udC13ZWlnaHQ6IDYwMDtcclxuICBtYXJnaW4tYm90dG9tOiAxcmVtO1xyXG4gIGxpbmUtaGVpZ2h0OiAxLjQ7XHJcbn1cclxuXHJcbi5uby1hbGlhcy1kZXNjcmlwdGlvbiB7XHJcbiAgY29sb3I6IHJnYmEoMjU1LCAyNTUsIDI1NSwgMC42KTtcclxuICBmb250LXNpemU6IDEuNHJlbTtcclxuICBsaW5lLWhlaWdodDogMS42O1xyXG4gIG1hcmdpbi1ib3R0b206IDIuNXJlbTtcclxufVxyXG5cclxuLm5vLWFsaWFzLWJ1dHRvbiB7XHJcbiAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICBnYXA6IDAuOHJlbTtcclxuICBiYWNrZ3JvdW5kOiBsaW5lYXItZ3JhZGllbnQoMTQ1ZGVnLCAjMzJEQzU5LCAjMjhCOTRBKTtcclxuICBib3JkZXI6IG5vbmU7XHJcbiAgYm9yZGVyLXJhZGl1czogMTJweDtcclxuICBwYWRkaW5nOiAxLjJyZW0gMi41cmVtO1xyXG4gIGNvbG9yOiAjZmZmO1xyXG4gIGZvbnQtc2l6ZTogMS40cmVtO1xyXG4gIGZvbnQtd2VpZ2h0OiA2MDA7XHJcbiAgY3Vyc29yOiBwb2ludGVyO1xyXG4gIHRyYW5zaXRpb246IGFsbCAwLjNzIGVhc2U7XHJcbiAgXHJcbiAgc3ZnIHtcclxuICAgIHdpZHRoOiAyMHB4O1xyXG4gICAgaGVpZ2h0OiAyMHB4O1xyXG4gICAgdHJhbnNpdGlvbjogdHJhbnNmb3JtIDAuM3MgZWFzZTtcclxuICB9XHJcbiAgXHJcbiAgJjpob3ZlciB7XHJcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTNweCk7XHJcbiAgICBib3gtc2hhZG93OiAwIDEwcHggMzBweCByZ2JhKDUwLCAyMjAsIDg5LCAwLjMpO1xyXG4gICAgXHJcbiAgICBzdmcge1xyXG4gICAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVgoNHB4KTtcclxuICAgIH1cclxuICB9XHJcbiAgXHJcbiAgJjphY3RpdmUge1xyXG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC0xcHgpO1xyXG4gIH1cclxufVxyXG5cclxuLnN3YXBfY29udGFuZXIge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbn1cclxuXHJcbmgxIHtcclxuICAgIGZvbnQtc2l6ZTogNHJlbTtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgIG1hcmdpbi1ib3R0b206IDJyZW07XHJcbn1cclxuXHJcbmlucHV0LCAuYnV5X3NlbGwge1xyXG4gIG1hcmdpbi1ib3R0b206IDJyZW1cclxufVxyXG5cclxuLm9mZmVyX2J1dHRvbnMge1xyXG4gICAgd2lkdGg6IDEwMCU7XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAganVzdGlmeS1jb250ZW50OiBmbGV4LXN0YXJ0O1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMnJlbTtcclxufVxyXG5cclxuLm9mZmVyc19oZWFkZXIge1xyXG4gIGRpc3BsYXk6IGZsZXg7XHJcbn1cclxuXHJcbi5vZmZlcl9idXR0b24ge1xyXG4gICAgbWFyZ2luOiAxcmVtO1xyXG59XHJcblxyXG4ub2ZmZXJzX3RoZWFkX3RhYnMge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzE2NkU0NjtcclxuICAgIGZvbnQtc2l6ZTogMTZweDtcclxufVxyXG5cclxuLm9mZmVyc190aGVhZF90YWJzIHRoIHtcclxuICAgIHBhZGRpbmc6IDEuNXJlbTtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG50YWJsZS5vZmZlcnMtdGFibGUge1xyXG4gICAgaGVpZ2h0OiAxMDAlO1xyXG4gICAgb3ZlcmZsb3cteDogaGlkZGVuO1xyXG4gICAgb3ZlcmZsb3cteTogb3ZlcmxheTtcclxuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XHJcbiAgICB0Ym9keSB7XHJcbiAgICAgIGZvbnQtd2VpZ2h0OiA1MDA7XHJcbiAgICAgIHRyIHtcclxuICAgICAgICB0ZCB7XHJcbiAgICAgICAgICBtaW4td2lkdGg6IDEwcmVtO1xyXG4gICAgICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcclxuICAgICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxuICAgICAgICB9XHJcbiAgICAgICAgLnN0YXR1cyB7XHJcbiAgICAgICAgICBwb3NpdGlvbjogcmVsYXRpdmU7XHJcbiAgICAgICAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAgICAgICAgYWxpZ24taXRlbXM6IGNlbnRlcjtcclxuICAgICAgICAgIC5jb25maXJtYXRpb24ge1xyXG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuN3JlbTtcclxuICAgICAgICAgICAgd2lkdGg6IDEuN3JlbTtcclxuICAgICAgICAgICAgaGVpZ2h0OiAxLjdyZW07XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgICAubG9jay10cmFuc2FjdGlvbiB7XHJcbiAgICAgICAgICAgIGJhY2tncm91bmQ6IGNlbnRlciAvIGNvbnRhaW4gbm8tcmVwZWF0IHVybCguLi8uLi9hc3NldHMvaWNvbnMvbG9jay10cmFuc2FjdGlvbi5zdmcpO1xyXG4gICAgICAgICAgICBtYXJnaW4tbGVmdDogMC43cmVtO1xyXG4gICAgICAgICAgICB3aWR0aDogMS40cmVtO1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDEuNHJlbTtcclxuICAgICAgICAgIH1cclxuICAgICAgICAgIC51bmxvY2stdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICBiYWNrZ3JvdW5kOiBjZW50ZXIgLyBjb250YWluIG5vLXJlcGVhdCB1cmwoLi4vLi4vYXNzZXRzL2ljb25zL3VubG9jay10cmFuc2FjdGlvbi5zdmcpO1xyXG4gICAgICAgICAgICBtYXJnaW4tbGVmdDogMC43cmVtO1xyXG4gICAgICAgICAgICB3aWR0aDogMS40cmVtO1xyXG4gICAgICAgICAgICBoZWlnaHQ6IDEuNHJlbTtcclxuICAgICAgICAgIH1cclxuICAgICAgICAgIGltZy5zdGF0dXMtdHJhbnNhY3Rpb24ge1xyXG4gICAgICAgICAgICBtYXJnaW4tcmlnaHQ6IDAuN3JlbTtcclxuICAgICAgICAgICAgd2lkdGg6IDEuNXJlbTtcclxuICAgICAgICAgICAgaGVpZ2h0OiAxLjVyZW07XHJcbiAgICAgICAgICB9XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5yZW1vdGUtYWRkcmVzcyB7XHJcbiAgICAgICAgICBzcGFuIHtcclxuICAgICAgICAgICAgZGlzcGxheTogaW5saW5lLWZsZXg7XHJcbiAgICAgICAgICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgICB0ZXh0LW92ZXJmbG93OiBlbGxpcHNpcztcclxuICAgICAgICAgIH1cclxuICAgICAgICB9XHJcbiAgICAgICAgJjpub3QoLnRyYW5zYWN0aW9uLWRldGFpbHMpIHtcclxuICAgICAgICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgICAgICB9XHJcbiAgICAgICAgJi50cmFuc2FjdGlvbi1kZXRhaWxzIHtcclxuICAgICAgICAgIC13ZWJraXQtdHJhbnNpdGlvbjogMC41cyBoZWlnaHQgbGluZWFyLCAwcyBmb250LXNpemU7XHJcbiAgICAgICAgICB0cmFuc2l0aW9uOiAwLjVzIGhlaWdodCBsaW5lYXIsIDBzIGZvbnQtc2l6ZTtcclxuICAgICAgICAgIHRyYW5zaXRpb24tZGVsYXk6IDBzLCAwLjVzO1xyXG4gICAgICAgICAgaGVpZ2h0OiAwO1xyXG4gICAgICAgICAgJi5vcGVuIHtcclxuICAgICAgICAgICAgaGVpZ2h0OiA0NXJlbTtcclxuICAgICAgICAgIH1cclxuICAgICAgICAgIHRkIHtcclxuICAgICAgICAgICAgYm9yZGVyLXJhZGl1czogMXJlbTtcclxuICAgICAgICAgICAgcG9zaXRpb246IHJlbGF0aXZlO1xyXG4gICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuO1xyXG4gICAgICAgICAgICBsaW5lLWhlaWdodDogaW5oZXJpdDtcclxuICAgICAgICAgICAgcGFkZGluZy10b3A6IDA7XHJcbiAgICAgICAgICAgIHBhZGRpbmctYm90dG9tOiAwO1xyXG4gICAgICAgICAgfVxyXG4gICAgICAgIH1cclxuICAgICAgfVxyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLm9kZC1yb3cge1xyXG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzE2NmU0NmJhOyBcclxuICB9XHJcbiAgXHJcbiAgLmV2ZW4tcm93IHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICMyMDZmNWE4YzsgXHJcbiAgfVxyXG5cclxuICAuZmlsdGVyLWJ1dHRvbiB7XHJcbiAgICBtYXJnaW4tbGVmdDogMS41cmVtO1xyXG4gICAgYm9yZGVyOiAycHggc29saWQgYmxhY2s7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB3aGl0ZTtcclxuICAgIHBhZGRpbmc6IDFyZW07XHJcbiAgICBjb2xvcjogYmxhY2s7XHJcbiAgfVxyXG5cclxuICAuZmlsdGVyLWZvcm0ge1xyXG4gICAgbWFyZ2luOiAxLjVyZW07XHJcbiAgICBkaXNwbGF5OiBmbGV4O1xyXG4gICAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDtcclxuICAgIGhlaWdodDogNTAlO1xyXG4gIH1cclxuXHJcbiAgLmFsZXJ0LXdhcm5pbmcge1xyXG4gICAgdGV4dC1hbGlnbjogY2VudGVyO1xyXG4gICAgbWFyZ2luLXRvcDogMTVyZW07XHJcbiAgfVxyXG5cclxuICAuY3JlYXRlX29mZmVyLCAuY2FuY2VsX29mZmVyIHtcclxuICAgIGRpc3BsYXk6IGZsZXg7XHJcbiAgICBqdXN0aWZ5LWNvbnRlbnQ6IGNlbnRlcjtcclxuICB9XHJcblxyXG4gIC5jcmVhdGluZ19vZmZlciB7XHJcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XHJcbiAgICAuY29uZmlybWF0aW9uIC5yb3cge1xyXG4gICAgICBmb250LXNpemU6IDNyZW07XHJcbiAgICAgIG1hcmdpbi1ib3R0b206IDJyZW07XHJcbiAgICB9XHJcbiAgfVxyXG5cclxuICAuaW5wdXRfdGV4dCB7XHJcbiAgICBwYWRkaW5nOiAwLjVyZW07XHJcbiAgICBmb250LXNpemU6IDIuNXJlbTtcclxuICAgIHdpZHRoOiAxMDAlO1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMnJlbTtcclxuICAgIG1pbi1oZWlnaHQ6IDUwcHg7XHJcbiAgICBvdmVyZmxvdy15OiBoaWRkZW47XHJcbiAgfVxyXG5cclxuICAub2ZmZXJzX3BhZ2Uge1xyXG4gICAgXHJcbiAgfVxyXG5cclxuICAucGVlci1oZWxwIHtcclxuICAgIGN1cnNvcjogcG9pbnRlcjtcclxuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcclxuICAgIHRvcDogMjByZW07XHJcbiAgICByaWdodDogN3JlbTtcclxuICAgIGNvbG9yOiB3aGVhdDtcclxuICB9XHJcblxyXG4gIC5uby1vZmZlcnMge1xyXG4gICAgbWFyZ2luLXRvcDogNSU7XHJcbiAgfVxyXG4iXX0= */"
 
 /***/ }),
 
@@ -21169,18 +25030,24 @@ var WalletComponent = /** @class */ (function () {
                 link: '/swap',
                 disabled: false
             },
-            {
-                title: 'NiRoom',
-                icon: 'chat',
-                link: '/chat',
-                disabled: true
-            },
+            /*{
+              title: 'NiRoom',
+              icon: 'chat',
+              link: '/chat',
+              disabled: true
+            },*/
             {
                 title: 'NiRVeil',
                 icon: 'veil',
                 link: '/nirvail',
                 disabled: false
             },
+            /*{
+              title: 'NiRNeT',
+              icon: 'globe',
+              link: '/nirnet',
+              disabled: true
+            },*/
             {
                 title: 'WALLET.TABS.EXPLORER',
                 icon: 'exp',
