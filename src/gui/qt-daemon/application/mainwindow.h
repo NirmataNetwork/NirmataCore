@@ -130,6 +130,20 @@ public:
   QString request_alias_update(const QString& param);
   QString get_alias_coast(const QString& param);
   QString validate_address(const QString& param);
+  QString niroom_sign_challenge(const QString& param);
+  QString niroom_create_device(const QString& param);
+  QString niroom_rotate_device(const QString& param);
+  QString niroom_generate_prekeys(const QString& param);
+  QString niroom_create_session(const QString& param);
+  QString niroom_accept_session(const QString& param);
+  QString niroom_encrypt_message(const QString& param);
+  QString niroom_decrypt_message(const QString& param);
+  QString niroom_store_message(const QString& param);
+  QString niroom_set_message_status(const QString& param);
+  QString niroom_delete_conversation(const QString& param);
+  QString niroom_list_messages(const QString& param);
+  QString niroom_upsert_contact(const QString& param);
+  QString niroom_list_contacts(const QString& param);
   QString on_request_quit();
   QString resync_wallet(const QString& param);
   QString get_recent_transfers(const QString& param);
@@ -144,6 +158,7 @@ public:
   QString restore_wallet(const QString& param);
   QString is_pos_allowed();
   QString store_to_file(const QString& path, const QString& buff);
+  QString store_base64_to_file(const QString& param);
   QString load_from_file(const QString& path);
   QString is_file_exist(const QString& path);
   QString get_mining_estimate(const QString& obj);
@@ -169,6 +184,7 @@ public:
   
   bool    get_is_disabled_notifications();
   bool    set_is_disabled_notifications(const bool& param);
+  QString show_niroom_notification(const QString& param);
   QString export_wallet_history(const QString& param);
   QString get_log_file();
   QString check_available_sources(const QString& param);
@@ -182,6 +198,16 @@ public:
 
   //for test purposes onlys
   QString request_dummy();
+
+  // JS-callable counterpart to schedule_render_nudge() below: the native
+  // nudge was originally wired only to the five daemon signals that move
+  // wallet state, but plain in-app route navigation (e.g. the create-wallet
+  // wizard) never fires any of those, so a page can finish laying out with
+  // fully correct computed styles yet never actually get repainted on
+  // screen. The Angular side now calls this after every render it schedules
+  // (see UiRenderService/AppComponent.renderExternalState), not just after
+  // daemon-driven ones.
+  void request_render_nudge(const QString& param);
 
 signals:
   void quit_requested(const QString str);
@@ -218,7 +244,7 @@ private:
   virtual bool pos_block_found(const currency::block& block_found);
   virtual bool set_options(const view::gui_options& opt);
   //--------- QAbstractNativeEventFilter ---------------------------
-  virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+  bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
   //----------------------------------------------
 
 
@@ -232,8 +258,11 @@ private:
   
 
   void init_tray_icon(const std::string& htmlPath);
+  void update_tray_menu_geometry();
   bool set_html_path(const std::string& path);
   void load_file(const QString &fileName);
+  void schedule_render_nudge();
+  void perform_render_nudge();
   void store_pos(bool consider_showed = false);
   void store_window_pos();
   void restore_pos(bool consider_showed = false);
@@ -242,6 +271,7 @@ private:
   bool init_window();
   bool init_ipc_server();
   bool remove_ipc();
+  QString m_pending_deeplink;
   
 
   std::string get_wallet_log_prefix(size_t wallet_id) const { return m_backend.get_wallet_log_prefix(wallet_id); }
@@ -251,6 +281,15 @@ private:
   // UI
   QWebEngineView *m_view;
   QWebChannel* m_channel;
+  // See schedule_render_nudge() in mainwindow.cpp: confirmed live that
+  // --disable-features=CalculateNativeWinOcclusion alone does not make this
+  // embedded QWebEngineView repaint on its own for WebChannel/JS-driven DOM
+  // changes; only a real native geometry event (e.g. dragging the window
+  // edge) does. This timer coalesces a synthetic, imperceptible one-pixel
+  // resize-and-back into the same native trigger, scheduled right after the
+  // daemon signals that actually drive on-screen state (sync progress,
+  // wallet status, incoming/cancelled transfers).
+  QTimer* m_render_nudge_timer = nullptr;
 
   // DATA
   wallets_manager m_backend;

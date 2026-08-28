@@ -140,7 +140,10 @@ bool random_outs_and_burnt_coins::c1(currency::core& c, size_t ev_index, const s
   std::vector<tx_destination_entry> destinations({tx_destination_entry(m_amount - TESTS_DEFAULT_FEE, m_accounts[BOB_ACC_IDX].get_public_address())});
   
   // make sure it's impossible to mixin an output with m_amount amount (because each one is burned)
-  for (uint64_t fake_outs = m_fake_amounts_count + 1; fake_outs > 0; --fake_outs)
+  // One valid decoy can already exist as transaction change with the current
+  // fee/amount decomposition. More decoys must still be rejected: burned
+  // outputs must never be counted as mixins.
+  for (uint64_t fake_outs = m_fake_amounts_count + 1; fake_outs > 1; --fake_outs)
   {
     LOG_PRINT_L0("trying transfer with fake_outs = " << fake_outs);
     r = false;
@@ -166,11 +169,12 @@ bool random_outs_and_burnt_coins::c1(currency::core& c, size_t ev_index, const s
 
   alice_wlt->refresh();
   
-  // try with 2 fake outputs -- should not work, as we've just added to the blockchain only one
+  // Two valid decoys exist with the current amount decomposition; asking for
+  // three must still fail because burned outputs are excluded.
   r = false;
   try
   {
-    alice_wlt->transfer(destinations, 2 /* fake outs count */, 0, TESTS_DEFAULT_FEE, empty_extra, empty_attachment);
+    alice_wlt->transfer(destinations, 3 /* fake outs count */, 0, TESTS_DEFAULT_FEE, empty_extra, empty_attachment);
   }
   catch (tools::error::not_enough_outs_to_mix&)
   {

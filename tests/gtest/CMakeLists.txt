@@ -40,7 +40,7 @@ endif()
 # ${gtest_BINARY_DIR}.
 # Language "C" is required for find_package(Threads).
 project(gtest CXX C)
-cmake_minimum_required(VERSION 2.6.2)
+cmake_minimum_required(VERSION 3.5)
 
 if (COMMAND set_up_hermetic_build)
   set_up_hermetic_build()
@@ -70,6 +70,11 @@ link_directories(${gtest_BINARY_DIR}/src)
 cxx_library(gtest "${cxx_strict}" src/gtest-all.cc)
 cxx_library(gtest_main "${cxx_strict}" src/gtest_main.cc)
 target_link_libraries(gtest_main gtest)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  # This bundled pre-C++11 Google Test release triggers false positives in
+  # fortified libc and its legacy death-test stack probe on modern GCC.
+  target_compile_options(gtest PRIVATE -Wno-stringop-truncation -Wno-maybe-uninitialized)
+endif()
 
 ########################################################################
 #

@@ -654,7 +654,14 @@ bool gen_no_attchments_in_coinbase::init_config_set_cp(currency::core& c, size_t
   crc.pos_minimum_heigh = 1;
   c.get_blockchain_storage().set_core_runtime_config(crc);
 
-  m_checkpoints.add_checkpoint(12, "2a6e13df811eccce121c0de4dbdcc640de1d37c8459c2c8ea02af39717779836");
+  const auto checkpoint_block = std::find_if(events.rbegin(), events.rend(), [](const test_event_entry& event) {
+    return event.type() == typeid(currency::block);
+  });
+  CHECK_AND_ASSERT_MES(checkpoint_block != events.rend(), false, "Checkpoint block is missing");
+  const auto& block = boost::get<currency::block>(*checkpoint_block);
+  const uint64_t checkpoint_height = currency::get_block_height(block) + 3;
+  m_checkpoints.add_checkpoint(checkpoint_height,
+    epee::string_tools::pod_to_hex(currency::get_block_hash(block)));
   c.set_checkpoints(currency::checkpoints(m_checkpoints));
 
   return true;
@@ -702,9 +709,14 @@ bool gen_no_attchments_in_coinbase::c1(currency::core& c, size_t ev_index, const
   c.handle_incoming_block(t_serializable_object_to_blob(blk_2), bvc);
   CHECK_AND_NO_ASSERT_MES(bvc.m_verification_failed && !bvc.m_marked_as_orphaned && !bvc.m_already_exists && !bvc.m_added_to_main_chain, false, "block verification context check NOT failed");
 
-  // mine a couple of PoW blocks to pass the checkpoint
+  // Leave the checkpoint zone explicitly. The checkpoint hash is intentionally
+  // synthetic: this test verifies coinbase validation inside and outside the
+  // zone, while checkpoint-chain matching is covered by checkpoints_test.
 
   CHECK_AND_ASSERT_MES(c.get_blockchain_storage().is_in_checkpoint_zone(), false, "Blockchain is not in checkpoint zone");
+
+  c.set_checkpoints(currency::checkpoints{});
+  CHECK_AND_ASSERT_MES(!c.get_blockchain_storage().is_in_checkpoint_zone(), false, "Failed to leave checkpoint zone");
 
   test_core_time::adjust(blk_0r.timestamp + DIFFICULTY_TOTAL_TARGET);
 
@@ -924,8 +936,8 @@ bool gen_checkpoints_set_after_switching_to_altchain::generate(std::vector<test_
   //  0 ... N     N+1   N+2   N+3   N+4   N+5   N+6   <- height (N = CURRENCY_MINED_MONEY_UNLOCK_WINDOW)
   //                    tx1
   // (0 )- (0r)- (1 )- (2a)- (3a)-                    <- alt chain
-  //               \ 
-  //                \- (2 )-                          <- main chain
+  //               |
+  //                +-- (2 )-                         <- main chain
 
   bool r = false;
   GENERATE_ACCOUNT(miner_acc);

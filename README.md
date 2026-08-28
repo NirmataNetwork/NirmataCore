@@ -1,151 +1,183 @@
-## Cloning
+# Nirmata Core and desktop wallet
 
-Be sure to clone the repository properly:\
-`$ git clone --recursive https://github.com/NirmataNetwork/NirmataCore.git`
+Native Nirmata daemon, command-line wallet and Qt 6 desktop wallet. Clone with
+submodules:
 
-# Building
---------
+```bash
+git clone --recursive https://github.com/NirmataNetwork/NirmataCore.git
+```
 
+The release scripts expect the current `NirmataGUI` checkout next to this
+repository. You can override its generated bundle with `GUI_HTML_DIR`.
 
-### Dependencies
-| component / version | minimum <br>(not recommended but may work) | recommended | most recent of what we have ever tested |
-|--|--|--|--|
-| gcc (Linux) | 5.4.0 | 7.5.0 | 8.3.0 |
-| llvm/clang (Linux) | UNKNOWN | 7.0.1 | 8.0.0 |
-| [MSVC](https://visualstudio.microsoft.com/downloads/) (Windows) | 2015 (14.0 update 1) | 2017 (15.9.0) | 2022 (17.4.2) |
-| [XCode](https://developer.apple.com/downloads/) (macOS) | 9.2 | 12.3 | 12.3 |
-| [CMake](https://cmake.org/download/) | 2.8.6 | 3.15.5 | 3.26.3 |
-| [Boost](https://www.boost.org/users/download/) | 1.70 | 1.70 | 1.76 |
-| [OpenSSL](https://www.openssl.org/source/) [(win)](https://slproweb.com/products/Win32OpenSSL.html) | - | 1.1.1n | 1.1.1n | 
-| [Qt](https://download.qt.io/archive/qt/) (*only for GUI*) | 5.8.0 | 5.11.2 | 5.15.2 |
+## Supported build environments
 
-Note:\
-[*server version*] denotes steps required for building command-line tools (daemon, simplewallet, etc.).\
-[*GUI version*] denotes steps required for building Nirmata executable with GUI.
+| Platform | Tested toolchain | Desktop framework |
+|---|---|---|
+| Ubuntu 22.04 / 24.04 LTS | GCC, CMake 3.21+, OpenSSL 3, system Boost | Qt 6.8.3 |
+| Windows 10 / 11 x64 | Visual Studio 2022 | Qt 6.8.3 `msvc2022_64` |
+| macOS 12+ | Current Xcode/Clang, Homebrew | Qt 6.8.3 |
 
-<br />
+Qt modules required by the GUI are WebEngine, WebChannel, Positioning,
+SerialPort and ImageFormats. Qt 5, Python 2 and OpenSSL 1.1 build instructions
+are obsolete.
 
-### Linux
+## Build the Angular interface
 
-Recommended OS version: Ubuntu 20.04 LTS.
+From the adjacent GUI checkout:
 
-1. Prerequisites
+```bash
+cd ../NirmataGUI/html_source
+npm ci
+npm run test
+npm run build:desktop
+```
 
-   [*server version*]
-   
-       sudo apt-get install -y build-essential g++ python-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev
-          
-   [*GUI version*]
+Use Node.js 24 and npm 11. The generated interface is in `NirmataGUI/html`.
 
-       sudo apt-get install -y build-essential g++ python-dev autotools-dev libicu-dev libbz2-dev cmake git screen checkinstall zlib1g-dev mesa-common-dev libglu1-mesa-dev
+## Ubuntu 22.04 and 24.04
 
-2. Download and build Boost
+Install the native dependencies and Qt 6.8.3:
 
-       curl -OL https://boostorg.jfrog.io/artifactory/main/release/1.70.0/source/boost_1_70_0.tar.bz2
-       echo "430ae8354789de4fd19ee52f3b1f739e1fba576f0aded0897c3c2bc00fb38778  boost_1_70_0.tar.bz2" | shasum -c && tar -xjf boost_1_70_0.tar.bz2
-       cd boost_1_70_0
-       ./bootstrap.sh --with-libraries=system,filesystem,thread,date_time,chrono,regex,serialization,atomic,program_options,locale,timer,log
-       ./b2
+```bash
+utils/install_deps_ubuntu.sh --with-qt
+export QT_PREFIX_PATH="$HOME/.local/Qt/6.8.3/gcc_64"
+```
 
-3. Install Qt\
-(*GUI version only, skip this step if you're building server version*)
+If Qt is already installed, omit `--with-qt` and point `QT_PREFIX_PATH` to it.
+Then build and stage the complete application:
 
-    [*GUI version*]
+```bash
+GUI_HTML_DIR="$PWD/../NirmataGUI/html" utils/build_script_linux.sh
+```
 
-       curl -OL https://download.qt.io/new_archive/qt/5.11/5.11.2/qt-opensource-linux-x64-5.11.2.run
-       chmod +x qt-opensource-linux-x64-5.11.2.run
-       ./qt-opensource-linux-x64-5.11.2.run
-    Then follow the instructions in Wizard. Don't forget to tick the WebEngine module checkbox!
+Output:
 
+- `build/linux-release/src/Nirmata` — development executable;
+- `build/dist/Nirmata-linux-<arch>-<version>/` — staging directory;
+- `build/dist/Nirmata-linux-<arch>-<version>.tar.zst` — release archive.
 
-4. Install OpenSSL
+Launch it with the `run-nirmata.sh` inside that directory. The tar archive is
+a native Ubuntu package and expects compatible system libraries. Use the
+AppImage target when a self-contained desktop package is required.
+On a headless server use `QT_QPA_PLATFORM=offscreen` only for smoke tests;
+Qt WebEngine still needs its runtime libraries.
 
-   We recommend installing OpenSSL v1.1.1n locally unless you would like to use the same version system-wide. Adjust the local path `/home/user/openssl` in the commands below according to your needs.
+For an AppImage install `linuxdeploy` and `linuxdeploy-plugin-qt`, make them
+available in `PATH`, then run:
 
-       curl -OL https://www.openssl.org/source/openssl-1.1.1n.tar.gz
-       echo "40dceb51a4f6a5275bde0e6bf20ef4b91bfc32ed57c0552e2e8e15463372b17a  openssl-1.1.1n.tar.gz" | shasum -c && tar xaf openssl-1.1.1n.tar.gz 
-       cd openssl-1.1.1n/
-       ./config --prefix=/home/user/openssl --openssldir=/home/user/openssl shared zlib
-       make
-       make test
-       make install
+```bash
+utils/build_script_linux_appimage.sh
+```
 
+The AppImage bundles Qt WebEngine and the required desktop libraries. On a
+minimal build host where a runtime library is available only in a private
+sysroot, pass its full path through the colon-separated
+`NIRMATA_EXTRA_LIBRARIES` variable (for example `libasound.so.2`).
 
-5. Set environment variables properly\
-For instance, by adding the following lines to `~/.bashrc`
+## Windows 10 and 11
 
-    [*server version*]
+Set paths for the Qt installation and dependencies, then execute the release
+script. It discovers Visual Studio 2022 and initializes the x64 toolchain when
+it is not already running in a Developer Command Prompt:
 
-       export BOOST_ROOT=/home/user/boost_1_70_0  
-       export OPENSSL_ROOT_DIR=/home/user/openssl
+```bat
+set QT_PREFIX_PATH=C:\Qt\6.8.3\msvc2022_64
+set BOOST_ROOT=C:\local\boost_1_85_0
+set BOOST_LIBRARYDIR=%BOOST_ROOT%\lib64-msvc-14.3
+set OPENSSL_ROOT_DIR=C:\OpenSSL-Win64
+set GUI_HTML_DIR=F:\GitHub\NirmataGUI\html
+utils\build_script_windows.bat
+```
 
+The paths are examples; use the actual locations on the build machine. Copy
+`utils\configure_local_paths_msvs2022.example.cmd` to
+`utils\configure_local_paths_msvs2022.cmd`, adapt its values and call the local
+file before the build script. The local file is intentionally ignored by Git.
+`OPENSSL_ROOT_DIR` must be a clean OpenSSL 3 installation and must not mix 1.1
+and 3.x headers or libraries.
 
-    [*GUI version*]
+The deployable directory is `build\dist\Nirmata-Windows-x64`. The script runs
+`windeployqt`, includes the OpenSSL runtime DLLs, and then compiles
+`utils\NIRNATA_CELL.iss` with Inno Setup 6. The final installer is written to
+`build\dist\installer\Nirmata-CELL-2.0.0-Windows-x64.exe`. Set `APP_VERSION`,
+`INSTALLER_OUTPUT_DIR`, or `ISCC_EXE` before running the script to override the
+defaults. Copying only `Nirmata.exe` is not sufficient for WebEngine.
 
-       export BOOST_ROOT=/home/user/boost_1_70_0
-       export OPENSSL_ROOT_DIR=/home/user/openssl  
-       export QT_PREFIX_PATH=/home/user/Qt5.11.2/5.11.2/gcc_64
+The installer registers both `nir:` and the legacy `nirmata:` URL protocols.
+Payment links use the form
+`nir:action=send&address=<address>&amount=1.25&comment=Payment`; values must be
+URL-encoded. A link works both when the wallet is already running and when it
+starts the wallet.
 
+For the complete Windows test build and run:
 
+```bat
+cmake -S . -B build\windows-tests -G "Visual Studio 17 2022" -A x64 ^
+  -DBUILD_GUI=ON -DBUILD_TESTS=ON -DSTATIC=OFF ^
+  -DCMAKE_PREFIX_PATH="%QT_PREFIX_PATH%" -DBOOST_ROOT="%BOOST_ROOT%" ^
+  -DBOOST_LIBRARYDIR="%BOOST_LIBRARYDIR%" ^
+  -DOPENSSL_ROOT_DIR="%OPENSSL_ROOT_DIR%"
+cmake --build build\windows-tests --config Release --parallel --target ^
+  unit_tests coretests db_tests crypto-tests hash-tests hash-target-tests
+ctest --test-dir build\windows-tests -C Release --output-on-failure
+```
 
-6. Build the binaries
-   1. Build daemon and simplewallet:
+## macOS
 
-          cd NirmataCore/ && make -j1
-      or 
-   
-          cd NirmataCore && mkdir build && cd build
-          cmake ..
-          make -j1 daemon simplewallet
+Install Xcode command-line tools and dependencies:
 
-      **NOTICE**: If you are building on a machine with a relatively high amount of RAM or with the proper setting of virtual memory, then you can use `-j2` or `-j` option to speed up the building process. Use with caution.
-      
-      **NOTICE 2**: If you'd like to build binaries for the testnet, use `cmake -D TESTNET=TRUE ..` instead of `cmake ..` .
-   
-   1. Build GUI:
+```bash
+xcode-select --install
+brew install qt boost@1.85 openssl@3 cmake ninja rsync
+```
 
-          cd NirmataCore
-          utils/build_script_linux.sh
+Build the Angular bundle, then run:
 
+```bash
+export QT_PREFIX_PATH="$(brew --prefix qt)"
+GUI_HTML_DIR="$PWD/../NirmataGUI/html" utils/build_script_mac_osx.sh
+```
 
-7. Look for the binaries in `build` folder
+The script creates and verifies an ad-hoc signed application and writes
+`build/dist/nirmata-macos-<arch>.zip`. For distribution, set
+`CODESIGN_IDENTITY` to a Developer ID Application identity and notarize the
+result outside the build script. No keychain password is stored in the repo.
+After a successful compile, `PACKAGE_ONLY=true utils/build_script_mac_osx.sh`
+can repeat deployment, portability checks and signing without recompiling.
 
-<br />
+## Useful options
 
-### Windows
-Recommended OS version: Windows 7 x64.
-1. Install required prerequisites (Boost, Qt, CMake, OpenSSL).
-2. Edit paths in `utils/configure_local_paths.cmd`.
-3. Run one of `utils/configure_win64_msvsNNNN_gui.cmd` according to your MSVC version.
-4. Go to the build folder and open generated Nirmata.sln in MSVC.
-5. Build.
+All scripts accept environment overrides:
 
-In order to correctly deploy Qt GUI application, you also need to do the following:
+- `BUILD_DIR`, `DIST_DIR`, `GUI_HTML_DIR`, `JOBS`;
+- `QT_PREFIX_PATH`, `BOOST_ROOT`, `OPENSSL_ROOT_DIR`;
+- `testnet=true` for a testnet build;
+- `BUILD_GUI=OFF` with the Linux script for CLI-only binaries.
+- `-DNIRMATA_ENABLE_LTO=ON` to opt into release LTO after verifying that the
+  compiler and all Boost binaries use compatible definitions.
 
-6. Copy Nirmata.exe to a folder (e.g. `depoy`). 
-7. Run  `PATH_TO_QT\bin\windeployqt.exe deploy\Nirmata.exe`.
-8. Copy folder `\src\gui\qt-daemon\html` to `deploy\html`.
-9. Now you can run `Nirmata.exe`
+Direct CMake builds use the same options:
 
-<br />
+```bash
+cmake -S . -B build/local -DBUILD_GUI=ON -DSTATIC=OFF \
+  -DCMAKE_PREFIX_PATH="$QT_PREFIX_PATH"
+cmake --build build/local --parallel
+ctest --test-dir build/local --output-on-failure
+```
 
-### macOS
-Recommended OS version: macOS Big Sur 11.4 x64.
-1. Install required prerequisites.
-2. Set environment variables as stated in `utils/macosx_build_config.command`.
-3.  `mkdir build` <br> `cd build` <br> `cmake ..` <br> `make`
+For the complete Linux test build:
 
-To build GUI application:
+```bash
+cmake -S . -B build/linux-tests -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_GUI=OFF -DBUILD_TESTS=ON -DSTATIC=OFF
+cmake --build build/linux-tests --parallel --target \
+  unit_tests coretests db_tests crypto-tests hash-tests
+ctest --test-dir build/linux-tests --output-on-failure
+```
 
-1. Create self-signing certificate via Keychain Access:\
-    a. Run Keychain Access.\
-    b. Choose Keychain Access > Certificate Assistant > Create a Certificate.\
-    c. Use Nirmata (without quotes) as certificate name.\
-    d. Choose “Code Signing” in “Certificate Type” field.\
-    e. Press “Create”, then “Done”.\
-    f. Make sure the certificate was added to keychain "System". If not—move it to "System".\
-    g. Double click the certificate you've just added, enter the trust section and under "When using this certificate" select "Always trust".\
-    h. Unfold the certificate in Keychain Access window and double click the underlying private key "Nirmata". Select "Access Control" tab, then select "Allow all applications to access this item". Click "Save Changes".
-2. Revise building script, comment out unwanted steps and run it:  `utils/build_script_mac_osx.sh`
-3. The application should be here: `/buid_mac_osx_64/release/src`
+## Continuous integration
 
+`.github/workflows/build.yml` builds Ubuntu 24.04, Windows Server 2022 and
+macOS 14 artifacts. Keep Qt and Node versions aligned with `NirmataGUI` when
+updating the toolchain.

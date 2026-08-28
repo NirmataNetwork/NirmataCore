@@ -2278,6 +2278,7 @@ mdb_page_dirty(MDB_txn *txn, MDB_page *mp)
 	mid.mptr = mp;
 	rc = insert(txn->mt_u.dirty_list, &mid);
 	mdb_tassert(txn, rc == 0);
+	(void)rc;
 	txn->mt_dirty_room--;
 }
 

@@ -16,8 +16,13 @@
 #include "wallet/wallet2.h"
 #include "test_core_time.h"
 
+// Keep fee validation aligned with the live network, but retain the round
+// 0.01 synthetic coin unit expected by legacy generators.  Binding both to
+// Nirmata's intentionally non-decimal 0.001618 fee breaks deterministic
+// output decomposition and leaves multi-fee test transactions underfunded.
 #define TESTS_DEFAULT_FEE                   ((uint64_t)TX_DEFAULT_FEE)
-#define MK_TEST_COINS(amount)               (static_cast<uint64_t>(amount) * TX_DEFAULT_FEE)
+#define TESTS_COIN_UNIT                     ((uint64_t)(COIN / 100))
+#define MK_TEST_COINS(amount)               (static_cast<uint64_t>(amount) * TESTS_COIN_UNIT)
 #define TESTS_POS_CONFIG_MIN_COINSTAKE_AGE  4
 #define TESTS_POS_CONFIG_POS_MINIMUM_HEIGH  4
 

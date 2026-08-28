@@ -30,20 +30,13 @@
 
 
 
-// Check windows
-#if _WIN32 || _WIN64
-#if _WIN64
+// Determine the process address width rather than trying to enumerate CPU
+// architectures.  The old GCC branch treated AArch64 (including Apple
+// Silicon) as 32-bit because it only knew about x86_64 and ppc64.
+#if defined(_WIN64) || defined(__LP64__) || defined(_LP64) || \
+    defined(__aarch64__) || defined(__x86_64__) || defined(__ppc64__) || \
+    defined(__s390x__) || defined(__riscv_xlen) && __riscv_xlen == 64
 #define ENV64BIT
 #else
 #define ENV32BIT
-#endif
-#endif
-
-// Check GCC
-#if __GNUC__
-#if __x86_64__ || __ppc64__
-#define ENV64BIT
-#else
-#define ENV32BIT
-#endif
 #endif

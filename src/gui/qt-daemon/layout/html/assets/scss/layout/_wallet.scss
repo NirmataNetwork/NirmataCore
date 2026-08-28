@@ -1,11 +1,14 @@
+@use "../base/mixins";
+@use "../base/variables";
+
 app-wallet {
   color: #fff;
   .header {
     button {
-      color: $blueTextColor;
+      color: variables.$blueTextColor;
       &:disabled {
         .icon svg path {
-          fill: $accountOptionalTextColor;
+          fill: variables.$accountOptionalTextColor;
         }
       }
     }
@@ -17,26 +20,26 @@ app-wallet {
         color: #BEBEBE;
       }
       margin-left: 0.7rem;
-      color: $greenTextColor;
+      color: variables.$greenTextColor;
     }
   }
   .address {
-    color: $addressTextColor;
+    color: variables.$addressTextColor;
   }
   .tabs {
     .tabs-header {
       .tab {
-        color: $blueTextColor;
-        background-color: $tabInactiveBackgroundColor;
+        color: variables.$blueTextColor;
+        background-color: variables.$tabInactiveBackgroundColor;
         .indicator {
-          background-color: $accountIndicatorBackgroundColor;
-          color: $accountIndicatorTextColor;
+          background-color: variables.$accountIndicatorBackgroundColor;
+          color: variables.$accountIndicatorTextColor;
         }
         &.active {
-          background-color: $contentBackgroundColor;
+          background-color: variables.$contentBackgroundColor;
         }
         &:hover:not(.active):not(.disabled) {
-          background-color: $tabHoverBackgroundColor;
+          background-color: variables.$tabHoverBackgroundColor;
         }
       }
     }
@@ -50,19 +53,19 @@ app-wallet {
         button {
           color: #fff;
           &:hover {
-            color: $blueButtonHoverColor;
+            color: variables.$blueButtonHoverColor;
             svg path {
-              fill: $paginationButtonHoverColor;
+              fill: variables.$paginationButtonHoverColor;
             }
           }
           &.disabled {
-            color: $paginationButtonHoverColor;
+            color: variables.$paginationButtonHoverColor;
             svg path {
-              fill: $paginationButtonHoverColor;
+              fill: variables.$paginationButtonHoverColor;
             }
           }
           &.active {
-            color: $blueButtonBackgroundColor;
+            color: variables.$blueButtonBackgroundColor;
           }
         }
       }
@@ -72,13 +75,13 @@ app-wallet {
 app-send {
   .form-send {
     .curent-alias-adress {
-      color: $placeholderTextColor;
+      color: variables.$placeholderTextColor;
     }
     .send-select {
-      color: $mainTextColor;
+      color: variables.$mainTextColor;
     }
     .additional-details {
-      border: 0.2rem solid $resetButtonBackgroundColor;
+      border: 0.2rem solid variables.$resetButtonBackgroundColor;
     }
   }
 }
@@ -93,7 +96,7 @@ app-history {
         }
         .status.received {
           .status-transaction-text {
-            color: $greenTextColor;
+            color: variables.$greenTextColor;
           }
         }
       }
@@ -103,56 +106,20 @@ app-history {
 app-purchase {
   .form-purchase {
     .purchase-select {
-      color: $mainTextColor;
+      color: variables.$mainTextColor;
     }
     .purchase-states {
-      color: $blueTextColor;
+      color: variables.$blueTextColor;
     }
     .additional-details {
-      border: 0.2rem solid $resetButtonBackgroundColor;
+      border: 0.2rem solid variables.$resetButtonBackgroundColor;
     }
   }
   .progress-bar-container {
     .progress-bar {
-      background-color: $progressBarBackgroundColor;
+      background-color: variables.$progressBarBackgroundColor;
       .progress-bar-full {
-        background-color: $progressBarFullBackgroundColor;
-      }
-    }
-  }
-}
-app-typing-message {
-  .head {
-    .interlocutor {
-      color: $blueTextColor;
-    }
-  }
-  .messages-content {
-    .messages-list {
-      div {
-        &.date {
-          color: $optionalTextColor;
-        }
-        &.my {
-          background-color: $messageMyBackgroundColor;
-          &:before {
-            @include pseudo;
-            top: 0;
-            left: -1.1rem;
-            border: 1.2rem solid transparent;
-            border-top-color: $messageMyBackgroundColor;
-          }
-        }
-        &.buddy {
-          background-color: $messageBuddyBackgroundColor;
-          &:after {
-            @include pseudo;
-            right: -1.1rem;
-            top: 0;
-            border: 1.2rem solid transparent;
-            border-top-color: $messageBuddyBackgroundColor;
-          }
-        }
+        background-color: variables.$progressBarFullBackgroundColor;
       }
     }
   }
@@ -161,10 +128,10 @@ app-staking {
   .chart-header {
     .general {
       .label {
-        color: $mainTextColor;
+        color: variables.$mainTextColor;
       }
       .options {
-        color: $mainTextColor;
+        color: variables.$mainTextColor;
       }
     }
     .selected {
@@ -177,26 +144,26 @@ app-staking {
   }
   .chart-options {
     .title {
-      color: $mainTextColor;
+      color: variables.$mainTextColor;
     }
     .options {
       button {
-        color: $mainTextColor;
+        color: variables.$mainTextColor;
         &:not(:disabled) {
-          background: $blueButtonBackgroundColor;
-          box-shadow: $blueButtonBoxShadow;
+          background: variables.$blueButtonBackgroundColor;
+          box-shadow: variables.$blueButtonBoxShadow;
           &:hover {
-            background: $blueButtonHoverColor;
-            box-shadow: $blueButtonHoverBoxShadow;
+            background: variables.$blueButtonHoverColor;
+            box-shadow: variables.$blueButtonHoverBoxShadow;
           }
           &:focus,
           &.active {
-            background: $blueButtonFocusColor;
-            box-shadow: $blueButtonFocusBoxShadow;
+            background: variables.$blueButtonFocusColor;
+            box-shadow: variables.$blueButtonFocusBoxShadow;
           }
         }
         &:disabled {
-          background: $blueButtondisabledColor;
+          background: variables.$blueButtondisabledColor;
         }
       }
     }
@@ -222,7 +189,7 @@ app-staking {
       line-height: 2.4rem;
       margin-bottom: 1rem;
       &:hover {
-        background-color: $selectHoverColor;
+        background-color: variables.$selectHoverColor;
       }
     }
   }

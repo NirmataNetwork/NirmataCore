@@ -205,6 +205,14 @@ bool gen_and_play_intermitted_by_blockchain_saveload(const char* const genclass_
   // STAGE 2: replay all events chunk by chunk, storing and loading blockchain every time. Then remember state of the core.
   core_state_helper core_state_after;
   currency::core_runtime_config crc = currency::get_default_core_runtime_config(); // to store runtime config between chunks replaying
+  // The first chunk has no previous core instance to copy from, so seed the
+  // saved configuration with the same isolated baseline as do_replay_events().
+  crc.get_core_time = &test_core_time::get_time;
+  crc.tx_pool_min_fee = TESTS_DEFAULT_FEE;
+  crc.tx_default_fee = TESTS_DEFAULT_FEE;
+  crc.hard_fork_01_starts_after_height = CURRENCY_MAX_BLOCK_NUMBER;
+  crc.hard_fork_02_starts_after_height = CURRENCY_MAX_BLOCK_NUMBER;
+  crc.hard_fork_03_starts_after_height = CURRENCY_MAX_BLOCK_NUMBER;
   // Note: blockchain_storage doesn't dump alt blocks onto disk by design. It means on each do_replay_events() call blockchain_storage will load the blockchain from file where alt blocks are absent.
   // In the production environment it is not a issue, because node sync protocol will always start syncing from the most recent common block. Thus a node can't stuck on altchain.
   // Here, in this specific case we DO need to keep all the altchains, just because we have no aid from sync protocol in tests. Removing alt blocks between events chunks would break the tests.
@@ -585,8 +593,6 @@ inline bool do_replay_events(const std::vector<test_event_entry>& events, t_test
     return false;
   }
 
-  after_init_cb(c);
-
   bc_services::bc_offers_service offers_service(nullptr);
   c.get_blockchain_storage().get_attachment_services_manager().add_service(&offers_service);
 
@@ -594,7 +600,20 @@ inline bool do_replay_events(const std::vector<test_event_entry>& events, t_test
   crc.get_core_time = &test_core_time::get_time;
   crc.tx_pool_min_fee = TESTS_DEFAULT_FEE;
   crc.tx_default_fee = TESTS_DEFAULT_FEE;
+  // The test generator starts with every hard fork disabled and individual
+  // hard-fork scenarios enable them explicitly through their configure_core
+  // callbacks.  Keep the replay core on the same baseline; using the live
+  // mainnet fork heights here makes generated pre-fork blocks get validated
+  // with post-fork consensus rules.
+  crc.hard_fork_01_starts_after_height = CURRENCY_MAX_BLOCK_NUMBER;
+  crc.hard_fork_02_starts_after_height = CURRENCY_MAX_BLOCK_NUMBER;
+  crc.hard_fork_03_starts_after_height = CURRENCY_MAX_BLOCK_NUMBER;
   c.get_blockchain_storage().set_core_runtime_config(crc);
+
+  // Allow a replay stage (for example the save/load consistency test) to
+  // restore a scenario-specific runtime configuration after the baseline is
+  // established.
+  after_init_cb(c);
 
   if (validator.need_core_proxy())
   {

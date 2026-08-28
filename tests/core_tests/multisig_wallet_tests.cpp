@@ -1622,7 +1622,13 @@ multisig_and_checkpoints::multisig_and_checkpoints()
 bool multisig_and_checkpoints::set_cp(currency::core& c, size_t ev_index, const std::vector<test_event_entry>& events)
 {
   currency::checkpoints checkpoints;
-  checkpoints.add_checkpoint(15, "6f9194c144afd73077478e7f04e947c50160b5673558e6f696a4f662a3ca261e");
+  const auto checkpoint_block = std::find_if(events.begin(), events.end(), [](const test_event_entry& event) {
+    return event.type() == typeid(currency::block) &&
+      currency::get_block_height(boost::get<currency::block>(event)) == 15;
+  });
+  CHECK_AND_ASSERT_MES(checkpoint_block != events.end(), false, "Checkpoint block at height 15 is missing");
+  checkpoints.add_checkpoint(15, epee::string_tools::pod_to_hex(
+    currency::get_block_hash(boost::get<currency::block>(*checkpoint_block))));
   c.set_checkpoints(std::move(checkpoints));
 
   return true;

@@ -74,11 +74,13 @@ bool escrow_wallet_test::prepare_proposal_accepted_test(currency::core& c, const
   //  CHECK_AND_FORCE_ASSERT_MES(blocks_fetched == CURRENCY_MINED_MONEY_UNLOCK_WINDOW, false, "Incorrect numbers of blocks fetched");
   CHECK_AND_FORCE_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool");
 
-  miner_wlt->transfer(AMOUNT_TO_TRANSFER_ESCROW * 2 + TESTS_DEFAULT_FEE, accunt_buyer.get_public_address());
-  LOG_PRINT_MAGENTA("Transaction sent to buyer_account: " << AMOUNT_TO_TRANSFER_ESCROW * 2 + TESTS_DEFAULT_FEE, LOG_LEVEL_0);
+  const uint64_t buyer_start_amount = AMOUNT_TO_TRANSFER_ESCROW * 2 + TESTS_DEFAULT_FEE + MK_TEST_COINS(1);
+  const uint64_t seller_start_amount = AMOUNT_TO_TRANSFER_ESCROW + TESTS_DEFAULT_FEE * 2 + MK_TEST_COINS(1);
+  miner_wlt->transfer(buyer_start_amount, accunt_buyer.get_public_address());
+  LOG_PRINT_MAGENTA("Transaction sent to buyer_account: " << buyer_start_amount, LOG_LEVEL_0);
 
-  miner_wlt->transfer(AMOUNT_TO_TRANSFER_ESCROW + TESTS_DEFAULT_FEE * 2, accunt_seller.get_public_address());
-  LOG_PRINT_MAGENTA("Transaction sent to seller_account: " << AMOUNT_TO_TRANSFER_ESCROW + TESTS_DEFAULT_FEE * 2, LOG_LEVEL_0);
+  miner_wlt->transfer(seller_start_amount, accunt_seller.get_public_address());
+  LOG_PRINT_MAGENTA("Transaction sent to seller_account: " << seller_start_amount, LOG_LEVEL_0);
 
   bool r = mine_next_pow_blocks_in_playtime(m_mining_accunt.get_public_address(), c, CURRENCY_MINED_MONEY_UNLOCK_WINDOW);
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_blocks_in_playtime failed");
@@ -92,8 +94,8 @@ bool escrow_wallet_test::prepare_proposal_accepted_test(currency::core& c, const
   wallet_seller->callback(seller_backend_mock);
   wallet_buyer->refresh();
   wallet_seller->refresh();
-  CHECK_AND_FORCE_ASSERT_MES(wallet_buyer->balance() == AMOUNT_TO_TRANSFER_ESCROW * 2 + TESTS_DEFAULT_FEE, false, "Incorrect balance");
-  CHECK_AND_FORCE_ASSERT_MES(wallet_seller->balance() == AMOUNT_TO_TRANSFER_ESCROW + TESTS_DEFAULT_FEE * 2, false, "Incorrect balance");
+  CHECK_AND_FORCE_ASSERT_MES(wallet_buyer->balance() == buyer_start_amount, false, "Incorrect balance");
+  CHECK_AND_FORCE_ASSERT_MES(wallet_seller->balance() == seller_start_amount, false, "Incorrect balance");
 
 
   bc_services::contract_private_details cpd = AUTO_VAL_INIT(cpd);
@@ -229,7 +231,10 @@ bool escrow_wallet_test::exec_test_with_cancel_release_type(currency::core& c, c
   //----------------------
   wallet_miner = init_playtime_test_wallet(events, c, m_mining_accunt);
   wallet_miner->refresh();
-  wallet_miner->transfer(TESTS_DEFAULT_FEE, wallet_buyer->get_account().get_public_address());
+  // Fund cancellation with a regular synthetic output.  Sending exactly one
+  // non-decimal network fee can leave only decomposed fragments smaller than
+  // the next fee in repeated escrow scenarios.
+  wallet_miner->transfer(MK_TEST_COINS(1), wallet_buyer->get_account().get_public_address());
   r = mine_next_pow_blocks_in_playtime(m_mining_accunt.get_public_address(), c, 10);
   wallet_buyer->refresh();
   tools::wallet2::escrow_contracts_container contracts_buyer, contracts_seller;

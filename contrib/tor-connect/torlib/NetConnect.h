@@ -71,7 +71,7 @@ class NetConnect
 	tuple<u32, u8, u16> ParsingHeader();
 	void HexDumpResponse();
 public:	
-	NetConnect(net::io_service& io_service, ssl::context& context);
+	NetConnect(net::io_context& io_context, ssl::context& context);
 	void Connect(const string& host, int port, ConnectFunction connectFunc);
 	void SendVersion(ConnectFunction connectFunc);
 	void Close();
@@ -82,4 +82,3 @@ public:
 	void ShutDown();
 	~NetConnect();
 };
-

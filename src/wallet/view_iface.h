@@ -81,6 +81,330 @@ namespace view
     END_KV_SERIALIZE_MAP()
   };
 
+  struct niroom_sign_challenge_request
+  {
+    uint64_t wallet_id;
+    std::string payload;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(payload)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_sign_challenge_response
+  {
+    std::string address;
+    std::string proof;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(address)
+      KV_SERIALIZE(proof)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_one_time_prekey
+  {
+    std::string id;
+    std::string public_key;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(id)
+      KV_SERIALIZE(public_key)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_key_bundle
+  {
+    std::string device_id;
+    std::string identity_key;
+    std::string signed_prekey;
+    std::string signed_prekey_signature;
+    std::vector<niroom_one_time_prekey> one_time_prekeys;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(device_id)
+      KV_SERIALIZE(identity_key)
+      KV_SERIALIZE(signed_prekey)
+      KV_SERIALIZE(signed_prekey_signature)
+      KV_SERIALIZE(one_time_prekeys)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_create_device_request
+  {
+    uint64_t wallet_id;
+    uint64_t one_time_prekey_count;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(one_time_prekey_count)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_generate_prekeys_request
+  {
+    uint64_t wallet_id;
+    uint64_t count;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(count)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_create_session_request
+  {
+    uint64_t wallet_id;
+    std::string peer_address;
+    std::string peer_device_id;
+    std::string identity_key;
+    std::string signed_prekey;
+    std::string signed_prekey_signature;
+    std::string one_time_prekey_id;
+    std::string one_time_prekey;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(peer_address)
+      KV_SERIALIZE(peer_device_id)
+      KV_SERIALIZE(identity_key)
+      KV_SERIALIZE(signed_prekey)
+      KV_SERIALIZE(signed_prekey_signature)
+      KV_SERIALIZE(one_time_prekey_id)
+      KV_SERIALIZE(one_time_prekey)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_session_header
+  {
+    std::string session_id;
+    std::string sender_identity_key;
+    std::string sender_ephemeral_key;
+    std::string recipient_one_time_prekey_id;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(session_id)
+      KV_SERIALIZE(sender_identity_key)
+      KV_SERIALIZE(sender_ephemeral_key)
+      KV_SERIALIZE(recipient_one_time_prekey_id)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_accept_session_request
+  {
+    uint64_t wallet_id;
+    std::string peer_address;
+    std::string peer_device_id;
+    std::string expected_identity_key;
+    niroom_session_header header;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(peer_address)
+      KV_SERIALIZE(peer_device_id)
+      KV_SERIALIZE(expected_identity_key)
+      KV_SERIALIZE(header)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_encrypted_message
+  {
+    std::string session_id;
+    uint64_t counter;
+    std::string ratchet_public_key;
+    uint64_t previous_chain_length;
+    std::string nonce;
+    std::string ciphertext;
+    std::string tag;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(session_id)
+      KV_SERIALIZE(counter)
+      KV_SERIALIZE(ratchet_public_key)
+      KV_SERIALIZE(previous_chain_length)
+      KV_SERIALIZE(nonce)
+      KV_SERIALIZE(ciphertext)
+      KV_SERIALIZE(tag)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_encrypt_message_request
+  {
+    uint64_t wallet_id;
+    std::string session_id;
+    std::string plaintext;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(session_id)
+      KV_SERIALIZE(plaintext)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_decrypt_message_request
+  {
+    uint64_t wallet_id;
+    niroom_encrypted_message message;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(message)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_decrypt_message_response
+  {
+    std::string plaintext;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(plaintext)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_local_message
+  {
+    std::string message_id;
+    std::string conversation_id;
+    std::string peer_address;
+    std::string peer_device_id;
+    bool incoming;
+    std::string plaintext;
+    std::string wire_ciphertext;
+    uint64_t created_at;
+    std::string status;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(message_id)
+      KV_SERIALIZE(conversation_id)
+      KV_SERIALIZE(peer_address)
+      KV_SERIALIZE(peer_device_id)
+      KV_SERIALIZE(incoming)
+      KV_SERIALIZE(plaintext)
+      KV_SERIALIZE(wire_ciphertext)
+      KV_SERIALIZE(created_at)
+      KV_SERIALIZE(status)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_store_message_request
+  {
+    uint64_t wallet_id;
+    niroom_local_message message;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(message)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_set_message_status_request
+  {
+    uint64_t wallet_id;
+    std::string message_id;
+    std::string status;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(message_id)
+      KV_SERIALIZE(status)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_delete_conversation_request
+  {
+    uint64_t wallet_id;
+    std::string peer_address;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(peer_address)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_list_messages_request
+  {
+    uint64_t wallet_id;
+    std::string conversation_id;
+    std::string status;
+    uint64_t limit;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(conversation_id)
+      KV_SERIALIZE(status)
+      KV_SERIALIZE(limit)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_list_messages_response
+  {
+    std::vector<niroom_local_message> messages;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(messages)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_trusted_device
+  {
+    std::string device_id;
+    std::string identity_key;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(device_id)
+      KV_SERIALIZE(identity_key)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_contact
+  {
+    std::string address;
+    std::string display_name;
+    std::string avatar_seed;
+    bool blocked;
+    uint64_t updated_at;
+    std::vector<niroom_trusted_device> trusted_devices;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(address)
+      KV_SERIALIZE(display_name)
+      KV_SERIALIZE(avatar_seed)
+      KV_SERIALIZE(blocked)
+      KV_SERIALIZE(updated_at)
+      KV_SERIALIZE(trusted_devices)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_upsert_contact_request
+  {
+    uint64_t wallet_id;
+    niroom_contact contact;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+      KV_SERIALIZE(contact)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_list_contacts_request
+  {
+    uint64_t wallet_id;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(wallet_id)
+    END_KV_SERIALIZE_MAP()
+  };
+
+  struct niroom_list_contacts_response
+  {
+    std::vector<niroom_contact> contacts;
+
+    BEGIN_KV_SERIALIZE_MAP()
+      KV_SERIALIZE(contacts)
+    END_KV_SERIALIZE_MAP()
+  };
+
 
   enum ui_last_build_displaymode
   {
@@ -608,6 +932,7 @@ public:
     bool is_in_long_refresh;
     uint64_t progress;
     uint64_t current_daemon_height;
+    bool is_mining;
 
     BEGIN_KV_SERIALIZE_MAP()
       KV_SERIALIZE(is_daemon_connected)
@@ -615,6 +940,7 @@ public:
       KV_SERIALIZE(is_in_long_refresh)
       KV_SERIALIZE(progress)
       KV_SERIALIZE(current_daemon_height)
+      KV_SERIALIZE(is_mining)
     END_KV_SERIALIZE_MAP()
   };
 

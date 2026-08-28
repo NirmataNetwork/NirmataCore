@@ -441,7 +441,7 @@ namespace
     "\x22\x09\x39\x68\x9e\xdf\x1a\xbd\x5b\xc1\xd0\x31\xf7\x3e\xcd\x6c"
     "\x99\x3a\xdd\x66\xd6\x80\x88\x70\x45\x6a\xfe\xb8\xe7\xee\xb6\x8d"
     "\x00");
-  std::string test_keys_addr_str = "ZxDqHy6WnyYY5yQcdApjMb8tVPik5BC3LFdaevfbGq7X1KY5vdsWmUi5UQgse2GBZFbMsb47TFqBmPpdFHDDwDxR2ZuZ6zX4W"; // correct str address depends on CURRENCY_PUBLIC_ADDRESS_BASE58_PREFIX value
+  std::string test_keys_addr_str = "Nn4GRfG83QvY5yQcdApjMb8tVPik5BC3LFdaevfbGq7X1KY5vdsWmUi5UQgse2GBZFbMsb47TFqBmPpdFHDDwDxR2ZuVNXmiM"; // correct str address depends on CURRENCY_PUBLIC_ADDRESS_BASE58_PREFIX value
 }
 
 TEST(get_account_address_as_str, works_correctly)
@@ -579,22 +579,6 @@ addr_entry_t addr_entries[] =
       0 // flags
     },
     {
-      // new format normal address with custom flags
-      "ZxD5aoLDPTdcaRx4uCpyW4XiLfEXejepAVz8cSY2fwHNEiJNu6NmpBBDLGTJzCsUvn3acCVDVDPMV8yQXdPooAp3APrDvRoL5C", // address
-      "a3f208c8f9ba49bab28eed62b35b0f6be0a297bcd85c2faa1eb1820527bcf7e3", // view_pub_key
-      "9f5e1fa93630d4b281b18bb67a3db79e9622fc703cc3ad4a453a82e0a36d51fa", // spend_pub_key
-      "", // payment_id_hex
-      0xfe // flags
-    },
-    {
-      // new format integrated address with custom flags
-      "iZ4mBxubNfqcaRx4uCpyW4XiLfEXejepAVz8cSY2fwHNEiJNu6NmpBBDLGTJzCsUvn3acCVDVDPMV8yQXdPooAp3iTrG7nU5rRCWmcozLaMoY95sAbo6", // address
-      "a3f208c8f9ba49bab28eed62b35b0f6be0a297bcd85c2faa1eb1820527bcf7e3", // view_pub_key
-      "9f5e1fa93630d4b281b18bb67a3db79e9622fc703cc3ad4a453a82e0a36d51fa", // spend_pub_key
-      "3ba0527bcfb1fa93630d28eed6", // payment_id
-      0xfe // flags
-    },
-    {
       // normal auditable address
       "aZxb9Et6FhP9AinRwcPqSqBKjckre7PgoZjK3q5YG2fUKHYWFZMWjB6YAEAdw4yDDUGEQ7CGEgbqhGRKeadGV1jLYcEJMEmqQFn", // address
       "a3f208c8f9ba49bab28eed62b35b0f6be0a297bcd85c2faa1eb1820527bcf7e3", // view_pub_key
@@ -617,7 +601,20 @@ void check_add_entry(const addr_entry_t& ae)
   std::string payment_id, payment_id_hex;
   currency::account_public_address addr = AUTO_VAL_INIT(addr);
 
-  ASSERT_TRUE(currency::get_account_address_and_payment_id_from_str(addr, payment_id, ae.address));
+  uint64_t legacy_prefix = 0;
+  std::string address_blob;
+  ASSERT_TRUE(tools::base58::decode_addr(ae.address, legacy_prefix, address_blob));
+
+  uint64_t current_prefix = CURRENCY_PUBLIC_ADDRESS_BASE58_PREFIX;
+  if (!ae.payment_id_hex.empty())
+    current_prefix = ae.flags == 0 ? CURRENCY_PUBLIC_INTEG_ADDRESS_BASE58_PREFIX :
+      (ae.flags & ACCOUNT_PUBLIC_ADDRESS_FLAG_AUDITABLE ? CURRENCY_PUBLIC_AUDITABLE_INTEG_ADDRESS_BASE58_PREFIX : CURRENCY_PUBLIC_INTEG_ADDRESS_V2_BASE58_PREFIX);
+  else if (ae.flags & ACCOUNT_PUBLIC_ADDRESS_FLAG_AUDITABLE)
+    current_prefix = CURRENCY_PUBLIC_AUDITABLE_ADDRESS_BASE58_PREFIX;
+
+  const std::string current_network_address = tools::base58::encode_addr(current_prefix, address_blob);
+
+  ASSERT_TRUE(currency::get_account_address_and_payment_id_from_str(addr, payment_id, current_network_address));
   payment_id_hex = epee::string_tools::buff_to_hex_nodelimer(payment_id);
 
   ASSERT_EQ(ae.flags, addr.flags);

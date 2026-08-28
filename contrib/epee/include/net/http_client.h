@@ -941,7 +941,11 @@ using namespace std;
         m_pcb.reset(new idle_handler<callback_t>(cb));
         const http_response_info* p_hri = nullptr;
         bool r = invoke_request(url, *this, timeout, &p_hri, method, body, additional_params);
-        if (p_hri && !(p_hri->m_response_code >= 200 && p_hri->m_response_code < 300))
+        // A zero response code means that no HTTP response was received (for
+        // example, a transport timeout while reconnecting).  It is retryable;
+        // treating it as a permanent HTTP error aborts resumable downloads.
+        if (p_hri && p_hri->m_response_code != 0 &&
+            !(p_hri->m_response_code >= 200 && p_hri->m_response_code < 300))
         {
           LOG_PRINT_L0("HTTP request to " << url << " failed with code: " << p_hri->m_response_code);
           m_permanent_error = true;

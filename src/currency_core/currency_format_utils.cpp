@@ -638,7 +638,7 @@ namespace currency
         result.htlc_origin = generate_origin_for_htlc(htlc, self);
 
         //calculate hash
-        if (!htlc.flags&CURRENCY_TXOUT_HTLC_FLAGS_HASH_TYPE_MASK)
+        if (!(htlc.flags & CURRENCY_TXOUT_HTLC_FLAGS_HASH_TYPE_MASK))
         {
           htlc.htlc_hash = crypto::sha256_hash(result.htlc_origin.data(), result.htlc_origin.size());
         }
@@ -2940,7 +2940,7 @@ namespace currency
   {
     payment_id.clear();
     blobdata blob;
-    uint64_t prefix;
+    uint64_t prefix = 0;
     if (!tools::base58::decode_addr(str, prefix, blob))
     {
       LOG_PRINT_L1("Invalid address format: base58 decoding failed for \"" << str << "\"");

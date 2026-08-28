@@ -189,7 +189,7 @@ bool hard_fork_2_tx_payer_in_wallet::c1(currency::core& c, size_t ev_index, cons
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_block_in_playtime failed");
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(11)), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(11) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, "");
 
 
   //
@@ -253,7 +253,7 @@ bool hard_fork_2_tx_payer_in_wallet::c1(currency::core& c, size_t ev_index, cons
   CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(4)), false, "");
 
   bob_wlt->callback(l2);
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(13)), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(13) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, "");
 
   alice_wlt->callback(std::make_shared<tools::i_wallet2_callback>()); // clear callback
   bob_wlt->callback(std::make_shared<tools::i_wallet2_callback>()); // clear callback
@@ -282,7 +282,7 @@ bool hard_fork_2_tx_payer_in_wallet::c1(currency::core& c, size_t ev_index, cons
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
   CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(5)), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(11)), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(11) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE)), false, "");
 
   return true;
 }
@@ -702,7 +702,7 @@ bool hard_fork_2_auditable_addresses_basics::c1(currency::core& c, size_t ev_ind
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_block_in_playtime failed");
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(20), false, 3), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(20) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 3), false, "");
 
   // repeat the transfer after HF2 (using the same destinations)
   alice_wlt->transfer(destination, 0, 0, TESTS_DEFAULT_FEE, empty_extra, empty_attachment, tx);
@@ -922,7 +922,6 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   bob_wlt_awo->load(bob_wo_filename, "");
   bob_wlt_awo->set_core_runtime_config(c.get_blockchain_storage().get_core_runtime_config());
   bob_wlt_awo->set_core_proxy(m_core_proxy);
-  bob_wlt_awo->set_disable_tor_relay(true);
 
   CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(110), false, CURRENCY_MINED_MONEY_UNLOCK_WINDOW + 1 + WALLET_DEFAULT_TX_SPENDABLE_AGE), false, "");
   CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, 0, false, CURRENCY_MINED_MONEY_UNLOCK_WINDOW + 1 + WALLET_DEFAULT_TX_SPENDABLE_AGE), false, "");
@@ -943,7 +942,7 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_block_in_playtime failed");
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(99), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(99) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
   CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(10), false, 1), false, "");
   CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(10), false, 1), false, "");
 
@@ -990,9 +989,9 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_block_in_playtime failed");
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(99), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(0), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(0), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(99) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
 
   //
   // Alice -> Bob as non-auditable (mix_attr != 1)
@@ -1019,13 +1018,13 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   bob_wlt_awo->callback(l);
 
   callback_called = false;
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(91), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(91) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
   CHECK_AND_ASSERT_MES(callback_called, false, "callback was not called");
   callback_called = false;
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(0), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
   CHECK_AND_ASSERT_MES(!callback_called, false, "callback was called");
   callback_called = false;
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(0), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
   CHECK_AND_ASSERT_MES(!callback_called, false, "callback was called");
 
 
@@ -1038,9 +1037,9 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_block_in_playtime failed");
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(87), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(3), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(3), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(87) + 3 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(3) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(3) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false, 1), false, "");
 
   //
   // Make sure a wallet, restored from awo blob will has the very same balance
@@ -1055,9 +1054,8 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   bob_wlt_awo_restored->restore(bob_wo_restored_filename, "", bob_tracking_seed, true, "");
   bob_wlt_awo_restored->set_core_runtime_config(c.get_blockchain_storage().get_core_runtime_config());
   bob_wlt_awo_restored->set_core_proxy(m_core_proxy);
-  bob_wlt_awo_restored->set_disable_tor_relay(true);
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo_restored", bob_wlt_awo_restored, MK_TEST_COINS(3), false), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo_restored", bob_wlt_awo_restored, MK_TEST_COINS(3) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE, false), false, "");
 
 
   // miner few blocks to unlock coins
@@ -1075,9 +1073,9 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   CHECK_AND_ASSERT_MES(r, false, "mine_next_pow_block_in_playtime failed");
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(1), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(1), false, WALLET_DEFAULT_TX_SPENDABLE_AGE + 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo_restored", bob_wlt_awo_restored, MK_TEST_COINS(1), false, WALLET_DEFAULT_TX_SPENDABLE_AGE + 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(1) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(1) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, WALLET_DEFAULT_TX_SPENDABLE_AGE + 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo_restored", bob_wlt_awo_restored, MK_TEST_COINS(1) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, WALLET_DEFAULT_TX_SPENDABLE_AGE + 1), false, "");
 
 
   //
@@ -1094,10 +1092,9 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   bob_wlt_non_auditable->restore(bob_non_auditable_filename, "", bob_seed, false, "");
   bob_wlt_non_auditable->set_core_runtime_config(c.get_blockchain_storage().get_core_runtime_config());
   bob_wlt_non_auditable->set_core_proxy(m_core_proxy);
-  bob_wlt_non_auditable->set_disable_tor_relay(true);
 
   // the balance for non-auditable wallet should be greather by mix_attr!=1 output (7 test coins + 1 left from prev step)
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_non_auditable", bob_wlt_non_auditable, MK_TEST_COINS(8), false), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_non_auditable", bob_wlt_non_auditable, MK_TEST_COINS(8) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false), false, "");
 
   // spend mix_attr!=1 7-coins output
   bob_wlt_non_auditable->transfer(MK_TEST_COINS(6), m_accounts[ALICE_ACC_IDX].get_public_address());
@@ -1109,15 +1106,15 @@ bool hard_fork_2_awo_wallets_basic_test<before_hf_2>::c1(currency::core& c, size
   CHECK_AND_ASSERT_MES(c.get_pool_transactions_count() == 0, false, "Incorrect txs count in the pool: " << c.get_pool_transactions_count());
 
   // all auditable wallets should keep the same balance value
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(1), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(1), false, 1), false, "");
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo_restored", bob_wlt_awo_restored, MK_TEST_COINS(1), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob", bob_wlt, MK_TEST_COINS(1) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo", bob_wlt_awo, MK_TEST_COINS(1) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_awo_restored", bob_wlt_awo_restored, MK_TEST_COINS(1) + 2 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
   
   // non-auditable should also show the same balance as we've just spent mix_attr!=1 output
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_non_auditable", bob_wlt_non_auditable, MK_TEST_COINS(1), false, 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Bob_non_auditable", bob_wlt_non_auditable, MK_TEST_COINS(1) + 3 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1), false, "");
 
   // make sure Alice received coins
-  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(93), false, 1 + WALLET_DEFAULT_TX_SPENDABLE_AGE + 1), false, "");
+  CHECK_AND_ASSERT_MES(refresh_wallet_and_check_balance("", "Alice", alice_wlt, MK_TEST_COINS(93) + 3 * (TESTS_COIN_UNIT - TESTS_DEFAULT_FEE), false, 1 + WALLET_DEFAULT_TX_SPENDABLE_AGE + 1), false, "");
 
   return true;
 }

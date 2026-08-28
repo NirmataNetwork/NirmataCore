@@ -624,7 +624,7 @@ namespace currency
   {
     std::list<currency::extra_alias_entry> al_list;
     m_core.get_tx_pool().get_aliases_from_tx_pool(al_list);
-    for (const auto a : al_list)
+    for (const auto& a : al_list)
     {
       res.aliases_que.push_back(alias_info_to_rpc_alias_info(a));
     }
@@ -1118,6 +1118,50 @@ namespace currency
   }
   //------------------------------------------------------------------------------------------------------------------------------
 
+  bool core_rpc_server::on_verify_niroom_proof(
+    const COMMAND_RPC_VERIFY_NIROOM_PROOF::request& req,
+    COMMAND_RPC_VERIFY_NIROOM_PROOF::response& res,
+    epee::json_rpc::error& error_resp,
+    connection_context& cntx)
+  {
+    res.valid = false;
+    if (!check_core_ready())
+    {
+      error_resp.code = CORE_RPC_ERROR_CODE_CORE_BUSY;
+      error_resp.message = "Core is busy.";
+      return true;
+    }
+    if (req.payload.empty() || req.payload.size() > 16 * 1024)
+    {
+      res.status = API_RETURN_CODE_BAD_ARG;
+      return true;
+    }
+
+    account_public_address address = AUTO_VAL_INIT(address);
+    crypto::signature signature = AUTO_VAL_INIT(signature);
+    if (!currency::get_account_address_from_str(address, req.address) ||
+        !epee::string_tools::hex_to_pod(req.proof, signature))
+    {
+      res.status = API_RETURN_CODE_BAD_ARG;
+      return true;
+    }
+
+    std::string alias = req.alias;
+    if (!alias.empty() && alias[0] == '@')
+      alias.erase(0, 1);
+    if (!alias.empty() &&
+        m_core.get_blockchain_storage().get_alias_by_address(address) != alias)
+    {
+      res.status = API_RETURN_CODE_NOT_FOUND;
+      return true;
+    }
+
+    const crypto::hash payload_hash = crypto::cn_fast_hash(req.payload.data(), req.payload.size());
+    res.valid = crypto::check_signature(payload_hash, address.spend_public_key, signature);
+    res.status = res.valid ? API_RETURN_CODE_OK : API_RETURN_CODE_FALSE;
+    return true;
+  }
+  //------------------------------------------------------------------------------------------------------------------------------
   bool core_rpc_server::on_get_all_aliases(const COMMAND_RPC_GET_ALL_ALIASES::request& req, COMMAND_RPC_GET_ALL_ALIASES::response& res, epee::json_rpc::error& error_resp, connection_context& cntx)
   {
     if(!check_core_ready())

@@ -6,6 +6,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include <numeric>
+#include <algorithm>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/iostreams/stream.hpp>
@@ -19,6 +20,7 @@ using namespace epee;
 #include "string_coding.h"
 #define KEEP_WALLET_LOG_MACROS
 #include "wallet2.h"
+#include "niroom_crypto.h"
 #include "currency_core/currency_format_utils.h"
 #include "currency_core/bc_offers_service_basic.h"
 #include "rpc/core_rpc_server_commands_defs.h"
@@ -2634,6 +2636,622 @@ void wallet2::restore(const std::wstring& path, const std::string& pass, const s
 bool wallet2::check_connection()
 {
   return m_core_proxy->check_connection();
+}
+//----------------------------------------------------------------------------------------------------
+const wallet2::niroom_device& wallet2::niroom_create_device(size_t one_time_prekey_count)
+{
+  if (m_watch_only)
+    throw std::runtime_error("NiRoom devices are not supported by watch-only wallets");
+
+  if (m_niroom_device.device_id.empty())
+  {
+    m_niroom_device = niroom_device();
+    m_niroom_device.device_id = epee::string_tools::pod_to_hex(crypto::rand<crypto::hash>());
+    crypto::generate_keys(m_niroom_device.identity_public_key, m_niroom_device.identity_secret_key);
+    crypto::generate_keys(m_niroom_device.signed_prekey_public, m_niroom_device.signed_prekey_secret);
+    const crypto::hash signed_prekey_hash = crypto::cn_fast_hash(
+      &m_niroom_device.signed_prekey_public,
+      sizeof(m_niroom_device.signed_prekey_public));
+    crypto::generate_signature(
+      signed_prekey_hash,
+      m_niroom_device.identity_public_key,
+      m_niroom_device.identity_secret_key,
+      m_niroom_device.signed_prekey_signature);
+  }
+
+  while (m_niroom_device.one_time_prekeys.size() < one_time_prekey_count)
+  {
+    niroom_prekey prekey = AUTO_VAL_INIT(prekey);
+    prekey.id = epee::string_tools::pod_to_hex(crypto::rand<crypto::hash>());
+    crypto::generate_keys(prekey.public_key, prekey.secret_key);
+    m_niroom_device.one_time_prekeys.push_back(prekey);
+  }
+  store();
+  return m_niroom_device;
+}
+//----------------------------------------------------------------------------------------------------
+const wallet2::niroom_device& wallet2::niroom_rotate_device(size_t one_time_prekey_count)
+{
+  if (m_watch_only || m_niroom_device.device_id.empty() || one_time_prekey_count == 0)
+    throw std::runtime_error("NiRoom device is not initialized");
+  crypto::generate_keys(
+    m_niroom_device.signed_prekey_public,
+    m_niroom_device.signed_prekey_secret);
+  const crypto::hash signed_prekey_hash = crypto::cn_fast_hash(
+    &m_niroom_device.signed_prekey_public,
+    sizeof(m_niroom_device.signed_prekey_public));
+  crypto::generate_signature(
+    signed_prekey_hash,
+    m_niroom_device.identity_public_key,
+    m_niroom_device.identity_secret_key,
+    m_niroom_device.signed_prekey_signature);
+  m_niroom_device.one_time_prekeys.clear();
+  for (size_t i = 0; i < one_time_prekey_count; ++i)
+  {
+    niroom_prekey prekey = AUTO_VAL_INIT(prekey);
+    prekey.id = epee::string_tools::pod_to_hex(crypto::rand<crypto::hash>());
+    crypto::generate_keys(prekey.public_key, prekey.secret_key);
+    m_niroom_device.one_time_prekeys.push_back(prekey);
+  }
+  m_niroom_sessions.clear();
+  store();
+  return m_niroom_device;
+}
+//----------------------------------------------------------------------------------------------------
+std::vector<wallet2::niroom_prekey> wallet2::niroom_generate_prekeys(size_t count)
+{
+  if (m_watch_only || m_niroom_device.device_id.empty())
+    throw std::runtime_error("NiRoom device is not initialized");
+
+  std::vector<niroom_prekey> generated;
+  generated.reserve(count);
+  for (size_t i = 0; i < count; ++i)
+  {
+    niroom_prekey prekey = AUTO_VAL_INIT(prekey);
+    prekey.id = epee::string_tools::pod_to_hex(crypto::rand<crypto::hash>());
+    crypto::generate_keys(prekey.public_key, prekey.secret_key);
+    m_niroom_device.one_time_prekeys.push_back(prekey);
+    generated.push_back(prekey);
+  }
+  store();
+  return generated;
+}
+//----------------------------------------------------------------------------------------------------
+namespace
+{
+  void append_derivation(std::string& material, const crypto::key_derivation& derivation)
+  {
+    material.append(reinterpret_cast<const char*>(&derivation), sizeof(derivation));
+  }
+
+  crypto::key_derivation niroom_dh(
+    const crypto::public_key& public_key,
+    const crypto::secret_key& secret_key)
+  {
+    crypto::key_derivation result = AUTO_VAL_INIT(result);
+    if (!crypto::generate_key_derivation(public_key, secret_key, result))
+      throw std::runtime_error("invalid NiRoom public key");
+    return result;
+  }
+
+  crypto::hash niroom_root_key(const std::string& session_id, const std::string& dh_material)
+  {
+    const std::string input = "NIROOM-X3DH-V1\n" + session_id + "\n" + dh_material;
+    return crypto::cn_fast_hash(input.data(), input.size());
+  }
+
+  crypto::hash niroom_dh_ratchet_step(
+    crypto::hash& root_key,
+    const crypto::key_derivation& derivation)
+  {
+    std::string material("NIROOM-DH-RATCHET-V1\n");
+    material.append(reinterpret_cast<const char*>(&root_key), sizeof(root_key));
+    material.append(reinterpret_cast<const char*>(&derivation), sizeof(derivation));
+    const crypto::hash input_key = crypto::cn_fast_hash(material.data(), material.size());
+    root_key = niroom_crypto::derive_key(input_key, "root");
+    return niroom_crypto::derive_key(input_key, "chain");
+  }
+}
+//----------------------------------------------------------------------------------------------------
+wallet2::niroom_session_header wallet2::niroom_create_session(
+  const std::string& peer_address,
+  const std::string& peer_device_id,
+  const crypto::public_key& peer_identity_key,
+  const crypto::public_key& peer_signed_prekey,
+  const crypto::signature& peer_signed_prekey_signature,
+  const std::string& peer_one_time_prekey_id,
+  const crypto::public_key* peer_one_time_prekey)
+{
+  if (m_watch_only || m_niroom_device.device_id.empty())
+    throw std::runtime_error("NiRoom device is not initialized");
+
+  const crypto::hash signed_prekey_hash =
+    crypto::cn_fast_hash(&peer_signed_prekey, sizeof(peer_signed_prekey));
+  if (!crypto::check_signature(
+        signed_prekey_hash, peer_identity_key, peer_signed_prekey_signature))
+    throw std::runtime_error("invalid NiRoom signed prekey signature");
+  if ((peer_one_time_prekey == nullptr) != peer_one_time_prekey_id.empty())
+    throw std::runtime_error("incomplete NiRoom one-time prekey");
+  niroom_trust_device(peer_address, peer_device_id, peer_identity_key);
+
+  crypto::public_key ephemeral_public = AUTO_VAL_INIT(ephemeral_public);
+  crypto::secret_key ephemeral_secret = AUTO_VAL_INIT(ephemeral_secret);
+  crypto::generate_keys(ephemeral_public, ephemeral_secret);
+
+  niroom_session_header header = AUTO_VAL_INIT(header);
+  header.session_id = epee::string_tools::pod_to_hex(crypto::rand<crypto::hash>());
+  header.sender_identity_key = m_niroom_device.identity_public_key;
+  header.sender_ephemeral_key = ephemeral_public;
+  header.recipient_one_time_prekey_id = peer_one_time_prekey_id;
+
+  std::string material;
+  append_derivation(material, niroom_dh(peer_signed_prekey, m_niroom_device.identity_secret_key));
+  append_derivation(material, niroom_dh(peer_identity_key, ephemeral_secret));
+  append_derivation(material, niroom_dh(peer_signed_prekey, ephemeral_secret));
+  if (peer_one_time_prekey != nullptr)
+    append_derivation(material, niroom_dh(*peer_one_time_prekey, ephemeral_secret));
+
+  niroom_session session = AUTO_VAL_INIT(session);
+  session.session_id = header.session_id;
+  session.peer_address = peer_address;
+  session.peer_device_id = peer_device_id;
+  session.peer_identity_key = peer_identity_key;
+  session.root_key = niroom_root_key(header.session_id, material);
+  session.local_ratchet_public_key = ephemeral_public;
+  session.local_ratchet_secret_key = ephemeral_secret;
+  session.remote_ratchet_public_key = peer_signed_prekey;
+  session.remote_ratchet_history.push_back(session.remote_ratchet_public_key);
+  session.send_chain_key = niroom_dh_ratchet_step(
+    session.root_key,
+    niroom_dh(session.remote_ratchet_public_key, session.local_ratchet_secret_key));
+  session.send_chain_initialized = true;
+  m_niroom_sessions.push_back(session);
+  store();
+  return header;
+}
+//----------------------------------------------------------------------------------------------------
+void wallet2::niroom_accept_session(
+  const std::string& peer_address,
+  const std::string& peer_device_id,
+  const niroom_session_header& header)
+{
+  if (m_watch_only || m_niroom_device.device_id.empty() || header.session_id.empty())
+    throw std::runtime_error("invalid NiRoom session header");
+  niroom_trust_device(peer_address, peer_device_id, header.sender_identity_key);
+  for (const auto& existing : m_niroom_sessions)
+    if (existing.session_id == header.session_id)
+      throw std::runtime_error("NiRoom session already exists");
+
+  std::string material;
+  append_derivation(material, niroom_dh(
+    header.sender_identity_key, m_niroom_device.signed_prekey_secret));
+  append_derivation(material, niroom_dh(
+    header.sender_ephemeral_key, m_niroom_device.identity_secret_key));
+  append_derivation(material, niroom_dh(
+    header.sender_ephemeral_key, m_niroom_device.signed_prekey_secret));
+
+  niroom_prekey* selected_prekey = nullptr;
+  if (!header.recipient_one_time_prekey_id.empty())
+  {
+    for (auto& prekey : m_niroom_device.one_time_prekeys)
+    {
+      if (prekey.id == header.recipient_one_time_prekey_id)
+      {
+        selected_prekey = &prekey;
+        break;
+      }
+    }
+    if (selected_prekey == nullptr || selected_prekey->used)
+      throw std::runtime_error("NiRoom one-time prekey is missing or already used");
+    append_derivation(material, niroom_dh(
+      header.sender_ephemeral_key, selected_prekey->secret_key));
+  }
+
+  niroom_session session = AUTO_VAL_INIT(session);
+  session.session_id = header.session_id;
+  session.peer_address = peer_address;
+  session.peer_device_id = peer_device_id;
+  session.peer_identity_key = header.sender_identity_key;
+  session.root_key = niroom_root_key(header.session_id, material);
+  session.local_ratchet_public_key = m_niroom_device.signed_prekey_public;
+  session.local_ratchet_secret_key = m_niroom_device.signed_prekey_secret;
+  session.remote_ratchet_public_key = header.sender_ephemeral_key;
+  session.remote_ratchet_history.push_back(session.remote_ratchet_public_key);
+  session.receive_chain_key = niroom_dh_ratchet_step(
+    session.root_key,
+    niroom_dh(session.remote_ratchet_public_key, session.local_ratchet_secret_key));
+  session.receive_chain_initialized = true;
+  if (selected_prekey != nullptr)
+    selected_prekey->used = true;
+  m_niroom_sessions.push_back(session);
+  store();
+}
+//----------------------------------------------------------------------------------------------------
+wallet2::niroom_encrypted_message wallet2::niroom_encrypt_message(
+  const std::string& session_id,
+  const std::string& plaintext)
+{
+  niroom_session* session = nullptr;
+  for (auto& candidate : m_niroom_sessions)
+    if (candidate.session_id == session_id)
+      session = &candidate;
+  if (session == nullptr)
+    throw std::runtime_error("NiRoom session not found");
+
+  if (!session->send_chain_initialized)
+  {
+    session->previous_send_chain_length = session->send_counter;
+    crypto::generate_keys(
+      session->local_ratchet_public_key,
+      session->local_ratchet_secret_key);
+    session->send_chain_key = niroom_dh_ratchet_step(
+      session->root_key,
+      niroom_dh(
+        session->remote_ratchet_public_key,
+        session->local_ratchet_secret_key));
+    session->send_counter = 0;
+    session->send_chain_initialized = true;
+  }
+
+  const uint64_t counter = session->send_counter;
+  const std::string ratchet_public_key =
+    epee::string_tools::pod_to_hex(session->local_ratchet_public_key);
+  const std::string associated_data =
+    "NIROOM-MSG-V2\n" + session_id + "\n" +
+    ratchet_public_key + "\n" +
+    std::to_string(session->previous_send_chain_length) + "\n" +
+    std::to_string(counter);
+  const crypto::hash message_key =
+    niroom_crypto::derive_key(session->send_chain_key, "message");
+  const niroom_crypto::encrypted_message encrypted =
+    niroom_crypto::encrypt(message_key, plaintext, associated_data);
+
+  niroom_encrypted_message result = AUTO_VAL_INIT(result);
+  result.session_id = session_id;
+  result.counter = counter;
+  result.ratchet_public_key = ratchet_public_key;
+  result.previous_chain_length = session->previous_send_chain_length;
+  result.nonce = string_encoding::base64_encode(
+    encrypted.nonce.data(), encrypted.nonce.size());
+  result.ciphertext = string_encoding::base64_encode(encrypted.ciphertext);
+  result.tag = string_encoding::base64_encode(
+    encrypted.tag.data(), encrypted.tag.size());
+  session->send_chain_key =
+    niroom_crypto::derive_key(session->send_chain_key, "chain");
+  ++session->send_counter;
+  store();
+  return result;
+}
+//----------------------------------------------------------------------------------------------------
+std::string wallet2::niroom_decrypt_message(const niroom_encrypted_message& message)
+{
+  static const uint64_t max_skipped_message_keys = 1000;
+  static const size_t max_remote_ratchet_keys = 1000;
+  niroom_session* session = nullptr;
+  for (auto& candidate : m_niroom_sessions)
+    if (candidate.session_id == message.session_id)
+      session = &candidate;
+  if (session == nullptr)
+    throw std::runtime_error("NiRoom session not found");
+
+  crypto::public_key message_ratchet_public_key = AUTO_VAL_INIT(message_ratchet_public_key);
+  if (!epee::string_tools::hex_to_pod(
+        message.ratchet_public_key, message_ratchet_public_key))
+    throw std::runtime_error("invalid NiRoom ratchet public key");
+  const std::string nonce = string_encoding::base64_decode(message.nonce);
+  const std::string tag = string_encoding::base64_decode(message.tag);
+  niroom_crypto::encrypted_message encrypted;
+  if (nonce.size() != encrypted.nonce.size() || tag.size() != encrypted.tag.size())
+    throw std::runtime_error("invalid NiRoom nonce or authentication tag");
+  std::copy(nonce.begin(), nonce.end(), encrypted.nonce.begin());
+  std::copy(tag.begin(), tag.end(), encrypted.tag.begin());
+  encrypted.ciphertext = string_encoding::base64_decode(message.ciphertext);
+
+  const std::string associated_data =
+    "NIROOM-MSG-V2\n" + message.session_id + "\n" +
+    message.ratchet_public_key + "\n" +
+    std::to_string(message.previous_chain_length) + "\n" +
+    std::to_string(message.counter);
+
+  niroom_session staged = *session;
+  auto skipped = std::find_if(
+    staged.skipped_message_keys.begin(),
+    staged.skipped_message_keys.end(),
+    [&](const niroom_session::skipped_message_key& value)
+    {
+      return value.ratchet_public_key == message_ratchet_public_key &&
+        value.counter == message.counter;
+    });
+  const bool uses_skipped_key = skipped != staged.skipped_message_keys.end();
+  const size_t skipped_key_index = uses_skipped_key ?
+    static_cast<size_t>(std::distance(staged.skipped_message_keys.begin(), skipped)) : 0;
+
+  crypto::hash message_key = {};
+  if (uses_skipped_key)
+  {
+    message_key = skipped->key;
+  }
+  else
+  {
+    auto skip_to = [&](uint64_t target)
+    {
+      if (target < staged.receive_counter)
+        throw std::runtime_error("NiRoom message key is unavailable or already used");
+      const uint64_t gap = target - staged.receive_counter;
+      if (gap > max_skipped_message_keys ||
+          staged.skipped_message_keys.size() + gap > max_skipped_message_keys)
+        throw std::runtime_error("NiRoom message counter gap is too large");
+      while (staged.receive_counter < target)
+      {
+        niroom_session::skipped_message_key value = AUTO_VAL_INIT(value);
+        value.ratchet_public_key = staged.remote_ratchet_public_key;
+        value.counter = staged.receive_counter;
+        value.key = niroom_crypto::derive_key(staged.receive_chain_key, "message");
+        staged.skipped_message_keys.push_back(value);
+        staged.receive_chain_key =
+          niroom_crypto::derive_key(staged.receive_chain_key, "chain");
+        ++staged.receive_counter;
+      }
+    };
+
+    if (message_ratchet_public_key != staged.remote_ratchet_public_key)
+    {
+      if (std::find(
+            staged.remote_ratchet_history.begin(),
+            staged.remote_ratchet_history.end(),
+            message_ratchet_public_key) != staged.remote_ratchet_history.end())
+        throw std::runtime_error("old NiRoom ratchet key cannot be reused");
+      if (staged.remote_ratchet_history.size() >= max_remote_ratchet_keys)
+        throw std::runtime_error("NiRoom session requires renewal");
+      if (staged.receive_chain_initialized)
+        skip_to(message.previous_chain_length);
+
+      staged.previous_send_chain_length = staged.send_counter;
+      staged.send_counter = 0;
+      staged.receive_counter = 0;
+      staged.remote_ratchet_public_key = message_ratchet_public_key;
+      staged.remote_ratchet_history.push_back(message_ratchet_public_key);
+      staged.receive_chain_key = niroom_dh_ratchet_step(
+        staged.root_key,
+        niroom_dh(
+          staged.remote_ratchet_public_key,
+          staged.local_ratchet_secret_key));
+      staged.receive_chain_initialized = true;
+
+      crypto::generate_keys(
+        staged.local_ratchet_public_key,
+        staged.local_ratchet_secret_key);
+      staged.send_chain_key = niroom_dh_ratchet_step(
+        staged.root_key,
+        niroom_dh(
+          staged.remote_ratchet_public_key,
+          staged.local_ratchet_secret_key));
+      staged.send_chain_initialized = true;
+    }
+    else if (!staged.receive_chain_initialized)
+    {
+      throw std::runtime_error("NiRoom receive chain is not initialized");
+    }
+
+    skip_to(message.counter);
+    message_key = niroom_crypto::derive_key(staged.receive_chain_key, "message");
+    staged.receive_chain_key =
+      niroom_crypto::derive_key(staged.receive_chain_key, "chain");
+    ++staged.receive_counter;
+  }
+
+  std::string plaintext;
+  if (!niroom_crypto::decrypt(message_key, encrypted, associated_data, plaintext))
+    throw std::runtime_error("NiRoom message authentication failed");
+
+  if (uses_skipped_key)
+    staged.skipped_message_keys.erase(
+      staged.skipped_message_keys.begin() + skipped_key_index);
+  *session = staged;
+  store();
+  return plaintext;
+}
+//----------------------------------------------------------------------------------------------------
+namespace
+{
+  bool is_niroom_message_status(const std::string& status)
+  {
+    return status == "pending" || status == "stored" ||
+      status == "delivered" || status == "read" || status == "failed";
+  }
+
+  unsigned int niroom_status_rank(const std::string& status)
+  {
+    if (status == "pending" || status == "failed")
+      return 0;
+    if (status == "stored")
+      return 1;
+    if (status == "delivered")
+      return 2;
+    if (status == "read")
+      return 3;
+    return 0;
+  }
+}
+//----------------------------------------------------------------------------------------------------
+void wallet2::niroom_store_message(const niroom_message_record& message)
+{
+  if (message.message_id.empty() || message.conversation_id.empty() ||
+      message.peer_address.empty() || message.created_at == 0 ||
+      !is_niroom_message_status(message.status) ||
+      (!message.incoming && message.wire_ciphertext.empty()))
+    throw std::runtime_error("invalid NiRoom local message");
+
+  auto existing = std::find_if(
+    m_niroom_messages.begin(),
+    m_niroom_messages.end(),
+    [&](const niroom_message_record& value)
+    {
+      return value.message_id == message.message_id;
+    });
+  if (existing != m_niroom_messages.end())
+  {
+    if (existing->conversation_id != message.conversation_id ||
+        existing->peer_address != message.peer_address ||
+        existing->incoming != message.incoming ||
+        existing->plaintext != message.plaintext ||
+        existing->wire_ciphertext != message.wire_ciphertext)
+      throw std::runtime_error("conflicting NiRoom message id");
+    return;
+  }
+  m_niroom_messages.push_back(message);
+  store();
+}
+//----------------------------------------------------------------------------------------------------
+void wallet2::niroom_set_message_status(
+  const std::string& message_id,
+  const std::string& status)
+{
+  if (!is_niroom_message_status(status))
+    throw std::runtime_error("invalid NiRoom message status");
+  auto existing = std::find_if(
+    m_niroom_messages.begin(),
+    m_niroom_messages.end(),
+    [&](const niroom_message_record& value)
+    {
+      return value.message_id == message_id;
+    });
+  if (existing == m_niroom_messages.end())
+    throw std::runtime_error("NiRoom message not found");
+  if (existing->status == status)
+    return;
+  if ((status == "pending" && existing->status != "failed") ||
+      (status == "failed" && existing->status != "pending") ||
+      (status != "failed" && status != "pending" &&
+       niroom_status_rank(status) < niroom_status_rank(existing->status)))
+    throw std::runtime_error("NiRoom message status cannot move backwards");
+  existing->status = status;
+  store();
+}
+//----------------------------------------------------------------------------------------------------
+size_t wallet2::niroom_delete_conversation(const std::string& peer_address)
+{
+  if (peer_address.empty())
+    throw std::runtime_error("invalid NiRoom peer address");
+  const size_t previous_size = m_niroom_messages.size();
+  m_niroom_messages.erase(
+    std::remove_if(
+      m_niroom_messages.begin(),
+      m_niroom_messages.end(),
+      [&](const niroom_message_record& message)
+      {
+        return message.peer_address == peer_address;
+      }),
+    m_niroom_messages.end());
+  const size_t removed = previous_size - m_niroom_messages.size();
+  if (removed != 0)
+    store();
+  return removed;
+}
+//----------------------------------------------------------------------------------------------------
+std::vector<wallet2::niroom_message_record> wallet2::niroom_list_messages(
+  const std::string& conversation_id,
+  const std::string& status,
+  size_t limit) const
+{
+  if (!status.empty() && !is_niroom_message_status(status))
+    throw std::runtime_error("invalid NiRoom message status");
+  std::vector<niroom_message_record> result;
+  for (const auto& message : m_niroom_messages)
+  {
+    if ((!conversation_id.empty() && message.conversation_id != conversation_id) ||
+        (!status.empty() && message.status != status))
+      continue;
+    result.push_back(message);
+  }
+  std::sort(
+    result.begin(),
+    result.end(),
+    [](const niroom_message_record& left, const niroom_message_record& right)
+    {
+      if (left.created_at != right.created_at)
+        return left.created_at < right.created_at;
+      return left.message_id < right.message_id;
+    });
+  if (result.size() > limit)
+    result.erase(result.begin(), result.end() - limit);
+  return result;
+}
+//----------------------------------------------------------------------------------------------------
+void wallet2::niroom_upsert_contact(const niroom_contact_record& contact)
+{
+  if (contact.address.empty() || contact.address.size() > 256 ||
+      contact.display_name.size() > 128 || contact.avatar_seed.size() > 128)
+    throw std::runtime_error("invalid NiRoom contact");
+  auto existing = std::find_if(
+    m_niroom_contacts.begin(),
+    m_niroom_contacts.end(),
+    [&](const niroom_contact_record& value)
+    {
+      return value.address == contact.address;
+    });
+  if (existing == m_niroom_contacts.end())
+  {
+    m_niroom_contacts.push_back(contact);
+  }
+  else
+  {
+    existing->display_name = contact.display_name;
+    existing->avatar_seed = contact.avatar_seed;
+    existing->blocked = contact.blocked;
+    existing->updated_at = contact.updated_at;
+  }
+  store();
+}
+//----------------------------------------------------------------------------------------------------
+std::vector<wallet2::niroom_contact_record> wallet2::niroom_list_contacts() const
+{
+  std::vector<niroom_contact_record> result = m_niroom_contacts;
+  std::sort(
+    result.begin(),
+    result.end(),
+    [](const niroom_contact_record& left, const niroom_contact_record& right)
+    {
+      if (left.display_name != right.display_name)
+        return left.display_name < right.display_name;
+      return left.address < right.address;
+    });
+  return result;
+}
+//----------------------------------------------------------------------------------------------------
+void wallet2::niroom_trust_device(
+  const std::string& peer_address,
+  const std::string& peer_device_id,
+  const crypto::public_key& identity_key)
+{
+  if (peer_address.empty() || peer_device_id.empty())
+    throw std::runtime_error("invalid NiRoom peer identity");
+  auto contact = std::find_if(
+    m_niroom_contacts.begin(),
+    m_niroom_contacts.end(),
+    [&](const niroom_contact_record& value)
+    {
+      return value.address == peer_address;
+    });
+  if (contact == m_niroom_contacts.end())
+  {
+    niroom_contact_record created = AUTO_VAL_INIT(created);
+    created.address = peer_address;
+    created.avatar_seed = peer_address;
+    m_niroom_contacts.push_back(created);
+    contact = m_niroom_contacts.end() - 1;
+  }
+  if (contact->blocked)
+    throw std::runtime_error("NiRoom contact is blocked");
+  const std::string key = epee::string_tools::pod_to_hex(identity_key);
+  const auto trusted = contact->trusted_identity_keys.find(peer_device_id);
+  if (trusted != contact->trusted_identity_keys.end() && trusted->second != key)
+    throw std::runtime_error("NiRoom device identity key changed");
+  if (trusted == contact->trusted_identity_keys.end())
+  {
+    contact->trusted_identity_keys[peer_device_id] = key;
+    store();
+  }
 }
 //----------------------------------------------------------------------------------------------------
 void wallet2::load(const std::wstring& wallet_, const std::string& password)

@@ -432,6 +432,10 @@ namespace plain_wallet
         ok_response.result.recovered = true;
       }
       inst_ptr->gwm.run_wallet(ok_response.result.wallet_id);
+      
+      // Добавляем исходную seed-фразу в ответ
+      ok_response.result.seed = seed;
+      
       return epee::serialization::store_t_to_json(ok_response);
     }
     error_response err_result = AUTO_VAL_INIT(err_result);
@@ -453,6 +457,39 @@ namespace plain_wallet
         ok_response.result.recovered = true;
       }
       inst_ptr->gwm.run_wallet(ok_response.result.wallet_id);
+      
+      // Получаем seed-фразу напрямую через invoke, т.к. gwm.get_wallet_restore_info возвращает строку состояния
+      LOG_PRINT_L0("Trying to get seed phrase for wallet ID: " << ok_response.result.wallet_id);
+      
+      std::string invoke_params = R"({
+        "jsonrpc": "2.0",
+        "id": 0,
+        "method": "get_wallet_restore_info",
+        "params": {
+          "seed_password": ""
+        }
+      })";
+      
+      std::string result = inst_ptr->gwm.invoke(ok_response.result.wallet_id, invoke_params);
+      LOG_PRINT_L0("get_wallet_restore_info result: " << result);
+      
+      // Извлекаем seed из результата
+      std::string seed_phrase = "";
+      size_t seed_pos = result.find("\"seed\":\"");
+      if (seed_pos != std::string::npos) {
+        seed_pos += 8; // длина "seed":"
+        size_t seed_end = result.find("\"", seed_pos);
+        if (seed_end != std::string::npos) {
+          seed_phrase = result.substr(seed_pos, seed_end - seed_pos);
+          LOG_PRINT_L0("Extracted seed phrase: " << seed_phrase);
+          ok_response.result.seed = seed_phrase;
+        }
+      }
+      
+      if (ok_response.result.seed.empty()) {
+        LOG_ERROR("Failed to extract seed phrase from invoke result");
+      }
+      
       return epee::serialization::store_t_to_json(ok_response);
     }
     error_response err_result = AUTO_VAL_INIT(err_result);
@@ -484,10 +521,188 @@ namespace plain_wallet
     return inst_ptr->gwm.get_wallet_status(h);
   }
 
+  std::string start_pos_mining(hwallet h)
+  {
+    GET_INSTANCE_PTR(inst_ptr);
+
+    std::string r = "{\"response\": \"";
+    r += inst_ptr->gwm.start_pos_mining(h);
+    r += "\"}";
+    return r;
+  }
+
+  std::string stop_pos_mining(hwallet h)
+  {
+    GET_INSTANCE_PTR(inst_ptr);
+
+    std::string r = "{\"response\": \"";
+    r += inst_ptr->gwm.stop_pos_mining(h);
+    r += "\"}";
+    return r;
+  }
+
+  std::string resync_wallet(hwallet h)
+  {
+    GET_INSTANCE_PTR(inst_ptr);
+
+    std::string r = "{\"response\": \"";
+    r += inst_ptr->gwm.resync_wallet(h);
+    r += "\"}";
+    return r;
+  }
+
   std::string invoke(hwallet h, const std::string& params)
   {
     GET_INSTANCE_PTR(inst_ptr);
     return inst_ptr->gwm.invoke(h, params);
+  }
+
+  namespace
+  {
+    template<typename Request, typename Response, typename Callback>
+    std::string niroom_request(const std::string& params, Callback&& callback)
+    {
+      Request request = AUTO_VAL_INIT(request);
+      view::api_response_t<Response> response = AUTO_VAL_INIT(response);
+      if (!epee::serialization::load_t_from_json(request, params))
+      {
+        response.error_code = API_RETURN_CODE_BAD_ARG;
+        return epee::serialization::store_t_to_json(response);
+      }
+      response.error_code = callback(request, response.response_data);
+      return epee::serialization::store_t_to_json(response);
+    }
+
+    template<typename Request, typename Callback>
+    std::string niroom_void_request(const std::string& params, Callback&& callback)
+    {
+      Request request = AUTO_VAL_INIT(request);
+      view::api_response response = AUTO_VAL_INIT(response);
+      if (!epee::serialization::load_t_from_json(request, params))
+        response.error_code = API_RETURN_CODE_BAD_ARG;
+      else
+        response.error_code = callback(request);
+      return epee::serialization::store_t_to_json(response);
+    }
+  }
+
+  std::string niroom_call(const std::string& method, const std::string& params)
+  {
+    GET_INSTANCE_PTR(inst_ptr);
+    try
+    {
+      if (method == "sign_challenge")
+        return niroom_request<view::niroom_sign_challenge_request, view::niroom_sign_challenge_response>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_sign_challenge(request.wallet_id, request.payload, response); });
+      if (method == "create_device" || method == "rotate_device")
+        return niroom_request<view::niroom_create_device_request, view::niroom_key_bundle>(params,
+          [&](const auto& request, auto& response) {
+            return method == "create_device"
+              ? inst_ptr->gwm.niroom_create_device(request.wallet_id, request.one_time_prekey_count, response)
+              : inst_ptr->gwm.niroom_rotate_device(request.wallet_id, request.one_time_prekey_count, response);
+          });
+      if (method == "generate_prekeys")
+        return niroom_request<view::niroom_generate_prekeys_request, view::niroom_key_bundle>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_generate_prekeys(request.wallet_id, request.count, response); });
+      if (method == "create_session")
+        return niroom_request<view::niroom_create_session_request, view::niroom_session_header>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_create_session(request, response); });
+      if (method == "accept_session")
+        return niroom_void_request<view::niroom_accept_session_request>(params,
+          [&](const auto& request) { return inst_ptr->gwm.niroom_accept_session(request); });
+      if (method == "encrypt_message")
+        return niroom_request<view::niroom_encrypt_message_request, view::niroom_encrypted_message>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_encrypt_message(request, response); });
+      if (method == "decrypt_message")
+        return niroom_request<view::niroom_decrypt_message_request, view::niroom_decrypt_message_response>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_decrypt_message(request, response); });
+      if (method == "store_message")
+        return niroom_void_request<view::niroom_store_message_request>(params,
+          [&](const auto& request) { return inst_ptr->gwm.niroom_store_message(request); });
+      if (method == "set_message_status")
+        return niroom_void_request<view::niroom_set_message_status_request>(params,
+          [&](const auto& request) { return inst_ptr->gwm.niroom_set_message_status(request); });
+      if (method == "delete_conversation")
+        return niroom_void_request<view::niroom_delete_conversation_request>(params,
+          [&](const auto& request) { return inst_ptr->gwm.niroom_delete_conversation(request); });
+      if (method == "list_messages")
+        return niroom_request<view::niroom_list_messages_request, view::niroom_list_messages_response>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_list_messages(request, response); });
+      if (method == "upsert_contact")
+        return niroom_void_request<view::niroom_upsert_contact_request>(params,
+          [&](const auto& request) { return inst_ptr->gwm.niroom_upsert_contact(request); });
+      if (method == "list_contacts")
+        return niroom_request<view::niroom_list_contacts_request, view::niroom_list_contacts_response>(params,
+          [&](const auto& request, auto& response) { return inst_ptr->gwm.niroom_list_contacts(request, response); });
+
+      view::api_response response = AUTO_VAL_INIT(response);
+      response.error_code = API_RETURN_CODE_BAD_ARG;
+      return epee::serialization::store_t_to_json(response);
+    }
+    catch (const std::exception& e)
+    {
+      LOG_ERROR("NiRoom mobile API error: " << e.what());
+      view::api_response response = AUTO_VAL_INIT(response);
+      response.error_code = API_RETURN_CODE_INTERNAL_ERROR;
+      return epee::serialization::store_t_to_json(response);
+    }
+  }
+
+  std::string alias_call(const std::string& method, const std::string& params)
+  {
+    GET_INSTANCE_PTR(inst_ptr);
+    try
+    {
+      if (method == "get_by_name" || method == "get_by_address")
+      {
+        currency::struct_with_one_t_type<std::string> request = AUTO_VAL_INIT(request);
+        view::api_response_t<currency::alias_rpc_details> response = AUTO_VAL_INIT(response);
+        if (!epee::serialization::load_t_from_json(request, params))
+          response.error_code = API_RETURN_CODE_BAD_ARG;
+        else if (method == "get_by_name")
+          response.error_code = inst_ptr->gwm.get_alias_info_by_name(request.v, response.response_data);
+        else
+          response.error_code = inst_ptr->gwm.get_alias_info_by_address(request.v, response.response_data);
+        return epee::serialization::store_t_to_json(response);
+      }
+      if (method == "get_cost")
+      {
+        currency::struct_with_one_t_type<std::string> request = AUTO_VAL_INIT(request);
+        view::get_alias_coast_response response = AUTO_VAL_INIT(response);
+        response.error_code = epee::serialization::load_t_from_json(request, params)
+          ? inst_ptr->gwm.get_alias_coast(request.v, response.coast)
+          : API_RETURN_CODE_BAD_ARG;
+        return epee::serialization::store_t_to_json(response);
+      }
+      if (method == "register" || method == "update")
+      {
+        view::request_alias_param request = AUTO_VAL_INIT(request);
+        view::api_response_t<view::transfer_response> response = AUTO_VAL_INIT(response);
+        if (!epee::serialization::load_t_from_json(request, params))
+        {
+          response.error_code = API_RETURN_CODE_BAD_ARG;
+          return epee::serialization::store_t_to_json(response);
+        }
+        currency::transaction transaction = AUTO_VAL_INIT(transaction);
+        response.error_code = method == "register"
+          ? inst_ptr->gwm.request_alias_registration(request.alias, request.wallet_id, request.fee, transaction, request.reward)
+          : inst_ptr->gwm.request_alias_update(request.alias, request.wallet_id, request.fee, transaction, request.reward);
+        if (response.error_code == API_RETURN_CODE_OK)
+        {
+          response.response_data.success = true;
+          response.response_data.tx_hash = string_tools::pod_to_hex(currency::get_transaction_hash(transaction));
+          response.response_data.tx_blob_size = currency::get_object_blobsize(transaction);
+        }
+        return epee::serialization::store_t_to_json(response);
+      }
+    }
+    catch (const std::exception& e)
+    {
+      LOG_ERROR("Alias mobile API error: " << e.what());
+    }
+    view::api_response response = AUTO_VAL_INIT(response);
+    response.error_code = API_RETURN_CODE_BAD_ARG;
+    return epee::serialization::store_t_to_json(response);
   }
 
   void put_result(uint64_t job_id, const std::string& res)

@@ -1,236 +1,103 @@
-call configure_local_paths.cmd
+@echo off
+setlocal EnableExtensions EnableDelayedExpansion
 
-;; MSVC version-specific paths
-SET QT_MSVC_PATH=%QT_PREFIX_PATH%\msvc2017_64
-
-SET ACHIVE_NAME_PREFIX=nirmata-win-x64-
-SET MY_PATH=%~dp0
-SET SOURCES_PATH=%MY_PATH:~0,-7%
-
-IF NOT [%build_prefix%] == [] (
-  SET ACHIVE_NAME_PREFIX=%ACHIVE_NAME_PREFIX%%build_prefix%-
+set "SOURCE_DIR=%~dp0.."
+if not defined VCINSTALLDIR (
+  set "VSWHERE=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"
+  if not exist "!VSWHERE!" (
+    echo Visual Studio Installer vswhere.exe was not found.
+    exit /b 1
+  )
+  for /f "usebackq tokens=*" %%I in (`"!VSWHERE!" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath`) do set "VSINSTALL_DIR=%%I"
+  if not defined VSINSTALL_DIR (
+    echo Visual Studio 2022 with the x64 C++ toolchain was not found.
+    exit /b 1
+  )
+  for %%I in ("!VSWHERE!") do set "PATH=%%~dpI;!PATH!"
+  call "!VSINSTALL_DIR!\Common7\Tools\VsDevCmd.bat" -arch=x64 -host_arch=x64 >nul || exit /b 1
+)
+if not defined BUILD_DIR set "BUILD_DIR=%SOURCE_DIR%\build\windows-release"
+if not defined DIST_DIR set "DIST_DIR=%SOURCE_DIR%\build\dist\Nirmata-Windows-x64"
+if not defined INSTALLER_OUTPUT_DIR set "INSTALLER_OUTPUT_DIR=%SOURCE_DIR%\build\dist\installer"
+if not defined APP_VERSION set "APP_VERSION=2.0.0"
+if not defined QT_PREFIX_PATH (
+  echo QT_PREFIX_PATH must point to Qt 6.8.3 msvc2022_64.
+  exit /b 1
+)
+if not defined BOOST_ROOT (
+  echo BOOST_ROOT must point to a Boost installation.
+  exit /b 1
+)
+if not defined OPENSSL_ROOT_DIR (
+  echo OPENSSL_ROOT_DIR must point to an OpenSSL 3 installation.
+  exit /b 1
 )
 
-IF "%testnet%" == "true" (
-  SET TESTNET_DEF=-D TESTNET=TRUE
-  SET TESTNET_LABEL=testnet 
-  SET ACHIVE_NAME_PREFIX=%ACHIVE_NAME_PREFIX%testnet-
+set "BOOST_LIBRARYDIR_ARG="
+if defined BOOST_LIBRARYDIR set "BOOST_LIBRARYDIR_ARG=-DBOOST_LIBRARYDIR=%BOOST_LIBRARYDIR%"
+
+set "TESTNET_ARG="
+if /I "%testnet%"=="true" set "TESTNET_ARG=-DTESTNET=ON"
+
+cmake -S "%SOURCE_DIR%" -B "%BUILD_DIR%" -G "Visual Studio 17 2022" -A x64 ^
+  -DBUILD_GUI=ON -DSTATIC=OFF -DCMAKE_PREFIX_PATH="%QT_PREFIX_PATH%" ^
+  -DBOOST_ROOT="%BOOST_ROOT%" %BOOST_LIBRARYDIR_ARG% ^
+  -DOPENSSL_ROOT_DIR="%OPENSSL_ROOT_DIR%" ^
+  %TESTNET_ARG% || exit /b 1
+cmake --build "%BUILD_DIR%" --config Release --parallel --target Nirmata daemon simplewallet connectivity_tool || exit /b 1
+
+if exist "%DIST_DIR%" rmdir /s /q "%DIST_DIR%"
+mkdir "%DIST_DIR%" || exit /b 1
+copy /y "%BUILD_DIR%\src\Release\Nirmata.exe" "%DIST_DIR%\" >nul
+copy /y "%BUILD_DIR%\src\Release\nirmatad.exe" "%DIST_DIR%\" >nul
+copy /y "%BUILD_DIR%\src\Release\simplewallet.exe" "%DIST_DIR%\" >nul
+copy /y "%BUILD_DIR%\src\Release\connectivity_tool.exe" "%DIST_DIR%\" >nul
+
+set "VC_REDIST_SOURCE="
+if defined VCToolsRedistDir if exist "%VCToolsRedistDir%vc_redist.x64.exe" set "VC_REDIST_SOURCE=%VCToolsRedistDir%vc_redist.x64.exe"
+if not defined VC_REDIST_SOURCE if defined VSINSTALL_DIR (
+  for /f "delims=" %%I in ('dir /b /s "!VSINSTALL_DIR!\VC\Redist\MSVC\vc_redist.x64.exe" 2^>nul') do set "VC_REDIST_SOURCE=%%I"
+)
+if not defined VC_REDIST_SOURCE (
+  echo Visual C++ x64 redistributable was not found in the Visual Studio installation.
+  exit /b 1
+)
+copy /y "%VC_REDIST_SOURCE%" "%DIST_DIR%\vc_redist.x64.exe" >nul || exit /b 1
+
+if defined WindowsSdkDir if exist "%WindowsSdkDir%Redist\D3D\x64" set "PATH=%WindowsSdkDir%Redist\D3D\x64;%PATH%"
+"%QT_PREFIX_PATH%\bin\windeployqt.exe" --release --no-translations --compiler-runtime "%DIST_DIR%\Nirmata.exe" || exit /b 1
+for %%F in ("%OPENSSL_ROOT_DIR%\bin\libcrypto*.dll" "%OPENSSL_ROOT_DIR%\bin\libssl*.dll") do (
+  if exist "%%~fF" copy /y "%%~fF" "%DIST_DIR%\" >nul
+)
+dir /b "%DIST_DIR%\libcrypto-3*.dll" >nul 2>&1
+if errorlevel 1 (
+  echo OpenSSL 3 runtime DLL was not found under %OPENSSL_ROOT_DIR%\bin.
+  exit /b 1
 )
 
-SET PARAM=%~1
-IF "%PARAM%"=="--skip-build" ( GOTO skip_build )
+if defined GUI_HTML_DIR goto copy_gui
+if exist "%SOURCE_DIR%\..\NirmataGUI\html\index.html" set "GUI_HTML_DIR=%SOURCE_DIR%\..\NirmataGUI\html"
+if not defined GUI_HTML_DIR set "GUI_HTML_DIR=%SOURCE_DIR%\src\gui\qt-daemon\layout\html"
+:copy_gui
+robocopy "%GUI_HTML_DIR%" "%DIST_DIR%\html" /MIR /XD node_modules .angular >nul
+if errorlevel 8 exit /b 1
 
-@echo on
-
-set BOOST_ROOT=%LOCAL_BOOST_PATH%
-set BOOST_LIBRARYDIR=%LOCAL_BOOST_LIB_PATH%
-
-
-
-@echo "---------------- PREPARING BINARIES ---------------------------"
-@echo "---------------------------------------------------------------"
-
-
-
-cd %SOURCES_PATH%
-
-@echo "---------------- BUILDING APPLICATIONS ------------------------"
-@echo "---------------------------------------------------------------"
-
-
-
-
-rmdir build /s /q
-mkdir build
-cd build
-
-cmake %TESTNET_DEF% -D OPENSSL_ROOT_DIR="%OPENSSL_ROOT_DIR%" -D CMAKE_PREFIX_PATH="%QT_MSVC_PATH%" -D BUILD_GUI=TRUE -D STATIC=FALSE -DBOOST_ROOT="%BOOST_ROOT%" -DBOOST_LIBRARYDIR="%BOOST_ROOT%\lib64-msvc-14.1" -G "Visual Studio 16 2019" -A x64 -T host=x64 ..
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
+if not exist "%DIST_DIR%\vc_redist.x64.exe" (
+  echo vc_redist.x64.exe is required in %DIST_DIR% for the installer.
+  exit /b 1
 )
 
-call "D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat" x86_amd64
-echo on
-cd %SOURCES_PATH%\build
-
-msbuild version.vcxproj /p:SubSystem="CONSOLE,5.02"  /p:Configuration=Release /t:Build
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
+if not defined ISCC_EXE if exist "%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe" set "ISCC_EXE=%ProgramFiles(x86)%\Inno Setup 6\ISCC.exe"
+if not defined ISCC_EXE if exist "%ProgramFiles%\Inno Setup 6\ISCC.exe" set "ISCC_EXE=%ProgramFiles%\Inno Setup 6\ISCC.exe"
+if not defined ISCC_EXE for /f "delims=" %%I in ('where ISCC.exe 2^>nul') do if not defined ISCC_EXE set "ISCC_EXE=%%I"
+if not defined ISCC_EXE (
+  echo Inno Setup 6 compiler ISCC.exe was not found. Install Inno Setup 6 or set ISCC_EXE.
+  exit /b 1
 )
 
-msbuild src/daemon.vcxproj /p:SubSystem="CONSOLE,5.02"  /p:Configuration=Release /t:Build
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
+if not exist "%INSTALLER_OUTPUT_DIR%" mkdir "%INSTALLER_OUTPUT_DIR%" || exit /b 1
+"%ISCC_EXE%" /Qp "/DSourceDir=%DIST_DIR%" "/DOutputDir=%INSTALLER_OUTPUT_DIR%" "/DMyAppVersion=%APP_VERSION%" "%SOURCE_DIR%\utils\NIRNATA_CELL.iss" || exit /b 1
 
-msbuild src/simplewallet.vcxproj /p:SubSystem="CONSOLE,5.02"  /p:Configuration=Release /t:Build
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-msbuild src/Nirmata.vcxproj /p:SubSystem="WINDOWS,5.02" /p:Configuration=Release /t:Build
-
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-@echo on
-echo "sources are built successfully"
-
-
-
-
-:skip_build
-cd %SOURCES_PATH%/build
-
-set cmd=src\Release\simplewallet.exe --version
-FOR /F "tokens=3" %%a IN ('%cmd%') DO set version=%%a  
-set version=%version:~0,-2%
-echo '%version%'
-
-set build_zip_filename=%ACHIVE_NAME_PREFIX%%version%.zip
-set build_zip_path=%BUILDS_PATH%\builds\%build_zip_filename%
-
-del /F /Q %build_zip_path%
-
-cd src\release
-
-call :sign_file Nirmata.exe || goto error
-call :sign_file nirmatad.exe || goto error
-call :sign_file simplewallet.exe || goto error
-
-@echo on
-
-
-mkdir bunch
-
-copy /Y Nirmata.exe bunch
-copy /Y nirmatad.exe bunch
-copy /Y simplewallet.exe bunch
-copy /Y *.pdb bunch
-
-%QT_MSVC_PATH%\bin\windeployqt.exe bunch\Nirmata.exe || goto error
-
-cd bunch
-
-zip -r %build_zip_path% *.*
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-@echo "Add html"
-
-cd %SOURCES_PATH%\src\gui\qt-daemon\layout
-zip -x html/package.json html/gulpfile.js html/less/* -r %build_zip_path% html
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-@echo "Add runtime stuff"
-
-
-cd %ETC_BINARIES_PATH%
-zip -r %build_zip_path% *.*
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-cd %SOURCES_PATH%\build
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-@echo "---------------------------------------------------------------"
-@echo "-------------------Building installer--------------------------"
-@echo "---------------------------------------------------------------"
-
-mkdir installer_src
-
-
-unzip -o %build_zip_path% -d installer_src
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-"%INNOSETUP_PATH%"  /dBinariesPath=../build/installer_src /DMyAppVersion=%version% /o%BUILDS_PATH%\builds\ /f%ACHIVE_NAME_PREFIX%%version%-installer ..\utils\setup_64.iss 
-IF %ERRORLEVEL% NEQ 0 (
-  goto error
-)
-
-
-@echo "---------------------------------------------------------------"
-@echo "---------------------------------------------------------------"
-
-set installer_file=%ACHIVE_NAME_PREFIX%%version%-installer.exe
-set installer_path=%BUILDS_PATH%\builds\%installer_file%
-
-@echo "   SIGNING the installer ...."
-
-call :sign_file %installer_path% || goto error
-
-@echo "   UPLOADING TO SERVER ...."
-
-pscp -load nirmata_build_server %installer_path% %NIRMATA_BUILDS_HOST%:/var/www/html/builds
-IF %ERRORLEVEL% NEQ 0 (
-  @echo "FAILED TO UPLOAD EXE TO SERVER"
-  goto error
-)
-call :sha256 %installer_path% installer_checksum
-
-pscp -load nirmata_build_server %build_zip_path% %NIRMATA_BUILDS_HOST%:/var/www/html/builds
-IF %ERRORLEVEL% NEQ 0 (
-  @echo "FAILED TO UPLOAD ZIP TO SERVER"
-  goto error
-)
-call :sha256 %build_zip_path% build_zip_checksum
-
-set mail_msg="New %build_prefix% %TESTNET_LABEL%build for win-x64:<br>INST: <a href='https://build.nirmata-network.com/builds/%installer_file%'>https://build.nirmata-network.com/builds/%installer_file%</a> <br>sha256: %installer_checksum%<br><br>ZIP:  <a href='https://build.nirmata-network.com/builds/%build_zip_filename%'>https://build.nirmata-network.com/builds/%build_zip_filename%</a> <br>sha256: %build_zip_checksum%<br>"
-
-echo %mail_msg%
-
-python ../utils/build_mail.py "Nirmata win-x64 %build_prefix% %TESTNET_LABEL%build %version%" "%emails%" %mail_msg%
-
-goto success
-
-:error
-echo "BUILD FAILED"
-exit /B %ERRORLEVEL%
-
-:success
-echo "BUILD SUCCESS"
-
-cd ..
-
-EXIT /B %ERRORLEVEL%
-
-
-:: functions
-
-:sha256
-@setlocal enabledelayedexpansion
-@set /a count=1 
-@for /f "skip=1 delims=:" %%a in ('CertUtil -hashfile %1 SHA256') do @(
-  @if !count! equ 1 set "hash=%%a"
-  @set /a count+=1
-)
-@(
- @endlocal
- @set "%2=%hash: =%
-)
-@exit /B 0
-
-
-:sign_file
-@echo Signing %1...
-@call %NIRMATA_SIGN_CMD% %1
-@if %ERRORLEVEL% neq 0 (
-  @echo ERROR: failed to sign %1
-  @exit /B 1
-)
-@exit /B 0
+echo Windows portable package created: %DIST_DIR%
+echo Windows installer created: %INSTALLER_OUTPUT_DIR%\Nirmata-CELL-%APP_VERSION%-Windows-x64.exe
+exit /b 0

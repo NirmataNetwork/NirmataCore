@@ -544,8 +544,7 @@ bool blockchain_storage::set_checkpoints(checkpoints&& chk_pts)
   try
   {
     m_db.begin_transaction();
-    if (m_db_blocks.size() < m_checkpoints.get_top_checkpoint_height())
-      m_is_in_checkpoint_zone = true;
+    m_is_in_checkpoint_zone = m_checkpoints.is_in_checkpoint_zone(m_db_blocks.size());
     prune_ring_signatures_and_attachments_if_need();
     m_db.commit_transaction();
     return true;
@@ -4932,7 +4931,7 @@ bool blockchain_storage::validate_tx_for_hardfork_specific_terms(const transacti
   bool var_is_after_hardfork_3_zone = is_after_hardfork_3_zone(block_height);
   
   //inputs
-  for (const auto in : tx.vin)
+  for (const auto& in : tx.vin)
   {
     if (in.type() == typeid(txin_htlc))
     {
@@ -4941,7 +4940,7 @@ bool blockchain_storage::validate_tx_for_hardfork_specific_terms(const transacti
     }
   }
   //outputs
-  for (const auto out : tx.vout)
+  for (const auto& out : tx.vout)
   {
     if (out.target.type() == typeid(txout_htlc))
     {
@@ -4951,7 +4950,7 @@ bool blockchain_storage::validate_tx_for_hardfork_specific_terms(const transacti
   }
 
   //extra
-  for (const auto el : tx.extra)
+  for (const auto& el : tx.extra)
   {
     if (!var_is_after_hardfork_1_zone && !is_allowed_before_hardfork1(el))
       return false;
@@ -4960,7 +4959,7 @@ bool blockchain_storage::validate_tx_for_hardfork_specific_terms(const transacti
   }
 
   //attachments
-  for (const auto el : tx.attachment)
+  for (const auto& el : tx.attachment)
   {
     if (!var_is_after_hardfork_2_zone && !is_allowed_before_hardfork2(el))
       return false;

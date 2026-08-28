@@ -55,11 +55,16 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
     endif()
     if(MSVC_LIB_EXE)
       message(STATUS "Found MSVC's lib tool: ${MSVC_LIB_EXE}")
+      if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(MDBX_MSVC_MACHINE /MACHINE:X64)
+      else()
+        set(MDBX_MSVC_MACHINE /MACHINE:X86)
+      endif()
       set(MDBX_NTDLL_EXTRA_IMPLIB ${CMAKE_CURRENT_BINARY_DIR}/mdbx_ntdll_extra.lib)
       add_custom_command(OUTPUT ${MDBX_NTDLL_EXTRA_IMPLIB}
         COMMENT "Create extra-import-library for ntdll.dll"
         MAIN_DEPENDENCY "${CMAKE_CURRENT_SOURCE_DIR}/elements/ntdll.def"
-        COMMAND ${MSVC_LIB_EXE} /def:"${CMAKE_CURRENT_SOURCE_DIR}/elements/ntdll.def" /out:"${MDBX_NTDLL_EXTRA_IMPLIB}" ${INITIAL_CMAKE_STATIC_LINKER_FLAGS})
+        COMMAND ${MSVC_LIB_EXE} ${MDBX_MSVC_MACHINE} /def:"${CMAKE_CURRENT_SOURCE_DIR}/elements/ntdll.def" /out:"${MDBX_NTDLL_EXTRA_IMPLIB}" ${INITIAL_CMAKE_STATIC_LINKER_FLAGS})
     else()
       message(SEND_ERROR "MSVC's lib tool not found")
     endif()
@@ -84,6 +89,16 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 endif()
 
 target_link_libraries(mdbx ${MDBX_LIBDEP_MODE} ${CMAKE_THREAD_LIBS_INIT})
+if(MSVC)
+  # The vendored MDBX 0.3 code intentionally complements 32-bit masks before
+  # widening them to size_t. MSVC 19.44 diagnoses that established construct.
+  target_compile_options(mdbx PRIVATE /wd4319)
+elseif(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+  # GCC 11+ emits false positives for the cursor overlay used by this vendored
+  # MDBX snapshot, and the project-wide aggregate-return warning is not useful
+  # for third-party C code.
+  target_compile_options(mdbx PRIVATE -Wno-array-bounds -Wno-aggregate-return)
+endif()
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
   target_link_libraries(mdbx ${MDBX_LIBDEP_MODE} ntdll.lib)
   if(MDBX_NTDLL_EXTRA_IMPLIB)
@@ -104,7 +119,7 @@ endif()
 set_target_properties(mdbx PROPERTIES
   INTERPROCEDURAL_OPTIMIZATION $<BOOL:${INTERPROCEDURAL_OPTIMIZATION}>
   C_STANDARD ${MDBX_C_STANDARD} C_STANDARD_REQUIRED ON
-  PUBLIC_HEADER "../mdbx.h")
+  PUBLIC_HEADER "${CMAKE_CURRENT_SOURCE_DIR}/../mdbx.h")
 
 if(CC_HAS_FASTMATH)
   target_compile_options(mdbx PRIVATE "-ffast-math")

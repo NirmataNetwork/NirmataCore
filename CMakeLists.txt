@@ -1,6 +1,10 @@
-cmake_minimum_required(VERSION 2.8.6)
+cmake_minimum_required(VERSION 3.21)
 
 PROJECT(Nirmata)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB:libucrt.lib /DEFAULTLIB:ucrt.lib")
@@ -18,19 +22,22 @@ set(VERSION "1.0")
 #    cmake_policy(SET CMP0020 OLD)
 #  endif()
 
-if(CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
+option(NIRMATA_ANDROID_FULL_NODE "Build the complete daemon stack for Android" OFF)
+
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS" OR (CMAKE_SYSTEM_NAME STREQUAL "Android" AND NOT NIRMATA_ANDROID_FULL_NODE))
   add_definitions(-DMOBILE_WALLET_BUILD)
   if(CMAKE_SYSTEM_NAME STREQUAL "iOS" )   
     add_definitions(-DIOS_BUILD)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fembed-bitcode")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fembed-bitcode")			
   endif()
-  if(CMAKE_SYSTEM_NAME STREQUAL "Android")
-    add_definitions(-DANDROID_BUILD)
-    message("Android sdk prefix: ${CMAKE_CXX_ANDROID_TOOLCHAIN_PREFIX}")    
-    message("Android CMAKE_CXX_COMPILER prefix: ${CMAKE_CXX_COMPILER}")    
-    message("Android ANDROID_LD: ${ANDROID_LD}")
-  endif()
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Android")
+  add_definitions(-DANDROID_BUILD)
+  message("Android sdk prefix: ${CMAKE_CXX_ANDROID_TOOLCHAIN_PREFIX}")
+  message("Android CMAKE_CXX_COMPILER prefix: ${CMAKE_CXX_COMPILER}")
+  message("Android ANDROID_LD: ${ANDROID_LD}")
 endif()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -56,8 +63,8 @@ message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}, and built ty
 enable_testing()
 
 
-if(APPLE)
-  set(CMAKE_OSX_DEPLOYMENT_TARGET 10.10.5)          
+if(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+  set(CMAKE_OSX_DEPLOYMENT_TARGET "12.0" CACHE STRING "Minimum supported macOS version")
 endif()
 
 set(USE_PCH FALSE CACHE BOOL "Use shared precompiled headers")
@@ -73,26 +80,22 @@ if(TESTNET)
   add_definitions(-DTESTNET)  
 endif()
 
-set(OPENSSL_USE_STATIC_LIBS TRUE) # link statically
-find_package(OpenSSL REQUIRED)
-
-
-
-
 set(STATIC ${MSVC} CACHE BOOL "Link libraries statically")
+set(OPENSSL_USE_STATIC_LIBS ${STATIC})
+find_package(OpenSSL REQUIRED)
 if (UNIX AND NOT APPLE)
   # Note that at the time of this writing the -Wstrict-prototypes flag added below will make this fail
   find_package(Threads REQUIRED)
 endif()
 
 # TODO(unassigned): expand on types and versions, and then refactor.
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CLANG TRUE)
 endif()
 
 if(MSVC)
   add_definitions("/D_CRT_SECURE_NO_WARNINGS /D_WIN32_WINNT=0x0600 /DWIN32_LEAN_AND_MEAN /DGTEST_HAS_TR1_TUPLE=0 /D__SSE4_1__")
-  add_compile_options(/bigobj /Zm1000 /Z7 /MP2 /W3 /GS- /wd4996 /wd4503 /wd4345 /wd4091 /FIinline_c.h)
+  add_compile_options(/bigobj /Zm1000 /Z7 /W3 /GS- /wd4996 /wd4503 /wd4345 /wd4091 /FIinline_c.h)
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /STACK:10485760 /DEBUG dbghelp.lib")
   if(STATIC)
     foreach(VAR CMAKE_C_FLAGS_DEBUG CMAKE_CXX_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE CMAKE_CXX_FLAGS_RELEASE)
@@ -111,10 +114,13 @@ else()
 #  if(NOT APPLE)
 #    set(WARNINGS "${WARNINGS} -Werror")
 #  endif()
-  if(CMAKE_C_COMPILER_ID STREQUAL "Clang")
+  if(CMAKE_C_COMPILER_ID MATCHES "Clang")
     set(WARNINGS "${WARNINGS} -Wno-implicit-function-declaration -Wno-shift-count-overflow -Wno-error=mismatched-tags -Wno-error=null-conversion -Wno-overloaded-shift-op-parentheses -Wno-error=shift-count-overflow -Wno-error=tautological-constant-out-of-range-compare -Wno-error=unused-private-field -Wno-error=unneeded-internal-declaration")
+    if(APPLE)
+      set(WARNINGS "${WARNINGS} -Wno-deprecated-copy-with-user-provided-copy -Wno-inconsistent-missing-override -Wno-deprecated-declarations")
+    endif()
   else()
-    set(WARNINGS "${WARNINGS} -Wno-error=write-strings -Wlogical-op -Wno-error=maybe-uninitialized")
+    set(WARNINGS "${WARNINGS} -Wno-error=write-strings -Wlogical-op -Wno-error=maybe-uninitialized -Wno-odr")
   endif()
 
   # Since gcc 4.9 the LTO format is non-standard (slim), so we need the gcc-specific ar and ranlib binaries
@@ -148,7 +154,7 @@ else()
     set(STATIC_ASSERT_FLAG "-Dstatic_assert=_Static_assert")
   endif()
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11 -D_GNU_SOURCE ${MINGW_FLAG} ${STATIC_ASSERT_FLAG} ${WARNINGS} ${C_WARNINGS} ${ARCH_FLAG}")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive -ftemplate-depth-1024 -std=c++11 -D_GNU_SOURCE ${APPLE_FLAG} ${MINGW_FLAG} ${WARNINGS} ${CXX_WARNINGS} ${ARCH_FLAG}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive -ftemplate-depth-1024 -D_GNU_SOURCE ${APPLE_FLAG} ${MINGW_FLAG} ${WARNINGS} ${CXX_WARNINGS} ${ARCH_FLAG}")
   if (NOT APPLE AND NOT MSVC)
     if (CLANG)
       set(LLVM_USE_LINKER "gold")
@@ -163,8 +169,13 @@ else()
   endif()
   set(RELEASE_FLAGS "-Ofast -DNDEBUG -Wno-unused-variable")
 
-  if(NOT APPLE AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Android"))
-    set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
+  option(NIRMATA_ENABLE_LTO "Enable link-time optimization for release builds" OFF)
+  if(NIRMATA_ENABLE_LTO AND NOT APPLE AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Android"))
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+      set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto=auto")
+    else()
+      set(RELEASE_FLAGS "${RELEASE_FLAGS} -flto")
+    endif()
   endif()
   #if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND NOT MINGW)
   #  set(RELEASE_FLAGS "${RELEASE_FLAGS} -fno-fat-lto-objects")
@@ -185,10 +196,14 @@ endif()
 
 if(MSVC)
   set(Boost_USE_STATIC_LIBS ON)
+  # Boost is linked explicitly by CMake. Disable its compiler-driven auto-link,
+  # which otherwise derives a library suffix from the current MSVC toolset and
+  # can request vc143 names even when a compatible vc142 package was selected.
+  add_compile_definitions(BOOST_ALL_NO_LIB)
 endif()
 
-if(STATIC)  
-  set(Boost_USE_STATIC_LIBS ON)  
+if(STATIC)
+  set(Boost_USE_STATIC_LIBS ON)
   set(Boost_USE_STATIC_RUNTIME ON)
 endif()
 
@@ -203,10 +218,42 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   set(CMAKE_XCODE_ATTRIBUTE_ARCHS[sdk=iphonesimulator*] "${__iphonesimulator_archs}")
   set(CMAKE_XCODE_ATTRIBUTE_VALID_ARCHS[sdk=iphonesimulator*] "${__iphonesimulator_archs}")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Android")
-  set(Boost_LIBRARY_DIRS "${Boost_LIBRARY_DIRS}/${CMAKE_ANDROID_ARCH_ABI}/")
-  set(Boost_LIBRARIES "${Boost_LIBRARY_DIRS}libboost_system.a;${Boost_LIBRARY_DIRS}libboost_filesystem.a;${Boost_LIBRARY_DIRS}libboost_thread.a;${Boost_LIBRARY_DIRS}libboost_timer.a;${Boost_LIBRARY_DIRS}libboost_date_time.a;${Boost_LIBRARY_DIRS}libboost_chrono.a;${Boost_LIBRARY_DIRS}libboost_regex.a;${Boost_LIBRARY_DIRS}libboost_serialization.a;${Boost_LIBRARY_DIRS}libboost_atomic.a;${Boost_LIBRARY_DIRS}libboost_program_options.a")
+  if(NOT Boost_INCLUDE_DIRS OR NOT Boost_LIBRARY_DIRS)
+    message(FATAL_ERROR "Android builds require Boost_INCLUDE_DIRS and Boost_LIBRARY_DIRS")
+  endif()
+  file(TO_CMAKE_PATH "${Boost_LIBRARY_DIRS}" Boost_LIBRARY_DIRS)
+  set(Boost_LIBRARIES
+    "${Boost_LIBRARY_DIRS}/libboost_filesystem.a"
+    "${Boost_LIBRARY_DIRS}/libboost_thread.a"
+    "${Boost_LIBRARY_DIRS}/libboost_timer.a"
+    "${Boost_LIBRARY_DIRS}/libboost_date_time.a"
+    "${Boost_LIBRARY_DIRS}/libboost_chrono.a"
+    "${Boost_LIBRARY_DIRS}/libboost_regex.a"
+    "${Boost_LIBRARY_DIRS}/libboost_serialization.a"
+    "${Boost_LIBRARY_DIRS}/libboost_atomic.a"
+    "${Boost_LIBRARY_DIRS}/libboost_program_options.a"
+  )
 else()
-  find_package(Boost 1.70 REQUIRED COMPONENTS system filesystem thread timer date_time chrono regex serialization atomic program_options locale)
+  if(POLICY CMP0144)
+    cmake_policy(SET CMP0144 NEW)
+  endif()
+  if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+  endif()
+
+  # Boost.System is header-only in current Boost releases and Boost 1.90 no
+  # longer ships a boost_system CMake component/library. Discover the version
+  # first and retain the binary component only for older distributions.
+  find_package(Boost 1.70 REQUIRED)
+  set(NIRMATA_BOOST_COMPONENTS filesystem thread timer date_time chrono regex serialization atomic program_options locale)
+  if(Boost_VERSION_STRING VERSION_LESS "1.89.0")
+    list(APPEND NIRMATA_BOOST_COMPONENTS system)
+  endif()
+  find_package(Boost 1.70 REQUIRED COMPONENTS ${NIRMATA_BOOST_COMPONENTS})
+  if(MSVC)
+    # boost::uuids::random_generator uses the Windows CNG random provider.
+    list(APPEND Boost_LIBRARIES bcrypt)
+  endif()
 endif()
 
 
@@ -228,8 +275,7 @@ elseif(NOT MSVC)
 endif()
 
 if(BUILD_GUI)
-  cmake_minimum_required(VERSION 2.8.11)
-  find_package(Qt5Widgets REQUIRED)  
+  find_package(Qt6 6.8 REQUIRED COMPONENTS Widgets WebEngineWidgets WebChannel PrintSupport)
 endif()
 
 set(COMMIT_ID_IN_VERSION ON CACHE BOOL "Include commit ID in version")

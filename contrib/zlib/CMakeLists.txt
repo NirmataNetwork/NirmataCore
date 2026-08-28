@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.4.4)
+cmake_minimum_required(VERSION 3.21)
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS ON)
 
 project(zlib C)
@@ -185,6 +185,9 @@ endif(MINGW)
 
 #add_library(zlib SHARED ${ZLIB_SRCS} ${ZLIB_ASMS} ${ZLIB_DLL_SRCS} ${ZLIB_PUBLIC_HDRS} ${ZLIB_PRIVATE_HDRS})
 add_library(zlibstatic STATIC ${ZLIB_SRCS} ${ZLIB_ASMS} ${ZLIB_PUBLIC_HDRS} ${ZLIB_PRIVATE_HDRS})
+if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+    target_compile_options(zlibstatic PRIVATE -Wno-deprecated-non-prototype -Wno-strict-prototypes)
+endif()
 # set_target_properties(zlib PROPERTIES DEFINE_SYMBOL ZLIB_DLL)
 # set_target_properties(zlib PROPERTIES SOVERSION 1)
 

@@ -923,7 +923,7 @@ bool pos_altblocks_validation::generate(std::vector<test_event_entry>& events) c
   //          +-----------------------+
   //          |                      tx_0                                tx_0 spends all outputs in blk_1 (main chain)
   // (0 )-   (1 )-...(1r)-   (2 )-   (3 )-...(3r)-   (4 )-   (5 )-       <- main chain
-  //           |        \ 
+  //           |        \.
   //           |         \-  (2a)-                                       <- alt chain
   //           +--------------+                                          PoS block 2a uses stake already spent in main chain
 
@@ -941,7 +941,7 @@ bool pos_altblocks_validation::generate(std::vector<test_event_entry>& events) c
   //          +-----------------------+
   //          |                      tx_0                                tx_0 spends all outputs in blk_1 (main chain)
   // (0 )-   (1 )-...(1r)-   (2 )-   (3 )-...(3r)-   (4 )-   (5 )-       <- main chain
-  //          ||        \ 
+  //          ||        \.
   //          ||         \-  (2a)-   #3a#-                               <- alt chain
   //          |+--------------+       |                                  PoS block 2a uses stake already spent in main chain (okay)
   //          +-----------------------+                                  PoS block 3a uses stake already spent in current alt chain (fail)
@@ -962,11 +962,11 @@ bool pos_altblocks_validation::generate(std::vector<test_event_entry>& events) c
   //          +-----------------------+
   //          |                      tx_0                                        tx_0 spends all outputs in blk_1 (main chain)
   // (0 )-   (1 )-...(1r)-   (2 )-   (3 )- ........  (3r)-   (4 )-   (5 )-       <- main chain
-  //          ||        \ 
+  //          ||        \.
   //          ||         \-  (2a)-   #3a#-                                       <- alt chain
   //          |+--------------+ \     |                                          PoS block 2a uses stake already spent in main chain (okay)
   //          +---------------|-------+                                          PoS block 3a uses stake already spent in current alt chain (fail)
-  //                          |   \ 
+  //                          |   \.
   //                          |    \ ...... (2br)-   (3b)-                       <- alt chain
   //                          |                       |
   //                          +-----------------------+                          PoS block 3b uses as stake an output, created in current alt chain (2a)
@@ -989,7 +989,7 @@ bool pos_altblocks_validation::generate(std::vector<test_event_entry>& events) c
   //          ||         \-  (2a)-   #3a#-                 |                     <- alt chain
   //          |+--------------+ \     |                    \                     PoS block 2a uses stake already spent in main chain (okay)
   //          +---------------|-------+                     \                    PoS block 3a uses stake already spent in current alt chain (fail)
-  //                          |   \                          \ 
+  //                          |   \                          \.
   //                          |    \ ...... (2br)-   (3b)-   #4b#                <- alt chain
   //                          |                       |
   //                          +-----------------------+                          PoS block 3b uses as stake an output, created in current alt chain (2a)
@@ -1124,7 +1124,7 @@ bool pos_minting_tx_packing::c1(currency::core& c, size_t ev_index, const std::v
     m_alice_start_amount + CURRENCY_BLOCK_REWARD * (m_pos_mint_packing_size + 2), // total (+1 one block reward)
     true,
     UINT64_MAX,
-    m_alice_start_amount + CURRENCY_BLOCK_REWARD * (m_pos_mint_packing_size + 0) // unlocked
+    m_alice_start_amount + CURRENCY_BLOCK_REWARD * (m_pos_mint_packing_size + 1) - TESTS_COIN_UNIT // unlocked stake change
   ), false, "");
 
   alice_wlt->set_pos_mint_packing_size(8);
@@ -1135,7 +1135,7 @@ bool pos_minting_tx_packing::c1(currency::core& c, size_t ev_index, const std::v
     m_alice_start_amount + CURRENCY_BLOCK_REWARD * (m_pos_mint_packing_size + 3), // total (+1 one block reward)
     true,
     UINT64_MAX,
-    0 // unlocked
+    m_alice_start_amount + CURRENCY_BLOCK_REWARD * (m_pos_mint_packing_size + 1) - TESTS_COIN_UNIT - MK_TEST_COINS(60) // unlocked after the selected stake is locked
   ), false, "");
 
   return true;

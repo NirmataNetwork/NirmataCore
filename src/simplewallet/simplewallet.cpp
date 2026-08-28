@@ -185,6 +185,7 @@ simple_wallet::simple_wallet()
   m_refresh_progress_reporter(*this),
   m_offline_mode(false)
 {
+  using boost::placeholders::_1;
   m_cmd_binder.set_handler("start_mining", boost::bind(&simple_wallet::start_mining, this, _1), "start_mining <threads_count> - Start mining in daemon");
   m_cmd_binder.set_handler("stop_mining", boost::bind(&simple_wallet::stop_mining, this, _1), "Stop mining in daemon");
   m_cmd_binder.set_handler("refresh", boost::bind(&simple_wallet::refresh, this, _1), "Resynchronize transactions and balance");

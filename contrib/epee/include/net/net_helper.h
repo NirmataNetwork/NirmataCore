@@ -38,6 +38,7 @@
 #include <ostream>
 #include <string>
 #include <boost/asio.hpp>
+#include <boost/asio/deadline_timer.hpp>
 #include <boost/preprocessor/selection/min.hpp>
 #include <boost/lambda/bind.hpp>
 #include <boost/lambda/lambda.hpp>
@@ -82,10 +83,10 @@ namespace net_utils
 		
 	public:
 		inline
-			blocked_mode_client():m_socket(m_io_service), 
+			blocked_mode_client():m_socket(m_io_context),
                             m_initialized(false), 
                             m_connected(false), 
-                            m_deadline(m_io_service), 
+                            m_deadline(m_io_context),
                             m_shutdowned(0),
                             m_connect_timeout{},
                             m_reciev_timeout{}
@@ -143,11 +144,10 @@ namespace net_utils
 
 				//////////////////////////////////////////////////////////////////////////
 
-				boost::asio::ip::tcp::resolver resolver(m_io_service);
-				boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), addr, port);
-				boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
-				boost::asio::ip::tcp::resolver::iterator end;
-				if(iterator == end)
+				boost::asio::ip::tcp::resolver resolver(m_io_context);
+				auto endpoints = resolver.resolve(boost::asio::ip::tcp::v4(), addr, port);
+				auto iterator = endpoints.begin();
+				if(iterator == endpoints.end())
 				{
 					LOG_ERROR("Failed to resolve " << addr);
 					return false;
@@ -163,7 +163,7 @@ namespace net_utils
 				m_socket.open(remote_endpoint.protocol());
 				if(bind_ip != "0.0.0.0" && bind_ip != "0" && bind_ip != "" )
 				{
-					boost::asio::ip::tcp::endpoint local_endpoint(boost::asio::ip::address::from_string(addr.c_str()), 0);
+					boost::asio::ip::tcp::endpoint local_endpoint(boost::asio::ip::make_address(bind_ip), 0);
 					m_socket.bind(local_endpoint);
 				}
 
@@ -177,11 +177,21 @@ namespace net_utils
 				m_socket.async_connect(remote_endpoint, boost::lambda::var(ec) = boost::lambda::_1);
 				while (ec == boost::asio::error::would_block)
 				{	
-					m_io_service.run_one(); 
+					m_io_context.run_one();
 				}
 				
 				if (!ec && m_socket.is_open())
 				{
+#ifdef ANDROID_BUILD
+                    // The legacy 64 KiB-ish defaults collapse throughput for a
+                    // multi-gigabyte stream, especially when Android routes the
+                    // socket through a userspace VPN. Give TCP enough receive
+                    // window to keep the producer and inflate callback decoupled.
+                    boost::system::error_code option_ec;
+                    m_socket.set_option(boost::asio::socket_base::receive_buffer_size(1024 * 1024), option_ec);
+                    if (option_ec)
+                      LOG_PRINT_L2("Unable to enlarge Android TCP receive buffer: " << option_ec.message());
+#endif
 					m_connected = true;
 					m_deadline.expires_at(boost::posix_time::pos_infin);
 					return true;
@@ -258,7 +268,7 @@ namespace net_utils
 				// Block until the asynchronous operation has completed.
 				while (ec == boost::asio::error::would_block)
 				{
-					m_io_service.run_one(); 
+					m_io_context.run_one();
 				}
 
 				if (ec)
@@ -310,7 +320,7 @@ namespace net_utils
 				// Block until the asynchronous operation has completed.
 				while (ec == boost::asio::error::would_block)
 				{
-					m_io_service.run_one();
+					m_io_context.run_one();
 				}
 				*/
 				boost::system::error_code ec;
@@ -381,14 +391,18 @@ namespace net_utils
 			
 				handler_obj hndlr(ec, bytes_transfered);
 
+#ifdef ANDROID_BUILD
+                std::vector<char> local_buff(256 * 1024);
+#else
 				char local_buff[10000] = {0};
+#endif
 				//m_socket.async_read_some(boost::asio::buffer(local_buff, sizeof(local_buff)), hndlr);
-				boost::asio::async_read(m_socket, boost::asio::buffer(local_buff, sizeof(local_buff)), boost::asio::transfer_at_least(1), hndlr);
+				boost::asio::async_read(m_socket, boost::asio::buffer(local_buff), boost::asio::transfer_at_least(1), hndlr);
 
 				// Block until the asynchronous operation has completed.
 				while (ec == boost::asio::error::would_block && !boost::interprocess::ipcdetail::atomic_read32(&m_shutdowned))
 				{
-					m_io_service.run_one(); 
+					m_io_context.run_one();
 				}
 
 
@@ -414,7 +428,7 @@ namespace net_utils
 				/*if(!bytes_transfered)
 					return false;*/
 
-				buff.assign(local_buff, bytes_transfered);
+				buff.assign(&local_buff[0], bytes_transfered);
 				return true;
 			}
 
@@ -471,7 +485,7 @@ namespace net_utils
 				// Block until the asynchronous operation has completed.
 				while (ec == boost::asio::error::would_block && !boost::interprocess::ipcdetail::atomic_read32(&m_shutdowned))
 				{
-					m_io_service.run_one(); 
+					m_io_context.run_one();
 				}
 
 				if (ec)
@@ -526,9 +540,9 @@ namespace net_utils
 		{
 			m_connected = connected;
 		}
-		boost::asio::io_service& get_io_service()
+		boost::asio::io_context& get_io_context()
 		{
-			return m_io_service;
+			return m_io_context;
 		}
 
 		boost::asio::ip::tcp::socket& get_socket()
@@ -564,7 +578,7 @@ namespace net_utils
 
 		
 	protected:
-		boost::asio::io_service m_io_service;
+		boost::asio::io_context m_io_context;
 		boost::asio::ip::tcp::socket m_socket;
 		int m_connect_timeout;
 		int m_reciev_timeout;
@@ -581,7 +595,7 @@ namespace net_utils
 	class async_blocked_mode_client: public blocked_mode_client
 	{
 	public:
-		async_blocked_mode_client():m_send_deadline(blocked_mode_client::m_io_service)
+		async_blocked_mode_client():m_send_deadline(blocked_mode_client::m_io_context)
 		{
 
 			// No deadline is required until the first socket operation is started. We
@@ -628,7 +642,7 @@ namespace net_utils
 				// Block until the asynchronous operation has completed.
 				while(ec == boost::asio::error::would_block)
 				{
-					m_io_service.run_one();
+					m_io_context.run_one();
 				}*/
 				
 				boost::system::error_code ec;

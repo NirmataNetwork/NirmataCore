@@ -31,8 +31,8 @@
 #include "NetConnect.h"
 
 
-NetConnect::NetConnect(net::io_service& io_service, ssl::context& context)
-	: _resolver(io_service), socket(io_service, context)
+NetConnect::NetConnect(net::io_context& io_context, ssl::context& context)
+	: _resolver(io_context), socket(io_context, context)
 {
 	BOOST_LOG_TRIVIAL(debug) << "NetConnect::created";
 };

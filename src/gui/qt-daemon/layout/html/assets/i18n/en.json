@@ -395,6 +395,14 @@
       "GREAT_THAN_UNWRAPPED_COINS": "Amount is bigger than ERC20 tokens left available",
       "LESS_THAN_NIR_NEEDED": "Too small amount to cover ERC20 fee",
       "WRAP_INFO_NULL": "failed to request wrap state"
+    },
+    "QR_SCAN": {
+      "BUTTON": "Scan QR",
+      "TITLE": "Scan QR code",
+      "STARTING": "Requesting camera access...",
+      "DENIED": "Camera access was not granted. Allow it in Windows settings and try again.",
+      "UNAVAILABLE": "No camera was found on this device.",
+      "HINT": "Point the camera at a wallet address QR code"
     }
   },
   "HISTORY": {
@@ -742,6 +750,8 @@
     "SELLING_ADDRESS": "The address for sending the asset",
     "COMENT": "Comment",
     "CONTACT": "Contact",
+    "NIROOM_CONTACT": "NiRoom contact",
+    "OPEN_NIROOM": "Open NiRoom",
     "CONTRACT": "Contract"
   },
   "NIRVAIL": {
@@ -763,7 +773,8 @@
     "SELLING_ADDRESS": "The address for receiving the asset",
     "SELLING_PRICE": "Unit cost",
     "SELLING_DESCRIPTION": "The most understandable description of your offer",
-    "SELLING_CONTACT": "Specify not only the contact but also the platform for communication",
+    "SELLING_CONTACT": "Contact",
+    "NIROOM_CONTACT": "NiRoom contact (assigned automatically)",
     "SUBMIT": "Submit",
     "TRANSACTION_FEE": "Transaction fee",
     "BUTTON_SEND": "Sign & Send...",

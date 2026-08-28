@@ -1,3 +1,5 @@
+@use "../base/variables";
+
 .form-details {
   margin-top: 3.6rem;
 
@@ -26,7 +28,7 @@
 
   .form-content {
     & > label {
-      color: $mainTextColor;
+      color: variables.$mainTextColor;
       margin-left: -1rem;
       line-height: 1.9rem;
       margin-bottom: 2rem;
@@ -36,7 +38,7 @@
       display: inline-block;
       text-decoration: none;
       cursor: pointer;
-      background: center / contain no-repeat url(~src/assets/icons/info.svg);
+      background: center / contain no-repeat url(./assets/icons/info.svg);
       width: 2rem;
       height: 2rem;
     }
@@ -64,7 +66,7 @@
     }
     .secured-seed {
       margin-left: 1.5rem;
-      color: $blueTextColor;
+      color: variables.$blueTextColor;
       font-size: 1.6rem;
       line-height: 1.9rem;
       text-decoration: none;
@@ -98,7 +100,7 @@
   flex-direction: column;
   width: 100%;
   &-title {
-    color: $mainTextColor;
+    color: variables.$mainTextColor;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -156,13 +158,13 @@
       align-items: center;
       .title {
         margin-left: 0.7rem;
-        color: $blueTextColor;
+        color: variables.$blueTextColor;
         .info {
           display: inline-block;
-          background: center / contain no-repeat url(~src/assets/icons/info.svg);
+          background: center / contain no-repeat url(./assets/icons/info.svg);
           width: 2rem;
           height: 2rem;
-          color: $blueTextColor;
+          color: variables.$blueTextColor;
         }
       }
     }
@@ -185,15 +187,15 @@
   width: 2rem;
   height: 2rem;
   &.secured {
-    background: center / contain no-repeat url(~src/assets/icons/secured.svg);
+    background: center / contain no-repeat url(./assets/icons/secured.svg);
   }
   &.info {
-    background: center / contain no-repeat url(~src/assets/icons/info.svg);
+    background: center / contain no-repeat url(./assets/icons/info.svg);
   }
   &.unsecured {
-    background: center / contain no-repeat url(~src/assets/icons/unsecured.svg);
+    background: center / contain no-repeat url(./assets/icons/unsecured.svg);
   }
   &.safety {
-    background: center / contain no-repeat url(~src/assets/icons/safety.svg);
+    background: center / contain no-repeat url(./assets/icons/safety.svg);
   }
 }

@@ -49,8 +49,16 @@
   #define TX_POOL_SCAN_INTERVAL             1
 #endif
 
-#define HTTP_PROXY_TIMEOUT                2000
-#define HTTP_PROXY_ATTEMPTS_COUNT         1
+#ifdef MOBILE_WALLET_BUILD
+  // Binary wallet RPC responses can take several seconds on a real mobile
+  // network. Two seconds made a healthy public node look disconnected and
+  // left freshly restored wallets permanently at blockchain height 1.
+  #define HTTP_PROXY_TIMEOUT              60000
+  #define HTTP_PROXY_ATTEMPTS_COUNT       2
+#else
+  #define HTTP_PROXY_TIMEOUT              2000
+  #define HTTP_PROXY_ATTEMPTS_COUNT       1
+#endif
 
 const command_line::arg_descriptor<bool> arg_alloc_win_console = { "alloc-win-console", "Allocates debug console with GUI", false };
 const command_line::arg_descriptor<std::string> arg_html_folder = { "html-path", "Manually set GUI html folder path", "",  true };
@@ -85,10 +93,15 @@ wallets_manager::wallets_manager():m_pview(&m_view_stub),
                                  m_use_deffered_global_outputs(false)
 {
 #ifndef MOBILE_WALLET_BUILD
-  m_offers_service.set_disabled(true);
+  // The desktop wallet always runs its own embedded daemon, so keep the
+  // marketplace index next to the local blockchain and expose it through the
+  // existing get_offers_ex bridge.  Leaving this service disabled forced the
+  // GUI to query public daemon RPC endpoints directly and also meant that the
+  // native API could only return an empty list.
+  m_offers_service.set_disabled(false);
+  m_ccore.get_blockchain_storage().get_attachment_services_manager().add_service(&m_offers_service);
   m_pproxy_diganostic_info = m_rpc_proxy->get_proxy_diagnostic_info();
 #endif
-	//m_ccore.get_blockchain_storage().get_attachment_services_manager().add_service(&m_offers_service);
 }
 
 wallets_manager::~wallets_manager()
@@ -182,6 +195,7 @@ bool wallets_manager::init_command_line(int argc, char* argv[], std::string& fai
   command_line::add_arg(desc_cmd_sett, arg_qt_dev_tools);
   command_line::add_arg(desc_cmd_sett, command_line::arg_no_predownload);
   command_line::add_arg(desc_cmd_sett, command_line::arg_force_predownload);
+  command_line::add_arg(desc_cmd_sett, command_line::arg_predownload_required);
   command_line::add_arg(desc_cmd_sett, command_line::arg_validate_predownload);
   command_line::add_arg(desc_cmd_sett, command_line::arg_predownload_link);
   command_line::add_arg(desc_cmd_sett, command_line::arg_deeplink);
@@ -1048,7 +1062,7 @@ std::string wallets_manager::generate_wallet(const std::wstring& path, const std
   {
     w->generate(path, password, false);
     w->set_minimum_height(m_last_daemon_height);
-    //owr.seed = w->get_account().get_seed_phrase();
+    owr.seed = w->get_account().get_seed_phrase("");
   }
   catch (const tools::error::file_exists&)
   {
@@ -1156,7 +1170,7 @@ std::string wallets_manager::restore_wallet(const std::wstring& path, const std:
   {
     bool is_tracking = currency::account_base::is_seed_tracking(seed_phrase);
     w->restore(path, password, seed_phrase, is_tracking, seed_password);
-    //owr.seed = w->get_account().get_seed_phrase();
+    owr.seed = w->get_account().get_seed_phrase(seed_password);
   }
   catch (const tools::error::file_exists&)
   {
@@ -1495,6 +1509,7 @@ std::string wallets_manager::get_wallet_status(uint64_t wallet_id)
   wsi.progress = wo.w.unlocked_get().get()->get_sync_progress();
   wsi.wallet_state = wo.wallet_state;
   wsi.current_daemon_height = m_last_daemon_height;
+  wsi.is_mining = wo.do_mining;
   return epee::serialization::store_t_to_json(wsi);
 }
 
@@ -1817,6 +1832,349 @@ std::string wallets_manager::validate_address(const std::string& addr_str, std::
     return API_RETURN_CODE_TRUE;
   else
     return API_RETURN_CODE_FALSE;
+}
+
+std::string wallets_manager::niroom_sign_challenge(
+  uint64_t wallet_id,
+  const std::string& payload,
+  view::niroom_sign_challenge_response& response)
+{
+  if (payload.empty() || payload.size() > 16 * 1024)
+    return API_RETURN_CODE_BAD_ARG;
+
+  GET_WALLET_BY_ID(wallet_id, w);
+  if (w->get()->is_watch_only())
+    return API_RETURN_CODE_WALLET_WATCH_ONLY_NOT_SUPPORTED;
+
+  const currency::account_keys& keys = w->get()->get_account().get_keys();
+  const crypto::hash payload_hash = crypto::cn_fast_hash(payload.data(), payload.size());
+  crypto::signature signature = AUTO_VAL_INIT(signature);
+  crypto::generate_signature(
+    payload_hash,
+    keys.account_address.spend_public_key,
+    keys.spend_secret_key,
+    signature);
+
+  response.address = currency::get_account_address_as_str(keys.account_address);
+  response.proof = epee::string_tools::pod_to_hex(signature);
+  return API_RETURN_CODE_OK;
+}
+
+namespace
+{
+  view::niroom_one_time_prekey to_public_prekey(const tools::wallet2::niroom_prekey& source)
+  {
+    view::niroom_one_time_prekey result = AUTO_VAL_INIT(result);
+    result.id = source.id;
+    result.public_key = epee::string_tools::pod_to_hex(source.public_key);
+    return result;
+  }
+
+  void fill_public_bundle(const tools::wallet2::niroom_device& source, view::niroom_key_bundle& target)
+  {
+    target.device_id = source.device_id;
+    target.identity_key = epee::string_tools::pod_to_hex(source.identity_public_key);
+    target.signed_prekey = epee::string_tools::pod_to_hex(source.signed_prekey_public);
+    target.signed_prekey_signature = epee::string_tools::pod_to_hex(source.signed_prekey_signature);
+    target.one_time_prekeys.clear();
+    target.one_time_prekeys.reserve(source.one_time_prekeys.size());
+    for (const auto& prekey : source.one_time_prekeys)
+      target.one_time_prekeys.push_back(to_public_prekey(prekey));
+  }
+}
+
+std::string wallets_manager::niroom_create_device(
+  uint64_t wallet_id,
+  uint64_t one_time_prekey_count,
+  view::niroom_key_bundle& response)
+{
+  if (one_time_prekey_count > 1000)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(wallet_id, w);
+  if (w->get()->is_watch_only())
+    return API_RETURN_CODE_WALLET_WATCH_ONLY_NOT_SUPPORTED;
+  fill_public_bundle(w->get()->niroom_create_device(
+    static_cast<size_t>(one_time_prekey_count)), response);
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_rotate_device(
+  uint64_t wallet_id,
+  uint64_t one_time_prekey_count,
+  view::niroom_key_bundle& response)
+{
+  if (one_time_prekey_count == 0 || one_time_prekey_count > 1000)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(wallet_id, w);
+  if (w->get()->is_watch_only())
+    return API_RETURN_CODE_WALLET_WATCH_ONLY_NOT_SUPPORTED;
+  fill_public_bundle(w->get()->niroom_rotate_device(
+    static_cast<size_t>(one_time_prekey_count)), response);
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_generate_prekeys(
+  uint64_t wallet_id,
+  uint64_t count,
+  view::niroom_key_bundle& response)
+{
+  if (count == 0 || count > 1000)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(wallet_id, w);
+  if (w->get()->is_watch_only())
+    return API_RETURN_CODE_WALLET_WATCH_ONLY_NOT_SUPPORTED;
+  const std::vector<tools::wallet2::niroom_prekey> generated =
+    w->get()->niroom_generate_prekeys(static_cast<size_t>(count));
+  response.one_time_prekeys.clear();
+  response.one_time_prekeys.reserve(generated.size());
+  for (const auto& prekey : generated)
+    response.one_time_prekeys.push_back(to_public_prekey(prekey));
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_create_session(
+  const view::niroom_create_session_request& request,
+  view::niroom_session_header& response)
+{
+  if (request.peer_address.empty() || request.peer_device_id.empty())
+    return API_RETURN_CODE_BAD_ARG;
+  crypto::public_key identity_key = AUTO_VAL_INIT(identity_key);
+  crypto::public_key signed_prekey = AUTO_VAL_INIT(signed_prekey);
+  crypto::signature signed_prekey_signature = AUTO_VAL_INIT(signed_prekey_signature);
+  if (!epee::string_tools::hex_to_pod(request.identity_key, identity_key) ||
+      !epee::string_tools::hex_to_pod(request.signed_prekey, signed_prekey) ||
+      !epee::string_tools::hex_to_pod(request.signed_prekey_signature, signed_prekey_signature))
+    return API_RETURN_CODE_BAD_ARG;
+
+  crypto::public_key one_time_prekey = AUTO_VAL_INIT(one_time_prekey);
+  const crypto::public_key* one_time_prekey_ptr = nullptr;
+  if (!request.one_time_prekey.empty())
+  {
+    if (!epee::string_tools::hex_to_pod(request.one_time_prekey, one_time_prekey))
+      return API_RETURN_CODE_BAD_ARG;
+    one_time_prekey_ptr = &one_time_prekey;
+  }
+
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  const tools::wallet2::niroom_session_header header = w->get()->niroom_create_session(
+    request.peer_address,
+    request.peer_device_id,
+    identity_key,
+    signed_prekey,
+    signed_prekey_signature,
+    request.one_time_prekey_id,
+    one_time_prekey_ptr);
+  response.session_id = header.session_id;
+  response.sender_identity_key = epee::string_tools::pod_to_hex(header.sender_identity_key);
+  response.sender_ephemeral_key = epee::string_tools::pod_to_hex(header.sender_ephemeral_key);
+  response.recipient_one_time_prekey_id = header.recipient_one_time_prekey_id;
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_accept_session(
+  const view::niroom_accept_session_request& request)
+{
+  if (request.peer_address.empty() || request.peer_device_id.empty() ||
+      request.header.session_id.empty())
+    return API_RETURN_CODE_BAD_ARG;
+  tools::wallet2::niroom_session_header header = AUTO_VAL_INIT(header);
+  crypto::public_key expected_identity_key = AUTO_VAL_INIT(expected_identity_key);
+  header.session_id = request.header.session_id;
+  header.recipient_one_time_prekey_id = request.header.recipient_one_time_prekey_id;
+  if (!epee::string_tools::hex_to_pod(
+        request.expected_identity_key, expected_identity_key) ||
+      !epee::string_tools::hex_to_pod(
+        request.header.sender_identity_key, header.sender_identity_key) ||
+      !epee::string_tools::hex_to_pod(
+        request.header.sender_ephemeral_key, header.sender_ephemeral_key))
+    return API_RETURN_CODE_BAD_ARG;
+  if (header.sender_identity_key != expected_identity_key)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  w->get()->niroom_accept_session(
+    request.peer_address, request.peer_device_id, header);
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_encrypt_message(
+  const view::niroom_encrypt_message_request& request,
+  view::niroom_encrypted_message& response)
+{
+  if (request.session_id.empty() || request.plaintext.size() > 1024 * 1024)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  const tools::wallet2::niroom_encrypted_message encrypted =
+    w->get()->niroom_encrypt_message(request.session_id, request.plaintext);
+  response.session_id = encrypted.session_id;
+  response.counter = encrypted.counter;
+  response.ratchet_public_key = encrypted.ratchet_public_key;
+  response.previous_chain_length = encrypted.previous_chain_length;
+  response.nonce = encrypted.nonce;
+  response.ciphertext = encrypted.ciphertext;
+  response.tag = encrypted.tag;
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_decrypt_message(
+  const view::niroom_decrypt_message_request& request,
+  view::niroom_decrypt_message_response& response)
+{
+  if (request.message.session_id.empty() ||
+      request.message.ciphertext.size() > 2 * 1024 * 1024)
+    return API_RETURN_CODE_BAD_ARG;
+  tools::wallet2::niroom_encrypted_message encrypted = AUTO_VAL_INIT(encrypted);
+  encrypted.session_id = request.message.session_id;
+  encrypted.counter = request.message.counter;
+  encrypted.ratchet_public_key = request.message.ratchet_public_key;
+  encrypted.previous_chain_length = request.message.previous_chain_length;
+  encrypted.nonce = request.message.nonce;
+  encrypted.ciphertext = request.message.ciphertext;
+  encrypted.tag = request.message.tag;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  response.plaintext = w->get()->niroom_decrypt_message(encrypted);
+  return API_RETURN_CODE_OK;
+}
+
+namespace
+{
+  tools::wallet2::niroom_message_record to_wallet_message(
+    const view::niroom_local_message& source)
+  {
+    tools::wallet2::niroom_message_record result = AUTO_VAL_INIT(result);
+    result.message_id = source.message_id;
+    result.conversation_id = source.conversation_id;
+    result.peer_address = source.peer_address;
+    result.peer_device_id = source.peer_device_id;
+    result.incoming = source.incoming;
+    result.plaintext = source.plaintext;
+    result.wire_ciphertext = source.wire_ciphertext;
+    result.created_at = source.created_at;
+    result.status = source.status;
+    return result;
+  }
+
+  view::niroom_local_message to_view_message(
+    const tools::wallet2::niroom_message_record& source)
+  {
+    view::niroom_local_message result = AUTO_VAL_INIT(result);
+    result.message_id = source.message_id;
+    result.conversation_id = source.conversation_id;
+    result.peer_address = source.peer_address;
+    result.peer_device_id = source.peer_device_id;
+    result.incoming = source.incoming;
+    result.plaintext = source.plaintext;
+    result.wire_ciphertext = source.wire_ciphertext;
+    result.created_at = source.created_at;
+    result.status = source.status;
+    return result;
+  }
+
+  tools::wallet2::niroom_contact_record to_wallet_contact(
+    const view::niroom_contact& source)
+  {
+    tools::wallet2::niroom_contact_record result = AUTO_VAL_INIT(result);
+    result.address = source.address;
+    result.display_name = source.display_name;
+    result.avatar_seed = source.avatar_seed;
+    result.blocked = source.blocked;
+    result.updated_at = source.updated_at;
+    return result;
+  }
+
+  view::niroom_contact to_view_contact(
+    const tools::wallet2::niroom_contact_record& source)
+  {
+    view::niroom_contact result = AUTO_VAL_INIT(result);
+    result.address = source.address;
+    result.display_name = source.display_name;
+    result.avatar_seed = source.avatar_seed;
+    result.blocked = source.blocked;
+    result.updated_at = source.updated_at;
+    result.trusted_devices.reserve(source.trusted_identity_keys.size());
+    for (const auto& trusted : source.trusted_identity_keys)
+    {
+      view::niroom_trusted_device device = AUTO_VAL_INIT(device);
+      device.device_id = trusted.first;
+      device.identity_key = trusted.second;
+      result.trusted_devices.push_back(device);
+    }
+    return result;
+  }
+}
+
+std::string wallets_manager::niroom_store_message(
+  const view::niroom_store_message_request& request)
+{
+  if (request.message.plaintext.size() > 1024 * 1024 ||
+      request.message.wire_ciphertext.size() > 2 * 1024 * 1024)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  w->get()->niroom_store_message(to_wallet_message(request.message));
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_set_message_status(
+  const view::niroom_set_message_status_request& request)
+{
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  w->get()->niroom_set_message_status(request.message_id, request.status);
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_delete_conversation(
+  const view::niroom_delete_conversation_request& request)
+{
+  if (request.peer_address.empty() || request.peer_address.size() > 256)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  w->get()->niroom_delete_conversation(request.peer_address);
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_list_messages(
+  const view::niroom_list_messages_request& request,
+  view::niroom_list_messages_response& response)
+{
+  if (request.limit == 0 || request.limit > 1000)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  const std::vector<tools::wallet2::niroom_message_record> messages =
+    w->get()->niroom_list_messages(
+      request.conversation_id,
+      request.status,
+      static_cast<size_t>(request.limit));
+  response.messages.clear();
+  response.messages.reserve(messages.size());
+  for (const auto& message : messages)
+    response.messages.push_back(to_view_message(message));
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_upsert_contact(
+  const view::niroom_upsert_contact_request& request)
+{
+  if (request.contact.address.empty() ||
+      request.contact.address.size() > 256 ||
+      request.contact.display_name.size() > 128 ||
+      request.contact.avatar_seed.size() > 128)
+    return API_RETURN_CODE_BAD_ARG;
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  w->get()->niroom_upsert_contact(to_wallet_contact(request.contact));
+  return API_RETURN_CODE_OK;
+}
+
+std::string wallets_manager::niroom_list_contacts(
+  const view::niroom_list_contacts_request& request,
+  view::niroom_list_contacts_response& response)
+{
+  GET_WALLET_BY_ID(request.wallet_id, w);
+  const std::vector<tools::wallet2::niroom_contact_record> contacts =
+    w->get()->niroom_list_contacts();
+  response.contacts.clear();
+  response.contacts.reserve(contacts.size());
+  for (const auto& contact : contacts)
+    response.contacts.push_back(to_view_contact(contact));
+  return API_RETURN_CODE_OK;
 }
 
 void wallets_manager::on_new_block(size_t wallet_id, uint64_t /*height*/, const currency::block& /*block*/)

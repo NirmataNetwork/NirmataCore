@@ -50,7 +50,11 @@ namespace tools
       intptr_t size_lower = 0;
       intptr_t size_now = -1;            //don't change current database size
       intptr_t size_upper = 0x10000000000;          //don't set db file size limit
-      intptr_t growth_step = 0x40000000; //increment step 1GB
+      // MDBX stores the growth step as a 16-bit page count.  A 1 GiB step
+      // overflows that field with the 4 KiB database page used here.  64 MiB
+      // is large enough to avoid excessive remaps and is representable on all
+      // supported platforms (including macOS/Apple Silicon).
+      intptr_t growth_step = 0x04000000; // increment step 64 MiB
       intptr_t shrink_threshold = -1;
       intptr_t pagesize = 0x00001000;   //4kb
       res = mdbx_env_set_geometry(m_penv, size_lower, size_now, size_upper, growth_step, shrink_threshold, pagesize);

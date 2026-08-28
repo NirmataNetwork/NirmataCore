@@ -973,13 +973,6 @@ struct alias_entry
   account_public_address addr;
 };
 
-account_public_address pub_addr_from_string(const char* str)
-{
-  account_public_address r = AUTO_VAL_INIT(r);
-  CHECK_AND_ASSERT_THROW_MES(get_account_address_from_str(r, str), "get_account_address_from_str failed for " << str);
-  return r;
-}
-
 gen_alias_too_small_reward::gen_alias_too_small_reward()
 {
   REGISTER_CALLBACK_METHOD(gen_alias_too_small_reward, init_runtime_config);
@@ -999,18 +992,21 @@ bool gen_alias_too_small_reward::init_runtime_config(currency::core& c, size_t e
 bool gen_alias_too_small_reward::generate(std::vector<test_event_entry>& events) const
 {
   // pay for alias too small and see, if it's ok
-  const alias_entry aliases[] = {
-    {"a",          pub_addr_from_string("ZxD95C97dFqVBsuTMA1VKjFxx8Cc7by2YTA9kLhFc8JB3zJ3qKKXRm9Lu2YQsjPP5UKhCSfLLEqJr5ovyQNYYQWV1Pv98fRzt")},
-    {"bb",         pub_addr_from_string("ZxDL9euTT4C9FUj28QY1RdWnreMHJiWfrPs39rXhrgai8H4pmaFzJ4vUUYRmHhNxToN64H1U5sMnaHuD3S4kVbyY1mKHnERVZ")},
-    {"ccc",        pub_addr_from_string("ZxBrpHp3xrjLrMMSyJUg44YmyJVZjetouVFdtqLfxpHUMSxiEyyQ7iKSj4sr6gn7qwXrj6YSw7UjJZLyc1H37QtF2p96c2gAD")},
-    {"dddd",       pub_addr_from_string("ZxDtT1pTwt6R2t3eGw9VD6N1heHCKNLKuCFUvqgHpXkAVnPkfai4KDYEjRSV8E42XKN3MJeaHJMaxa9hUmaXLyHm2nQ12aX93")},
-    {"eeeee",      pub_addr_from_string("ZxCABdwUJpqHstWJUHQ21piADBwaSsXcAh5EPtpSr8xXderWqvDef566ReFGrRqBUrE2tCgZ3HE5XRuxoq8mNTrP2X4J35yQq")},
-    {"ffffff",     pub_addr_from_string("ZxC34uAJJ2iW15GkvcqaQd4RKZdu16tpmf4ubmsirw7eFtKoLi2xswhNqy3Q4VacCq5mM7zuYyoWEW8AS5HGtoXr1m9RuTUuu")},
-    {"ggggggg",    pub_addr_from_string("ZxDHxZizSe5MNQoRkC1unqTrhYUkh1ZG7iEXMzLatyZ5EHRPat4Ls4ZRnN4CYLvJLq5F5gxdDtu17Zrvur7dcqU52sv2pryn7")},
-    {"hhhhhhhh",   pub_addr_from_string("ZxDXME4qrbh7mAbrqDmCbzGj14VQP1n9KLLi7fXBMNvDd5UUpcevCSXQ9zSkZcJtbzBS7u16NiykAiv3q9VkZySL2ySB6hTfL")},
-    {"iiiiiiiii",  pub_addr_from_string("ZxDtpxbC2bN8yu3J49tsUYUSoPYTnAgjmBogzFviUg3t2fGfWzmZ2gbKNC1XKVdMEE2hoW5sULs2hAF5T3igoAVW2MsHUmaj4")},
-    {"jjjjjjjjjj", pub_addr_from_string("ZxCBLxnctYwB37YZi7MsJqBCujXzkBeJEh7wPbYrFUvMiqXiPLkyBRAh6ahQ6wre2tGR8FHesZwKn2zYPkTuibyu2648g2CGV")}
+  alias_entry aliases[] = {
+    {"a", {}}, {"bb", {}}, {"ccc", {}}, {"dddd", {}}, {"eeeee", {}},
+    {"ffffff", {}}, {"ggggggg", {}}, {"hhhhhhhh", {}},
+    {"iiiiiiiii", {}}, {"jjjjjjjjjj", {}}
   };
+
+  // The former Zx-prefixed literals belong to the old network address
+  // format and are rejected by Nirmata's current prefixes.  The test only
+  // needs valid distinct destinations; generate them with the current codec.
+  for (auto& entry : aliases)
+  {
+    account_base destination;
+    destination.generate();
+    entry.addr = destination.get_public_address();
+  }
   
   const size_t aliases_count = sizeof aliases / sizeof aliases[0];
 
@@ -1508,6 +1504,3 @@ bool gen_alias_in_coinbase::check(currency::core& c, size_t ev_index, const std:
 
   return true;
 }
-
-  
-  

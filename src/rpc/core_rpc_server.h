@@ -73,6 +73,7 @@ namespace currency
     bool on_get_all_aliases(const COMMAND_RPC_GET_ALL_ALIASES::request& req, COMMAND_RPC_GET_ALL_ALIASES::response& res, epee::json_rpc::error& error_resp, connection_context& cntx);
     bool on_get_aliases(const COMMAND_RPC_GET_ALIASES::request& req, COMMAND_RPC_GET_ALIASES::response& res, epee::json_rpc::error& error_resp, connection_context& cntx);
     bool on_alias_by_address(const COMMAND_RPC_GET_ALIASES_BY_ADDRESS::request& req, COMMAND_RPC_GET_ALIASES_BY_ADDRESS::response& res, epee::json_rpc::error& error_resp, connection_context& cntx);
+    bool on_verify_niroom_proof(const COMMAND_RPC_VERIFY_NIROOM_PROOF::request& req, COMMAND_RPC_VERIFY_NIROOM_PROOF::response& res, epee::json_rpc::error& error_resp, connection_context& cntx);
     bool on_get_alias_reward(const COMMAND_RPC_GET_ALIAS_REWARD::request& req, COMMAND_RPC_GET_ALIAS_REWARD::response& res, epee::json_rpc::error& error_resp, connection_context& cntx);  
     bool on_get_addendums(const COMMAND_RPC_GET_ADDENDUMS::request& req, COMMAND_RPC_GET_ADDENDUMS::response& res, epee::json_rpc::error& error_resp, connection_context& cntx);
     bool on_reset_transaction_pool(const COMMAND_RPC_RESET_TX_POOL::request& req, COMMAND_RPC_RESET_TX_POOL::response& res, connection_context& cntx);
@@ -136,6 +137,7 @@ namespace currency
         MAP_JON_RPC_WE("getblockheaderbyheight",      on_get_block_header_by_height,  COMMAND_RPC_GET_BLOCK_HEADER_BY_HEIGHT)
         MAP_JON_RPC_WE("get_alias_details",           on_get_alias_details,           COMMAND_RPC_GET_ALIAS_DETAILS)
         MAP_JON_RPC_WE("get_alias_by_address",        on_alias_by_address,            COMMAND_RPC_GET_ALIASES_BY_ADDRESS)
+        MAP_JON_RPC_WE("verify_niroom_proof",         on_verify_niroom_proof,         COMMAND_RPC_VERIFY_NIROOM_PROOF)
         MAP_JON_RPC_WE("get_alias_reward",            on_get_alias_reward,            COMMAND_RPC_GET_ALIAS_REWARD)
         MAP_JON_RPC   ("get_est_height_from_date",    on_get_est_height_from_date,    COMMAND_RPC_GET_EST_HEIGHT_FROM_DATE)
         //block explorer api

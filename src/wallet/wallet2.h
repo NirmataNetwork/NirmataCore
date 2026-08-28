@@ -7,6 +7,7 @@
 
 #pragma once
 #include <memory>
+#include <boost/serialization/library_version_type.hpp>
 #include <boost/serialization/list.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/deque.hpp>
@@ -462,6 +463,187 @@ namespace tools
     typedef std::map<uint64_t, std::set<size_t> > free_amounts_cache_type;
     typedef std::unordered_map<std::pair<uint64_t, uint64_t>, uint64_t> amount_gindex_to_transfer_id_container; // maps [amount; gindex] -> tid
 
+    struct niroom_prekey
+    {
+      std::string id;
+      crypto::public_key public_key;
+      crypto::secret_key secret_key;
+      bool used;
+
+      template <class Archive>
+      void serialize(Archive& a, const unsigned int)
+      {
+        a & id;
+        a & public_key;
+        a & secret_key;
+        a & used;
+      }
+    };
+
+    struct niroom_session
+    {
+      struct skipped_message_key
+      {
+        crypto::public_key ratchet_public_key;
+        uint64_t counter;
+        crypto::hash key;
+
+        template <class Archive>
+        void serialize(Archive& a, const unsigned int version)
+        {
+          if (version >= 1)
+            a & ratchet_public_key;
+          a & counter;
+          a & key;
+        }
+      };
+
+      std::string session_id;
+      std::string peer_address;
+      std::string peer_device_id;
+      crypto::public_key peer_identity_key;
+      crypto::hash root_key;
+      crypto::public_key local_ratchet_public_key;
+      crypto::secret_key local_ratchet_secret_key;
+      crypto::public_key remote_ratchet_public_key;
+      std::vector<crypto::public_key> remote_ratchet_history;
+      crypto::hash send_chain_key;
+      crypto::hash receive_chain_key;
+      bool send_chain_initialized;
+      bool receive_chain_initialized;
+      uint64_t send_counter;
+      uint64_t receive_counter;
+      uint64_t previous_send_chain_length;
+      std::vector<skipped_message_key> skipped_message_keys;
+
+      template <class Archive>
+      void serialize(Archive& a, const unsigned int version)
+      {
+        a & session_id;
+        a & peer_address;
+        a & peer_device_id;
+        a & peer_identity_key;
+        a & root_key;
+        if (version == 0)
+        {
+          a & send_counter;
+          a & receive_counter;
+        }
+        else
+        {
+          if (version >= 2)
+          {
+            a & local_ratchet_public_key;
+            a & local_ratchet_secret_key;
+            a & remote_ratchet_public_key;
+            a & remote_ratchet_history;
+          }
+          a & send_chain_key;
+          a & receive_chain_key;
+          if (version >= 2)
+          {
+            a & send_chain_initialized;
+            a & receive_chain_initialized;
+          }
+          a & send_counter;
+          a & receive_counter;
+          if (version >= 2)
+            a & previous_send_chain_length;
+          a & skipped_message_keys;
+        }
+      }
+    };
+
+    struct niroom_session_header
+    {
+      std::string session_id;
+      crypto::public_key sender_identity_key;
+      crypto::public_key sender_ephemeral_key;
+      std::string recipient_one_time_prekey_id;
+    };
+
+    struct niroom_encrypted_message
+    {
+      std::string session_id;
+      uint64_t counter;
+      std::string ratchet_public_key;
+      uint64_t previous_chain_length;
+      std::string nonce;
+      std::string ciphertext;
+      std::string tag;
+    };
+
+    struct niroom_message_record
+    {
+      std::string message_id;
+      std::string conversation_id;
+      std::string peer_address;
+      std::string peer_device_id;
+      bool incoming;
+      std::string plaintext;
+      std::string wire_ciphertext;
+      uint64_t created_at;
+      std::string status;
+
+      template <class Archive>
+      void serialize(Archive& a, const unsigned int)
+      {
+        a & message_id;
+        a & conversation_id;
+        a & peer_address;
+        a & peer_device_id;
+        a & incoming;
+        a & plaintext;
+        a & wire_ciphertext;
+        a & created_at;
+        a & status;
+      }
+    };
+
+    struct niroom_contact_record
+    {
+      std::string address;
+      std::string display_name;
+      std::string avatar_seed;
+      bool blocked;
+      uint64_t updated_at;
+      std::map<std::string, std::string> trusted_identity_keys;
+
+      template <class Archive>
+      void serialize(Archive& a, const unsigned int)
+      {
+        a & address;
+        a & display_name;
+        a & avatar_seed;
+        a & blocked;
+        a & updated_at;
+        a & trusted_identity_keys;
+      }
+    };
+
+    struct niroom_device
+    {
+      std::string device_id;
+      crypto::public_key identity_public_key;
+      crypto::secret_key identity_secret_key;
+      crypto::public_key signed_prekey_public;
+      crypto::secret_key signed_prekey_secret;
+      crypto::signature signed_prekey_signature;
+      std::vector<niroom_prekey> one_time_prekeys;
+
+      template <class Archive>
+      void serialize(Archive& a, const unsigned int)
+      {
+        a & device_id;
+        a & identity_public_key;
+        a & identity_secret_key;
+        a & signed_prekey_public;
+        a & signed_prekey_secret;
+        a & signed_prekey_signature;
+        a & one_time_prekeys;
+      }
+    };
+
 
     struct keys_file_data_old
     {
@@ -509,6 +691,40 @@ namespace tools
     std::string get_wallet_password()const { return m_password; }
     currency::account_base& get_account() { return m_account; }
     const currency::account_base& get_account() const { return m_account; }
+    const niroom_device& niroom_create_device(size_t one_time_prekey_count);
+    const niroom_device& niroom_rotate_device(size_t one_time_prekey_count);
+    std::vector<niroom_prekey> niroom_generate_prekeys(size_t count);
+    niroom_session_header niroom_create_session(
+      const std::string& peer_address,
+      const std::string& peer_device_id,
+      const crypto::public_key& peer_identity_key,
+      const crypto::public_key& peer_signed_prekey,
+      const crypto::signature& peer_signed_prekey_signature,
+      const std::string& peer_one_time_prekey_id,
+      const crypto::public_key* peer_one_time_prekey);
+    void niroom_accept_session(
+      const std::string& peer_address,
+      const std::string& peer_device_id,
+      const niroom_session_header& header);
+    niroom_encrypted_message niroom_encrypt_message(
+      const std::string& session_id,
+      const std::string& plaintext);
+    std::string niroom_decrypt_message(const niroom_encrypted_message& message);
+    void niroom_store_message(const niroom_message_record& message);
+    void niroom_set_message_status(
+      const std::string& message_id,
+      const std::string& status);
+    size_t niroom_delete_conversation(const std::string& peer_address);
+    std::vector<niroom_message_record> niroom_list_messages(
+      const std::string& conversation_id,
+      const std::string& status,
+      size_t limit) const;
+    void niroom_upsert_contact(const niroom_contact_record& contact);
+    std::vector<niroom_contact_record> niroom_list_contacts() const;
+    void niroom_trust_device(
+      const std::string& peer_address,
+      const std::string& peer_device_id,
+      const crypto::public_key& identity_key);
 
     void get_recent_transfers_history(std::vector<wallet_public::wallet_transfer_info>& trs, size_t offset, size_t count, uint64_t& total, uint64_t& last_item_index, bool exclude_mining_txs = false, bool start_from_end = true);
     uint64_t get_recent_transfers_total_count();
@@ -784,6 +1000,19 @@ namespace tools
       a & m_active_htlcs;
       a & m_active_htlcs_txid;
 
+      if (ver >= NIROOM_WALLET_SERIALIZATION_VERSION)
+      {
+        a & m_niroom_device;
+        a & m_niroom_sessions;
+        if (!t_archive::is_saving::value &&
+            ver < NIROOM_DH_RATCHET_SERIALIZATION_VERSION)
+          m_niroom_sessions.clear();
+      }
+      if (ver >= NIROOM_HISTORY_SERIALIZATION_VERSION)
+        a & m_niroom_messages;
+      if (ver >= NIROOM_CONTACTS_SERIALIZATION_VERSION)
+        a & m_niroom_contacts;
+
     }
 
     void wipeout_extra_if_needed(std::vector<wallet_public::wallet_transfer_info>& transfer_history);
@@ -1058,6 +1287,10 @@ private:
     free_amounts_cache_type m_found_free_amounts;
     uint64_t m_fake_outputs_count;
     std::string m_miner_text_info;
+    niroom_device m_niroom_device;
+    std::vector<niroom_session> m_niroom_sessions;
+    std::vector<niroom_message_record> m_niroom_messages;
+    std::vector<niroom_contact_record> m_niroom_contacts;
 
     mutable uint64_t m_current_wallet_file_size;
     bool m_use_deffered_global_outputs;
@@ -1069,6 +1302,8 @@ private:
 } // namespace tools
 
 BOOST_CLASS_VERSION(tools::wallet2, WALLET_FILE_SERIALIZATION_VERSION)
+BOOST_CLASS_VERSION(tools::wallet2::niroom_session, 2)
+BOOST_CLASS_VERSION(tools::wallet2::niroom_session::skipped_message_key, 1)
 BOOST_CLASS_VERSION(tools::wallet_public::wallet_transfer_info, 10)
 BOOST_CLASS_VERSION(tools::wallet2::transfer_details, 3)
 

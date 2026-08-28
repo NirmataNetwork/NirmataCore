@@ -1,3 +1,5 @@
+@use "../base/variables";
+
 app-contacts,
 app-add-contacts,
 app-contact-send,
@@ -8,7 +10,7 @@ app-export-import {
     position: relative;
     padding: 3rem;
     min-height: 100%;
-    color: $mainTextColor;
+    color: variables.$mainTextColor;
     .head {
       position: relative;
       top: 0;
@@ -23,9 +25,9 @@ app-contacts {
       tbody {
         tr {
           td {
-            background-color: $selectHoverColor !important;
+            background-color: variables.$selectHoverColor !important;
             .alias {
-              color: $blueTextColor;
+              color: variables.$blueTextColor;
             }
           }
         }
@@ -33,7 +35,7 @@ app-contacts {
 
       button {
         span {
-          color: $mainTextColor;
+          color: variables.$mainTextColor;
         }
       }
     }
@@ -45,7 +47,7 @@ app-contacts {
 app-contact-send {
   .wallets-selection {
     button {
-      color: $blueTextColor;
+      color: variables.$blueTextColor;
     }
   }
 }

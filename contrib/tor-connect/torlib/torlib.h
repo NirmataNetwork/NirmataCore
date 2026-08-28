@@ -114,4 +114,3 @@ public:
   virtual void TransferExternalConsensus(std::vector<std::string>& local_consensus_data);
   virtual void WithdrawExternalConsensus(std::vector<std::string>& local_consensus_data);
 };
-

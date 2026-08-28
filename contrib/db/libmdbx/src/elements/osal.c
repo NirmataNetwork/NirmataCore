@@ -164,6 +164,11 @@ __extern_C void __assert_fail(const char *assertion, const char *file,
 #endif /* __THROW */
     __noreturn;
 
+#elif defined(__ANDROID__)
+__extern_C void __assert2(const char *file, int line, const char *function,
+                          const char *assertion) __noreturn;
+#define __assert_fail(assertion, file, line, function)                         \
+  __assert2(file, (int)line, function, assertion)
 #elif defined(__APPLE__) || defined(__MACH__)
 __extern_C void __assert_rtn(const char *function, const char *file, int line,
                              const char *assertion) /* __nothrow */
@@ -701,7 +706,7 @@ MDBX_INTERNAL_FUNC int mdbx_write(mdbx_filehandle_t fd, const void *buf,
 
 int mdbx_pwritev(mdbx_filehandle_t fd, struct iovec *iov, int iovcnt,
                  uint64_t offset, size_t expected_written) {
-#if defined(_WIN32) || defined(_WIN64) || defined(__APPLE__)
+#if defined(_WIN32) || defined(_WIN64) || defined(__APPLE__) || defined(__ANDROID__)
   size_t written = 0;
   for (int i = 0; i < iovcnt; ++i) {
     int rc = mdbx_pwrite(fd, iov[i].iov_base, iov[i].iov_len, offset);

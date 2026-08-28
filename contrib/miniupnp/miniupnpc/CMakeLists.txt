@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
 project (miniupnpc C)
 
@@ -47,6 +47,9 @@ endif ()
 # Suppress noise warnings
 if (MSVC)
   target_compile_definitions(miniupnpc-private INTERFACE _CRT_SECURE_NO_WARNINGS)
+  # This vendored MiniUPnPc release uses int-sized socket APIs internally;
+  # MSVC reports its established size_t conversions as consumer warnings.
+  target_compile_options(miniupnpc-private INTERFACE /wd4244 /wd4267)
 endif()
 
 configure_file (${CMAKE_CURRENT_SOURCE_DIR}/miniupnpcstrings.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/miniupnpcstrings.h)
@@ -99,6 +102,9 @@ endif ()
 
 if (UPNPC_BUILD_STATIC)
   add_library (libminiupnpc-static STATIC ${MINIUPNPC_SOURCES})
+  if(CMAKE_C_COMPILER_ID MATCHES "Clang")
+    target_compile_options(libminiupnpc-static PRIVATE -Wno-unused-but-set-variable)
+  endif()
   set_target_properties (libminiupnpc-static PROPERTIES OUTPUT_NAME "miniupnpc")
   target_link_libraries (libminiupnpc-static PRIVATE miniupnpc-private)
   target_include_directories(libminiupnpc-static INTERFACE ../${CMAKE_CURRENT_SOURCE_DIR})

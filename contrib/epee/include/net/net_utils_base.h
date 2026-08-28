@@ -79,6 +79,8 @@ namespace net_utils
                                m_started(time(NULL))
     {}
 
+    connection_context_base(const connection_context_base&) = default;
+
     connection_context_base& operator=(const connection_context_base& a)
     {
       set_details(a.m_connection_id, a.m_remote_ip, a.m_remote_port, a.m_is_income);
@@ -105,7 +107,7 @@ namespace net_utils
     virtual bool close()=0;
     virtual bool call_run_once_service_io()=0;
     virtual bool request_callback()=0;
-    virtual boost::asio::io_service& get_io_service()=0;
+    virtual boost::asio::io_context& get_io_context()=0;
     //protect from deletion connection object(with protocol instance) during external call "invoke"
     virtual bool add_ref()=0;
     virtual bool release()=0;

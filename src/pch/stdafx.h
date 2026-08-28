@@ -58,6 +58,7 @@ POP_VS_WARNINGS
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/program_options.hpp>
 #include <boost/serialization/is_bitwise_serializable.hpp>
+#include <boost/serialization/library_version_type.hpp>
 #include <boost/serialization/list.hpp>
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/serialization.hpp>

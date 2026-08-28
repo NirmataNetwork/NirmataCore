@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <string>
 
 namespace plain_wallet
@@ -34,7 +35,12 @@ namespace plain_wallet
 
   std::string get_wallet_status(hwallet h);
   std::string close_wallet(hwallet h);
+  std::string start_pos_mining(hwallet h);
+  std::string stop_pos_mining(hwallet h);
+  std::string resync_wallet(hwallet h);
   std::string invoke(hwallet h, const std::string& params);
+  std::string niroom_call(const std::string& method, const std::string& params);
+  std::string alias_call(const std::string& method, const std::string& params);
   
   //async api
   std::string async_call(const std::string& method_name, uint64_t instance_id, const std::string& params);

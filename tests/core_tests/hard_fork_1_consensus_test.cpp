@@ -73,7 +73,7 @@ bool before_hard_fork_1_cumulative_difficulty::c1(currency::core& c, size_t ev_i
   
   std::shared_ptr<block_extended_info> last_pow_block = c.get_blockchain_storage().get_last_block_of_type(false);
   std::shared_ptr<block_extended_info> last_pos_block = c.get_blockchain_storage().get_last_block_of_type(true);
-  CHECK_AND_ASSERT_MES(last_pow_block->cumulative_diff_precise == 184, false, "Incorrect condition failed: last_pow_block->cumulative_diff_precise == 184");
+  CHECK_AND_ASSERT_MES(last_pow_block->cumulative_diff_precise == 196, false, "Unexpected pre-HF PoW cumulative difficulty: " << last_pow_block->cumulative_diff_precise);
   CHECK_AND_ASSERT_MES(last_pos_block->cumulative_diff_precise == 20, false, "Incorrect condition failed: last_pos_block->cumulative_diff_precise == 20");
   //
   return true;
@@ -91,7 +91,7 @@ bool inthe_middle_hard_fork_1_cumulative_difficulty::c1(currency::core& c, size_
 
   std::shared_ptr<block_extended_info> last_pow_block = c.get_blockchain_storage().get_last_block_of_type(false);
   std::shared_ptr<block_extended_info> last_pos_block = c.get_blockchain_storage().get_last_block_of_type(true);
-  CHECK_AND_ASSERT_MES(last_pow_block->cumulative_diff_precise == 184, false, "Incorrect condition failed: last_pow_block->cumulative_diff_precise == 184");
+  CHECK_AND_ASSERT_MES(last_pow_block->cumulative_diff_precise == 196, false, "Unexpected transition PoW cumulative difficulty: " << last_pow_block->cumulative_diff_precise);
   CHECK_AND_ASSERT_MES(last_pos_block->cumulative_diff_precise == 20, false, "Incorrect condition failed: last_pos_block->cumulative_diff_precise == 20");
   //
   return true;
@@ -106,8 +106,8 @@ bool after_hard_fork_1_cumulative_difficulty::c1(currency::core& c, size_t ev_in
 
   std::shared_ptr<block_extended_info> last_pow_block = c.get_blockchain_storage().get_last_block_of_type(false);
   std::shared_ptr<block_extended_info> last_pos_block = c.get_blockchain_storage().get_last_block_of_type(true);
-  CHECK_AND_ASSERT_MES(last_pow_block->cumulative_diff_precise == 172, false, "Incorrect condition failed: last_pow_block->cumulative_diff_precise == 184");
-  CHECK_AND_ASSERT_MES(last_pos_block->cumulative_diff_precise == 199, false, "Incorrect condition failed: last_pos_block->cumulative_diff_precise == 20");
+  CHECK_AND_ASSERT_MES(last_pow_block->cumulative_diff_precise == 172, false, "Unexpected post-HF PoW cumulative difficulty: " << last_pow_block->cumulative_diff_precise);
+  CHECK_AND_ASSERT_MES(last_pos_block->cumulative_diff_precise == 179, false, "Unexpected post-HF PoS cumulative difficulty: " << last_pos_block->cumulative_diff_precise);
   //
   return true;
 }

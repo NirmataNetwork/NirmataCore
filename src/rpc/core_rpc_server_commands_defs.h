@@ -1080,6 +1080,35 @@ namespace currency
     };
   };
 
+  struct COMMAND_RPC_VERIFY_NIROOM_PROOF
+  {
+    struct request
+    {
+      std::string address;
+      std::string alias;
+      std::string payload;
+      std::string proof;
+
+      BEGIN_KV_SERIALIZE_MAP()
+        KV_SERIALIZE(address)
+        KV_SERIALIZE(alias)
+        KV_SERIALIZE(payload)
+        KV_SERIALIZE(proof)
+      END_KV_SERIALIZE_MAP()
+    };
+
+    struct response
+    {
+      bool valid;
+      std::string status;
+
+      BEGIN_KV_SERIALIZE_MAP()
+        KV_SERIALIZE(valid)
+        KV_SERIALIZE(status)
+      END_KV_SERIALIZE_MAP()
+    };
+  };
+
 
   struct COMMAND_RPC_GET_ADDENDUMS
   {

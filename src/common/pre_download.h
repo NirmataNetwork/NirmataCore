@@ -22,11 +22,11 @@ namespace tools
   };
 
 #ifndef TESTNET
-  static constexpr pre_download_entry c_pre_download_lmdb = { 
-    "http://download.nirmata-network.com/nirmata-blockchain-lmdb-2M.deflate", 
-    "fdb50866d6f302615fe505c929bffeb64b4550c99e7328ced20345f51f7f3e92", 
-    4930402700, 
-    6984818688 
+  static constexpr pre_download_entry c_pre_download_lmdb = {
+    "http://download.nirmata-network.com/nirmata-blockchain-lmdb-2700000.deflate",
+    "5de08497e037304c38b27f42a1988bb001dda12a11260285c9a33e2e90304139",
+    6129410013,
+    9024577536
   };
   static constexpr pre_download_entry c_pre_download_mdbx = { "", "", 0, 0 };
 #else
@@ -57,6 +57,11 @@ namespace tools
     boost::system::error_code ec;
     uint64_t sz = boost::filesystem::file_size(db_main_file_path, ec);
     bool flag_force_predownload = command_line::has_arg(vm, command_line::arg_force_predownload);
+    // predownload_required only makes a failed/skipped download fatal (see the
+    // two `return !flag_...` branches below); it must NOT bypass the
+    // up-to-date size check the way force_predownload intentionally does,
+    // otherwise every restart would re-fetch an already-complete database.
+    bool flag_predownload_required = command_line::has_arg(vm, command_line::arg_predownload_required);
     if (pre_download.unpacked_size == 0 || !(ec || (pre_download.unpacked_size > sz && pre_download.unpacked_size - sz > pre_download_min_size_difference) || flag_force_predownload) )
     {
       LOG_PRINT_MAGENTA("Pre-downloading not needed (db file size = " << sz << ")", LOG_LEVEL_0);
@@ -96,18 +101,31 @@ namespace tools
     };
 
     tools::create_directories_if_necessary(working_folder);
-    r = cl.download_and_unzip(cb, downloading_file_path, url, 5000 /* timout */, "GET", std::string(), 30 /* fails count */);
+#ifdef ANDROID_BUILD
+    // Android may suspend a native socket for several seconds while changing
+    // radio/Wi-Fi state. The desktop timeout causes the large snapshot stream
+    // to be torn down after only a few kilobytes on affected devices.
+    // The inflate/hash callback can keep a low-power Android core busy long
+    // enough for a short idle deadline to expire between socket reads. Keep
+    // the connection alive; the downloader still resumes after real errors.
+    constexpr uint64_t predownload_timeout_ms = 1800000;
+    constexpr uint64_t predownload_attempts = 100;
+#else
+    constexpr uint64_t predownload_timeout_ms = 5000;
+    constexpr uint64_t predownload_attempts = 30;
+#endif
+    r = cl.download_and_unzip(cb, downloading_file_path, url, predownload_timeout_ms, "GET", std::string(), predownload_attempts);
     if (!r)
     {
       LOG_PRINT_RED("Downloading failed", LOG_LEVEL_0);
-      return !flag_force_predownload;  // fatal error only if force-predownload
+      return !(flag_force_predownload || flag_predownload_required);  // fatal error only if required
     }
 
     crypto::hash data_hash = hash_stream.calculate_hash();
     if (epee::string_tools::pod_to_hex(data_hash) != pre_download.hash)
     {
       LOG_ERROR("hash missmatch in downloaded file, got: " << epee::string_tools::pod_to_hex(data_hash) << ", expected: " << pre_download.hash);
-      return !flag_force_predownload;  // fatal error only if force-predownload
+      return !(flag_force_predownload || flag_predownload_required);  // fatal error only if required
     }
 
     LOG_PRINT_GREEN("Download succeeded, hash " << pre_download.hash << " is correct" , LOG_LEVEL_0);

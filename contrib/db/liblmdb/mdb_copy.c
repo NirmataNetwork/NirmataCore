@@ -66,6 +66,9 @@ int main(int argc,char * argv[])
 	act = "opening environment";
 	rc = mdb_env_create(&env);
 	if (rc == MDB_SUCCESS) {
+		rc = mdb_env_set_maxdbs(env, 15);
+	}
+	if (rc == MDB_SUCCESS) {
 		rc = mdb_env_open(env, argv[1], flags, 0600);
 	}
 	if (rc == MDB_SUCCESS) {

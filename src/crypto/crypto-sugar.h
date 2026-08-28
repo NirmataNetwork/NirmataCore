@@ -821,8 +821,8 @@ namespace crypto
     // zeroes all elements
     void zero()
     {
-      size_t size_bytes = sizeof(scalar_t) * size();
-      memset(data(), 0, size_bytes);
+      for (scalar_t& scalar : *this)
+        scalar = scalar_t(0, 0, 0, 0);
     }
 
     // invert all elements in-place efficiently: 4*N muptiplications + 1 inversion

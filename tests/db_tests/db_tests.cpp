@@ -410,25 +410,25 @@ int main(int argc, char* argv[])
 
 
   if (!prepare_db_and_run_test<check_boost_multiprecision_container>())
-    return 0;
+    return 1;
 
   if (!db_cache_test())
-    return 0;
+    return 1;
 
   if (!prepare_db_and_run_test<simple_get_set_test>())
-    return 0;
+    return 1;
 
   if (!prepare_db_and_run_test<simple_check_count>())
-    return 0;
+    return 1;
 
   if (!prepare_db_and_run_test<check_array_container>())
-    return 0;
+    return 1;
 
   if (!prepare_db_and_run_test<check_subcontainer_container>())
-    return 0;
+    return 1;
 
   if (!solo_container_save_load_test())
-    return 0;
+    return 1;
 
-  return 1;
+  return 0;
 }

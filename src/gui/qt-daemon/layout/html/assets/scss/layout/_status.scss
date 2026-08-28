@@ -1,3 +1,5 @@
+@use "../base/variables";
+
 .synchronization-status {
   display: flex;
   align-items: center;
@@ -28,10 +30,10 @@
       }
     }
     .offline:before {
-      background-color: $offlineColor;
+      background-color: variables.$offlineColor;
     }
     .online:before {
-      background-color: $onlineColor;
+      background-color: variables.$onlineColor;
     }
     .progress-bar-container {
       position: absolute;
@@ -45,25 +47,25 @@
           border-radius: 1rem;
           flex: 1 0 auto;
           overflow: hidden;
-          background-color: $progressBarBackgroundColor;
+          background-color: variables.$progressBarBackgroundColor;
           .fill {
             border-radius: 1rem;
             height: 100%;
-            background-color: $progressBarFullBackgroundColor;
+            background-color: variables.$progressBarFullBackgroundColor;
           }
         }
         &.downloading {
           .progress-bar {
-            background-color: $progressBarBackgroundColor;
+            background-color: variables.$progressBarBackgroundColor;
             border-radius: 1rem;
             .fill {
-              background-color: $blueTextColor;
+              background-color: variables.$blueTextColor;
               border-radius: 1rem;
             }
           }
         }
         .progress-percent {
-          color: $blueTextColor;
+          color: variables.$blueTextColor;
           flex: 0 0 auto;
           font-size: 1.4rem;
           line-height: 1.7rem;
@@ -71,7 +73,7 @@
         }
       }
       .loading {
-        background-color: $progressBarFullBackgroundColor;
+        background-color: variables.$progressBarFullBackgroundColor;
         animation: move 5s linear infinite;
         background-image: -webkit-gradient(
             linear,
@@ -119,35 +121,35 @@
       width: 1.2rem;
       height: 1.2rem;
       &.time {
-        background: center / contain no-repeat url(./assets/icons/time.svg);
+        background: center / contain no-repeat url("./assets/icons/time.svg");
       }
     }
     .standard {
-      color: $blueTextColor;
+      color: variables.$blueTextColor;
     }
     .important {
-      color: $orangeTextColor;
+      color: variables.$orangeTextColor;
     }
     .critical {
-      color: $redTextColor;
+      color: variables.$redTextColor;
     }
     .time {
-      color: $orangeTextColor;
+      color: variables.$orangeTextColor;
     }
     .icon {
       &.standard {
         .st0 {
-          fill: $blueTextColor;
+          fill: variables.$blueTextColor;
         }
       }
       &.important {
         .st0 {
-          fill: $orangeTextColor;
+          fill: variables.$orangeTextColor;
         }
       }
       &.critical {
         .st0 {
-          fill: $redTextColor;
+          fill: variables.$redTextColor;
         }
       }
     }

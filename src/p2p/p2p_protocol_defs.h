@@ -101,7 +101,9 @@ namespace nodetool
     peerid_type peer_id;
 
     BEGIN_KV_SERIALIZE_MAP()
-      KV_SERIALIZE_VAL_POD_AS_BLOB(network_id)
+      // Boost.UUID 1.91 is trivially byte-serializable but no longer reports
+      // std::is_pod, so preserve the existing 16-byte wire representation.
+      KV_SERIALIZE_VAL_POD_AS_BLOB_FORCE(network_id)
       KV_SERIALIZE(peer_id)
       KV_SERIALIZE(local_time)
       KV_SERIALIZE(my_port)

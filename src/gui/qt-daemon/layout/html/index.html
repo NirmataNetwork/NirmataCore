@@ -3,13 +3,64 @@
 <head>
   <meta charset="utf-8">
   <title>NiR</title>
-  <base href=".">
+  <base href="./index.html">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Native JS<->C++ bridge. BackendService.initService() calls
+       `new QWebChannel(...)` at startup; without this tag the class doesn't
+       exist, that call throws, and nothing past it ever runs — no daemon
+       start, no event subscriptions (including quit_requested), so the app
+       sits on its initial route forever and the window stops responding to
+       the close button too. script-src already allow-lists the qrc: scheme
+       below specifically for this. -->
   <script type="text/javascript" src="qrc:///qtwebchannel/qwebchannel.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+  <!-- Regular is the weight used for most on-screen text; preloading only
+       this one (not Medium/Semibold) avoids competing with the app bundle
+       for bandwidth on first paint while still cutting the FOIT window.
+       No `crossorigin`: on this file:// origin the @font-face fetch below
+       is same-origin/credentialed, and a preload declared as anonymous-CORS
+       doesn't match that — the browser then treats them as two different
+       requests and never applies the preload, logging "preload... not used"
+       and a credentials-mode mismatch warning. -->
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/SF-Pro-Rounded-Regular.woff2">
+  <!--
+    Second line of defense against C-01 (TooltipDirective HTML injection from
+    remote/counterparty data: PeerSwap offers, contract details, NiRVeil
+    comments). The sanitizer fix in TooltipDirective is the primary fix; this
+    CSP additionally blocks inline/eval script execution and third-party
+    frames/plugins even if another unsanitized sink is found later. The app
+    ships over file:// with no HTTP layer, so this has to be a <meta> tag —
+    that means frame-ancestors and reporting directives are not enforceable
+    here and are intentionally omitted.
+
+    connect-src / frame-src were built from a static grep of every external
+    endpoint referenced in html_source/src (LiveCoinWatch price ticker, the
+    three exchange tickers on the Price tab, NiRoom's HTTPS/WSS API, the
+    block explorer iframe, the local dev NiRoom backend on 127.0.0.1:8080).
+    Firebase was removed from the app entirely, so its endpoints are not
+    allow-listed here. Do one supervised smoke test (Price tab tickers,
+    Explorer tab, NiRoom chat) with --qt-dev-tools before shipping, and widen
+    the relevant allowance if the console logs a CSP violation instead of
+    loosening the policy blindly.
+  -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'none';
+    script-src 'self' qrc:;
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    font-src 'self';
+    media-src 'self';
+    connect-src 'self' http://127.0.0.1:8080
+      https://http-api.livecoinwatch.com
+      https://rabid-rabbit.org https://api.nonkyc.io https://api.indoex.io
+      https://*.nirmata-network.com wss://*.nirmata-network.com;
+    frame-src https://*.nirmata-network.com;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+  ">
+<link rel="stylesheet" href="styles-25M5JWFI.css"></head>
 <body>
   <app-root></app-root>
-<script type="text/javascript" src="runtime.js"></script><script type="text/javascript" src="polyfills.js"></script><script type="text/javascript" src="styles.js"></script><script type="text/javascript" src="vendor.js"></script><script type="text/javascript" src="main.js"></script></body>
+<script src="polyfills-B7LGQ2G6.js" type="module"></script><script src="main-BDI55XEG.js" type="module"></script></body>
 </html>

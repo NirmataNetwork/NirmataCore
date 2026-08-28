@@ -3482,9 +3482,9 @@ bool wallet_watch_only_and_chain_switch::generate(std::vector<test_event_entry>&
   //  0     10    11    12    13    23    15         <- blockchain height
   // (0 )- (0r)- (1 )- (2 )- (3 )- (3r)-             <- main chain
   //              |          tx_0
-  //              \          tx_1
-  //               \
-  //                \- (2a)- (3a)- (3ar)- 
+  //              |          tx_1
+  //               |
+  //                +-- (2a)- (3a)- (3ar)-
 
 
   MAKE_NEXT_BLOCK(events, blk_1, blk_0r, miner_acc);

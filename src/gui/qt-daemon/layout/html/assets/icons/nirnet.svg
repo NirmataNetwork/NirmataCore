@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>NiRNeT</title>
+    <g id="NiRNeT" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M12,2 C17.5228,2 22,6.47715 22,12 C22,17.5228 17.5228,22 12,22 C6.47715,22 2,17.5228 2,12 C2,6.47715 6.47715,2 12,2 Z" id="Circle" stroke="#FFFFFF" stroke-width="1.5"></path>
+        <path d="M12,5 C15.866,5 19,8.13401 19,12 C19,15.866 15.866,19 12,19 C8.13401,19 5,15.866 5,12 C5,8.13401 8.13401,5 12,5 Z" id="Inner-Circle" stroke="#FFFFFF" stroke-width="1.5"></path>
+        <path d="M12,8 C14.2091,8 16,9.79086 16,12 C16,14.2091 14.2091,16 12,16 C9.79086,16 8,14.2091 8,12 C8,9.79086 9.79086,8 12,8 Z" id="Core" fill="#FFFFFF"></path>
+        <path d="M3.5,7.5 L7.5,3.5" id="Line-1" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M16.5,3.5 L20.5,7.5" id="Line-2" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M20.5,16.5 L16.5,20.5" id="Line-3" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M7.5,20.5 L3.5,16.5" id="Line-4" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"></path>
+    </g>
+</svg> 

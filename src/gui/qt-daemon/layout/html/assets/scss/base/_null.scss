@@ -1,3 +1,5 @@
+@use "mixins";
+
 //* ******* reset & normalize *******  *//
 
 // box-sizing the same for all elements
@@ -12,7 +14,7 @@ html {
   -moz-box-sizing: inherit;
   margin: 0;
   padding: 0;
-  @include unSelect;
+  @include mixins.unSelect;
 }
 
 html, body, div, span, applet, object, iframe,
@@ -67,7 +69,10 @@ th {
 input {
     outline: none;
     &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 1000px white inset;
+      -webkit-text-fill-color: #effff6;
+      caret-color: #effff6;
+      -webkit-box-shadow: 0 0 0 1000px #07131d inset;
+      transition: background-color 9999s ease-out;
     }
 }
 

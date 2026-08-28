@@ -1,6 +1,6 @@
 
 
-if(CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "Android")
+if(CMAKE_SYSTEM_NAME STREQUAL "iOS" OR (CMAKE_SYSTEM_NAME STREQUAL "Android" AND NOT NIRMATA_ANDROID_FULL_NODE))
   message("excluded db support for IOS build")
   return()
 endif()

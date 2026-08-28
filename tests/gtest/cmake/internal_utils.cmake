@@ -175,8 +175,10 @@ function(cxx_executable name dir libs)
     ${name} "${cxx_default}" "${libs}" "${dir}/${name}.cc" ${ARGN})
 endfunction()
 
-# Sets PYTHONINTERP_FOUND and PYTHON_EXECUTABLE.
-find_package(PythonInterp)
+# Python is needed only by GoogleTest's own optional tests.
+if (gtest_build_tests)
+  find_package(Python3 COMPONENTS Interpreter)
+endif()
 
 # cxx_test_with_flags(name cxx_flags libs srcs...)
 #

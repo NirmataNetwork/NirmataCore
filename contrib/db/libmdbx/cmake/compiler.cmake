@@ -13,9 +13,9 @@
 ##  limitations under the License.
 ##
 
-cmake_minimum_required(VERSION 3.8.2)
+cmake_minimum_required(VERSION 3.10)
 cmake_policy(PUSH)
-cmake_policy(VERSION 3.8.2)
+cmake_policy(VERSION 3.10)
 
 if (CMAKE_VERSION MATCHES ".*MSVC.*")
   message(FATAL_ERROR "CMake from MSVC kit is unfit! "
@@ -367,7 +367,7 @@ if(CMAKE_COMPILER_IS_CLANG)
       set(CMAKE_CLANG_NM ${CMAKE_NM})
     endif()
     if (NOT CMAKE_CLANG_RANLIB)
-      set(CMAKE_CLANG_RANLIB ${CMAKE_RANLIB })
+      set(CMAKE_CLANG_RANLIB ${CMAKE_RANLIB})
     endif()
     message(STATUS "Assume Link-Time Optimization by CLANG/LLVM is available via ${CMAKE_TOOLCHAIN_FILE}")
   else()

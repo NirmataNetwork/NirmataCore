@@ -1,206 +1,207 @@
-set -x # echo on
-set +e # switch off exit on error
-curr_path=${BASH_SOURCE%/*}
+#!/usr/bin/env bash
+set -Eeuo pipefail
 
-export NIRMATA_QT_PATH="/Users/nwiznirmata/Qt5.11.2/5.11.2"
-export NIRMATA_BOOST_ROOT="/Users/nwiznirmata/boost_1_70_0"
-export NIRMATA_BOOST_LIBS_PATH="$NIRMATA_BOOST_ROOT/stage/lib"
-export NIRMATA_BUILD_DIR="/Users/nwiznirmata/NirmataCoreDEV/build"
-export OPENSSL_ROOT_DIR="/usr/local/opt/openssl"
-export CMAKE_OSX_SYSROOT=$(xcrun --show-sdk-path)
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+BUILD_DIR="${BUILD_DIR:-${SOURCE_DIR}/build/macos-release}"
+DIST_DIR="${DIST_DIR:-${SOURCE_DIR}/build/dist}"
+JOBS="${JOBS:-$(sysctl -n hw.logicalcpu)}"
+MACOS_DEPLOYMENT_TARGET="${MACOS_DEPLOYMENT_TARGET:-12.0}"
+CODESIGN_IDENTITY="${CODESIGN_IDENTITY:--}"
 
-ARCHIVE_NAME_PREFIX=nirmata-macos-x64-
+brew_prefix() { brew --prefix "$1" 2>/dev/null || true; }
+QT_PREFIX_PATH="${QT_PREFIX_PATH:-$(brew_prefix qt)}"
+BOOST_ROOT="${BOOST_ROOT:-$(brew_prefix boost@1.85)}"
+BOOST_ROOT="${BOOST_ROOT:-$(brew_prefix boost)}"
+OPENSSL_ROOT_DIR="${OPENSSL_ROOT_DIR:-$(brew_prefix openssl@3)}"
+DEPENDENCY_PREFIX_PATH="${QT_PREFIX_PATH}"
+[[ -n "${BOOST_ROOT}" ]] && DEPENDENCY_PREFIX_PATH+=";${BOOST_ROOT}"
+[[ -n "${OPENSSL_ROOT_DIR}" ]] && DEPENDENCY_PREFIX_PATH+=";${OPENSSL_ROOT_DIR}"
 
-if [ -n "$build_prefix" ]; then
-  ARCHIVE_NAME_PREFIX=${ARCHIVE_NAME_PREFIX}${build_prefix}-
-  build_prefix_label="$build_prefix "
+if [[ -z "${QT_PREFIX_PATH}" || ! -x "${QT_PREFIX_PATH}/bin/macdeployqt" ]]; then
+  echo "Qt 6 was not found. Set QT_PREFIX_PATH or install it with: brew install qt" >&2
+  exit 1
 fi
 
-if [ "$testnet" == true ]; then
-  testnet_def="-D TESTNET=TRUE"
-  testnet_label="testnet "
-  ARCHIVE_NAME_PREFIX=${ARCHIVE_NAME_PREFIX}testnet-
+if [[ "${PACKAGE_ONLY:-false}" != true ]]; then
+  rm -rf "${BUILD_DIR}"
+
+  generator=()
+  command -v ninja >/dev/null 2>&1 && generator=(-G Ninja)
+  cmake_args=(
+    -S "${SOURCE_DIR}" -B "${BUILD_DIR}"
+    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_OSX_DEPLOYMENT_TARGET="${MACOS_DEPLOYMENT_TARGET}"
+    -DCMAKE_PREFIX_PATH="${DEPENDENCY_PREFIX_PATH}"
+    -DBUILD_GUI=ON -DSTATIC=OFF
+  )
+  [[ -n "${BOOST_ROOT}" ]] && cmake_args+=("-DBOOST_ROOT=${BOOST_ROOT}")
+  [[ -n "${OPENSSL_ROOT_DIR}" ]] && cmake_args+=("-DOPENSSL_ROOT_DIR=${OPENSSL_ROOT_DIR}")
+  [[ "${testnet:-false}" == true ]] && cmake_args+=("-DTESTNET=ON")
+
+  cmake "${generator[@]}" "${cmake_args[@]}"
+  cmake --build "${BUILD_DIR}" --config Release --parallel "${JOBS}" \
+    --target Nirmata nirmatad simplewallet connectivity_tool
 fi
 
-######### DEBUG ##########
-#cd "$NIRMATA_BUILD_DIR/release/src"
-#rm *.dmg
-#if false; then
-##### end of DEBUG ######
-
-rm -rf $NIRMATA_BUILD_DIR; mkdir -p "$NIRMATA_BUILD_DIR/release"; cd "$NIRMATA_BUILD_DIR/release"
-
-cmake $testnet_def -D OPENSSL_ROOT_DIR=$OPENSSL_ROOT_DIR -D CMAKE_OSX_SYSROOT=$CMAKE_OSX_SYSROOT -D BUILD_GUI=TRUE -D CMAKE_PREFIX_PATH="$NIRMATA_QT_PATH/clang_64" -D CMAKE_BUILD_TYPE=Release -D BOOST_ROOT="$NIRMATA_BOOST_ROOT" -D BOOST_LIBRARYDIR="$NIRMATA_BOOST_LIBS_PATH" ../..
-if [ $? -ne 0 ]; then
-    echo "Failed to cmake"
+APP="${BUILD_DIR}/src/Nirmata.app"
+[[ -d "${APP}" ]] || { echo "Application bundle was not created: ${APP}" >&2; exit 1; }
+PRISTINE_APP="${BUILD_DIR}/Nirmata.pristine.app"
+if [[ "${PACKAGE_ONLY:-false}" == true ]]; then
+  [[ -d "${PRISTINE_APP}" ]] || {
+    echo "Pristine application bundle is missing; run a full build once before PACKAGE_ONLY." >&2
     exit 1
+  }
+  rm -rf "${APP}"
+  cp -a "${PRISTINE_APP}" "${APP}"
+else
+  rm -rf "${PRISTINE_APP}"
+  cp -a "${APP}" "${PRISTINE_APP}"
+fi
+mkdir -p "${APP}/Contents/MacOS" "${DIST_DIR}"
+cp "${BUILD_DIR}/src/nirmatad" "${BUILD_DIR}/src/simplewallet" "${APP}/Contents/MacOS/"
+
+GUI_HTML_DIR="${GUI_HTML_DIR:-}"
+if [[ -z "${GUI_HTML_DIR}" && -f "${SOURCE_DIR}/../NirmataGUI/html/index.html" ]]; then
+  GUI_HTML_DIR="${SOURCE_DIR}/../NirmataGUI/html"
+fi
+if [[ -z "${GUI_HTML_DIR}" ]]; then
+  GUI_HTML_DIR="${SOURCE_DIR}/src/gui/qt-daemon/layout/html"
+fi
+mkdir -p "${APP}/Contents/lib" "${APP}/Contents/Frameworks"
+for formula in webp brotli; do
+  formula_prefix="$(brew_prefix "${formula}")"
+  if [[ -d "${formula_prefix}/lib" ]]; then
+    cp -Lf "${formula_prefix}"/lib/*.dylib "${APP}/Contents/lib/"
+    cp -Lf "${formula_prefix}"/lib/*.dylib "${APP}/Contents/Frameworks/"
+  fi
+done
+rm -rf "${APP}/Contents/_CodeSignature"
+codesign --remove-signature "${APP}/Contents/MacOS/Nirmata" >/dev/null 2>&1 || true
+find "${APP}/Contents/lib" "${APP}/Contents/Frameworks" -type f -name '*.dylib' \
+  -exec codesign --remove-signature {} \; >/dev/null 2>&1 || true
+
+deploy_args=("${APP}" -always-overwrite)
+deploy_lib_dirs=(
+  "${QT_PREFIX_PATH}/lib"
+  "${OPENSSL_ROOT_DIR}/lib"
+  "${BOOST_ROOT}/lib"
+  "$(brew_prefix webp)/lib"
+  "$(brew_prefix brotli)/lib"
+)
+for lib_dir in "${deploy_lib_dirs[@]}"; do
+  [[ -d "${lib_dir}" ]] && deploy_args+=("-libpath=${lib_dir}")
+done
+macdeploy_log="${BUILD_DIR}/macdeployqt.log"
+if ! "${QT_PREFIX_PATH}/bin/macdeployqt" "${deploy_args[@]}" >"${macdeploy_log}" 2>&1; then
+  cat "${macdeploy_log}" >&2
+  exit 1
+fi
+if grep -q 'Cannot resolve rpath' "${macdeploy_log}"; then
+  cat "${macdeploy_log}" >&2
+  exit 1
 fi
 
-make -j Nirmata
-if [ $? -ne 0 ]; then
-    echo "Failed to make Nirmata"
-    exit 1
-fi
-
-make -j connectivity_tool daemon simplewallet
-if [ $? -ne 0 ]; then
-    echo "Failed to make binaries!"
-    exit 1
-fi
-
-cd src/
-if [ $? -ne 0 ]; then
-    echo "Failed to cd src"
-    exit 1
-fi
-
-# copy all necessary libs into the bundle in order to workaround El Capitan's SIP restrictions
-mkdir -p Nirmata.app/Contents/Frameworks/boost_libs
-cp -R "$NIRMATA_BOOST_LIBS_PATH/" Nirmata.app/Contents/Frameworks/boost_libs/
-if [ $? -ne 0 ]; then
-    echo "Failed to cp workaround to MacOS"
-    exit 1
-fi
-
-# rename process name to big letter 
-mv Nirmata.app/Contents/MacOS/nirmata Nirmata.app/Contents/MacOS/Nirmata
-if [ $? -ne 0 ]; then
-    echo "Failed to rename process"
-    exit 1
-fi
-
-cp nirmatad simplewallet Nirmata.app/Contents/MacOS/
-if [ $? -ne 0 ]; then
-    echo "Failed to copy binaries to Nirmata.app folder"
-    exit 1
-fi
-
-# fix boost libs paths in main executable and libs to workaround El Capitan's SIP restrictions
-source ../../../utils/macosx_fix_boost_libs_path.sh
-fix_boost_libs_in_binary @executable_path/../Frameworks/boost_libs Nirmata.app/Contents/MacOS/Nirmata
-fix_boost_libs_in_binary @executable_path/../Frameworks/boost_libs Nirmata.app/Contents/MacOS/simplewallet
-fix_boost_libs_in_binary @executable_path/../Frameworks/boost_libs Nirmata.app/Contents/MacOS/nirmatad
-fix_boost_libs_in_libs @executable_path/../Frameworks/boost_libs Nirmata.app/Contents/Frameworks/boost_libs
-
-# Улучшенный вызов macdeployqt с дополнительными параметрами
-"$NIRMATA_QT_PATH/clang_64/bin/macdeployqt" Nirmata.app -verbose=3 -always-overwrite
-if [ $? -ne 0 ]; then
-    echo "Failed to macdeployqt Nirmata.app"
-    exit 1
-fi
-
-# Проверка наличия QtWebEngineWidgets
-if [ ! -d "Nirmata.app/Contents/Frameworks/QtWebEngineWidgets.framework" ]; then
-    echo "QtWebEngineWidgets framework not found!"
-    exit 1
-fi
-
-# Копирование ресурсов
-rsync -a ../../../src/gui/qt-daemon/layout/html Nirmata.app/Contents/MacOS --exclude less --exclude package.json --exclude gulpfile.js
-if [ $? -ne 0 ]; then
-    echo "Failed to cp html to MacOS"
-    exit 1
-fi
-
-# Копирование и настройка иконки
-cp ../../../src/gui/qt-daemon/app.icns Nirmata.app/Contents/Resources
-if [ $? -ne 0 ]; then
-    echo "Failed to cp app.icns to resources"
-    exit 1
-fi
-
-# Обновление Info.plist
-echo "Updating Info.plist..."
-PLIST_PATH="Nirmata.app/Contents/Info.plist"
-plutil -replace CFBundleIconFile -string "app.icns" "$PLIST_PATH"
-plutil -replace CFBundleIdentifier -string "com.nirmata.wallet" "$PLIST_PATH"
-plutil -replace CFBundleDisplayName -string "Nirmata" "$PLIST_PATH"
-plutil -replace CFBundleName -string "Nirmata" "$PLIST_PATH"
-
-# Очистка предыдущих подписей
-echo "Cleaning previous signatures..."
-codesign --remove-signature Nirmata.app 2>/dev/null || true
-
-# Установка правильных прав доступа
-echo "Setting correct permissions..."
-chmod -R a+r Nirmata.app
-find Nirmata.app -type d -exec chmod a+x {} \;
-
-# Подпись QtWebEngine helpers
-echo "Signing QtWebEngine helpers..."
-if [ -d "Nirmata.app/Contents/Frameworks/QtWebEngineCore.framework" ]; then
-    # Подпись QtWebEngineProcess
-    find Nirmata.app/Contents/Frameworks/QtWebEngineCore.framework -name 'QtWebEngineProcess' -exec codesign --force --options runtime --sign "Nirmata" {} \;
-    
-    # Подпись файлов в Helpers
-    find Nirmata.app/Contents/Frameworks/QtWebEngineCore.framework -path "*/Helpers/*" -type f -exec codesign --force --options runtime --sign "Nirmata" {} \;
-    
-    # Подпись Helpers.app
-    find Nirmata.app/Contents/Frameworks/QtWebEngineCore.framework -name '*.app' -exec codesign --force --options runtime --sign "Nirmata" --deep {} \;
-fi
-
-# Подпись остальных фреймворков
-echo "Signing frameworks..."
-find Nirmata.app/Contents/Frameworks -name '*.framework' -or -name '*.dylib' | while read framework
-do
-    if [[ "$framework" != *"QtWebEngineCore.framework/Versions/Current/Helpers"* ]]; then
-        echo "Signing $framework"
-        codesign --force --options runtime --sign "Nirmata" "$framework"
-        if [ $? -ne 0 ]; then
-            echo "Failed to sign framework: $framework"
-            exit 1
-        fi
+# macdeployqt only follows the main GUI executable. Bundle dependencies of the
+# command-line programs shipped beside it as well, so they work without Homebrew.
+cli_dependency_queue=(
+  "${APP}/Contents/MacOS/nirmatad"
+  "${APP}/Contents/MacOS/simplewallet"
+)
+homebrew_dependencies() {
+  local binary="$1"
+  local first_dependency_line=2
+  if file "${binary}" | grep -q 'dynamically linked shared library'; then
+    first_dependency_line=3 # line 2 is LC_ID_DYLIB, not a load command
+  fi
+  otool -L "${binary}" | awk -v first="${first_dependency_line}" \
+    'NR >= first { print $1 }' | grep '^/opt/homebrew/' || true
+}
+queue_index=0
+processed_binaries=""
+while (( queue_index < ${#cli_dependency_queue[@]} )); do
+  binary="${cli_dependency_queue[queue_index++]}"
+  if grep -Fqx "${binary}" <<<"${processed_binaries}"; then
+    continue
+  fi
+  processed_binaries+="${binary}"$'\n'
+  codesign --remove-signature "${binary}" >/dev/null 2>&1 || true
+  while IFS= read -r dependency; do
+    [[ -n "${dependency}" ]] || continue
+    bundled_library="${APP}/Contents/Frameworks/$(basename "${dependency}")"
+    if [[ ! -f "${bundled_library}" ]]; then
+      cp -Lf "${dependency}" "${bundled_library}"
+      chmod u+w "${bundled_library}"
+      install_name_tool -id "@rpath/$(basename "${dependency}")" "${bundled_library}"
     fi
+    cli_dependency_queue+=("${bundled_library}")
+    install_name_tool -change "${dependency}" \
+      "@executable_path/../Frameworks/$(basename "${dependency}")" "${binary}"
+  done < <(homebrew_dependencies "${binary}")
 done
 
-# Подпись основного приложения
-echo "Signing main application..."
-codesign --force --options runtime --entitlements ../../../utils/macos_entitlements.plist --sign "Nirmata" --deep ./Nirmata.app
-if [ $? -ne 0 ]; then
-    echo "Failed to sign Nirmata.app"
-    exit 1
-fi
+# Homebrew's Qt 6 macdeployqt can leave absolute references in the nested
+# QtWebEngine helper. Convert every remaining load command to the bundle rpath.
+while IFS= read -r -d '' binary; do
+  file "${binary}" | grep -q 'Mach-O' || continue
+  while IFS= read -r dependency; do
+    [[ -n "${dependency}" ]] || continue
+    if [[ "${dependency}" == *.framework/Versions/* ]]; then
+      relative_dependency="${dependency#*/lib/}"
+      replacement="@rpath/${relative_dependency}"
+    else
+      replacement="@rpath/$(basename "${dependency}")"
+    fi
+    codesign --remove-signature "${binary}" >/dev/null 2>&1 || true
+    install_name_tool -change "${dependency}" "${replacement}" "${binary}"
+  done < <(homebrew_dependencies "${binary}")
+done < <(find "${APP}/Contents" -type f -print0)
 
-# Проверка подписи
-echo "Verifying signature..."
-codesign -vv --deep --strict ./Nirmata.app
-if [ $? -ne 0 ]; then
-    echo "Failed to verify signature"
-    exit 1
-fi
+# Dependencies recorded as @executable_path/../Frameworks work for the main
+# executable, but resolve relative to the deeply nested QtWebEngineProcess for
+# framework binaries loaded by that helper. Frameworks already carry bundle
+# rpaths, so use @rpath for their private dependencies.
+while IFS= read -r -d '' binary; do
+  file "${binary}" | grep -q 'Mach-O' || continue
+  [[ "${binary}" == "${APP}/Contents/MacOS/"* ]] && continue
+  while IFS= read -r dependency; do
+    [[ "${dependency}" == @executable_path/../Frameworks/* ]] || continue
+    replacement="@rpath/${dependency#@executable_path/../Frameworks/}"
+    codesign --remove-signature "${binary}" >/dev/null 2>&1 || true
+    install_name_tool -change "${dependency}" "${replacement}" "${binary}"
+  done < <(otool -L "${binary}" | awk 'NR >= 2 { print $1 }')
 
-# Проверка запуска
-echo "Checking if app can be launched..."
-spctl --assess --verbose ./Nirmata.app
-if [ $? -ne 0 ]; then
-    echo "App failed system policy check"
-    exit 1
-fi
+  if file "${binary}" | grep -q 'dynamically linked shared library'; then
+    if [[ "${binary}" == *'.framework/Versions/'* ]]; then
+      bundle_rpath='@loader_path/../../..'
+    else
+      bundle_rpath='@loader_path'
+    fi
+    if ! otool -l "${binary}" | awk '/cmd LC_RPATH/{getline; getline; print $2}' | grep -Fqx "${bundle_rpath}"; then
+      codesign --remove-signature "${binary}" >/dev/null 2>&1 || true
+      install_name_tool -add_rpath "${bundle_rpath}" "${binary}"
+    fi
+  fi
+done < <(find "${APP}/Contents" -type f -print0)
 
-read version_str <<< $(DYLD_LIBRARY_PATH=$NIRMATA_BOOST_LIBS_PATH ./connectivity_tool --version | awk '/^Nirmata/ { print $2 }')
-version_str=${version_str}
-echo $version_str
+portable=true
+while IFS= read -r -d '' binary; do
+  file "${binary}" | grep -q 'Mach-O' || continue
+  if homebrew_dependencies "${binary}" | grep -q .; then
+    echo "Unbundled Homebrew dependency in ${binary}:" >&2
+    homebrew_dependencies "${binary}" >&2
+    portable=false
+  fi
+done < <(find "${APP}/Contents" -type f -print0)
+[[ "${portable}" == true ]] || exit 1
 
-echo "############### Prepearing archive... ################"
-mkdir package_folder
-if [ $? -ne 0 ]; then
-    echo "Failed to zip app"
-    exit 1
-fi
+rm -rf "${APP}/Contents/MacOS/html"
+rsync -a --delete --exclude node_modules --exclude .angular "${GUI_HTML_DIR}/" "${APP}/Contents/MacOS/html/"
+xattr -cr "${APP}"
+codesign --force --deep --options runtime \
+  --entitlements "${SOURCE_DIR}/utils/macos_entitlements.plist" \
+  --sign "${CODESIGN_IDENTITY}" "${APP}"
+codesign --verify --deep --strict "${APP}"
 
-mv Nirmata.app package_folder 
-if [ $? -ne 0 ]; then
-    echo "Failed to top app package"
-    exit 1
-fi
-
-package_filename=${ARCHIVE_NAME_PREFIX}${version_str}.dmg
-
-source ../../../utils/macosx_dmg_builder.sh
-build_fancy_dmg package_folder $package_filename
-if [ $? -ne 0 ]; then
-    echo "Failed to create fancy dmg"
-    exit 1
-fi
-
-echo "Build success"
+archive="${DIST_DIR}/nirmata-macos-$(uname -m).zip"
+ditto -c -k --sequesterRsrc --keepParent "${APP}" "${archive}"
+echo "macOS package created: ${archive}"

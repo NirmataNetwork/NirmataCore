@@ -38,6 +38,7 @@ namespace command_line
 
   const arg_descriptor<bool>        arg_no_predownload       = { "no-predownload", "Do not pre-download blockchain database", };
   const arg_descriptor<bool>        arg_force_predownload    = { "force-predownload", "Pre-download blockchain database regardless of it's status", };
+  const arg_descriptor<bool>        arg_predownload_required = { "predownload-required", "Fail startup if pre-download is needed but fails, instead of silently falling back to P2P sync. Unlike force-predownload, this does not bypass the up-to-date size check, so an already-downloaded database is not re-fetched.", };
   const arg_descriptor<bool>        arg_validate_predownload = { "validate-predownload", "Paranoid mode, re-validate each block from pre-downloaded database and rebuild own database", };
   const arg_descriptor<std::string> arg_predownload_link     = { "predownload-link", "Override url for blockchain database pre-downloading", "", true };
 

@@ -251,6 +251,7 @@ namespace net_utils
       return r;
     }
   public: 
+    using content_encoding_gzip::stop;
     gzip_decoder_lambda() : content_encoding_gzip(this, true, Z_BEST_COMPRESSION)
     {}
     

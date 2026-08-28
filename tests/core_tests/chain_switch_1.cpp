@@ -435,7 +435,7 @@ bool chain_switching_when_gindex_spent_in_both_chains::generate(std::vector<test
   //  0      1      11     12     13     14             < height
   // (0 )-  (1 )...(1r)-  (2 )-  (3 )-                  < main chain
   //         ^        \          tx_1                   < txs
-  //         |         \ 
+  //         |         \.
   //         |          \-(2a)-  (3a)-  (4a)-           < alt chain
   //         +                   tx_1                   < txs
 
@@ -471,7 +471,7 @@ bool alt_chain_coins_pow_mined_then_spent::generate(std::vector<test_event_entry
 
   //  0      1      2      12      13
   // (0 )-  (1 )-  . . .  (1r)-  
-  //          \ 
+  //          \.
   //           \-  (2a)...(2ra)-  (3a)-
   //                |
   //                +-------------tx_1      tx_1 spents 2a.miner_tx output
@@ -540,7 +540,7 @@ bool alt_blocks_validation_and_same_new_amount_in_two_txs::generate(std::vector<
 
   //  0      1       11      12      13
   // (0 )-  (1 )-...(1r)-   (2 )-   (3 )-
-  //                  \ 
+  //                  \.
   //                   \-   (2a)-   (3a)-
   //                                tx_1
   //                                tx_2
@@ -573,7 +573,7 @@ bool alt_blocks_with_the_same_txs::generate(std::vector<test_event_entry>& event
   //  0      1       11      12      13      14
   // (0 )-  (1 )-...(1r)-   (2 )-   (3 )-
   //                  \     tx_0
-  //                   \ 
+  //                   \.
   //                    \-  (2a)-   (3a)-   (4 )-
   //                        tx_0
 
@@ -637,8 +637,8 @@ bool chain_switching_when_out_spent_in_alt_chain_mixin::generate(std::vector<tes
 
   //  0      1       11      12      13      14   
   // (0 )-  (1 )-...(1r)-   (2 )-   (3 )-            <-- main chain
-  //                  \     
-  //                   \ 
+  //                  \.
+  //                   \.
   //                    \-  (2a)-   (3a)-   (4a)-
   //                        tx_0 <- tx_1             // tx_1 spends output from tx_0
 
@@ -673,7 +673,7 @@ bool chain_switching_when_out_spent_in_alt_chain_mixin::generate(std::vector<tes
 
   // make sure Alice has correct balance
   REFRESH_TEST_WALLET_AT_GEN_TIME(events, alice_wlt, blk_4a, 2);
-  CHECK_TEST_WALLET_BALANCE_AT_GEN_TIME(alice_wlt, MK_TEST_COINS(45));
+  CHECK_TEST_WALLET_BALANCE_AT_GEN_TIME(alice_wlt, MK_TEST_COINS(45) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE);
 
   // make sure chain successfully switched
   DO_CALLBACK_PARAMS(events, "check_top_block", params_top_block(get_block_height(blk_4a), get_block_hash(blk_4a)));
@@ -704,8 +704,8 @@ bool chain_switching_when_out_spent_in_alt_chain_ref_id::generate(std::vector<te
 
   //  0      1       11      12      13      14   
   // (0 )-  (1 )-...(1r)-   (2 )-   (3 )-            <- main chain
-  //                  \     
-  //                   \ 
+  //                  \.
+  //                   \.
   //                    \-  (2a)-   (3a)-   (4a)-
   //                        tx_0 <- tx_1             // tx_1 spends an output from tx_0 using ref_by_id and mixins
 
@@ -755,7 +755,7 @@ bool chain_switching_when_out_spent_in_alt_chain_ref_id::generate(std::vector<te
 
   // make sure Alice has correct balance
   REFRESH_TEST_WALLET_AT_GEN_TIME(events, alice_wlt, blk_4a, 2);
-  CHECK_TEST_WALLET_BALANCE_AT_GEN_TIME(alice_wlt, MK_TEST_COINS(45));
+  CHECK_TEST_WALLET_BALANCE_AT_GEN_TIME(alice_wlt, MK_TEST_COINS(45) + TESTS_COIN_UNIT - TESTS_DEFAULT_FEE);
 
   // make sure chain successfully switched
   DO_CALLBACK_PARAMS(events, "check_top_block", params_top_block(get_block_height(blk_4a), get_block_hash(blk_4a)));

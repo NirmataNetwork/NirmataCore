@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
   _set_FMA3_enable(0);
   #endif
   //mutex to let InnoSetup know about running instance
-  ::CreateMutex(NULL, FALSE, CURRENCY_NAME_BASE "_instance");
+  ::CreateMutexA(NULL, FALSE, CURRENCY_NAME_BASE "_instance");
   //::CreateMutex(NULL, FALSE, "Global\\" CURRENCY_NAME_BASE "_instance");
 #endif
 
@@ -53,18 +53,41 @@ int main(int argc, char *argv[])
 
   TRY_ENTRY();
   epee::string_tools::set_module_name_and_folder(path_to_process_utf8);
-  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#ifdef _MSC_VER
-#if _MSC_VER >= 1910
-  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps); //HiDPI pixmaps
-  qputenv("QT_SCALE_FACTOR", "0.75");
-#endif
-#endif
-
   log_space::get_set_log_detalisation_level(true, LOG_LEVEL_0);
   log_space::get_set_need_thread_id(true, true);
   log_space::log_singletone::enable_channels("core,currency_protocol,tx_pool,p2p,wallet");
 
+
+#ifdef Q_OS_WIN
+  // Chromium can incorrectly classify an embedded desktop window as occluded.
+  // WebChannel state then advances while painting remains frozen until a native
+  // click. Keep timers and the renderer active for live wallet status updates.
+  //
+  // The three flags below only cover Chromium's legacy per-tab backgrounding
+  // throttling (timers/rAF/renderer priority for background *tabs*). They do
+  // NOT cover CalculateNativeWinOcclusion, a separate Windows-only feature
+  // (added ~Chrome 85) that walks the OS window Z-order via
+  // IVirtualDesktopManager to decide whether the top-level window is actually
+  // visible, and throttles compositor frame submission independently of the
+  // above when it (mis-)judges the window occluded. An embedded QWebEngineView
+  // inside a QMainWindow is exactly the kind of non-standard window hierarchy
+  // that heuristic misfires on, so it has to be disabled explicitly.
+  QByteArray chromium_flags = qgetenv("QTWEBENGINE_CHROMIUM_FLAGS");
+  const QByteArray realtime_rendering_flags =
+    " --disable-background-timer-throttling"
+    " --disable-backgrounding-occluded-windows"
+    " --disable-renderer-backgrounding"
+    " --disable-features=CalculateNativeWinOcclusion";
+  for (const QByteArray& flag : realtime_rendering_flags.split(' '))
+  {
+    if (!flag.isEmpty() && !chromium_flags.contains(flag))
+    {
+      chromium_flags += ' ';
+      chromium_flags += flag;
+    }
+  }
+  qputenv("QTWEBENGINE_CHROMIUM_FLAGS", chromium_flags.trimmed());
+#endif
 
   QApplication app(argc, argv);
 

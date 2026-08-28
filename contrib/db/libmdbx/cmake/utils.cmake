@@ -13,9 +13,9 @@
 ##  limitations under the License.
 ##
 
-cmake_minimum_required(VERSION 3.8.2)
+cmake_minimum_required(VERSION 3.10)
 cmake_policy(PUSH)
-cmake_policy(VERSION 3.8.2)
+cmake_policy(VERSION 3.10)
 
 macro(add_compile_flags langs)
   foreach(_lang ${langs})
@@ -138,7 +138,7 @@ macro(fetch_version name version_file)
 ##   endif()
 
   if(NOT ${name}_GIT_VERSION OR NOT ${name}_GIT_TIMESTAMP OR NOT ${name}_GIT_REVISION)
-    message(WARNING "Unable to retrive ${name} version from git.")
+    message(STATUS "${name} git metadata is unavailable; using the bundled VERSION file")
     set(${name}_GIT_VERSION "0;0;0;0")
     set(${name}_GIT_TIMESTAMP "")
     set(${name}_GIT_REVISION 0)

@@ -927,7 +927,6 @@ bool test_generator::init_test_wallet(const currency::account_base& account, con
   w->assign_account(account);
   w->set_genesis(genesis_hash);
   w->set_core_proxy(m_wallet_test_core_proxy);
-  w->set_disable_tor_relay(true);
 
   result = w;
   return true;
@@ -1730,7 +1729,7 @@ bool check_balance_via_wallet(const tools::wallet2& w, const char* account_name,
 bool calculate_amounts_many_outs_have_and_no_outs_have(const uint64_t first_blocks_reward, uint64_t& amount_many_outs_have, uint64_t& amount_no_outs_have)
 {
   std::set<uint64_t, std::greater<uint64_t> > digits;
-  decompose_amount_into_digits(first_blocks_reward, DEFAULT_DUST_THRESHOLD, [&digits](uint64_t chunk){ digits.insert(chunk); }, [&digits](uint64_t dust) { /* nope */ });
+  decompose_amount_into_digits(first_blocks_reward, DEFAULT_DUST_THRESHOLD, [&digits](uint64_t chunk){ digits.insert(chunk); }, [](uint64_t dust) { /* nope */ });
   CHECK_AND_ASSERT_MES(!digits.empty(), false, "decompose_amount_into_digits failed");
   amount_many_outs_have = *std::max_element(digits.begin(), digits.end());
 

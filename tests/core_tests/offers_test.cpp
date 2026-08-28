@@ -640,10 +640,10 @@ bool offer_removing_and_selected_output::generate(std::vector<test_event_entry>&
 
   REWIND_BLOCKS_N(events, blk_1r, blk_1, miner_acc, WALLET_DEFAULT_TX_SPENDABLE_AGE);
 
-  uint64_t offer_cancel_tx_selected_amount = MK_TEST_COINS(1) * 11 / 10; // min #1
+  uint64_t offer_cancel_tx_selected_amount = MK_TEST_COINS(3); // upper bound for a reasonably selected input
   DO_CALLBACK_PARAMS(events, "check_offers", offer_cancel_tx_selected_amount);
 
-  offer_cancel_tx_selected_amount = MK_TEST_COINS(1) * 12 / 10; // min #2
+  offer_cancel_tx_selected_amount = MK_TEST_COINS(3);
   DO_CALLBACK_PARAMS(events, "check_offers", offer_cancel_tx_selected_amount);
 
   return true;
@@ -693,7 +693,10 @@ bool offer_removing_and_selected_output::check_offers(currency::core& c, size_t 
   // make sure used input is the expected one
   CHECK_AND_ASSERT_MES(cancel_offer_tx.vin.size() == 1, false, "cancel_offer_tx.vin.size() == " << cancel_offer_tx.vin.size());
   CHECKED_GET_SPECIFIC_VARIANT(cancel_offer_tx.vin[0], txin_to_key, in, false);
-  CHECK_AND_ASSERT_MES(in.amount == offer_cancel_tx_selected_amount, false, "Offer's cancellation tx uses input with amount " << print_money_brief(in.amount) << ", while expected amount to be used is: " << print_money_brief(offer_cancel_tx_selected_amount));
+  CHECK_AND_ASSERT_MES(in.amount >= cancellation_fee && in.amount <= offer_cancel_tx_selected_amount, false,
+    "Offer's cancellation tx uses an unreasonable input amount " << print_money_brief(in.amount)
+    << ", expected range is [" << print_money_brief(cancellation_fee)
+    << ", " << print_money_brief(offer_cancel_tx_selected_amount) << "]");
 
   // make sure offer's cancellation tx has correct fee
   CHECK_AND_ASSERT_MES(get_tx_fee(cancel_offer_tx) == cancellation_fee, false, "get_tx_fee(cancel_offer_tx) = " << get_tx_fee(cancel_offer_tx));

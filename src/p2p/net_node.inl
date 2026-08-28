@@ -276,28 +276,26 @@ namespace nodetool
 
       std::string portstr = std::to_string(port);
 
-      io_service io_srv;
+      io_context io_srv;
       ip::tcp::resolver resolver(io_srv);
-      ip::tcp::resolver::query query(host, portstr);
       boost::system::error_code ec;
-      ip::tcp::resolver::iterator i = resolver.resolve(query, ec);
+      auto endpoints = resolver.resolve(host, portstr, ec);
       CHECK_AND_NO_ASSERT_MES(!ec, false, "Failed to resolve host name '" << host << "': " << ec.message() << ':' << ec.value());
 
-      ip::tcp::resolver::iterator iend;
-      for (; i != iend; ++i)
+      for (auto i = endpoints.begin(); i != endpoints.end(); ++i)
       {
         ip::tcp::endpoint endpoint = *i;
         if (endpoint.address().is_v4())
         {
           nodetool::net_address na;
-          na.ip = boost::asio::detail::socket_ops::host_to_network_long(endpoint.address().to_v4().to_ulong());
+          na.ip = boost::asio::detail::socket_ops::host_to_network_long(endpoint.address().to_v4().to_uint());
           na.port = endpoint.port();
           nodes.push_back(na);
-          LOG_PRINT_L4("Added seed node: " << endpoint.address().to_v4().to_string(ec) << ':' << na.port);
+          LOG_PRINT_L4("Added seed node: " << endpoint.address().to_v4().to_string() << ':' << na.port);
         }
         else
         {
-          LOG_PRINT_L2("IPv6 doesn't supported, skip '" << host << "' -> " << endpoint.address().to_v6().to_string(ec));
+          LOG_PRINT_L2("IPv6 doesn't supported, skip '" << host << "' -> " << endpoint.address().to_v6().to_string());
         }
       }
 
@@ -311,12 +309,12 @@ namespace nodetool
   bool node_server<t_payload_net_handler>::init(const boost::program_options::variables_map& vm)
   {
 #ifndef TESTNET
-    ADD_HARDCODED_SEED_NODE("103.113.70.162", P2P_DEFAULT_PORT);
-    ADD_HARDCODED_SEED_NODE("194.246.114.23", P2P_DEFAULT_PORT);
-    ADD_HARDCODED_SEED_NODE("85.21.233.202", P2P_DEFAULT_PORT);
-    ADD_HARDCODED_SEED_NODE("45.14.247.211", P2P_DEFAULT_PORT);
+    ADD_HARDCODED_SEED_NODE("194.55.189.248", P2P_DEFAULT_PORT);
+    ADD_HARDCODED_SEED_NODE("139.28.169.97", P2P_DEFAULT_PORT);
+    ADD_HARDCODED_SEED_NODE("45.66.162.174", P2P_DEFAULT_PORT);
     ADD_HARDCODED_SEED_NODE("195.16.74.121", P2P_DEFAULT_PORT);
-    ADD_HARDCODED_SEED_NODE("45.159.250.116", P2P_DEFAULT_PORT);
+    ADD_HARDCODED_SEED_NODE("5.180.21.235", P2P_DEFAULT_PORT);
+    ADD_HARDCODED_SEED_NODE("138.124.123.1", P2P_DEFAULT_PORT);
 #else
     ADD_HARDCODED_SEED_NODE("87.251.79.161", P2P_DEFAULT_PORT);
     ADD_HARDCODED_SEED_NODE("87.251.79.162", P2P_DEFAULT_PORT);

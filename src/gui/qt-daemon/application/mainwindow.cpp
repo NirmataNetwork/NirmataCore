@@ -9,6 +9,7 @@
 #include <QtWebEngineWidgets>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QPointer>
 
 #include "string_coding.h"
 #include "gui_utils.h"
@@ -116,6 +117,7 @@ void MainWindow::on_load_finished(bool ok)
 bool MainWindow::init_window()
 {
   m_view = new QWebEngineView(this);
+  m_view->page()->setLifecycleState(QWebEnginePage::LifecycleState::Active);
   m_channel = new QWebChannel(m_view->page());
   m_view->page()->setWebChannel(m_channel);
 
@@ -163,6 +165,11 @@ bool MainWindow::init_window()
   connect(m_view, SIGNAL(loadFinished(bool)), SLOT(on_load_finished(bool)));
 
   setCentralWidget(central_widget_to_be_set);
+  // Keep the native window and the Angular layout on the same geometry
+  // contract. The window remains freely resizable above this baseline.
+  // 40 px of vertical allowance keeps the 1200x760 web viewport available
+  // below the platform title bar.
+  setMinimumSize(1200, 800);
   //this->setMouseTracking(true);
 
   m_view->page()->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
@@ -172,6 +179,24 @@ bool MainWindow::init_window()
   m_view->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
   m_view->settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
   m_view->settings()->setAttribute(QWebEngineSettings::LocalStorageEnabled, true);
+
+  m_render_nudge_timer = new QTimer(this);
+  m_render_nudge_timer->setSingleShot(true);
+  connect(m_render_nudge_timer, &QTimer::timeout, this, &MainWindow::perform_render_nudge);
+  // These five signals are the ones that actually move on-screen state
+  // (sync %, wallet status, incoming/cancelled transfers) yet are emitted
+  // from the daemon thread via QMetaObject::invokeMethod(..., QueuedConnection)
+  // above and below -- by the time they run here they're already back on the
+  // GUI thread, so a direct connection is safe.
+  // update_wallet_status/wallet_sync_progress/money_transfer/money_transfer_cancel
+  // are overloaded: each name is both a Qt signal here and an i_view virtual
+  // method taking a struct (see mainwindow.h), so &MainWindow::name alone is
+  // ambiguous -- cast to the signal's exact pointer type to pick it.
+  connect(this, &MainWindow::update_daemon_state, this, &MainWindow::schedule_render_nudge);
+  connect(this, static_cast<void (MainWindow::*)(const QString)>(&MainWindow::update_wallet_status), this, &MainWindow::schedule_render_nudge);
+  connect(this, static_cast<void (MainWindow::*)(const QString)>(&MainWindow::wallet_sync_progress), this, &MainWindow::schedule_render_nudge);
+  connect(this, static_cast<void (MainWindow::*)(const QString)>(&MainWindow::money_transfer), this, &MainWindow::schedule_render_nudge);
+  connect(this, static_cast<void (MainWindow::*)(const QString)>(&MainWindow::money_transfer_cancel), this, &MainWindow::schedule_render_nudge);
 
   m_localization.resize(localization_id_couter);
   m_localization[localization_id_quit] = "Quit";
@@ -187,6 +212,56 @@ bool MainWindow::init_window()
   m_localization[localization_id_tray_menu_minimize] = "localization_id_tray_menu_minimize";
 
   return true;
+}
+
+void MainWindow::request_render_nudge(const QString& param)
+{
+  TRY_ENTRY();
+  schedule_render_nudge();
+  CATCH_ENTRY2(void());
+}
+
+void MainWindow::schedule_render_nudge()
+{
+  if (!m_render_nudge_timer || m_render_nudge_timer->isActive())
+    return;
+  // Coalesce bursts (e.g. many wallet_sync_progress signals while catching
+  // up on blocks) into a single nudge instead of one resize per signal.
+  m_render_nudge_timer->start(120);
+}
+
+void MainWindow::perform_render_nudge()
+{
+  TRY_ENTRY();
+  if (isMinimized() || !isVisible() || !m_view)
+    return;
+
+  // The Angular DOM is already up to date at this point, but on Windows the
+  // Chromium child surface can keep presenting its previous frame until it
+  // receives a native input or geometry event. Changing the top-level window
+  // opacity did not invalidate that child surface reliably and also caused a
+  // visible full-window flash. Give the QWebEngineView itself a one-pixel
+  // geometry pulse and restore it on the next event-loop turn. This follows
+  // the same path as the user click/resize that was proven to unblock the
+  // history view, without changing the persisted window geometry.
+  const QRect original_geometry = m_view->geometry();
+  if (original_geometry.width() <= 1)
+    return;
+
+  QRect pulse_geometry = original_geometry;
+  pulse_geometry.setWidth(original_geometry.width() - 1);
+  m_view->setGeometry(pulse_geometry);
+  m_view->update();
+
+  QPointer<QWebEngineView> view(m_view);
+  QTimer::singleShot(0, m_view, [view, original_geometry]()
+  {
+    if (!view)
+      return;
+    view->setGeometry(original_geometry);
+    view->update();
+  });
+  CATCH_ENTRY2(void());
 }
 
 QString MainWindow::get_default_user_dir(const QString& param)
@@ -427,6 +502,27 @@ void MainWindow::on_menu_show()
   CATCH_ENTRY2(void());
 }
 
+void MainWindow::update_tray_menu_geometry()
+{
+  if (!m_tray_icon_menu)
+    return;
+
+  const QFontMetrics metrics(m_tray_icon_menu->font());
+  int widest_text = 0;
+  for (QAction* action : m_tray_icon_menu->actions())
+  {
+    if (action && !action->isSeparator())
+      widest_text = std::max(widest_text, metrics.horizontalAdvance(action->text()));
+  }
+
+  // Leave room for menu margins, a possible platform check/icon column and
+  // translated text. QMenu otherwise may keep the tiny size calculated from
+  // the placeholder labels that exist before Angular sends localization.
+  m_tray_icon_menu->setMinimumWidth(std::max(220, widest_text + 72));
+  m_tray_icon_menu->updateGeometry();
+  m_tray_icon_menu->adjustSize();
+}
+
 void MainWindow::init_tray_icon(const std::string& html_path)
 {
   TRY_ENTRY();
@@ -447,10 +543,21 @@ void MainWindow::init_tray_icon(const std::string& html_path)
   connect(m_minimize_action.get(), SIGNAL(triggered()), this, SLOT(showMinimized()));
 
   m_tray_icon_menu = std::unique_ptr<QMenu>(new QMenu(this));
+  m_tray_icon_menu->setStyleSheet(
+    "QMenu { padding: 6px; }"
+    "QMenu::item { min-height: 24px; padding: 7px 28px 7px 12px; }"
+    "QMenu::separator { height: 1px; margin: 5px 8px; }");
+  m_tray_icon_menu->addAction(m_restore_action.get());
   m_tray_icon_menu->addAction(m_minimize_action.get());
-  //m_tray_icon_menu->addAction(m_restore_action.get());
   m_tray_icon_menu->addSeparator();
   m_tray_icon_menu->addAction(m_quit_action.get());
+  connect(m_tray_icon_menu.get(), &QMenu::aboutToShow, this, [this]() {
+    const bool window_hidden = !isVisible() || isMinimized();
+    m_restore_action->setVisible(window_hidden);
+    m_minimize_action->setVisible(!window_hidden);
+    update_tray_menu_geometry();
+  });
+  update_tray_menu_geometry();
 
   m_tray_icon = std::unique_ptr<QSystemTrayIcon>(new QSystemTrayIcon(this));
   m_tray_icon->setContextMenu(m_tray_icon_menu.get());
@@ -532,7 +639,8 @@ void MainWindow::restore_pos(bool consider_showed)
   }
   else
   {
-    QPoint point = QApplication::desktop()->screenGeometry().bottomRight();
+    const QScreen* screen = this->screen() ? this->screen() : QGuiApplication::primaryScreen();
+    QPoint point = screen ? screen->availableGeometry().bottomRight() : QPoint(1199, 769);
     if (m_config.m_window_position.first + m_config.m_window_size.second > point.x() ||
       m_config.m_window_position.second + m_config.m_window_size.first > point.y()
       )
@@ -825,7 +933,8 @@ bool MainWindow::handle_deeplink_params_in_commandline()
   }
   catch (...)
   {
-    //ui not launched yet
+    // No running instance: keep the URL until QWebChannel has connected its signal.
+    m_pending_deeplink = QString::fromStdString(deep_link_params);
     return true;
   }
 }
@@ -927,7 +1036,7 @@ bool MainWindow::set_options(const view::gui_options& opt)
   CATCH_ENTRY2(false);
 }
 
-bool MainWindow::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
+bool MainWindow::nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result)
 {
   TRY_ENTRY();
 #ifdef WIN32
@@ -950,6 +1059,37 @@ bool MainWindow::set_is_disabled_notifications(const bool& param)
 {
   m_config.disable_notifications = param;
   return m_config.disable_notifications;
+}
+
+QString MainWindow::show_niroom_notification(const QString& param)
+{
+  TRY_ENTRY();
+  view::api_response response = AUTO_VAL_INIT(response);
+  QJsonParseError parse_error;
+  const QJsonDocument document = QJsonDocument::fromJson(param.toUtf8(), &parse_error);
+  if (parse_error.error != QJsonParseError::NoError || !document.isObject())
+  {
+    response.error_code = API_RETURN_CODE_BAD_ARG;
+    return MAKE_RESPONSE(response);
+  }
+  const QJsonObject object = document.object();
+  const QString title = object.value("title").toString().trimmed();
+  const QString message = object.value("message").toString().trimmed();
+  if (title.isEmpty() || message.isEmpty())
+  {
+    response.error_code = API_RETURN_CODE_BAD_ARG;
+    return MAKE_RESPONSE(response);
+  }
+
+  // The NiRoom client suppresses only messages belonging to the currently
+  // visible, focused conversation. Messages from another conversation must
+  // still notify while the wallet is open, as in a regular messenger.
+  if (!m_config.disable_notifications)
+    show_notification(title.toUtf8().constData(), message.toUtf8().constData());
+
+  response.error_code = API_RETURN_CODE_OK;
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
 }
 QString   MainWindow::export_wallet_history(const QString& param)
 {
@@ -1134,6 +1274,7 @@ QString MainWindow::set_localization_strings(const QString param)
       m_restore_action->setText(QString::fromStdString(m_localization[localization_id_tray_menu_show]));
     if(m_minimize_action)
       m_minimize_action->setText(QString::fromStdString(m_localization[localization_id_tray_menu_minimize]));
+    update_tray_menu_geometry();
     resp.error_code = API_RETURN_CODE_OK;
     LOG_PRINT_L0("New localization set, language title: " << lr.language_title << ", strings " << lr.strings.size());
   }
@@ -1498,6 +1639,31 @@ QString MainWindow::store_to_file(const QString& path, const QString& buff)
   CATCH_ENTRY2(API_RETURN_CODE_INTERNAL_ERROR);
 }
 
+QString MainWindow::store_base64_to_file(const QString& param)
+{
+  TRY_ENTRY();
+  const QJsonDocument document = QJsonDocument::fromJson(param.toUtf8());
+  if (!document.isObject())
+    return API_RETURN_CODE_BAD_ARG;
+
+  const QJsonObject object = document.object();
+  const QString path = object.value("path").toString();
+  const QString encoded = object.value("data").toString();
+  if (path.isEmpty() || encoded.isEmpty())
+    return API_RETURN_CODE_BAD_ARG;
+
+  const QByteArray decoded = QByteArray::fromBase64(
+    encoded.toLatin1(), QByteArray::AbortOnBase64DecodingErrors);
+  if (decoded.isEmpty())
+    return API_RETURN_CODE_BAD_ARG;
+
+  QSaveFile file(path);
+  if (!file.open(QIODevice::WriteOnly) || file.write(decoded) != decoded.size() || !file.commit())
+    return API_RETURN_CODE_ACCESS_DENIED;
+  return API_RETURN_CODE_OK;
+  CATCH_ENTRY2(API_RETURN_CODE_INTERNAL_ERROR);
+}
+
 QString MainWindow::load_from_file(const QString& path)
 {
   TRY_ENTRY();
@@ -1611,6 +1777,158 @@ QString MainWindow::validate_address(const QString& param)
   return MAKE_RESPONSE(ar);
   CATCH_ENTRY_FAIL_API_RESPONCE();
 }
+QString MainWindow::niroom_sign_challenge(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_sign_challenge_request, request);
+  PREPARE_RESPONSE(view::niroom_sign_challenge_response, response);
+  response.error_code = m_backend.niroom_sign_challenge(
+    request.wallet_id,
+    request.payload,
+    response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_create_device(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_create_device_request, request);
+  PREPARE_RESPONSE(view::niroom_key_bundle, response);
+  response.error_code = m_backend.niroom_create_device(
+    request.wallet_id,
+    request.one_time_prekey_count,
+    response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_rotate_device(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_create_device_request, request);
+  PREPARE_RESPONSE(view::niroom_key_bundle, response);
+  response.error_code = m_backend.niroom_rotate_device(
+    request.wallet_id,
+    request.one_time_prekey_count,
+    response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_generate_prekeys(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_generate_prekeys_request, request);
+  PREPARE_RESPONSE(view::niroom_key_bundle, response);
+  response.error_code = m_backend.niroom_generate_prekeys(
+    request.wallet_id,
+    request.count,
+    response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_create_session(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_create_session_request, request);
+  PREPARE_RESPONSE(view::niroom_session_header, response);
+  response.error_code = m_backend.niroom_create_session(
+    request, response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_accept_session(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_accept_session_request, request);
+  default_ar.error_code = m_backend.niroom_accept_session(request);
+  return MAKE_RESPONSE(default_ar);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_encrypt_message(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_encrypt_message_request, request);
+  PREPARE_RESPONSE(view::niroom_encrypted_message, response);
+  response.error_code = m_backend.niroom_encrypt_message(
+    request, response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_decrypt_message(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_decrypt_message_request, request);
+  PREPARE_RESPONSE(view::niroom_decrypt_message_response, response);
+  response.error_code = m_backend.niroom_decrypt_message(
+    request, response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_store_message(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_store_message_request, request);
+  default_ar.error_code = m_backend.niroom_store_message(request);
+  return MAKE_RESPONSE(default_ar);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_set_message_status(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_set_message_status_request, request);
+  default_ar.error_code = m_backend.niroom_set_message_status(request);
+  return MAKE_RESPONSE(default_ar);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_delete_conversation(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_delete_conversation_request, request);
+  default_ar.error_code = m_backend.niroom_delete_conversation(request);
+  return MAKE_RESPONSE(default_ar);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_list_messages(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_list_messages_request, request);
+  PREPARE_RESPONSE(view::niroom_list_messages_response, response);
+  response.error_code = m_backend.niroom_list_messages(
+    request, response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_upsert_contact(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_upsert_contact_request, request);
+  default_ar.error_code = m_backend.niroom_upsert_contact(request);
+  return MAKE_RESPONSE(default_ar);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
+QString MainWindow::niroom_list_contacts(const QString& param)
+{
+  TRY_ENTRY();
+  LOG_API_TIMING();
+  PREPARE_ARG_FROM_JSON(view::niroom_list_contacts_request, request);
+  PREPARE_RESPONSE(view::niroom_list_contacts_response, response);
+  response.error_code = m_backend.niroom_list_contacts(
+    request, response.response_data);
+  return MAKE_RESPONSE(response);
+  CATCH_ENTRY_FAIL_API_RESPONCE();
+}
 QString MainWindow::set_log_level(const QString& param)
 {
   TRY_ENTRY();
@@ -1667,6 +1985,11 @@ QString MainWindow::webkit_launched_script()
 {
   TRY_ENTRY();
   m_last_update_daemon_status_json.clear();
+  if (!m_pending_deeplink.isEmpty())
+  {
+    emit handle_deeplink_click(m_pending_deeplink);
+    m_pending_deeplink.clear();
+  }
   return "";
   CATCH_ENTRY2(API_RETURN_CODE_INTERNAL_ERROR);
 }
@@ -2200,6 +2523,7 @@ QString MainWindow::print_log(const QString& param)
 void MainWindow::show_notification(const std::string& title, const std::string& message)
 {
   TRY_ENTRY();
+
   LOG_PRINT_L1("system notification: \"" << title << "\", \"" << message << "\"");
   
   // it's expected that title and message are utf-8 encoded!

@@ -45,11 +45,11 @@ namespace net_utils {
 DISABLE_VS_WARNINGS(4355)
 
 template<class t_protocol_handler>
-connection<t_protocol_handler>::connection(boost::asio::io_service& io_service,
+connection<t_protocol_handler>::connection(boost::asio::io_context& io_context,
                                            typename t_protocol_handler::config_type& config, volatile uint32_t& sock_count, i_connection_filter*& pfilter)
-    : m_rio_service(io_service),
-      strand_(io_service),
-      socket_(io_service),
+    : m_rio_context(io_context),
+      strand_(io_context),
+      socket_(io_context),
       m_protocol_handler(this, config, context),
       m_want_close_connection(0),
       m_was_shutdown(0),
@@ -121,7 +121,7 @@ bool connection<t_protocol_handler>::start(bool is_income, bool is_multithreaded
   CHECK_AND_NO_ASSERT_MES(!ec, false, "Failed to get local endpoint: " << ec.message() << ':' << ec.value());
 
   context  = boost::value_initialized<t_connection_context>();
-  long ip_ = boost::asio::detail::socket_ops::host_to_network_long(remote_ep.address().to_v4().to_ulong());
+  long ip_ = boost::asio::detail::socket_ops::host_to_network_long(remote_ep.address().to_v4().to_uint());
 
   context.set_details(boost::uuids::random_generator()(), ip_, remote_ep.port(), is_income);
   context.m_last_send = context.m_last_recv = time(NULL);
@@ -157,15 +157,15 @@ bool connection<t_protocol_handler>::request_callback()
   if(!self)
     return false;
 
-  strand_.post(boost::bind(&connection<t_protocol_handler>::call_back_starter, self));
+  boost::asio::post(strand_, boost::bind(&connection<t_protocol_handler>::call_back_starter, self));
   CATCH_ENTRY_L0("connection<t_protocol_handler>::request_callback()", false);
   return true;
 }
 //---------------------------------------------------------------------------------
 template<class t_protocol_handler>
-boost::asio::io_service& connection<t_protocol_handler>::get_io_service()
+boost::asio::io_context& connection<t_protocol_handler>::get_io_context()
 {
-  return m_rio_service;
+  return m_rio_context;
 }
 //---------------------------------------------------------------------------------
 template<class t_protocol_handler>
@@ -265,7 +265,7 @@ bool connection<t_protocol_handler>::call_run_once_service_io()
   TRY_ENTRY();
   if(!m_is_multithreaded) {
     //single thread model, we can wait in blocked call
-    size_t cnt = m_rio_service.run_one();
+    size_t cnt = m_rio_context.run_one();
 
     if(!cnt)  //service is going to quit
       return false;
@@ -276,7 +276,7 @@ bool connection<t_protocol_handler>::call_run_once_service_io()
     //if no handlers were called
     //TODO: Maybe we need to have have critical section + event + callback to upper protocol to
     //ask it inside(!) critical region if we still able to go in event wait...
-    size_t cnt = m_rio_service.poll_one();
+    size_t cnt = m_rio_context.poll_one();
     if(!cnt)
       misc_utils::sleep_no_w(0);
   }
@@ -419,20 +419,20 @@ void connection<t_protocol_handler>::handle_write(const boost::system::error_cod
 /************************************************************************/
 template<class t_protocol_handler>
 boosted_tcp_server<t_protocol_handler>::boosted_tcp_server()
-    : m_io_service_local_instance(new boost::asio::io_service()),
-      io_service_(*m_io_service_local_instance.get()),
-      acceptor_(io_service_),
-      new_connection_(new connection<t_protocol_handler>(io_service_, m_config, m_sockets_count, m_pfilter)),
+    : m_io_context_local_instance(new boost::asio::io_context()),
+      io_context_(*m_io_context_local_instance.get()),
+      acceptor_(io_context_),
+      new_connection_(new connection<t_protocol_handler>(io_context_, m_config, m_sockets_count, m_pfilter)),
       m_stop_signal_sent(false), m_port(0), m_sockets_count(0), m_threads_count(0), m_pfilter(NULL), m_thread_index(0)
 {
   m_thread_name_prefix = "NET";
 }
 
 template<class t_protocol_handler>
-boosted_tcp_server<t_protocol_handler>::boosted_tcp_server(boost::asio::io_service& extarnal_io_service)
-    : io_service_(extarnal_io_service),
-      acceptor_(io_service_),
-      new_connection_(new connection<t_protocol_handler>(io_service_, m_config, m_sockets_count, m_pfilter)),
+boosted_tcp_server<t_protocol_handler>::boosted_tcp_server(boost::asio::io_context& extarnal_io_context)
+    : io_context_(extarnal_io_context),
+      acceptor_(io_context_),
+      new_connection_(new connection<t_protocol_handler>(io_context_, m_config, m_sockets_count, m_pfilter)),
       m_stop_signal_sent(false), m_port(0), m_sockets_count(0), m_threads_count(0), m_pfilter(NULL), m_thread_index(0)
 {
   m_thread_name_prefix = "NET";
@@ -457,9 +457,8 @@ bool boosted_tcp_server<t_protocol_handler>::init_server(uint32_t port, const st
   m_port             = port;
   m_address          = address;
   // Open the acceptor with the option to reuse the address (i.e. SO_REUSEADDR).
-  boost::asio::ip::tcp::resolver resolver(io_service_);
-  boost::asio::ip::tcp::resolver::query query(address, boost::lexical_cast<std::string>(port));
-  boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(query);
+  boost::asio::ip::tcp::resolver resolver(io_context_);
+  boost::asio::ip::tcp::endpoint endpoint = *resolver.resolve(address, boost::lexical_cast<std::string>(port)).begin();
   acceptor_.open(endpoint.protocol());
   acceptor_.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
   acceptor_.bind(endpoint);
@@ -499,7 +498,7 @@ bool boosted_tcp_server<t_protocol_handler>::worker_thread()
   log_space::log_singletone::set_thread_log_prefix(thread_name);
   while(!m_stop_signal_sent) {
     try {
-      io_service_.run();
+      io_context_.run();
     }
     catch(const std::exception& ex) {
       LOG_ERROR("Exception at server worker thread, what=" << ex.what());
@@ -533,7 +532,7 @@ bool boosted_tcp_server<t_protocol_handler>::run_server(size_t threads_count, bo
   m_main_thread_id = boost::this_thread::get_id();
   log_space::log_singletone::set_thread_log_prefix("[SRV_MAIN]");
   while(!m_stop_signal_sent) {
-    // Create a pool of threads to run all of the io_services.
+    // Create a pool of threads to run all of the io_contexts.
     CRITICAL_REGION_BEGIN(m_threads_lock);
     for(std::size_t i = 0; i < threads_count; ++i) {
       boost::shared_ptr<boost::thread> thread(new boost::thread(
@@ -612,7 +611,7 @@ void boosted_tcp_server<t_protocol_handler>::send_stop_signal()
   TRY_ENTRY();
   m_config.on_send_stop_signal();
 
-  io_service_.stop();
+  io_context_.stop();
   CATCH_ENTRY_L0("boosted_tcp_server<t_protocol_handler>::send_stop_signal()", void());
 }
 //---------------------------------------------------------------------------------
@@ -629,7 +628,7 @@ void boosted_tcp_server<t_protocol_handler>::handle_accept(const boost::system::
   if(!e) {
     connection_ptr conn(std::move(new_connection_));
 
-    new_connection_.reset(new connection<t_protocol_handler>(io_service_, m_config, m_sockets_count, m_pfilter));
+    new_connection_.reset(new connection<t_protocol_handler>(io_context_, m_config, m_sockets_count, m_pfilter));
     acceptor_.async_accept(new_connection_->socket(),
                            boost::bind(&boosted_tcp_server<t_protocol_handler>::handle_accept, this,
                                        boost::asio::placeholders::error));
@@ -647,15 +646,14 @@ bool boosted_tcp_server<t_protocol_handler>::connect(const std::string& adr, con
 {
   TRY_ENTRY();
 
-  connection_ptr new_connection_l(new connection<t_protocol_handler>(io_service_, m_config, m_sockets_count, m_pfilter));
+  connection_ptr new_connection_l(new connection<t_protocol_handler>(io_context_, m_config, m_sockets_count, m_pfilter));
   boost::asio::ip::tcp::socket& sock_ = new_connection_l->socket();
 
   //////////////////////////////////////////////////////////////////////////
-  boost::asio::ip::tcp::resolver resolver(io_service_);
-  boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), adr, port);
-  boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
-  boost::asio::ip::tcp::resolver::iterator end;
-  if(iterator == end) {
+  boost::asio::ip::tcp::resolver resolver(io_context_);
+  auto endpoints = resolver.resolve(boost::asio::ip::tcp::v4(), adr, port);
+  auto iterator = endpoints.begin();
+  if(iterator == endpoints.end()) {
     LOG_ERROR("Failed to resolve " << adr);
     return false;
   }
@@ -666,7 +664,7 @@ bool boosted_tcp_server<t_protocol_handler>::connect(const std::string& adr, con
 
   sock_.open(remote_endpoint.protocol());
   if(bind_ip != "0.0.0.0" && bind_ip != "0" && bind_ip != "") {
-    boost::asio::ip::tcp::endpoint local_endpoint(boost::asio::ip::address::from_string(adr.c_str()), 0);
+    boost::asio::ip::tcp::endpoint local_endpoint(boost::asio::ip::make_address(bind_ip), 0);
     sock_.bind(local_endpoint);
   }
 
@@ -724,7 +722,7 @@ bool boosted_tcp_server<t_protocol_handler>::connect(const std::string& adr, con
   bool r = new_connection_l->start(false, 1 < m_threads_count);
   if(r) {
     new_connection_l->get_context(conn_context);
-    //new_connection_l.reset(new connection<t_protocol_handler>(io_service_, m_config, m_sockets_count, m_pfilter));
+    //new_connection_l.reset(new connection<t_protocol_handler>(io_context_, m_config, m_sockets_count, m_pfilter));
   }
 
   return r;
@@ -737,15 +735,14 @@ template<class t_callback>
 bool boosted_tcp_server<t_protocol_handler>::connect_async(const std::string& adr, const std::string& port, uint32_t conn_timeout, const t_callback& cb, const std::string& bind_ip)
 {
   TRY_ENTRY();
-  connection_ptr new_connection_l(new connection<t_protocol_handler>(io_service_, m_config, m_sockets_count, m_pfilter));
+  connection_ptr new_connection_l(new connection<t_protocol_handler>(io_context_, m_config, m_sockets_count, m_pfilter));
   boost::asio::ip::tcp::socket& sock_ = new_connection_l->socket();
 
   //////////////////////////////////////////////////////////////////////////
-  boost::asio::ip::tcp::resolver resolver(io_service_);
-  boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), adr, port);
-  boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
-  boost::asio::ip::tcp::resolver::iterator end;
-  if(iterator == end) {
+  boost::asio::ip::tcp::resolver resolver(io_context_);
+  auto endpoints = resolver.resolve(boost::asio::ip::tcp::v4(), adr, port);
+  auto iterator = endpoints.begin();
+  if(iterator == endpoints.end()) {
     LOG_ERROR("Failed to resolve " << adr);
     return false;
   }
@@ -754,11 +751,11 @@ bool boosted_tcp_server<t_protocol_handler>::connect_async(const std::string& ad
 
   sock_.open(remote_endpoint.protocol());
   if(bind_ip != "0.0.0.0" && bind_ip != "0" && bind_ip != "") {
-    boost::asio::ip::tcp::endpoint local_endpoint(boost::asio::ip::address::from_string(adr.c_str()), 0);
+    boost::asio::ip::tcp::endpoint local_endpoint(boost::asio::ip::make_address(bind_ip), 0);
     sock_.bind(local_endpoint);
   }
 
-  boost::shared_ptr<boost::asio::deadline_timer> sh_deadline(new boost::asio::deadline_timer(io_service_));
+  boost::shared_ptr<boost::asio::deadline_timer> sh_deadline(new boost::asio::deadline_timer(io_context_));
   //start deadline
   sh_deadline->expires_from_now(boost::posix_time::milliseconds(conn_timeout));
   sh_deadline->async_wait([=](const boost::system::error_code& error) {

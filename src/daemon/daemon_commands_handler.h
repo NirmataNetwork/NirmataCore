@@ -32,6 +32,7 @@ class daemon_commands_handler
 public:
   daemon_commands_handler(nodetool::node_server<currency::t_currency_protocol_handler<currency::core> >& srv, currency::core_rpc_server& rpc) :m_srv(srv), m_rpc(rpc)
   {
+    using boost::placeholders::_1;
     m_cmd_binder.set_handler("help", boost::bind(&console_handlers_binder::help, &m_cmd_binder, _1), "Show this help");
     m_cmd_binder.set_handler("print_pl", boost::bind(&daemon_commands_handler::print_pl, this, _1), "Print peer list");
     m_cmd_binder.set_handler("print_cn", boost::bind(&daemon_commands_handler::print_cn, this, _1), "Print connections");

@@ -1,3 +1,6 @@
+@use "../base/mixins";
+@use "../base/variables";
+
 .head {
   display: flex;
   align-items: flex-end;
@@ -6,7 +9,7 @@
   width: 100%;
   height: 3rem;
   .breadcrumbs {
-    color: $blueTextColor;
+    color: variables.$blueTextColor;
     > span,
     a {
       &:not(:last-child) {
@@ -15,18 +18,18 @@
         margin-right: 3.5rem;
         outline-style: none;
         &:after {
-          @include pseudo;
+          @include mixins.pseudo;
           top: 0.25rem;
           right: -2.5rem;
           width: 1.5rem;
           height: 2rem;
-          background: center / contain no-repeat url(~src/assets/icons/right.svg);
+          background: center / contain no-repeat url(./assets/icons/right.svg);
         }
       }
     }
   }
   .back-btn {
-    color: $blueTextColor;
+    color: variables.$blueTextColor;
     display: flex;
     align-items: center;
     background-color: transparent;
@@ -37,7 +40,7 @@
     height: auto;
     .icon {
       margin-right: 1rem;
-      background: center / contain no-repeat url(~src/assets/icons/back.svg);
+      background: center / contain no-repeat url(./assets/icons/back.svg);
       width: 2rem;
       height: 2rem;
     }

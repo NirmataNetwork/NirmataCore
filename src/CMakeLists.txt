@@ -124,10 +124,16 @@ ENABLE_SHARED_PCH(currency_core CURRENCY_CORE)
 add_library(wallet  ${WALLET})
 if(CMAKE_SYSTEM_NAME STREQUAL "Android" )
   add_dependencies(wallet version ${PCH_LIB_NAME})
-  target_link_libraries(wallet currency_core crypto common zlibstatic ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES} android log)
+  target_link_libraries(wallet PUBLIC currency_core crypto common zlibstatic ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES} android log)
 else()
   add_dependencies(wallet version ${PCH_LIB_NAME})
   ENABLE_SHARED_PCH(wallet WALLET)
+endif()
+target_link_libraries(wallet PUBLIC OpenSSL::Crypto)
+if(WIN32)
+  # OpenSSL's static CAPI engine resolves these certificate-store symbols at
+  # the final executable link step.
+  target_link_libraries(wallet PUBLIC Crypt32)
 endif()
 
 
@@ -139,7 +145,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   install(TARGETS wallet currency_core crypto common DESTINATION lib)
   message("Generating install for iOS")
   return()
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Android")
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Android" AND NOT NIRMATA_ANDROID_FULL_NODE)
   install(TARGETS wallet currency_core crypto common zlibstatic DESTINATION "${CMAKE_ANDROID_ARCH_ABI}/lib")
   message("Generating install for Android")
   return()
@@ -158,9 +164,23 @@ target_link_libraries(currency_core lmdb mdbx)
 
 add_executable(daemon ${DAEMON} ${P2P} ${CURRENCY_PROTOCOL})
 add_dependencies(daemon version)
-target_link_libraries(daemon rpc stratum currency_core crypto common libminiupnpc-static zlibstatic ethash ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES})
+if(CMAKE_SYSTEM_NAME STREQUAL "Android")
+  target_link_libraries(daemon rpc stratum currency_core crypto common libminiupnpc-static zlibstatic ethash ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES} android log OpenSSL::Crypto)
+else()
+  target_link_libraries(daemon rpc stratum currency_core crypto common libminiupnpc-static zlibstatic ethash ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES})
+endif()
 ENABLE_SHARED_PCH(daemon DAEMON)
 ENABLE_SHARED_PCH_EXECUTABLE(daemon)
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Android" AND NIRMATA_ANDROID_FULL_NODE)
+  install(TARGETS wallet currency_core crypto common rpc stratum libminiupnpc-static zlibstatic ethash lmdb mdbx
+    ARCHIVE DESTINATION "${CMAKE_ANDROID_ARCH_ABI}/lib" COMPONENT AndroidFullNode
+    PUBLIC_HEADER DESTINATION "${CMAKE_ANDROID_ARCH_ABI}/include"
+    COMPONENT AndroidFullNode)
+  install(TARGETS daemon
+    RUNTIME DESTINATION "${CMAKE_ANDROID_ARCH_ABI}/bin"
+    COMPONENT AndroidFullNode)
+endif()
                      
 add_executable(connectivity_tool ${CONN_TOOL})
 add_dependencies(connectivity_tool version)
@@ -190,11 +210,11 @@ if(BUILD_GUI)
   add_executable(Nirmata WIN32 MACOSX_BUNDLE ${QTDAEMON} )
   ENABLE_SHARED_PCH(Nirmata QTDAEMON)
   ENABLE_SHARED_PCH_EXECUTABLE(Nirmata)
-	  
-  QT5_USE_MODULES(Nirmata WebEngineWidgets WebChannel)
-  find_package(Qt5PrintSupport REQUIRED)
 
-  target_link_libraries(Nirmata wallet rpc currency_core crypto common zlibstatic ethash Qt5::WebEngineWidgets Qt5::PrintSupport ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES})
+  target_link_libraries(Nirmata wallet rpc currency_core crypto common zlibstatic ethash Qt6::WebEngineWidgets Qt6::WebChannel Qt6::PrintSupport ${CMAKE_THREAD_LIBS_INIT} ${Boost_LIBRARIES})
+  if(MSVC)
+    target_compile_options(Nirmata PRIVATE /wd4828)
+  endif()
   if (UNIX AND NOT APPLE)
 	target_link_libraries(Nirmata rt)
   endif()

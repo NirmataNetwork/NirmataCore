@@ -205,7 +205,8 @@ bool hard_fork_1_unlock_time_2_in_coinbase::generate(std::vector<test_event_entr
   // add etc_tx_details_unlock_time2 entry
   etc_tx_details_unlock_time2 ut2 = AUTO_VAL_INIT(ut2);
   ut2.unlock_time_array.resize(blk_1.miner_tx.vout.size());
-  ut2.unlock_time_array[0] = get_block_height(blk_1) + CURRENCY_MINED_MONEY_UNLOCK_WINDOW;
+  std::fill(ut2.unlock_time_array.begin(), ut2.unlock_time_array.end(),
+    get_block_height(blk_1) + CURRENCY_MINED_MONEY_UNLOCK_WINDOW);
   blk_1.miner_tx.extra.push_back(ut2);
 
   DO_CALLBACK(events, "mark_invalid_block");
@@ -233,7 +234,8 @@ bool hard_fork_1_unlock_time_2_in_coinbase::generate(std::vector<test_event_entr
   // add etc_tx_details_unlock_time2 entry
   ut2 = AUTO_VAL_INIT(ut2);
   ut2.unlock_time_array.resize(blk_5.miner_tx.vout.size());
-  ut2.unlock_time_array[0] = get_block_height(blk_5) + CURRENCY_MINED_MONEY_UNLOCK_WINDOW;
+  std::fill(ut2.unlock_time_array.begin(), ut2.unlock_time_array.end(),
+    get_block_height(blk_5) + CURRENCY_MINED_MONEY_UNLOCK_WINDOW);
   blk_5.miner_tx.extra.push_back(ut2);
   miner::find_nonce_for_given_block(blk_5, diff, get_block_height(blk_5));
 
@@ -484,8 +486,8 @@ bool hard_fork_1_pos_and_locked_coins::generate(std::vector<test_event_entry>& e
   DO_CALLBACK(events, "configure_core");
   REWIND_BLOCKS_N_WITH_TIME(events, blk_0r, blk_0, miner_acc, CURRENCY_MINED_MONEY_UNLOCK_WINDOW + 3);
 
-  const uint64_t unique_amount_alice = TESTS_DEFAULT_FEE * 9;
-  const uint64_t unique_amount_bob   = TESTS_DEFAULT_FEE * 3;
+  const uint64_t unique_amount_alice = TESTS_COIN_UNIT * 9;
+  const uint64_t unique_amount_bob   = TESTS_COIN_UNIT * 3;
 
   CHECK_AND_ASSERT_MES(does_amount_have_one_non_zero_digit(unique_amount_alice), false, "does_amount_have_one_non_zero_digit failed for Alice");
   CHECK_AND_ASSERT_MES(does_amount_have_one_non_zero_digit(unique_amount_bob), false, "does_amount_have_one_non_zero_digit failed for Bob");

@@ -1,9 +1,11 @@
+@use "../base/variables";
+
 app-sidebar {
   //background-color: #0B1D33;
 
   .settings-block {
     .settings-dropdown {
-      background-color: $aliasDropdownBackground;
+      background-color: variables.$aliasDropdownBackground;
       button {
         span {
           color: #fff;
@@ -19,36 +21,36 @@ app-sidebar {
       .sidebar-account {
         margin-top: 10px;
         background-color: #0B1D33;
-        color: $accountMainTextColor;
+        color: variables.$accountMainTextColor;
         box-shadow: -3px 3px 5px 0px rgb(253, 253, 253);
         border: 1px solid #32DC59;
         &.auditable {
           background-color: transparent;
-          border-color: $accountAuditableBorderColor !important;
+          border-color: variables.$accountAuditableBorderColor !important;
         }
         &.watch-only {
           background-color: transparent;
-          border-color: $accountWatchOnlyBorderColor !important;
+          border-color: variables.$accountWatchOnlyBorderColor !important;
         }
         &.auditable,
         &.watch-only,
         &.tracking {
           border: 0.4rem solid;
           &.active {
-            background: $accountActiveBackgroundColor;
+            background: variables.$accountActiveBackgroundColor;
           }
           &:hover:not(.active) {
             transition: all 0.25s ease;
-            background-color: $accountHoverBackgroundColor;
+            background-color: variables.$accountHoverBackgroundColor;
           }
         }
 
         &.active {
           .sidebar-account-row {
             .progress-bar {
-              background-color: $progressBarAccountActiveColor;
+              background-color: variables.$progressBarAccountActiveColor;
               .fill {
-                background-color: $accountMainTextColor;
+                background-color: variables.$accountMainTextColor;
               }
             }
           }
@@ -56,31 +58,31 @@ app-sidebar {
 
         .sidebar-account-row {
           .text {
-            color: $accountMainTextColor;
+            color: variables.$accountMainTextColor;
           }
 
           .indicator {
-            background-color: $mainTextColor;
+            background-color: variables.$mainTextColor;
             color: black;
           }
 
           .progress-bar {
-            background-color: $progressBarAccountColor;
+            background-color: variables.$progressBarAccountColor;
             .fill {
-              background-color: $greenTextColor;
+              background-color: variables.$greenTextColor;
             }
           }
 
           &.account-price {
             .price {
-              color: $tooltipTextColor;
+              color: variables.$tooltipTextColor;
             }
             .price-percent {
               color: #BEBEBE;
             }
           }
           &.account-synchronization {
-            color: $accountMainTextColor;
+            color: variables.$accountMainTextColor;
           }
         }
 
@@ -89,7 +91,7 @@ app-sidebar {
           box-shadow: -3px 3px 5px 0px rgb(249, 248, 250);
           .sidebar-account-row {
             &.account-synchronization {
-              color: $accountMainTextColor;
+              color: variables.$accountMainTextColor;
             }
           }
         }
@@ -107,13 +109,13 @@ app-sidebar {
       button {
         color: #fff;
         :hover {
-          color: $blueButtonHoverColor !important;
+          color: variables.$blueButtonHoverColor !important;
         }
       }
 
       &.active {
         button {
-          color: $blueButtonFocusColor !important;
+          color: variables.$blueButtonFocusColor !important;
         }
       }
     }

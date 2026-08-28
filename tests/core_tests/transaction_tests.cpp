@@ -130,11 +130,11 @@ bool test_block_creation()
 {
   uint64_t vszs[] = {80,476,476,475,475,474,475,474,474,475,472,476,476,475,475,474,475,474,474,475,472,476,476,475,475,474,475,474,474,475,9391,476,476,475,475,474,475,8819,8301,475,472,4302,5316,14347,16620,19583,19403,19728,19442,19852,19015,19000,19016,19795,19749,18087,19787,19704,19750,19267,19006,19050,19445,19407,19522,19546,19788,19369,19486,19329,19370,18853,19600,19110,19320,19746,19474,19474,19743,19494,19755,19715,19769,19620,19368,19839,19532,23424,28287,30707};
   std::vector<uint64_t> szs(&vszs[0], &vszs[90]);
-  account_public_address adr;
-  bool r = get_account_address_from_str(adr, "ZxDLGBGXbjo5w51tJkvxEPHFRr7Xft4hf33N8EkJPndoGCqocQF1mzpZqYwXByx5gMbfQuPAAB9vj79EFR6Jwkgu1o3aMQPwJ");
-  CHECK_AND_ASSERT_MES(r, false, "failed to import");
+  account_base account;
+  account.generate();
+  const account_public_address& adr = account.get_public_address();
   block b;
-  r = construct_miner_tx(90, epee::misc_utils::median(szs), 3553616528562147, 33094, 10000000, adr, adr, b.miner_tx);
+  bool r = construct_miner_tx(90, epee::misc_utils::median(szs), 3553616528562147, 33094, 10000000, adr, adr, b.miner_tx);
   return r;
 }
 

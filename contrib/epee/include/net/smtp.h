@@ -33,7 +33,7 @@
 #include <ostream>
 #include <string>
 #include <boost/asio.hpp>
-#include <boost/bind.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/iterators/base64_from_binary.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
@@ -153,7 +153,7 @@ namespace net_utils
 			std::string mSubject;
 			std::string mMessage;
 			unsigned int mPort;
-			boost::asio::io_service mIOService;
+			boost::asio::io_context mIOService;
 			tcp::resolver mResolver;
 			tcp::socket mSocket;
 			boost::asio::streambuf mRequest;

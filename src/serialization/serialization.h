@@ -121,6 +121,7 @@ public:
   {}
   serializable_pair(const serializable_pair& sp) :std::pair<first_type, second_type>(sp.first, sp.second)
   {}
+  serializable_pair& operator=(const serializable_pair&) = default;
 
   BEGIN_SERIALIZE_OBJECT()
     FIELD(base::first)

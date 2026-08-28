@@ -3,10 +3,9 @@
 
 #include "internals.h"
 
-//#if MDBX_VERSION_MAJOR != ${MDBX_VERSION_MAJOR} ||                             \
-//    MDBX_VERSION_MINOR != ${MDBX_VERSION_MINOR}
-//#error "API version mismatch! Had `git fetch --tags` done?"
-//#endif
+/* The bundled snapshot intentionally does not enforce an upstream Git tag:
+ * MDBX_VERSION_MAJOR == ${MDBX_VERSION_MAJOR} and
+ * MDBX_VERSION_MINOR == ${MDBX_VERSION_MINOR}. */
 
 static const char sourcery[] = STRINGIFY(MDBX_BUILD_SOURCERY);
 
